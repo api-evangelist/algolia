@@ -50,7 +50,8 @@ apis:
       to the next level.
   - aid: algolia:algolia-search-api
     name: Algolia Search API
-    tags: []
+    tags:
+      - Search
     humanURL: https://www.algolia.com/doc/rest-api/search/
     properties:
       - url: https://www.algolia.com/doc/rest-api/search/
