@@ -5,7 +5,7 @@ apis:
   - aid: algolia:algolia
     name: Algolia
     tags:
-      - Search
+      - API
     humanURL: ' https://www.algolia.com/doc/'
     properties:
       - url: ' https://www.algolia.com/doc/'
@@ -37,3 +37,7 @@ maintainers:
   - FN: Kin Lane
     email: info@apievangelist.com
 specificationVersion: '0.19'
+common:
+  - name: GitHub Organization
+    url: https://github.com/algolia
+    type: GitHubOrganization
