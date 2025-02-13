@@ -10,10 +10,7 @@ info:
     engagement, conversion rates, and overall customer satisfaction. With
     features such as dynamic filtering, query rules, and personalization
     strategies, the Algolia Advanced Personalization API empowers businesses to
-    create tailored experiences that drive customer loyalty and revenue growth.
-    Whether it's optimizing product recommendations, improving search relevance,
-    or enhancing the overall user experience, this API is a valuable tool for
-    businesses looking to take their personalization efforts to the next level.
+    create tailored experiences that drive customer loyalty and revenue growth. 
   version: 2.0.0
 servers:
   - url: https://ai-personalization.{region}.algolia.com
