@@ -120,6 +120,8 @@ apis:
     properties:
       - url: https://www.algolia.com/doc/rest-api/ingestion/
         type: Documentation
+      - type: OpenAPI
+        url: properties/algolia-ingestion-api-openapi.yml
     description: >-
       The Algolia Ingestion API is a tool that allows developers to easily and
       efficiently transfer data into their Algolia search index. This API
