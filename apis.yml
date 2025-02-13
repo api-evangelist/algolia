@@ -197,7 +197,10 @@ apis:
       their users, ultimately driving better outcomes for their business.
   - aid: algolia:algolia-query-suggestions-api
     name: Algolia Query Suggestions API
-    tags: []
+    tags:
+      - Search
+      - Querieis
+      - Suggestions
     humanURL: https://www.algolia.com/doc/rest-api/query-suggestions/
     properties:
       - url: https://www.algolia.com/doc/rest-api/query-suggestions/
