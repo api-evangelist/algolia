@@ -27,6 +27,8 @@ apis:
     properties:
       - url: https://www.algolia.com/doc/rest-api/advanced-personalization/
         type: Documentation
+      - type: OpenAPI
+        url: properties/algolia-advanced-personalization-api-openapi.yml
     description: >-
       Algolia Advanced Personalization API is a powerful tool that allows
       businesses to create personalized search and discovery experiences for
