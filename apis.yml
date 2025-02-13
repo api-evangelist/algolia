@@ -136,7 +136,9 @@ apis:
       functionality and enhance the overall user experience.
   - aid: algolia:algolia-monitoring-api
     name: Algolia Monitoring API
-    tags: []
+    tags:
+      - Search
+      - Monitoring
     humanURL: https://www.algolia.com/doc/rest-api/monitoring/
     properties:
       - url: https://www.algolia.com/doc/rest-api/monitoring/
