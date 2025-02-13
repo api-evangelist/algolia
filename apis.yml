@@ -174,7 +174,9 @@ apis:
       optimize your user experience.
   - aid: algolia:algolia-personalization-api
     name: Algolia Personalization API
-    tags: []
+    tags:
+      - Personalization
+      - Search
     humanURL: https://www.algolia.com/doc/rest-api/personalization/
     properties:
       - url: https://www.algolia.com/doc/rest-api/personalization/
