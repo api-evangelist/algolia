@@ -202,6 +202,8 @@ apis:
     properties:
       - url: https://www.algolia.com/doc/rest-api/query-suggestions/
         type: Documentation
+      - type: OpenAPI
+        url: properties/algolia-query-suggestions-api-openapi.yml
     description: >-
       The Algolia Query Suggestions API is a powerful tool that allows
       developers to enhance search functionality on their websites or
