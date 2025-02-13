@@ -1,92 +1,15 @@
 openapi: 3.0.2
 info:
-  title: Crawler API
-  description: >
-    The Crawler API lets you manage and run your crawlers.
-
-
-    ## Base URL
-
-
-    The base URL for making requests to the Crawler API is:
-
-
-    - `https://crawler.algolia.com/api`
-
-
-    **All requests must use HTTPS.**
-
-
-    ## Availability and authentication
-
-
-    Access to the Crawler API is available with the [Crawler
-    add-on](https://www.algolia.com/pricing/).
-
-
-    To authenticate your API requests, use the **basic authentication** header:
-
-
-    - `Authorization: Basic <credentials>`
-
-
-    where `<credentials>` is a base64-encoded string `<user-id>:<api-key>`.
-
-
-    - `<user-id>`. The Crawler user ID.
-
-    - `<api-key>`. The Crawler API key.
-
-
-    You can find both on the [Crawler
-    settings](https://dashboard.algolia.com/crawler/settings) page in the
-    Algolia dashboard.
-
-    The Crawler credentials are different from your regular Algolia credentials.
-
-
-    ## Request format
-
-
-    Request bodies must be JSON objects.
-
-
-    ## Parameters
-
-
-    Parameters are passed as query parameters for GET requests,
-
-    and in the request body for POST and PATCH requests.
-
-
-    Query parameters must be
-    [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).
-
-    Non-ASCII characters must be UTF-8 encoded.
-
-
-    ## Response status and errors
-
-
-    The Crawler API returns JSON responses.
-
-    Since JSON doesn't guarantee any specific ordering, don't rely on the order
-    of attributes in the API response.
-
-
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status.
-
-    Server errors are indicated by a `5xx` status.
-
-    Error responses have a `message` property with more information.
-
-
-    ## Version
-
-
-    The current version of the Crawler API is version 1, as indicated by the
-    `/1/` in each endpoint's URL.
+  title: Algolia Crawler API
+  description: >-
+    Algolia Crawler API is a powerful tool that allows developers to easily
+    scrape and index data from websites in order to make it searchable and
+    discoverable through Algolia's search engine. The API enables users to
+    specify which pages and data they want to crawl, set up custom rules for how
+    the data should be processed, and monitor the crawling process in real-time.
+    By providing a seamless way to collect and organize information from the
+    web, Algolia Crawler API helps businesses and organizations enhance the user
+    experience by delivering relevant and up-to-date search results.
   version: 1.0.0
 servers:
   - url: https://crawler.algolia.com/api
