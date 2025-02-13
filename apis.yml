@@ -221,11 +221,15 @@ apis:
       engagement and satisfaction.
   - aid: algolia:algolia-recommend-api
     name: Algolia Recommend API
-    tags: []
+    tags:
+      - Search
+      - Recommendations
     humanURL: https://www.algolia.com/doc/rest-api/recommend/
     properties:
       - url: https://www.algolia.com/doc/rest-api/recommend/
         type: Documentation
+      - type: OpenAPI
+        url: properties/algolia-recommend-api-openapi.yml
     description: >-
       Algolia Recommend API is a powerful tool that leverages machine learning
       algorithms to provide personalized recommendations to users based on their
