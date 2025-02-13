@@ -76,6 +76,8 @@ apis:
     properties:
       - url: https://www.algolia.com/doc/rest-api/analytics/
         type: Documentation
+      - type: OpenAPI
+        url: properties/algolia-analytics-api-openapi.yml
     description: >-
       The Algolia Analytics API is a powerful tool that allows users to track
       and analyze the performance of their search engines in real-time. This API
