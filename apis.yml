@@ -94,7 +94,9 @@ apis:
       search performance and user satisfaction.
   - aid: algolia:algolia-crawler-api
     name: Algolia Crawler API
-    tags: []
+    tags:
+      - Search
+      - Crawlers
     humanURL: https://www.algolia.com/doc/rest-api/crawler/
     properties:
       - url: https://www.algolia.com/doc/rest-api/crawler/
