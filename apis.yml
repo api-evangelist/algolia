@@ -115,7 +115,9 @@ apis:
       results.
   - aid: algolia:algolia-ingestion-api
     name: Algolia Ingestion API
-    tags: []
+    tags:
+      - Search
+      - Ingestion
     humanURL: https://www.algolia.com/doc/rest-api/ingestion/
     properties:
       - url: https://www.algolia.com/doc/rest-api/ingestion/
