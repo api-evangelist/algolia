@@ -1,79 +1,17 @@
 openapi: 3.0.2
 info:
-  title: Query Suggestions API
-  description: >
-    The Query Suggestions API lets you manage your Query Suggestions
-    configurations.
-
-    Query Suggestions add new indices to your Algolia application with popular
-    search queries, external suggestions, or facet values.
-
-    In your user interface, you can query the Query Suggestions indices like
-    regular indices and add [suggested
-    searches](https://www.algolia.com/doc/guides/building-search-ui/ui-and-ux-patterns/query-suggestions/js/)
-    to guide users and speed up their search.
-
-
-    ## Base URLs
-
-
-    The base URLs for requests to the Query Suggestions API are:
-
-
-    - `https://query-suggestions.us.algolia.com`
-
-    - `https://query-suggestions.eu.algolia.com`
-
-
-    Use the URL that matches your [analytics
-    region](https://dashboard.algolia.com/account/infrastructure/analytics).
-
-
-    **All requests must use HTTPS.**
-
-
-    ## Authentication
-
-
-    To authenticate your API requests, add these headers:
-
-
-    - `x-algolia-application-id`. Your Algolia application ID.
-
-    - `x-algolia-api-key`. An API key with the necessary permissions to make the
-    request.
-      The required access control list (ACL) to make a request is listed in each endpoint's reference.
-
-    You can find your application ID and API key in the [Algolia
-    dashboard](https://dashboard.algolia.com/account).
-
-
-    ## Request format
-
-
-    Request bodies must be JSON objects.
-
-
-    ## Response status and errors
-
-
-    Response bodies are JSON objects.
-
-    Deleting a user token returns an empty response body with rate-limiting
-    information as headers.
-
-
-    Successful responses return a `2xx` status. Client errors return a `4xx`
-    status. Server errors are indicated by a `5xx` status.
-
-    Error responses have a `message` property with more information.
-
-
-    ## Version
-
-
-    The current version of the Query Suggestions API is version 1, as indicated
-    by the `/1/` in each endpoint's URL.
+  title: Algolia Query Suggestions API
+  description: >-
+    The Algolia Query Suggestions API is a powerful tool that allows developers
+    to enhance search functionality on their websites or applications. By
+    utilizing advanced algorithms, the API generates real-time suggestions as
+    users type in the search bar, helping them quickly find relevant content or
+    products. These suggestions are based on popular search queries, user
+    behavior, and contextual relevance, improving search accuracy and user
+    experience. Additionally, the API offers customization options, such as the
+    ability to prioritize certain suggestions or filter out irrelevant results.
+    Overall, the Algolia Query Suggestions API streamlines the search process,
+    leading to increased user engagement and satisfaction.
   version: 1.0.0
 servers:
   - url: https://query-suggestions.{region}.algolia.com
