@@ -55,6 +55,8 @@ apis:
     properties:
       - url: https://www.algolia.com/doc/rest-api/search/
         type: Documentation
+      - type: OpenAPI
+        url: properties/algolia-search-api-openapi.yml
     description: >-
       Algolia Search API is a powerful tool that allows developers to easily
       integrate fast and efficient search functionality into their websites and
