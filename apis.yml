@@ -141,6 +141,8 @@ apis:
     properties:
       - url: https://www.algolia.com/doc/rest-api/monitoring/
         type: Documentation
+      - type: OpenAPI
+        url: properties/algolia-monitoring-api-openapi.yml
     description: >-
       The Algolia Monitoring API is a tool that allows users to track and
       analyze the performance of their Algolia search implementations in
