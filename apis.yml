@@ -24,9 +24,10 @@ apis:
     name: Algolia Advanced Personalization API
     tags:
       - ' '
-      - ' '
-      - ' Users'
-      - Personalization
+      - '  '
+      - '  Users'
+      - ' Personalization'
+      - Search
     humanURL: https://www.algolia.com/doc/rest-api/advanced-personalization/
     properties:
       - url: https://www.algolia.com/doc/rest-api/advanced-personalization/
