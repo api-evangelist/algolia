@@ -17,6 +17,94 @@ apis:
       search within your websites and mobile applications. Our search API powers
       billions of queries for thousands of companies every month, delivering
       relevant results in under 100ms anywhere in the world. 
+  - aid: algolia:algolia-ab-testing-api
+    name: Algolia A/B Testing API
+    description: >-
+      The Algolia A/B Testing API lets you manage your Algolia A/B tests to
+      optimize your search experience.
+    humanURL: https://www.algolia.com/doc/rest-api/abtesting/
+    tags: []
+    properties: []
+  - aid: algolia:algolia-advanced-personalization-api
+    name: Algolia Advanced Personalization API
+    description: 'null'
+    humanURL: https://www.algolia.com/doc/rest-api/advanced-personalization/
+    tags: []
+    properties: []
+  - aid: algolia:algolia-search-api
+    name: Algolia Search API
+    description: 'null'
+    humanURL: https://www.algolia.com/doc/rest-api/search/
+    tags: []
+    properties: []
+  - aid: algolia:algolia-analytics-api
+    name: Algolia Analytics API
+    description: 'null'
+    humanURL: https://www.algolia.com/doc/rest-api/analytics/
+    tags: []
+    properties: []
+  - aid: algolia:algolia-crawler-api
+    name: Algolia Crawler API
+    description: The Crawler API lets you manage and run your crawlers.
+    humanURL: https://www.algolia.com/doc/rest-api/crawler/
+    tags: []
+    properties: []
+  - aid: algolia:algolia-ingestion-api
+    name: Algolia Ingestion API
+    description: >-
+      The Ingestion API lets you connect third-party services and platforms with
+      Algolia and schedule tasks to ingest your data. The Ingestion API powers
+      the no-code data connectors.
+    humanURL: https://www.algolia.com/doc/rest-api/ingestion/
+    tags: []
+    properties: []
+  - aid: algolia:algolia-monitoring-api
+    name: Algolia Monitoring API
+    description: >-
+      The Monitoring API lets you check the status of your Algolia
+      infrastructure.
+    humanURL: https://www.algolia.com/doc/rest-api/monitoring/
+    tags: []
+    properties: []
+  - aid: algolia:algolia-insights-api
+    name: Algolia Insights API
+    description: >-
+      The Insights API lets you collect events related to your search and
+      discovery experience. Events represent user interactions with your app or
+      website. They unlock powerful features, such as recommendations,
+      personalization, smarter search results, and analytics that help you
+      optimize your user experience.
+    humanURL: https://www.algolia.com/doc/rest-api/insights/
+    tags: []
+    properties: []
+  - aid: algolia:algolia-personalization-api
+    name: Algolia Personalization API
+    description: >-
+      The Personalization API lets you access user profiles built from the
+      personalization strategy.
+    humanURL: https://www.algolia.com/doc/rest-api/personalization/
+    tags: []
+    properties: []
+  - aid: algolia:algolia-query-suggestions-api
+    name: Algolia Query Suggestions API
+    description: >-
+      The Query Suggestions API lets you manage your Query Suggestions
+      configurations. Query Suggestions add new indices to your Algolia
+      application with popular search queries, external suggestions, or facet
+      values. In your user interface, you can query the Query Suggestions
+      indices like regular indices and add suggested searches to guide users and
+      speed up their search.
+    humanURL: https://www.algolia.com/doc/rest-api/query-suggestions/
+    tags: []
+    properties: []
+  - aid: algolia:algolia-recommend-api
+    name: Algolia Recommend API
+    description: >-
+      The Recommend API lets you retrieve recommendations from one of Algolias
+      AI recommendation models that you previously trained on your data.
+    humanURL: https://www.algolia.com/doc/rest-api/recommend/
+    tags: []
+    properties: []
 name: Algolia
 tags:
   - Search
