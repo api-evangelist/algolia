@@ -157,7 +157,9 @@ apis:
       informed decisions to improve their search capabilities.
   - aid: algolia:algolia-insights-api
     name: Algolia Insights API
-    tags: []
+    tags:
+      - Insights
+      - Search
     humanURL: https://www.algolia.com/doc/rest-api/insights/
     properties:
       - url: https://www.algolia.com/doc/rest-api/insights/
