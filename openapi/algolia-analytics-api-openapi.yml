@@ -1,114 +1,17 @@
 openapi: 3.0.2
 info:
-  title: Analytics API
-  description: >
-    The Analytics API gives you access to metrics related to your Algolia search
-    experience.
-
-
-    ## Base URLs
-
-
-    The base URLs for requests to the Analytics API are:
-
-
-    - `https://analytics.us.algolia.com`
-
-    - `https://analytics.de.algolia.com`
-
-    - `https://analytics.algolia.com` (routes requests to the closest of the
-    above servers, based on your geographical location)
-
-
-    Use the URL that matches your [analytics
-    region](https://dashboard.algolia.com/account/infrastructure/analytics).
-
-
-    **All requests must use HTTPS.**
-
-
-    ## Availability and authentication
-
-
-    Access to the Analytics API is available as part of the [Premium or Elevate
-    plans](https://www.algolia.com/pricing).
-
-
-    To authenticate your API requests, add these headers:
-
-
-    - `x-algolia-application-id`. Your Algolia application ID.
-
-    - `x-algolia-api-key`. An API key with the necessary permissions to make the
-    request.
-      The required access control list (ACL) to make a request is listed in each endpoint's reference.
-
-    You can find your application ID and API key in the [Algolia
-    dashboard](https://dashboard.algolia.com/account).
-
-
-    ## Rate limits
-
-
-    You can make up to **100 requests per minute per app** to the Analytics API.
-
-    The response includes headers with information about the limits.
-
-
-    ## Parameters
-
-
-    Query parameters must be
-    [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).
-
-    Non-ASCII characters must be UTF-8 encoded.
-
-    Plus characters (`+`) are interpreted as spaces.
-
-
-    ## Response status and errors
-
-
-    The Analytics API returns JSON responses.
-
-    Since JSON doesn't guarantee any specific ordering, don't rely on the order
-    of attributes in the API response.
-
-
-    - Successful responses return a `2xx` status
-
-    - Client errors return a `4xx` status
-
-    - Server errors are indicated by a `5xx` status.
-
-
-    Error responses have a `message` property with more information.
-
-
-    ## Version
-
-
-    The current version of the Analytics API is version 2, as indicated by the
-    `/2/` in each endpoint's URL.
-
-
-    ## Query aggregation
-
-
-    Algolia accepts queries on each keystroke.
-
-    To ensure you have relevant analytics data, however, the series of
-    keystrokes is aggregated to keep only the latest (final) user query.
-
-    This is called "prefix" aggregation.
-
-
-    For more information, see [Query agggregation and
-    processing](https://www.algolia.com/doc/guides/search-analytics/concepts/query-aggregation/).
-
-
-    See the analytics implementation overview for more information about query
-    aggregation.
+  title: Algolia Analytics API
+  description: >-
+    The Algolia Analytics API is a powerful tool that allows users to track and
+    analyze the performance of their search engines in real-time. This API
+    provides valuable data on search queries, user engagement, popular search
+    terms, and more, helping businesses understand how their users are
+    interacting with their website or app. By providing detailed insights into
+    search behavior, Algolia Analytics API enables companies to optimize their
+    search functionality, improve user experience, and ultimately drive more
+    conversions. With its comprehensive tracking and reporting capabilities,
+    this API is an essential tool for any business looking to improve their
+    search performance and user satisfaction.
   version: 2.0.0
 servers:
   - url: https://analytics.{region}.algolia.com
@@ -177,6 +80,8 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - analytics
+        - - Path
+          - Analytics
     post:
       operationId: customPost
       requestBody:
@@ -207,6 +112,8 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - analytics
+        - - Path
+          - Analytics
     put:
       operationId: customPut
       requestBody:
@@ -237,6 +144,8 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - analytics
+        - - Path
+          - Analytics
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -261,10 +170,14 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - analytics
+        - - Path
+          - Analytics
   /2/searches:
     get:
       tags:
         - analytics
+        - - Searches
+          - Analytics
       operationId: getTopSearches
       x-acl:
         - analytics
@@ -355,6 +268,9 @@ paths:
     get:
       tags:
         - analytics
+        - - Searches
+          - Count
+          - Analytics
       operationId: getSearchesCount
       x-acl:
         - analytics
@@ -420,6 +336,9 @@ paths:
     get:
       tags:
         - analytics
+        - - Searches
+          - Results
+          - Analytics
       operationId: getSearchesNoResults
       x-acl:
         - analytics
@@ -481,6 +400,9 @@ paths:
     get:
       tags:
         - analytics
+        - - Searches
+          - Clicks
+          - Analytics
       operationId: getSearchesNoClicks
       x-acl:
         - analytics
@@ -551,6 +473,10 @@ paths:
     get:
       tags:
         - analytics
+        - - Searches
+          - Result
+          - Rates
+          - Analytics
       operationId: getNoResultsRate
       x-acl:
         - analytics
@@ -631,6 +557,10 @@ paths:
     get:
       tags:
         - analytics
+        - - Searches
+          - Click
+          - Rates
+          - Analytics
       operationId: getNoClickRate
       x-acl:
         - analytics
@@ -711,6 +641,7 @@ paths:
     get:
       tags:
         - analytics
+        - - Analytics
       operationId: getTopHits
       x-acl:
         - analytics
@@ -799,6 +730,9 @@ paths:
     get:
       tags:
         - analytics
+        - - Users
+          - Count
+          - Analytics
       operationId: getUsersCount
       x-acl:
         - analytics
@@ -881,6 +815,7 @@ paths:
     get:
       tags:
         - analytics
+        - - Analytics
       operationId: getTopFilterAttributes
       x-acl:
         - analytics
@@ -925,6 +860,8 @@ paths:
     get:
       tags:
         - analytics
+        - - Attributes
+          - Analytics
       operationId: getTopFilterForAttribute
       x-acl:
         - analytics
@@ -971,6 +908,8 @@ paths:
     get:
       tags:
         - analytics
+        - - Results
+          - Analytics
       operationId: getTopFiltersNoResults
       x-acl:
         - analytics
@@ -1017,6 +956,8 @@ paths:
     get:
       tags:
         - analytics
+        - - Countries
+          - Analytics
       operationId: getTopCountries
       x-acl:
         - analytics
@@ -1077,6 +1018,11 @@ paths:
     get:
       tags:
         - analytics
+        - - Clicks
+          - Average
+          - Click
+          - Positions
+          - Analytics
       operationId: getAverageClickPosition
       x-acl:
         - analytics
@@ -1162,6 +1108,9 @@ paths:
     get:
       tags:
         - analytics
+        - - Clicks
+          - Positions
+          - Analytics
       operationId: getClickPositions
       x-acl:
         - analytics
@@ -1217,6 +1166,10 @@ paths:
     get:
       tags:
         - analytics
+        - - Clicks
+          - Click
+          - Rate
+          - Analytics
       operationId: getClickThroughRate
       x-acl:
         - analytics
@@ -1306,6 +1259,9 @@ paths:
     get:
       tags:
         - analytics
+        - - Conversions
+          - Rates
+          - Analytics
       operationId: getConversionRate
       x-acl:
         - analytics
@@ -1395,6 +1351,11 @@ paths:
     get:
       tags:
         - analytics
+        - - Conversions
+          - Add
+          - Cart
+          - Rates
+          - Analytics
       operationId: getAddToCartRate
       x-acl:
         - analytics
@@ -1494,6 +1455,10 @@ paths:
     get:
       tags:
         - analytics
+        - - Conversions
+          - Purchase
+          - Rates
+          - Analytics
       operationId: getPurchaseRate
       x-acl:
         - analytics
@@ -1593,6 +1558,9 @@ paths:
     get:
       tags:
         - analytics
+        - - Conversions
+          - Revenue
+          - Analytics
       operationId: getRevenue
       x-acl:
         - analytics
@@ -1660,6 +1628,8 @@ paths:
     get:
       tags:
         - analytics
+        - - Status
+          - Analytics
       operationId: getStatus
       x-acl:
         - analytics
@@ -1704,6 +1674,11 @@ paths:
       x-asynchronous-helper: false
       tags:
         - analytics
+        - - Set
+          - Client
+          - Apis
+          - Keys
+          - Analytics
       operationId: setClientApiKey
       summary: Switch the API key used to authenticate requests
       description: |
