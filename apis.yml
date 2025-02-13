@@ -5,7 +5,7 @@ apis:
   - aid: algolia:algolia
     name: Algolia
     tags:
-      - API
+      - Search
     humanURL: ' https://www.algolia.com/doc/'
     properties:
       - url: ' https://www.algolia.com/doc/'
