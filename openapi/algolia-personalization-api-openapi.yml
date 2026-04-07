@@ -26,22 +26,7 @@ security:
   - appId: []
     apiKey: []
 tags:
-  - name: profiles
-    x-displayName: Profiles
-    description: >
-      User profiles represent the affinities each user profile has for the
-      different facets in your index.
-
-      The more a user viewed and clicked search results with a specific facet,
-
-      the higher the affinity for that facet.
-  - name: strategies
-    x-displayName: Strategies
-    description: >
-      The personalization strategy defines how personalization should affect the
-      search results,
-
-      and how much each facet and event type impact the personalization.
+  - name: Personalization
 externalDocs:
   url: https://www.algolia.com/doc/guides/personalization/what-is-personalization/
   description: |
@@ -71,7 +56,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - personalization
+        - Personalization
     post:
       operationId: customPost
       requestBody:
@@ -101,7 +86,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - personalization
+        - Personalization
     put:
       operationId: customPut
       requestBody:
@@ -131,7 +116,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - personalization
+        - Personalization
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -155,11 +140,11 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - personalization
+        - Personalization
   /1/profiles/personalization/{userToken}:
     get:
       tags:
-        - personalization
+        - Personalization
       operationId: getUserTokenProfile
       x-acl:
         - recommendation
@@ -209,7 +194,7 @@ paths:
   /1/profiles/{userToken}:
     delete:
       tags:
-        - personalization
+        - Personalization
       operationId: deleteUserProfile
       x-acl:
         - recommendation
@@ -256,7 +241,7 @@ paths:
   /1/strategies/personalization:
     get:
       tags:
-        - personalization
+        - Personalization
       operationId: getPersonalizationStrategy
       x-acl:
         - recommendation
@@ -279,7 +264,7 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
     post:
       tags:
-        - personalization
+        - Personalization
       operationId: setPersonalizationStrategy
       x-acl:
         - recommendation
@@ -320,7 +305,7 @@ paths:
       x-helper: true
       x-asynchronous-helper: false
       tags:
-        - personalization
+        - Personalization
       operationId: setClientApiKey
       summary: Algolia Switch the API key used to authenticate requests
       description: |

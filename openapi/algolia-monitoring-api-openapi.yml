@@ -15,22 +15,7 @@ info:
 servers:
   - url: https://status.algolia.com
 tags:
-  - name: incidents
-    description: List the known incidents.
-    x-displayName: Incidents
-  - name: infrastructure
-    description: >-
-      Return information about the Algolia infrastructure used by your
-      application.
-    x-displayName: Infrastructure
-  - name: monitoring-tag
-    description: >-
-      Report search and indexing times for your clusters, and get a list of
-      servers.
-    x-displayName: Monitoring
-  - name: status
-    description: Report the status of Algolia clusters.
-    x-displayName: Status
+  - name: Monitoring
 paths:
   /{path}:
     get:
@@ -56,7 +41,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - monitoring
+        - Monitoring
     post:
       operationId: customPost
       requestBody:
@@ -86,7 +71,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - monitoring
+        - Monitoring
     put:
       operationId: customPut
       requestBody:
@@ -116,7 +101,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - monitoring
+        - Monitoring
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -140,14 +125,14 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - monitoring
+        - Monitoring
   /1/status:
     get:
       operationId: getStatus
       summary: Algolia Retrieve status of all clusters
       security: []
       tags:
-        - monitoring
+        - Monitoring
       description: Retrieves the status of all Algolia clusters and instances.
       responses:
         '200':
@@ -160,7 +145,7 @@ paths:
       description: Retrieves the status of selected clusters.
       operationId: getClusterStatus
       tags:
-        - monitoring
+        - Monitoring
       security: []
       parameters:
         - $ref: '#/components/parameters/Clusters'
@@ -178,7 +163,7 @@ paths:
       operationId: getIncidents
       security: []
       tags:
-        - monitoring
+        - Monitoring
       responses:
         '200':
           $ref: '#/components/responses/IncidentsResponse'
@@ -190,7 +175,7 @@ paths:
       description: Retrieves known incidents for the selected clusters.
       operationId: getClusterIncidents
       tags:
-        - monitoring
+        - Monitoring
       security: []
       parameters:
         - $ref: '#/components/parameters/Clusters'
@@ -219,7 +204,7 @@ paths:
         - Without authentication, the response lists the servers for all Algolia
         clusters.
       tags:
-        - monitoring
+        - Monitoring
       responses:
         '200':
           $ref: '#/components/responses/InventoryResponse'
@@ -232,7 +217,7 @@ paths:
       operationId: getLatency
       security: []
       tags:
-        - monitoring
+        - Monitoring
       parameters:
         - $ref: '#/components/parameters/Clusters'
       responses:
@@ -247,7 +232,7 @@ paths:
       operationId: getIndexingTime
       security: []
       tags:
-        - monitoring
+        - Monitoring
       parameters:
         - $ref: '#/components/parameters/Clusters'
       responses:
@@ -262,7 +247,7 @@ paths:
       operationId: getReachability
       security: []
       tags:
-        - monitoring
+        - Monitoring
       parameters:
         - $ref: '#/components/parameters/Clusters'
       responses:
@@ -285,7 +270,7 @@ paths:
         `x-algolia-api-key` headers (using the Monitoring API key).
       operationId: getMetrics
       tags:
-        - monitoring
+        - Monitoring
       parameters:
         - $ref: '#/components/parameters/MetricInPath'
         - $ref: '#/components/parameters/PeriodInPath'
@@ -299,7 +284,7 @@ paths:
       x-helper: true
       x-asynchronous-helper: false
       tags:
-        - monitoring
+        - Monitoring
       operationId: setClientApiKey
       summary: Algolia Switch the API key used to authenticate requests
       description: |

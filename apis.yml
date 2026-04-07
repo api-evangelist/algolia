@@ -18,11 +18,9 @@ apis:
   - aid: algolia:algolia-advanced-personalization-api
     name: Algolia Advanced Personalization API
     tags:
-      - ' '
-      - '  '
-      - '  Users'
-      - ' Personalization'
+      - Personalization
       - Search
+      - Users
     humanURL: https://www.algolia.com/doc/rest-api/advanced-personalization/
     properties:
       - url: https://www.algolia.com/doc/rest-api/advanced-personalization/
@@ -54,9 +52,9 @@ apis:
   - aid: algolia:algolia-analytics-api
     name: Algolia Analytics API
     tags:
-      - Search
       - Analytics
       - Insights
+      - Search
     humanURL: https://www.algolia.com/doc/rest-api/analytics/
     properties:
       - url: https://www.algolia.com/doc/rest-api/analytics/
@@ -72,8 +70,8 @@ apis:
   - aid: algolia:algolia-crawler-api
     name: Algolia Crawler API
     tags:
-      - Search
       - Crawlers
+      - Search
     humanURL: https://www.algolia.com/doc/rest-api/crawler/
     properties:
       - url: https://www.algolia.com/doc/rest-api/crawler/
@@ -89,8 +87,8 @@ apis:
   - aid: algolia:algolia-ingestion-api
     name: Algolia Ingestion API
     tags:
-      - Search
       - Ingestion
+      - Search
     humanURL: https://www.algolia.com/doc/rest-api/ingestion/
     properties:
       - url: https://www.algolia.com/doc/rest-api/ingestion/
@@ -107,8 +105,8 @@ apis:
   - aid: algolia:algolia-monitoring-api
     name: Algolia Monitoring API
     tags:
-      - Search
       - Monitoring
+      - Search
     humanURL: https://www.algolia.com/doc/rest-api/monitoring/
     properties:
       - url: https://www.algolia.com/doc/rest-api/monitoring/
@@ -160,8 +158,8 @@ apis:
   - aid: algolia:algolia-query-suggestions-api
     name: Algolia Query Suggestions API
     tags:
-      - Search
       - Querieis
+      - Search
       - Suggestions
     humanURL: https://www.algolia.com/doc/rest-api/query-suggestions/
     properties:
@@ -179,8 +177,8 @@ apis:
   - aid: algolia:algolia-recommend-api
     name: Algolia Recommend API
     tags:
-      - Search
       - Recommendations
+      - Search
     humanURL: https://www.algolia.com/doc/rest-api/recommend/
     properties:
       - url: https://www.algolia.com/doc/rest-api/recommend/

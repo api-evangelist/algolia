@@ -26,30 +26,7 @@ security:
   - appId: []
     apiKey: []
 tags:
-  - name: click
-    x-displayName: Clicks
-    description: |
-      Metrics related to click and conversion events,
-      such as click and conversion rates for your search results.
-  - name: filter
-    x-displayName: Filters
-    description: |
-      Metrics related to filters.
-  - name: revenue
-    x-displayName: Revenue
-    description: |
-      Metrics related to revenue.
-  - name: search
-    x-displayName: Searches
-    description: |
-      Metrics related to searches and search results,
-      such as the no-results rate or the most frequent search queries.
-  - name: status
-    x-displayName: Status
-    description: Check the status of the Analytics API.
-  - name: user
-    x-displayName: Users
-    description: Metrics related to the users of your search.
+  - name: Analytics
 externalDocs:
   url: https://www.algolia.com/doc/guides/search-analytics/overview/
   description: |
@@ -79,9 +56,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - analytics
-        -   - Path
-            - Analytics
+        - Analytics
     post:
       operationId: customPost
       requestBody:
@@ -111,9 +86,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - analytics
-        -   - Path
-            - Analytics
+        - Analytics
     put:
       operationId: customPut
       requestBody:
@@ -143,9 +116,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - analytics
-        -   - Path
-            - Analytics
+        - Analytics
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -169,15 +140,11 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - analytics
-        -   - Path
-            - Analytics
+        - Analytics
   /2/searches:
     get:
       tags:
-        - analytics
-        -   - Searches
-            - Analytics
+        - Analytics
       operationId: getTopSearches
       x-acl:
         - analytics
@@ -267,10 +234,7 @@ paths:
   /2/searches/count:
     get:
       tags:
-        - analytics
-        -   - Searches
-            - Count
-            - Analytics
+        - Analytics
       operationId: getSearchesCount
       x-acl:
         - analytics
@@ -335,10 +299,7 @@ paths:
   /2/searches/noResults:
     get:
       tags:
-        - analytics
-        -   - Searches
-            - Results
-            - Analytics
+        - Analytics
       operationId: getSearchesNoResults
       x-acl:
         - analytics
@@ -399,10 +360,7 @@ paths:
   /2/searches/noClicks:
     get:
       tags:
-        - analytics
-        -   - Searches
-            - Clicks
-            - Analytics
+        - Analytics
       operationId: getSearchesNoClicks
       x-acl:
         - analytics
@@ -472,11 +430,7 @@ paths:
   /2/searches/noResultRate:
     get:
       tags:
-        - analytics
-        -   - Searches
-            - Result
-            - Rates
-            - Analytics
+        - Analytics
       operationId: getNoResultsRate
       x-acl:
         - analytics
@@ -556,11 +510,7 @@ paths:
   /2/searches/noClickRate:
     get:
       tags:
-        - analytics
-        -   - Searches
-            - Click
-            - Rates
-            - Analytics
+        - Analytics
       operationId: getNoClickRate
       x-acl:
         - analytics
@@ -640,8 +590,7 @@ paths:
   /2/hits:
     get:
       tags:
-        - analytics
-        -   - Analytics
+        - Analytics
       operationId: getTopHits
       x-acl:
         - analytics
@@ -729,10 +678,7 @@ paths:
   /2/users/count:
     get:
       tags:
-        - analytics
-        -   - Users
-            - Count
-            - Analytics
+        - Analytics
       operationId: getUsersCount
       x-acl:
         - analytics
@@ -814,8 +760,7 @@ paths:
   /2/filters:
     get:
       tags:
-        - analytics
-        -   - Analytics
+        - Analytics
       operationId: getTopFilterAttributes
       x-acl:
         - analytics
@@ -859,9 +804,7 @@ paths:
   /2/filters/{attribute}:
     get:
       tags:
-        - analytics
-        -   - Attributes
-            - Analytics
+        - Analytics
       operationId: getTopFilterForAttribute
       x-acl:
         - analytics
@@ -907,9 +850,7 @@ paths:
   /2/filters/noResults:
     get:
       tags:
-        - analytics
-        -   - Results
-            - Analytics
+        - Analytics
       operationId: getTopFiltersNoResults
       x-acl:
         - analytics
@@ -955,9 +896,7 @@ paths:
   /2/countries:
     get:
       tags:
-        - analytics
-        -   - Countries
-            - Analytics
+        - Analytics
       operationId: getTopCountries
       x-acl:
         - analytics
@@ -1017,12 +956,7 @@ paths:
   /2/clicks/averageClickPosition:
     get:
       tags:
-        - analytics
-        -   - Clicks
-            - Average
-            - Click
-            - Positions
-            - Analytics
+        - Analytics
       operationId: getAverageClickPosition
       x-acl:
         - analytics
@@ -1107,10 +1041,7 @@ paths:
   /2/clicks/positions:
     get:
       tags:
-        - analytics
-        -   - Clicks
-            - Positions
-            - Analytics
+        - Analytics
       operationId: getClickPositions
       x-acl:
         - analytics
@@ -1165,11 +1096,7 @@ paths:
   /2/clicks/clickThroughRate:
     get:
       tags:
-        - analytics
-        -   - Clicks
-            - Click
-            - Rate
-            - Analytics
+        - Analytics
       operationId: getClickThroughRate
       x-acl:
         - analytics
@@ -1258,10 +1185,7 @@ paths:
   /2/conversions/conversionRate:
     get:
       tags:
-        - analytics
-        -   - Conversions
-            - Rates
-            - Analytics
+        - Analytics
       operationId: getConversionRate
       x-acl:
         - analytics
@@ -1350,12 +1274,7 @@ paths:
   /2/conversions/addToCartRate:
     get:
       tags:
-        - analytics
-        -   - Conversions
-            - Add
-            - Cart
-            - Rates
-            - Analytics
+        - Analytics
       operationId: getAddToCartRate
       x-acl:
         - analytics
@@ -1454,11 +1373,7 @@ paths:
   /2/conversions/purchaseRate:
     get:
       tags:
-        - analytics
-        -   - Conversions
-            - Purchase
-            - Rates
-            - Analytics
+        - Analytics
       operationId: getPurchaseRate
       x-acl:
         - analytics
@@ -1557,10 +1472,7 @@ paths:
   /2/conversions/revenue:
     get:
       tags:
-        - analytics
-        -   - Conversions
-            - Revenue
-            - Analytics
+        - Analytics
       operationId: getRevenue
       x-acl:
         - analytics
@@ -1627,9 +1539,7 @@ paths:
   /2/status:
     get:
       tags:
-        - analytics
-        -   - Status
-            - Analytics
+        - Analytics
       operationId: getStatus
       x-acl:
         - analytics
@@ -1673,12 +1583,7 @@ paths:
       x-helper: true
       x-asynchronous-helper: false
       tags:
-        - analytics
-        -   - Set
-            - Client
-            - Apis
-            - Keys
-            - Analytics
+        - Analytics
       operationId: setClientApiKey
       summary: Algolia Switch the API key used to authenticate requests
       description: |

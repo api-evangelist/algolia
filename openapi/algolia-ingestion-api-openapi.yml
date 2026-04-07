@@ -24,45 +24,7 @@ security:
   - appId: []
     apiKey: []
 tags:
-  - name: authentications
-    x-displayName: Authentications
-    description: >-
-      Authentication resources describe how to connect to a source or
-      destination.
-  - name: destinations
-    x-displayName: Destinations
-    description: >
-      Destinations are Algolia products or features where your data should be
-      used, such as a search index or events.
-
-      Algolia destinations require authentication with the `algolia` type.
-
-      You can reference authentications by their ID when creating destinations.
-  - name: observability
-    x-displayName: Observability
-    description: >-
-      Check the status and details of your task runs. A run is one instance of a
-      configured task.
-  - name: sources
-    x-displayName: Sources
-    description: >
-      Sources are third-party platforms or services from where you want to
-      ingest your data.
-
-      Sources may require authentication. To interact with such sources, you can
-      reference an authentication resource by its ID.
-  - name: tasks
-    x-displayName: Tasks
-    description: >
-      Tasks contain information how your data should be read from a source and
-      stored in a destination.
-
-      Tasks have _triggers_ which determine when the task should run.
-  - name: transformations
-    x-displayName: Transformations
-    description: >
-      Transformations allows you to transform a record before it gets indexed in
-      Algolia.
+  - name: Ingestion
 paths:
   /{path}:
     get:
@@ -88,7 +50,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - ingestion
+        - Ingestion
     post:
       operationId: customPost
       requestBody:
@@ -118,7 +80,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - ingestion
+        - Ingestion
     put:
       operationId: customPut
       requestBody:
@@ -148,7 +110,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - ingestion
+        - Ingestion
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -172,11 +134,11 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-        - ingestion
+        - Ingestion
   /1/authentications:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia List authentication resources
       description: Retrieves a list of all authentication resources.
       operationId: listAuthentications
@@ -214,7 +176,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Create an authentication resource
       description: Creates a new authentication resource.
       operationId: createAuthentication
@@ -241,7 +203,7 @@ paths:
   /1/authentications/search:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Search for authentication resources
       description: Searches for authentication resources.
       operationId: searchAuthentications
@@ -270,7 +232,7 @@ paths:
   /1/authentications/{authenticationID}:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Retrieve an authentication resource
       description: Retrieves an authentication resource by its ID.
       operationId: getAuthentication
@@ -291,7 +253,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     patch:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Update an authentication resource
       description: Updates an authentication resource.
       operationId: updateAuthentication
@@ -318,7 +280,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     delete:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Delete an authentication resource
       description: >-
         Deletes an authentication resource. You can't delete authentication
@@ -342,7 +304,7 @@ paths:
   /1/destinations:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia List destinations
       description: Retrieves a list of destinations.
       operationId: listDestinations
@@ -381,7 +343,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Create a destination
       description: Creates a new destination.
       operationId: createDestination
@@ -408,7 +370,7 @@ paths:
   /1/destinations/search:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Search for destinations
       description: Searches for destinations.
       operationId: searchDestinations
@@ -437,7 +399,7 @@ paths:
   /1/destinations/{destinationID}:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Retrieve a destination
       description: Retrieves a destination by its ID.
       operationId: getDestination
@@ -458,7 +420,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     patch:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Update a destination
       description: Updates the destination by its ID.
       operationId: updateDestination
@@ -485,7 +447,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     delete:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Delete a destination
       description: >-
         Deletes a destination by its ID. You can't delete destinations that are
@@ -509,7 +471,7 @@ paths:
   /1/sources:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia List sources
       description: Retrieves a list of sources.
       operationId: listSources
@@ -547,7 +509,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Create a source
       description: Creates a new source.
       operationId: createSource
@@ -574,7 +536,7 @@ paths:
   /1/sources/validate:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Validates a source payload
       description: >
         Validates a source payload to ensure it can be created and that the data
@@ -606,7 +568,7 @@ paths:
   /1/sources/search:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Search for sources
       description: Searches for sources.
       operationId: searchSources
@@ -635,7 +597,7 @@ paths:
   /1/sources/{sourceID}:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Retrieve a source
       description: Retrieve a source by its ID.
       operationId: getSource
@@ -656,7 +618,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     patch:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Update a source
       description: Updates a source by its ID.
       operationId: updateSource
@@ -683,7 +645,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     delete:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Delete a source
       description: >-
         Deletes a source by its ID. You can't delete sources that are referenced
@@ -707,7 +669,7 @@ paths:
   /1/sources/{sourceID}/validate:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Validates an update of a source payload
       description: >
         Validates an update of a source payload to ensure it can be created and
@@ -741,7 +703,7 @@ paths:
   /1/sources/{sourceID}/discover:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Trigger a stream-listing request
       description: >
         Triggers a stream-listing request for a source.
@@ -771,7 +733,7 @@ paths:
   /1/sources/{sourceID}/run:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Run all tasks linked to a source
       description: >-
         Runs all tasks linked to a source, only available for Shopify sources.
@@ -815,7 +777,7 @@ paths:
   /2/tasks:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia List tasks
       description: Retrieves a list of tasks.
       operationId: listTasks
@@ -859,7 +821,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Create a task
       description: Creates a new task.
       operationId: createTask
@@ -882,7 +844,7 @@ paths:
   /2/tasks/search:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Search for tasks
       description: Searches for tasks.
       operationId: searchTasks
@@ -911,7 +873,7 @@ paths:
   /2/tasks/{taskID}:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Retrieve a task
       description: Retrieves a task by its ID.
       operationId: getTask
@@ -932,7 +894,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     patch:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Update a task
       description: Updates a task by its ID.
       operationId: updateTask
@@ -955,7 +917,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     delete:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Delete a task
       description: Deletes a task by its ID.
       operationId: deleteTask
@@ -973,7 +935,7 @@ paths:
   /2/tasks/{taskID}/run:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Run a task
       description: >-
         Runs a task. You can check the status of task runs with the
@@ -997,7 +959,7 @@ paths:
   /2/tasks/{taskID}/push:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Push a `batch` request payload through the Pipeline
       description: >-
         Push a `batch` request payload through the Pipeline. You can check the
@@ -1060,7 +1022,7 @@ paths:
   /2/tasks/{taskID}/enable:
     put:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Enable a task
       description: Enables a task.
       operationId: enableTask
@@ -1082,7 +1044,7 @@ paths:
   /2/tasks/{taskID}/disable:
     put:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Disable a task
       description: Disables a task.
       operationId: disableTask
@@ -1104,7 +1066,7 @@ paths:
   /1/tasks:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia List tasks V1
       description: >-
         Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
@@ -1149,7 +1111,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Create a task V1
       description: >-
         Creates a new task using the v1 endpoint, please use `createTask`
@@ -1176,7 +1138,7 @@ paths:
   /1/tasks/search:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Search for tasks V1
       description: >-
         Searches for tasks using the v1 endpoint, please use `searchTasks`
@@ -1208,7 +1170,7 @@ paths:
   /1/tasks/{taskID}:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Retrieve a task V1
       description: >-
         Retrieves a task by its ID using the v1 endpoint, please use `getTask`
@@ -1232,7 +1194,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     patch:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Update a task V1
       description: >-
         Updates a task by its ID using the v1 endpoint, please use `updateTask`
@@ -1259,7 +1221,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     delete:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Delete a task
       description: >-
         Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
@@ -1280,7 +1242,7 @@ paths:
   /1/tasks/{taskID}/run:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Run a task V1
       description: >-
         Runs a task using the v1 endpoint, please use `runTask` instead. You can
@@ -1305,7 +1267,7 @@ paths:
   /1/tasks/{taskID}/enable:
     put:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Enable a task V1
       description: Enables a task using the v1 endpoint, please use `enableTask` instead.
       operationId: enableTaskV1
@@ -1328,7 +1290,7 @@ paths:
   /1/tasks/{taskID}/disable:
     put:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Disable a task V1
       description: Disables a task using the v1 endpoint, please use `disableTask` instead.
       operationId: disableTaskV1
@@ -1351,7 +1313,7 @@ paths:
   /1/transformations:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia List transformations
       description: Retrieves a list of transformations.
       operationId: listTransformations
@@ -1388,7 +1350,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Create a transformation
       description: Creates a new transformation.
       operationId: createTransformation
@@ -1411,7 +1373,7 @@ paths:
   /1/transformations/try:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Try a transformation before creating it
       description: Try a transformation before creating it.
       operationId: tryTransformation
@@ -1437,7 +1399,7 @@ paths:
   /1/transformations/search:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Search for transformations
       description: Searches for transformations.
       operationId: searchTransformations
@@ -1466,7 +1428,7 @@ paths:
   /1/transformations/{transformationID}:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Retrieve a transformation
       description: Retrieves a transformation by its ID.
       operationId: getTransformation
@@ -1487,7 +1449,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     put:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Update a transformation
       description: Updates a transformation by its ID.
       operationId: updateTransformation
@@ -1510,7 +1472,7 @@ paths:
           $ref: '#/components/responses/BadRequest'
     delete:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Delete a transformation
       description: Deletes a transformation by its ID.
       operationId: deleteTransformation
@@ -1528,7 +1490,7 @@ paths:
   /1/transformations/{transformationID}/try:
     post:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Try a transformation before updating it
       description: Try a transformation before updating it.
       operationId: tryTransformationBeforeUpdate
@@ -1556,7 +1518,7 @@ paths:
   /1/runs:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia List task runs
       description: Retrieve a list of task runs.
       operationId: listRuns
@@ -1598,7 +1560,7 @@ paths:
   /1/runs/{runID}:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Retrieve a task run
       description: Retrieve a single task run by its ID.
       operationId: getRun
@@ -1620,7 +1582,7 @@ paths:
   /1/runs/{runID}/events:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia List task run events
       description: Retrieves a list of events for a task run, identified by its ID.
       operationId: listEvents
@@ -1677,7 +1639,7 @@ paths:
   /1/runs/{runID}/events/{eventID}:
     get:
       tags:
-        - ingestion
+        - Ingestion
       summary: Algolia Retrieve a task run event
       description: Retrieves a single task run event by its ID.
       operationId: getEvent
@@ -1702,7 +1664,7 @@ paths:
       x-helper: true
       x-asynchronous-helper: false
       tags:
-        - ingestion
+        - Ingestion
       operationId: setClientApiKey
       summary: Algolia Switch the API key used to authenticate requests
       description: |
