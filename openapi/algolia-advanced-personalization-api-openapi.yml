@@ -80,7 +80,7 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - advanced-personalization
-        - - Path
+        -   - Path
     post:
       operationId: customPost
       requestBody:
@@ -111,7 +111,7 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - advanced-personalization
-        - - Path
+        -   - Path
     put:
       operationId: customPut
       requestBody:
@@ -142,7 +142,7 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - advanced-personalization
-        - - Path
+        -   - Path
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -167,7 +167,7 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - advanced-personalization
-        - - Path
+        -   - Path
   /2/config:
     get:
       tags:
@@ -178,7 +178,7 @@ paths:
         - search
         - browse
         - recommendation
-      summary: Retrieve the configuration
+      summary: Algolia Retrieve the configuration
       description: Retrieves a list of configuration objects for each index.
       responses:
         '200':
@@ -200,7 +200,7 @@ paths:
         - search
         - browse
         - recommendation
-      summary: Update the configuration
+      summary: Algolia Update the configuration
       description: >
         Updates the configuration.
 
@@ -286,13 +286,13 @@ paths:
     get:
       tags:
         - advanced-personalization
-        - - Users
+        -   - Users
       operationId: getUsers
       x-acl:
         - search
         - browse
         - recommendation
-      summary: Get a list of user profiles
+      summary: Algolia Get a list of user profiles
       description: >-
         Retrieves a list of user profiles in [lexicographical
         order](https://www.educative.io/answers/what-is-a-lexicographic-order).
@@ -333,14 +333,14 @@ paths:
     get:
       tags:
         - advanced-personalization
-        - - Users
-          - Advanced-personalization
+        -   - Users
+            - Advanced-personalization
       operationId: getUser
       x-acl:
         - search
         - browse
         - recommendation
-      summary: Get a user profile
+      summary: Algolia Get a user profile
       description: Retrieves a user profile.
       parameters:
         - $ref: '#/components/parameters/userID'
@@ -364,14 +364,14 @@ paths:
     delete:
       tags:
         - advanced-personalization
-        - - Users
-          - Advanced-personalization
+        -   - Users
+            - Advanced-personalization
       operationId: deleteUser
       x-acl:
         - search
         - browse
         - recommendation
-      summary: Delete a user profile
+      summary: Algolia Delete a user profile
       description: Deletes a user profile.
       parameters:
         - $ref: '#/components/parameters/userID'

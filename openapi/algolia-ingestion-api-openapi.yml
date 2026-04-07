@@ -177,7 +177,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List authentication resources
+      summary: Algolia List authentication resources
       description: Retrieves a list of all authentication resources.
       operationId: listAuthentications
       x-acl:
@@ -215,7 +215,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Create an authentication resource
+      summary: Algolia Create an authentication resource
       description: Creates a new authentication resource.
       operationId: createAuthentication
       x-acl:
@@ -242,7 +242,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for authentication resources
+      summary: Algolia Search for authentication resources
       description: Searches for authentication resources.
       operationId: searchAuthentications
       x-acl:
@@ -271,7 +271,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve an authentication resource
+      summary: Algolia Retrieve an authentication resource
       description: Retrieves an authentication resource by its ID.
       operationId: getAuthentication
       x-acl:
@@ -292,7 +292,7 @@ paths:
     patch:
       tags:
         - ingestion
-      summary: Update an authentication resource
+      summary: Algolia Update an authentication resource
       description: Updates an authentication resource.
       operationId: updateAuthentication
       x-acl:
@@ -319,7 +319,7 @@ paths:
     delete:
       tags:
         - ingestion
-      summary: Delete an authentication resource
+      summary: Algolia Delete an authentication resource
       description: >-
         Deletes an authentication resource. You can't delete authentication
         resources that are used by a source or a destination.
@@ -343,7 +343,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List destinations
+      summary: Algolia List destinations
       description: Retrieves a list of destinations.
       operationId: listDestinations
       x-acl:
@@ -382,7 +382,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Create a destination
+      summary: Algolia Create a destination
       description: Creates a new destination.
       operationId: createDestination
       x-acl:
@@ -409,7 +409,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for destinations
+      summary: Algolia Search for destinations
       description: Searches for destinations.
       operationId: searchDestinations
       x-acl:
@@ -438,7 +438,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a destination
+      summary: Algolia Retrieve a destination
       description: Retrieves a destination by its ID.
       operationId: getDestination
       x-acl:
@@ -459,7 +459,7 @@ paths:
     patch:
       tags:
         - ingestion
-      summary: Update a destination
+      summary: Algolia Update a destination
       description: Updates the destination by its ID.
       operationId: updateDestination
       x-acl:
@@ -486,7 +486,7 @@ paths:
     delete:
       tags:
         - ingestion
-      summary: Delete a destination
+      summary: Algolia Delete a destination
       description: >-
         Deletes a destination by its ID. You can't delete destinations that are
         referenced in tasks.
@@ -510,7 +510,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List sources
+      summary: Algolia List sources
       description: Retrieves a list of sources.
       operationId: listSources
       x-acl:
@@ -548,7 +548,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Create a source
+      summary: Algolia Create a source
       description: Creates a new source.
       operationId: createSource
       x-acl:
@@ -575,7 +575,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Validates a source payload
+      summary: Algolia Validates a source payload
       description: >
         Validates a source payload to ensure it can be created and that the data
         source can be reached by Algolia.
@@ -607,7 +607,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for sources
+      summary: Algolia Search for sources
       description: Searches for sources.
       operationId: searchSources
       x-acl:
@@ -636,7 +636,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a source
+      summary: Algolia Retrieve a source
       description: Retrieve a source by its ID.
       operationId: getSource
       x-acl:
@@ -657,7 +657,7 @@ paths:
     patch:
       tags:
         - ingestion
-      summary: Update a source
+      summary: Algolia Update a source
       description: Updates a source by its ID.
       operationId: updateSource
       x-acl:
@@ -684,7 +684,7 @@ paths:
     delete:
       tags:
         - ingestion
-      summary: Delete a source
+      summary: Algolia Delete a source
       description: >-
         Deletes a source by its ID. You can't delete sources that are referenced
         in tasks.
@@ -708,7 +708,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Validates an update of a source payload
+      summary: Algolia Validates an update of a source payload
       description: >
         Validates an update of a source payload to ensure it can be created and
         that the data source can be reached by Algolia.
@@ -742,7 +742,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Trigger a stream-listing request
+      summary: Algolia Trigger a stream-listing request
       description: >
         Triggers a stream-listing request for a source.
 
@@ -772,7 +772,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Run all tasks linked to a source
+      summary: Algolia Run all tasks linked to a source
       description: >-
         Runs all tasks linked to a source, only available for Shopify sources.
         It will create 1 run per task.
@@ -816,7 +816,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List tasks
+      summary: Algolia List tasks
       description: Retrieves a list of tasks.
       operationId: listTasks
       x-acl:
@@ -860,7 +860,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Create a task
+      summary: Algolia Create a task
       description: Creates a new task.
       operationId: createTask
       requestBody:
@@ -883,7 +883,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for tasks
+      summary: Algolia Search for tasks
       description: Searches for tasks.
       operationId: searchTasks
       x-acl:
@@ -912,7 +912,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a task
+      summary: Algolia Retrieve a task
       description: Retrieves a task by its ID.
       operationId: getTask
       x-acl:
@@ -933,7 +933,7 @@ paths:
     patch:
       tags:
         - ingestion
-      summary: Update a task
+      summary: Algolia Update a task
       description: Updates a task by its ID.
       operationId: updateTask
       parameters:
@@ -956,7 +956,7 @@ paths:
     delete:
       tags:
         - ingestion
-      summary: Delete a task
+      summary: Algolia Delete a task
       description: Deletes a task by its ID.
       operationId: deleteTask
       parameters:
@@ -974,7 +974,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Run a task
+      summary: Algolia Run a task
       description: >-
         Runs a task. You can check the status of task runs with the
         observability endpoints.
@@ -998,7 +998,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Push a `batch` request payload through the Pipeline
+      summary: Algolia Push a `batch` request payload through the Pipeline
       description: >-
         Push a `batch` request payload through the Pipeline. You can check the
         status of task pushes with the observability endpoints.
@@ -1061,7 +1061,7 @@ paths:
     put:
       tags:
         - ingestion
-      summary: Enable a task
+      summary: Algolia Enable a task
       description: Enables a task.
       operationId: enableTask
       x-acl:
@@ -1083,7 +1083,7 @@ paths:
     put:
       tags:
         - ingestion
-      summary: Disable a task
+      summary: Algolia Disable a task
       description: Disables a task.
       operationId: disableTask
       x-acl:
@@ -1105,7 +1105,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List tasks V1
+      summary: Algolia List tasks V1
       description: >-
         Retrieves a list of tasks using the v1 endpoint, please use `getTasks`
         instead.
@@ -1150,7 +1150,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Create a task V1
+      summary: Algolia Create a task V1
       description: >-
         Creates a new task using the v1 endpoint, please use `createTask`
         instead.
@@ -1177,7 +1177,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for tasks V1
+      summary: Algolia Search for tasks V1
       description: >-
         Searches for tasks using the v1 endpoint, please use `searchTasks`
         instead.
@@ -1209,7 +1209,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a task V1
+      summary: Algolia Retrieve a task V1
       description: >-
         Retrieves a task by its ID using the v1 endpoint, please use `getTask`
         instead.
@@ -1233,7 +1233,7 @@ paths:
     patch:
       tags:
         - ingestion
-      summary: Update a task V1
+      summary: Algolia Update a task V1
       description: >-
         Updates a task by its ID using the v1 endpoint, please use `updateTask`
         instead.
@@ -1260,7 +1260,7 @@ paths:
     delete:
       tags:
         - ingestion
-      summary: Delete a task
+      summary: Algolia Delete a task
       description: >-
         Deletes a task by its ID using the v1 endpoint, please use `deleteTask`
         instead.
@@ -1281,7 +1281,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Run a task V1
+      summary: Algolia Run a task V1
       description: >-
         Runs a task using the v1 endpoint, please use `runTask` instead. You can
         check the status of task runs with the observability endpoints.
@@ -1306,7 +1306,7 @@ paths:
     put:
       tags:
         - ingestion
-      summary: Enable a task V1
+      summary: Algolia Enable a task V1
       description: Enables a task using the v1 endpoint, please use `enableTask` instead.
       operationId: enableTaskV1
       deprecated: true
@@ -1329,7 +1329,7 @@ paths:
     put:
       tags:
         - ingestion
-      summary: Disable a task V1
+      summary: Algolia Disable a task V1
       description: Disables a task using the v1 endpoint, please use `disableTask` instead.
       operationId: disableTaskV1
       deprecated: true
@@ -1352,7 +1352,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List transformations
+      summary: Algolia List transformations
       description: Retrieves a list of transformations.
       operationId: listTransformations
       x-acl:
@@ -1389,7 +1389,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Create a transformation
+      summary: Algolia Create a transformation
       description: Creates a new transformation.
       operationId: createTransformation
       requestBody:
@@ -1412,7 +1412,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Try a transformation before creating it
+      summary: Algolia Try a transformation before creating it
       description: Try a transformation before creating it.
       operationId: tryTransformation
       x-acl:
@@ -1438,7 +1438,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Search for transformations
+      summary: Algolia Search for transformations
       description: Searches for transformations.
       operationId: searchTransformations
       x-acl:
@@ -1467,7 +1467,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a transformation
+      summary: Algolia Retrieve a transformation
       description: Retrieves a transformation by its ID.
       operationId: getTransformation
       x-acl:
@@ -1488,7 +1488,7 @@ paths:
     put:
       tags:
         - ingestion
-      summary: Update a transformation
+      summary: Algolia Update a transformation
       description: Updates a transformation by its ID.
       operationId: updateTransformation
       parameters:
@@ -1511,7 +1511,7 @@ paths:
     delete:
       tags:
         - ingestion
-      summary: Delete a transformation
+      summary: Algolia Delete a transformation
       description: Deletes a transformation by its ID.
       operationId: deleteTransformation
       parameters:
@@ -1529,7 +1529,7 @@ paths:
     post:
       tags:
         - ingestion
-      summary: Try a transformation before updating it
+      summary: Algolia Try a transformation before updating it
       description: Try a transformation before updating it.
       operationId: tryTransformationBeforeUpdate
       x-acl:
@@ -1557,7 +1557,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List task runs
+      summary: Algolia List task runs
       description: Retrieve a list of task runs.
       operationId: listRuns
       x-acl:
@@ -1599,7 +1599,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a task run
+      summary: Algolia Retrieve a task run
       description: Retrieve a single task run by its ID.
       operationId: getRun
       x-acl:
@@ -1621,7 +1621,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: List task run events
+      summary: Algolia List task run events
       description: Retrieves a list of events for a task run, identified by its ID.
       operationId: listEvents
       x-acl:
@@ -1678,7 +1678,7 @@ paths:
     get:
       tags:
         - ingestion
-      summary: Retrieve a task run event
+      summary: Algolia Retrieve a task run event
       description: Retrieves a single task run event by its ID.
       operationId: getEvent
       x-acl:
@@ -1704,7 +1704,7 @@ paths:
       tags:
         - ingestion
       operationId: setClientApiKey
-      summary: Switch the API key used to authenticate requests
+      summary: Algolia Switch the API key used to authenticate requests
       description: |
         Switch the API key used to authenticate requests.
       parameters:
@@ -2103,7 +2103,7 @@ components:
         - algoliaInsights
         - secrets
     Platform:
-      default: null
+      default:
       oneOf:
         - type: string
           description: |

@@ -163,7 +163,7 @@ paths:
       operationId: getUserTokenProfile
       x-acl:
         - recommendation
-      summary: Retrieve a user profile
+      summary: Algolia Retrieve a user profile
       description: Retrieves a user profile and their affinities for different facets.
       parameters:
         - $ref: '#/components/parameters/UserToken'
@@ -213,7 +213,7 @@ paths:
       operationId: deleteUserProfile
       x-acl:
         - recommendation
-      summary: Delete a user profile
+      summary: Algolia Delete a user profile
       description: >
         Deletes a user profile.
 
@@ -260,7 +260,7 @@ paths:
       operationId: getPersonalizationStrategy
       x-acl:
         - recommendation
-      summary: Retrieve the personalization strategy
+      summary: Algolia Retrieve the personalization strategy
       description: Retrieves the current personalization strategy.
       responses:
         '200':
@@ -283,7 +283,7 @@ paths:
       operationId: setPersonalizationStrategy
       x-acl:
         - recommendation
-      summary: Define the personalization strategy
+      summary: Algolia Define the personalization strategy
       description: Creates a new personalization strategy.
       requestBody:
         required: true
@@ -322,7 +322,7 @@ paths:
       tags:
         - personalization
       operationId: setClientApiKey
-      summary: Switch the API key used to authenticate requests
+      summary: Algolia Switch the API key used to authenticate requests
       description: |
         Switch the API key used to authenticate requests.
       parameters:

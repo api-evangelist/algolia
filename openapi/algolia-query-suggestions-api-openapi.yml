@@ -154,7 +154,7 @@ paths:
       operationId: getAllConfigs
       x-acl:
         - settings
-      summary: List configurations
+      summary: Algolia List configurations
       description: >-
         Retrieves all Query Suggestions configurations of your Algolia
         application.
@@ -175,7 +175,7 @@ paths:
       operationId: createConfig
       x-acl:
         - editSettings
-      summary: Create a configuration
+      summary: Algolia Create a configuration
       description: |
         Creates a new Query Suggestions configuration.
 
@@ -216,7 +216,7 @@ paths:
       operationId: getConfig
       x-acl:
         - settings
-      summary: Retrieve a configuration
+      summary: Algolia Retrieve a configuration
       description: Retrieves a single Query Suggestions configuration by its index name.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -239,7 +239,7 @@ paths:
       operationId: updateConfig
       x-acl:
         - editSettings
-      summary: Update a configuration
+      summary: Algolia Update a configuration
       description: Updates a QuerySuggestions configuration.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -274,7 +274,7 @@ paths:
       operationId: deleteConfig
       x-acl:
         - editSettings
-      summary: Delete a configuration
+      summary: Algolia Delete a configuration
       description: >
         Deletes a Query Suggestions configuration.
 
@@ -310,7 +310,7 @@ paths:
       operationId: getConfigStatus
       x-acl:
         - settings
-      summary: Retrieve configuration status
+      summary: Algolia Retrieve configuration status
       description: Reports the status of a Query Suggestions index.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -359,7 +359,7 @@ paths:
       operationId: getLogFile
       x-acl:
         - settings
-      summary: Retrieve logs
+      summary: Algolia Retrieve logs
       description: Retrieves the logs for a single Query Suggestions index.
       parameters:
         - $ref: '#/components/parameters/IndexName'
@@ -407,7 +407,7 @@ paths:
       tags:
         - query-suggestions
       operationId: setClientApiKey
-      summary: Switch the API key used to authenticate requests
+      summary: Algolia Switch the API key used to authenticate requests
       description: |
         Switch the API key used to authenticate requests.
       parameters:
@@ -492,7 +492,7 @@ components:
 
         For more information, see [Segment your analytics
         data](https://www.algolia.com/doc/guides/search-analytics/guides/segments/).
-      default: null
+      default:
       oneOf:
         - type: array
           items:
@@ -516,7 +516,7 @@ components:
 
         If provided, Query Suggestions adds the top facet values to each
         suggestion.
-      default: null
+      default:
       oneOf:
         - type: array
           items:
@@ -540,7 +540,7 @@ components:
 
 
         You can include nested lists.
-      default: null
+      default:
       oneOf:
         - type: array
           items:
@@ -549,8 +549,8 @@ components:
               type: string
         - type: 'null'
       example:
-        - - color
-          - brand
+        -   - color
+            - brand
     External:
       description: >
         Algolia indices with popular searches to use as query suggestions.
@@ -571,7 +571,7 @@ components:
 
         You can use this index to generate query suggestions until your Algolia
         Analytics has collected enough data.
-      default: null
+      default:
       oneOf:
         - type: array
           items:
@@ -643,7 +643,7 @@ components:
     Exclude:
       title: exclude
       description: Words or regular expressions to exclude from the suggestions.
-      default: null
+      default:
       oneOf:
         - type: array
           items:

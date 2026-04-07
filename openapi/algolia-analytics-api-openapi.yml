@@ -80,8 +80,8 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - analytics
-        - - Path
-          - Analytics
+        -   - Path
+            - Analytics
     post:
       operationId: customPost
       requestBody:
@@ -112,8 +112,8 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - analytics
-        - - Path
-          - Analytics
+        -   - Path
+            - Analytics
     put:
       operationId: customPut
       requestBody:
@@ -144,8 +144,8 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - analytics
-        - - Path
-          - Analytics
+        -   - Path
+            - Analytics
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -170,18 +170,18 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
       tags:
         - analytics
-        - - Path
-          - Analytics
+        -   - Path
+            - Analytics
   /2/searches:
     get:
       tags:
         - analytics
-        - - Searches
-          - Analytics
+        -   - Searches
+            - Analytics
       operationId: getTopSearches
       x-acl:
         - analytics
-      summary: Retrieve top searches
+      summary: Algolia Retrieve top searches
       description: >
         Returns the most popular searches. For each search, it also includes the
         average number of hits.
@@ -268,13 +268,13 @@ paths:
     get:
       tags:
         - analytics
-        - - Searches
-          - Count
-          - Analytics
+        -   - Searches
+            - Count
+            - Analytics
       operationId: getSearchesCount
       x-acl:
         - analytics
-      summary: Retrieve number of searches
+      summary: Algolia Retrieve number of searches
       description: >
         Retrieves the number of searches within a time range, including a daily
         breakdown.
@@ -336,13 +336,13 @@ paths:
     get:
       tags:
         - analytics
-        - - Searches
-          - Results
-          - Analytics
+        -   - Searches
+            - Results
+            - Analytics
       operationId: getSearchesNoResults
       x-acl:
         - analytics
-      summary: Retrieve the most frequent searches without results
+      summary: Algolia Retrieve the most frequent searches without results
       description: Retrieves the 1,000 most frequent searches that produced zero results.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -400,13 +400,13 @@ paths:
     get:
       tags:
         - analytics
-        - - Searches
-          - Clicks
-          - Analytics
+        -   - Searches
+            - Clicks
+            - Analytics
       operationId: getSearchesNoClicks
       x-acl:
         - analytics
-      summary: Retrieve top searches without clicks
+      summary: Algolia Retrieve top searches without clicks
       description: >
         Retrieves the most popular searches that didn't lead to any clicks, from
         the 1,000 most frequent searches.
@@ -473,14 +473,14 @@ paths:
     get:
       tags:
         - analytics
-        - - Searches
-          - Result
-          - Rates
-          - Analytics
+        -   - Searches
+            - Result
+            - Rates
+            - Analytics
       operationId: getNoResultsRate
       x-acl:
         - analytics
-      summary: Retrieve no results rate
+      summary: Algolia Retrieve no results rate
       description: >
         Retrieves the fraction of searches that didn't return any results within
         a time range, including a daily breakdown.
@@ -557,14 +557,14 @@ paths:
     get:
       tags:
         - analytics
-        - - Searches
-          - Click
-          - Rates
-          - Analytics
+        -   - Searches
+            - Click
+            - Rates
+            - Analytics
       operationId: getNoClickRate
       x-acl:
         - analytics
-      summary: Retrieve no click rate
+      summary: Algolia Retrieve no click rate
       description: >
         Retrieves the fraction of searches that didn't lead to any click within
         a time range, including a daily breakdown.
@@ -641,11 +641,11 @@ paths:
     get:
       tags:
         - analytics
-        - - Analytics
+        -   - Analytics
       operationId: getTopHits
       x-acl:
         - analytics
-      summary: Retrieve top search results
+      summary: Algolia Retrieve top search results
       description: >
         Retrieves the object IDs of the 1,000 most frequent search results.
 
@@ -730,13 +730,13 @@ paths:
     get:
       tags:
         - analytics
-        - - Users
-          - Count
-          - Analytics
+        -   - Users
+            - Count
+            - Analytics
       operationId: getUsersCount
       x-acl:
         - analytics
-      summary: Retrieve number of users
+      summary: Algolia Retrieve number of users
       description: >
         Retrieves the number of unique users within a time range, including a
         daily breakdown.
@@ -815,11 +815,11 @@ paths:
     get:
       tags:
         - analytics
-        - - Analytics
+        -   - Analytics
       operationId: getTopFilterAttributes
       x-acl:
         - analytics
-      summary: Retrieve top filters
+      summary: Algolia Retrieve top filters
       description: >
         Retrieves the 1,000 most frequently used filter attributes.
 
@@ -860,12 +860,12 @@ paths:
     get:
       tags:
         - analytics
-        - - Attributes
-          - Analytics
+        -   - Attributes
+            - Analytics
       operationId: getTopFilterForAttribute
       x-acl:
         - analytics
-      summary: Retrieve top filter values
+      summary: Algolia Retrieve top filter values
       description: >
         Retrieves the 1,000 most frequent filter (facet) values for a filter
         attribute.
@@ -908,12 +908,12 @@ paths:
     get:
       tags:
         - analytics
-        - - Results
-          - Analytics
+        -   - Results
+            - Analytics
       operationId: getTopFiltersNoResults
       x-acl:
         - analytics
-      summary: Retrieve top filters for a search without results
+      summary: Algolia Retrieve top filters for a search without results
       description: >
         Retrieves the 1,000 most frequently used filters for a search that
         didn't return any results.
@@ -956,12 +956,12 @@ paths:
     get:
       tags:
         - analytics
-        - - Countries
-          - Analytics
+        -   - Countries
+            - Analytics
       operationId: getTopCountries
       x-acl:
         - analytics
-      summary: Retrieve top countries
+      summary: Algolia Retrieve top countries
       description: Retrieves the countries with the most searches in your index.
       parameters:
         - $ref: '#/components/parameters/Index'
@@ -1018,15 +1018,15 @@ paths:
     get:
       tags:
         - analytics
-        - - Clicks
-          - Average
-          - Click
-          - Positions
-          - Analytics
+        -   - Clicks
+            - Average
+            - Click
+            - Positions
+            - Analytics
       operationId: getAverageClickPosition
       x-acl:
         - analytics
-      summary: Retrieve average click position
+      summary: Algolia Retrieve average click position
       description: >
         Retrieves the average click position of your search results, including a
         daily breakdown.
@@ -1108,13 +1108,13 @@ paths:
     get:
       tags:
         - analytics
-        - - Clicks
-          - Positions
-          - Analytics
+        -   - Clicks
+            - Positions
+            - Analytics
       operationId: getClickPositions
       x-acl:
         - analytics
-      summary: Retrieve click positions
+      summary: Algolia Retrieve click positions
       description: >
         Retrieves the positions in the search results and their associated
         number of clicks.
@@ -1166,14 +1166,14 @@ paths:
     get:
       tags:
         - analytics
-        - - Clicks
-          - Click
-          - Rate
-          - Analytics
+        -   - Clicks
+            - Click
+            - Rate
+            - Analytics
       operationId: getClickThroughRate
       x-acl:
         - analytics
-      summary: Retrieve click-through rate
+      summary: Algolia Retrieve click-through rate
       description: >
         Retrieves the click-through rate (CTR) for all your searches with at
         least one click event, including a daily breakdown.
@@ -1259,13 +1259,13 @@ paths:
     get:
       tags:
         - analytics
-        - - Conversions
-          - Rates
-          - Analytics
+        -   - Conversions
+            - Rates
+            - Analytics
       operationId: getConversionRate
       x-acl:
         - analytics
-      summary: Retrieve conversion rate
+      summary: Algolia Retrieve conversion rate
       description: >
         Retrieves the conversion rate (CR) for all your searches with at least
         one conversion event, including a daily breakdown.
@@ -1351,15 +1351,15 @@ paths:
     get:
       tags:
         - analytics
-        - - Conversions
-          - Add
-          - Cart
-          - Rates
-          - Analytics
+        -   - Conversions
+            - Add
+            - Cart
+            - Rates
+            - Analytics
       operationId: getAddToCartRate
       x-acl:
         - analytics
-      summary: Retrieve add-to-cart rate
+      summary: Algolia Retrieve add-to-cart rate
       description: >
         Retrieves the add-to-cart rate for all your searches with at least one
         add-to-cart event, including a daily breakdown.
@@ -1455,14 +1455,14 @@ paths:
     get:
       tags:
         - analytics
-        - - Conversions
-          - Purchase
-          - Rates
-          - Analytics
+        -   - Conversions
+            - Purchase
+            - Rates
+            - Analytics
       operationId: getPurchaseRate
       x-acl:
         - analytics
-      summary: Retrieve purchase rate
+      summary: Algolia Retrieve purchase rate
       description: >
         Retrieves the purchase rate for all your searches with at least one
         purchase event, including a daily breakdown.
@@ -1558,13 +1558,13 @@ paths:
     get:
       tags:
         - analytics
-        - - Conversions
-          - Revenue
-          - Analytics
+        -   - Conversions
+            - Revenue
+            - Analytics
       operationId: getRevenue
       x-acl:
         - analytics
-      summary: Retrieve revenue data
+      summary: Algolia Retrieve revenue data
       description: >
         Retrieves revenue-related metrics, such as the total revenue or the
         average order value.
@@ -1628,12 +1628,12 @@ paths:
     get:
       tags:
         - analytics
-        - - Status
-          - Analytics
+        -   - Status
+            - Analytics
       operationId: getStatus
       x-acl:
         - analytics
-      summary: Retrieve update status
+      summary: Algolia Retrieve update status
       description: >
         Retrieves the time when the Analytics data for the specified index was
         last updated.
@@ -1674,13 +1674,13 @@ paths:
       x-asynchronous-helper: false
       tags:
         - analytics
-        - - Set
-          - Client
-          - Apis
-          - Keys
-          - Analytics
+        -   - Set
+            - Client
+            - Apis
+            - Keys
+            - Analytics
       operationId: setClientApiKey
-      summary: Switch the API key used to authenticate requests
+      summary: Algolia Switch the API key used to authenticate requests
       description: |
         Switch the API key used to authenticate requests.
       parameters:
@@ -1914,7 +1914,7 @@ components:
       nullable: true
       minimum: 0
       maximum: 1
-      default: null
+      default:
       example: 0.49
     averageClickPosition:
       type: number
@@ -1928,7 +1928,7 @@ components:
       nullable: true
       minimum: 1
       example: 2.035
-      default: null
+      default:
     clickPositions:
       type: array
       description: >-
@@ -1977,7 +1977,7 @@ components:
       nullable: true
       minimum: 0
       maximum: 1
-      default: null
+      default:
       example: 0.05
     trackedSearchCount:
       type: integer
@@ -2078,7 +2078,7 @@ components:
       nullable: true
       minimum: 0
       maximum: 1
-      default: null
+      default:
       example: 0.1
     addToCartCount:
       type: integer
@@ -2098,7 +2098,7 @@ components:
       nullable: true
       minimum: 0
       maximum: 1
-      default: null
+      default:
       example: 0.05
     purchaseCount:
       type: integer
@@ -2457,7 +2457,7 @@ components:
     updatedAtNullable:
       oneOf:
         - type: string
-          default: null
+          default:
           description: Date and time when the object was updated, in RFC 3339 format.
           example: '2023-07-04T12:49:15Z'
         - type: 'null'
