@@ -1,241 +1,276 @@
 aid: algolia
 url: >-
   https://raw.githubusercontent.com/api-evangelist/algolia/refs/heads/main/apis.yml
+modified: '2026-04-19'
+name: Algolia
+description: >-
+  Algolia is a hosted search and discovery platform offering full-text,
+  numerical, and faceted search capable of delivering real-time results from
+  the first keystroke. Algolia's API powers billions of queries for thousands
+  of companies every month, delivering relevant results in under 100ms anywhere
+  in the world. The platform combines traditional keyword search with AI-powered
+  NeuralSearch (vector + keyword hybrid search) using large language models for
+  semantic understanding. Algolia's product suite includes search, analytics,
+  recommendations, personalization, A/B testing, monitoring, ingestion, and
+  agentic AI capabilities through Agent Studio. The company serves e-commerce,
+  media, SaaS, and enterprise customers with SDKs across all major languages.
 apis:
-  - aid: algolia:algolia-ab-testing-api
-    name: Algolia A/B Testing API
-    tags: []
-    humanURL: https://www.algolia.com/doc/rest-api/abtesting/
-    properties:
-      - url: https://www.algolia.com/doc/rest-api/abtesting/
-        type: Documentation
-    description: >-
-      The Algolia A/B Testing API allows developers to easily run experiments on their
-      search functionality to test and optimize different configurations. By creating
-      multiple versions of their search interface and dividing users into different
-      groups, businesses can measure the impact of changes on key metrics such as
-      click-through rates and conversion rates.
-  - aid: algolia:algolia-advanced-personalization-api
-    name: Algolia Advanced Personalization API
-    tags:
-      - Personalization
-      - Search
-      - Users
-    humanURL: https://www.algolia.com/doc/rest-api/advanced-personalization/
-    properties:
-      - url: https://www.algolia.com/doc/rest-api/advanced-personalization/
-        type: Documentation
-      - url: properties/algolia-advanced-personalization-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Algolia Advanced Personalization API is a powerful tool that allows businesses
-      to create personalized search and discovery experiences for their users. By
-      leveraging machine learning algorithms, the API analyzes user behavior and preferences
-      to deliver highly relevant search results and recommendations in real-time.
-      This helps businesses increase user engagement, conversion rates, and overall
-      customer satisfaction.
   - aid: algolia:algolia-search-api
     name: Algolia Search API
+    description: >-
+      Algolia Search API is a powerful tool that allows developers to integrate
+      fast and efficient search functionality into their websites and
+      applications. With Algolia, users can quickly search and retrieve relevant
+      results from large datasets in real-time. The API features advanced search
+      capabilities such as typo-tolerance, synonym recognition, geo-search, and
+      AI-powered NeuralSearch combining vector and keyword search for semantic
+      understanding beyond literal keyword matches.
+    humanURL: https://www.algolia.com/doc/rest-api/search/
+    baseURL: https://{appId}.algolia.net
     tags:
       - Search
-    humanURL: https://www.algolia.com/doc/rest-api/search/
+      - Full-Text Search
+      - Vector Search
+      - NeuralSearch
     properties:
-      - url: https://www.algolia.com/doc/rest-api/search/
-        type: Documentation
-      - url: properties/algolia-search-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Algolia Search API is a powerful tool that allows developers to easily integrate
-      fast and efficient search functionality into their websites and applications.
-      With Algolia, users can quickly search and retrieve relevant results from large
-      datasets in real-time.
+      - type: Documentation
+        url: https://www.algolia.com/doc/rest-api/search/
+      - type: OpenAPI
+        url: openapi/algolia-search-api-openapi.yml
   - aid: algolia:algolia-analytics-api
     name: Algolia Analytics API
+    description: >-
+      The Algolia Analytics API allows users to track and analyze the
+      performance of their Algolia search implementations in real-time. This
+      API provides key performance indicators such as response times, search
+      latency, indexing rates, popular search terms, click-through rates, and
+      user behavior metrics. By monitoring these metrics, users can identify
+      potential issues, optimize search performance, and enhance the overall
+      user experience.
+    humanURL: https://www.algolia.com/doc/rest-api/analytics/
+    baseURL: https://analytics.algolia.com
     tags:
       - Analytics
       - Insights
       - Search
-    humanURL: https://www.algolia.com/doc/rest-api/analytics/
+      - Metrics
     properties:
-      - url: https://www.algolia.com/doc/rest-api/analytics/
-        type: Documentation
-      - url: properties/algolia-analytics-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      The Algolia Analytics API is a powerful tool that allows users to track and
-      analyze the performance of their search engines in real-time. This API provides
-      valuable data on search queries, user engagement, popular search terms, and
-      more, helping businesses understand how their users are interacting with their
-      website or app.
-  - aid: algolia:algolia-crawler-api
-    name: Algolia Crawler API
-    tags:
-      - Crawlers
-      - Search
-    humanURL: https://www.algolia.com/doc/rest-api/crawler/
-    properties:
-      - url: https://www.algolia.com/doc/rest-api/crawler/
-        type: Documentation
-      - url: properties/algolia-crawler-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      Algolia Crawler API is a powerful tool that allows developers to easily scrape
-      and index data from websites in order to make it searchable and discoverable
-      through Algolia's search engine. The API enables users to specify which pages
-      and data they want to crawl, set up custom rules for how the data should be
-      processed, and monitor the crawling process in real-time.
-  - aid: algolia:algolia-ingestion-api
-    name: Algolia Ingestion API
-    tags:
-      - Ingestion
-      - Search
-    humanURL: https://www.algolia.com/doc/rest-api/ingestion/
-    properties:
-      - url: https://www.algolia.com/doc/rest-api/ingestion/
-        type: Documentation
-      - url: properties/algolia-ingestion-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      The Algolia Ingestion API is a tool that allows developers to easily and efficiently
-      transfer data into their Algolia search index. This API provides a simple and
-      flexible way to ingest large amounts of data, whether it be product information,
-      user profiles, or any other type of content. With the Ingestion API, developers
-      can quickly upload and update records in their search index, ensuring that the
-      most relevant and up-to-date information is available to users.
-  - aid: algolia:algolia-monitoring-api
-    name: Algolia Monitoring API
-    tags:
-      - Monitoring
-      - Search
-    humanURL: https://www.algolia.com/doc/rest-api/monitoring/
-    properties:
-      - url: https://www.algolia.com/doc/rest-api/monitoring/
-        type: Documentation
-      - url: properties/algolia-monitoring-api-openapi.yml
-        type: OpenAPI
-    description: >-
-      The Algolia Monitoring API is a tool that allows users to track and analyze
-      the performance of their Algolia search implementations in real-time. This API
-      provides key performance indicators such as response times, search latency,
-      indexing rates, and user behavior metrics. By monitoring these metrics, users
-      can identify potential issues, optimize their search performance, and enhance
-      the overall user experience on their applications.
+      - type: Documentation
+        url: https://www.algolia.com/doc/rest-api/analytics/
+      - type: OpenAPI
+        url: openapi/algolia-analytics-api-openapi.yml
   - aid: algolia:algolia-insights-api
     name: Algolia Insights API
-    tags:
-      - Insights
-      - Search
-    humanURL: https://www.algolia.com/doc/rest-api/insights/
-    properties:
-      - url: https://www.algolia.com/doc/rest-api/insights/
-        type: Documentation
-      - url: properties/algolia-insights-api-openapi.yml
-        type: OpenAPI
     description: >-
       The Insights API lets you collect events related to your search and
       discovery experience. Events represent user interactions with your app or
       website. They unlock powerful features, such as recommendations,
       personalization, smarter search results, and analytics that help you
       optimize your user experience.
+    humanURL: https://www.algolia.com/doc/rest-api/insights/
+    baseURL: https://insights.algolia.io
+    tags:
+      - Insights
+      - Events
+      - Search
+      - User Behavior
+    properties:
+      - type: Documentation
+        url: https://www.algolia.com/doc/rest-api/insights/
+      - type: OpenAPI
+        url: openapi/algolia-insights-api-openapi.yml
+  - aid: algolia:algolia-recommend-api
+    name: Algolia Recommend API
+    description: >-
+      Algolia Recommend API leverages machine learning algorithms to provide
+      personalized recommendations to users based on their behavior and
+      preferences. By analyzing user interactions, search history, and other
+      data points, the API can suggest relevant products, content, or services
+      to drive engagement and increase conversion rates.
+    humanURL: https://www.algolia.com/doc/rest-api/recommend/
+    baseURL: https://{appId}.algolia.net
+    tags:
+      - Recommendations
+      - Machine Learning
+      - Search
+      - Personalization
+    properties:
+      - type: Documentation
+        url: https://www.algolia.com/doc/rest-api/recommend/
+      - type: OpenAPI
+        url: openapi/algolia-recommend-api-openapi.yml
   - aid: algolia:algolia-personalization-api
     name: Algolia Personalization API
+    description: >-
+      The Algolia Personalization API allows businesses to deliver highly
+      personalized search and recommendation experiences to their users. By
+      harnessing machine learning algorithms, the API analyzes user behavior
+      and preferences to deliver tailored search results and product
+      recommendations in real-time, leading to increased engagement, conversion
+      rates, and customer satisfaction.
+    humanURL: https://www.algolia.com/doc/rest-api/personalization/
+    baseURL: https://personalization.algolia.com
     tags:
       - Personalization
       - Search
-    humanURL: https://www.algolia.com/doc/rest-api/personalization/
+      - Machine Learning
     properties:
-      - url: https://www.algolia.com/doc/rest-api/personalization/
-        type: Documentation
-      - url: properties/algolia-personalization-api-openapi.yml
-        type: OpenAPI
+      - type: Documentation
+        url: https://www.algolia.com/doc/rest-api/personalization/
+      - type: OpenAPI
+        url: openapi/algolia-personalization-api-openapi.yml
+  - aid: algolia:algolia-advanced-personalization-api
+    name: Algolia Advanced Personalization API
     description: >-
-      The Algolia Personalization API is a powerful tool that allows businesses to
-      deliver highly personalized search and recommendation experiences to their users.
-      By harnessing machine learning algorithms, the API can analyze user behavior
-      and preferences to deliver tailored search results and product recommendations
-      in real-time. This leads to increased engagement, conversion rates, and customer
-      satisfaction.
+      Algolia Advanced Personalization API is a powerful tool that allows
+      businesses to create personalized search and discovery experiences for
+      their users. By leveraging machine learning algorithms, the API analyzes
+      user behavior and preferences to deliver highly relevant search results
+      and recommendations in real-time.
+    humanURL: https://www.algolia.com/doc/rest-api/advanced-personalization/
+    baseURL: https://personalization.algolia.com
+    tags:
+      - Personalization
+      - Search
+      - Users
+      - Machine Learning
+    properties:
+      - type: Documentation
+        url: https://www.algolia.com/doc/rest-api/advanced-personalization/
+      - type: OpenAPI
+        url: openapi/algolia-advanced-personalization-api-openapi.yml
   - aid: algolia:algolia-query-suggestions-api
     name: Algolia Query Suggestions API
+    description: >-
+      The Algolia Query Suggestions API allows developers to enhance search
+      functionality by generating real-time suggestions as users type in the
+      search bar, helping them quickly find relevant content or products. These
+      suggestions are based on popular search queries, user behavior, and
+      contextual relevance, improving search accuracy and user experience.
+    humanURL: https://www.algolia.com/doc/rest-api/query-suggestions/
+    baseURL: https://{appId}.algolia.net
     tags:
-      - Querieis
       - Search
       - Suggestions
-    humanURL: https://www.algolia.com/doc/rest-api/query-suggestions/
+      - Autocomplete
     properties:
-      - url: https://www.algolia.com/doc/rest-api/query-suggestions/
-        type: Documentation
-      - url: properties/algolia-query-suggestions-api-openapi.yml
-        type: OpenAPI
+      - type: Documentation
+        url: https://www.algolia.com/doc/rest-api/query-suggestions/
+      - type: OpenAPI
+        url: openapi/algolia-query-suggestions-api-openapi.yml
+  - aid: algolia:algolia-ab-testing-api
+    name: Algolia A/B Testing API
     description: >-
-      The Algolia Query Suggestions API is a powerful tool that allows developers
-      to enhance search functionality on their websites or applications. By utilizing
-      advanced algorithms, the API generates real-time suggestions as users type in
-      the search bar, helping them quickly find relevant content or products. These
-      suggestions are based on popular search queries, user behavior, and contextual
-      relevance, improving search accuracy and user experience.
-  - aid: algolia:algolia-recommend-api
-    name: Algolia Recommend API
+      The Algolia A/B Testing API allows developers to easily run experiments
+      on their search functionality to test and optimize different
+      configurations. By creating multiple versions of their search interface
+      and dividing users into different groups, businesses can measure the
+      impact of changes on key metrics such as click-through rates and
+      conversion rates.
+    humanURL: https://www.algolia.com/doc/rest-api/abtesting/
+    baseURL: https://analytics.algolia.com
     tags:
-      - Recommendations
+      - A/B Testing
+      - Experimentation
       - Search
-    humanURL: https://www.algolia.com/doc/rest-api/recommend/
+      - Optimization
     properties:
-      - url: https://www.algolia.com/doc/rest-api/recommend/
-        type: Documentation
-      - url: properties/algolia-recommend-api-openapi.yml
-        type: OpenAPI
+      - type: Documentation
+        url: https://www.algolia.com/doc/rest-api/abtesting/
+  - aid: algolia:algolia-monitoring-api
+    name: Algolia Monitoring API
     description: >-
-      Algolia Recommend API is a powerful tool that leverages machine learning algorithms
-      to provide personalized recommendations to users based on their behavior and
-      preferences. By analyzing user interactions, search history, and other data
-      points, the API can suggest relevant products, content, or services to drive
-      engagement and increase conversion rates.
-name: Algolia
+      The Algolia Monitoring API allows users to track and analyze the
+      performance of their Algolia search implementations in real-time. This
+      API provides key performance indicators such as response times, search
+      latency, indexing rates, and user behavior metrics to identify potential
+      issues and optimize search performance.
+    humanURL: https://www.algolia.com/doc/rest-api/monitoring/
+    baseURL: https://status.algolia.com
+    tags:
+      - Monitoring
+      - Status
+      - Performance
+      - Search
+    properties:
+      - type: Documentation
+        url: https://www.algolia.com/doc/rest-api/monitoring/
+      - type: OpenAPI
+        url: openapi/algolia-monitoring-api-openapi.yml
+  - aid: algolia:algolia-ingestion-api
+    name: Algolia Ingestion API
+    description: >-
+      The Algolia Ingestion API allows developers to efficiently transfer data
+      into their Algolia search index. This API provides a flexible way to
+      ingest large amounts of data, whether it be product information, user
+      profiles, or any other type of content. With the Ingestion API, developers
+      can quickly upload and update records in their search index, ensuring the
+      most relevant and up-to-date information is available to users.
+    humanURL: https://www.algolia.com/doc/rest-api/ingestion/
+    baseURL: https://data.us.algolia.com
+    tags:
+      - Ingestion
+      - Data
+      - Search
+      - ETL
+    properties:
+      - type: Documentation
+        url: https://www.algolia.com/doc/rest-api/ingestion/
+      - type: OpenAPI
+        url: openapi/algolia-ingestion-api-openapi.yml
+  - aid: algolia:algolia-crawler-api
+    name: Algolia Crawler API
+    description: >-
+      Algolia Crawler API allows developers to scrape and index data from
+      websites in order to make it searchable and discoverable through
+      Algolia's search engine. The API enables users to specify which pages and
+      data they want to crawl, set up custom rules for how the data should be
+      processed, and monitor the crawling process in real-time.
+    humanURL: https://www.algolia.com/doc/rest-api/crawler/
+    baseURL: https://crawler.algolia.com
+    tags:
+      - Crawlers
+      - Web Scraping
+      - Search
+      - Indexing
+    properties:
+      - type: Documentation
+        url: https://www.algolia.com/doc/rest-api/crawler/
+      - type: OpenAPI
+        url: openapi/algolia-crawler-api-openapi.yml
+common:
+  - type: Website
+    url: https://www.algolia.com
+  - type: Documentation
+    url: https://www.algolia.com/doc/
+  - type: GettingStarted
+    url: https://www.algolia.com/doc/guides/getting-started/quick-start/
+  - type: Login
+    url: https://dashboard.algolia.com/users/sign_in
+  - type: SignUp
+    url: https://dashboard.algolia.com/users/sign_up
+  - type: Pricing
+    url: https://www.algolia.com/pricing/
+  - type: Glossary
+    url: https://www.algolia.com/doc/glossary/
+  - type: Security
+    url: https://www.algolia.com/doc/guides/security/security-best-practices/
+  - type: GitHub
+    url: https://github.com/algolia
+  - type: Blog
+    url: https://www.algolia.com/blog/
+  - type: Status
+    url: https://status.algolia.com
+  - type: Support
+    url: https://support.algolia.com
 tags:
   - Search
   - Search Engines
-type: Index
-image: https://kinlane-productions.s3.amazonaws.com/apis-json/apis-json-logo.jpg
-access: 3rd-Party
-common:
-  - url: https://github.com/algolia
-    name: GitHub Organization
-    type: GitHubOrganization
-  - name: Quickstart | Algolia
-    description: 'null'
-    url: https://www.algolia.com/doc/guides/getting-started/quick-start/
-    type: GettingStarted
-  - name: 'Glossary: terms and definitions | Algolia'
-    description: 'null'
-    url: https://www.algolia.com/doc/glossary/
-    type: Glossary
-  - name: Security best practices | Algolia
-    description: 'null'
-    url: https://www.algolia.com/doc/guides/security/security-best-practices/
-    type: Security
-  - name: Sign in | Algolia
-    description: 'null'
-    url: https://dashboard.algolia.com/users/sign_in
-    type: Login
-  - name: Sign Up | Algolia
-    description: 'null'
-    url: https://dashboard.algolia.com/users/sign_up
-    type: SignUp
-  - name: What is Algolia? | Algolia
-    description: 'null'
-    url: https://www.algolia.com/doc/guides/getting-started/what-is-algolia/
-    type: GettingStarted
-created: '2025-02-08'
-modified: '2026-03-16'
-position: Consumer
-description: >-
-  Algolia is a hosted search engine, offering full-text, numerical, and faceted search,
-  capable of delivering real-time results from the first keystroke. Algolias powerful
-  API lets you quickly and seamlessly implement search within your websites and mobile
-  applications. Our search API powers billions of queries for thousands of companies
-  every month, delivering relevant results in under 100ms anywhere in the world.
-maintainers:
-  - FN: Kin Lane
-    email: kin@apievangelist.com
-specificationVersion: '0.19'
+  - NeuralSearch
+  - Vector Search
+  - AI Search
+  - Recommendations
+  - Personalization
+  - Analytics
+  - E-Commerce
+  - Developer Tools
