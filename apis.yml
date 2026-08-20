@@ -33,6 +33,13 @@ tags:
   - Recommendations
   - Personalization
   - Analytics
+  - E-Commerce
+tags_raw:
+  - Search
+  - Discovery
+  - Recommendations
+  - Personalization
+  - Analytics
   - Ecommerce
 apis:
   - name: Algolia Search API
@@ -57,6 +64,10 @@ apis:
     humanURL: https://www.algolia.com/doc/rest-api/insights/
     baseURL: https://insights.algolia.io
     tags:
+      - Analytics
+      - Event
+      - REST
+    tags_raw:
       - Analytics
       - Events
       - REST
