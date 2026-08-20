@@ -1,32 +1,264 @@
-# Algolia
+# Algolia (algolia)
 
-Algolia is a hosted search and discovery platform offering full-text, numerical, and faceted search capable of delivering real-time results from the first keystroke. Algolia's API powers billions of queries for thousands of companies every month, delivering relevant results in under 100ms anywhere in the world.
+<!-- API-EVANGELIST-PROVENANCE:BEGIN -->
+> ### About this repository
+>
+> **This is not our API.** This repository is an independent, third-party profile of a company's
+> **publicly available** API surface, maintained by [API Evangelist](https://apievangelist.com).
+> API Evangelist does not operate, host, resell, or support this company's APIs, and is not
+> affiliated with or endorsed by the company unless stated on the profile.
+>
+> **Where the information came from.** Everything here is assembled from material a member of the
+> public can reach with a browser and no credentials — the company's own website, developer portal
+> and documentation, the specifications it publishes for public use (OpenAPI, AsyncAPI, JSON Schema,
+> `apis.json`, `llms.txt` and similar), its public repositories, and its public status, pricing and
+> changelog pages. **Nothing here is obtained by breaching a system, defeating an access control, or
+> using credentials of any kind.**
+>
+> **The rating is an independent assessment.** The Kin Score and Agent Readiness rating are
+> independently calculated scores of a company's *public* API artifacts, produced by API Evangelist
+> against a published rubric. They are not certifications, endorsements, security assessments, or
+> audits, and they score published artifacts — not the quality, safety, or security of the software.
+>
+> **Corrections, re-scores, and removal are free.** No partnership, contract, or purchase is
+> required, and you do not need to justify the request.
+>
+> - **Something wrong?** Open an issue on this repository, or email
+>   [info@apievangelist.com](mailto:info@apievangelist.com).
+> - **Published something new?** Ask for a re-score and we will re-run the rating.
+> - **Want the listing taken down?** Say so and we will honor it. The profile is reduced to your
+>   company name, a factual description, and a link to your own site, and the company is recorded as
+>   **unrated** — never scored zero for having asked.
+>
+> **Response times.** Acknowledgement within **one business day**; removal or restriction within
+> **two business days**; corrections and re-scores within **five business days**.
+>
+> **On a security or compliance team?** Email
+> [info@apievangelist.com](mailto:info@apievangelist.com) with *security* in the subject line and
+> you will get a person, not a form. We will tell you exactly which public URLs this profile was
+> built from so your team can see the same surface we did, and we will take the listing down on
+> request while you work through it.
+>
+> Full detail: **[Where this data comes from](https://apievangelist.com/about/where-our-data-comes-from)**
+<!-- API-EVANGELIST-PROVENANCE:END -->
 
-The platform combines traditional keyword search with AI-powered NeuralSearch (vector + keyword hybrid search) using large language models for semantic understanding. In 2025, Algolia launched Agent Studio, DocSearch, Ask AI, SiteSearch, and the Algolia MCP Server to power agentic AI experiences. Algolia serves e-commerce, media, SaaS, and enterprise customers with SDKs across all major languages and frameworks.
+Algolia is a hosted search and discovery platform that delivers fast, typo-tolerant search, browse, recommendations, and personalization through a suite of REST APIs and edge-distributed infrastructure. It powers search experiences for ecommerce, media, SaaS, and content sites, pairing a synchronous indexing and query control plane with event-driven Insights, Recommend, A/B Testing, and Personalization products.
+
+**APIs.json:** [https://raw.githubusercontent.com/api-evangelist/algolia/refs/heads/main/apis.yml](https://raw.githubusercontent.com/api-evangelist/algolia/refs/heads/main/apis.yml)
+
+## Tags
+
+- Search
+- Discovery
+- Recommendations
+- Personalization
+- Analytics
+- Ecommerce
+
+## Timestamps
+
+- **Created:** 2026-05-04
+- **Modified:** 2026-06-16
 
 ## APIs
 
-- **[Algolia Search API](https://www.algolia.com/doc/rest-api/search/)** - Core search with typo-tolerance, synonyms, geo-search, and NeuralSearch
-- **[Algolia Analytics API](https://www.algolia.com/doc/rest-api/analytics/)** - Search performance metrics, query analysis, and reporting
-- **[Algolia Insights API](https://www.algolia.com/doc/rest-api/insights/)** - Collect user interaction events for recommendations and personalization
-- **[Algolia Recommend API](https://www.algolia.com/doc/rest-api/recommend/)** - Machine learning-powered product and content recommendations
-- **[Algolia Personalization API](https://www.algolia.com/doc/rest-api/personalization/)** - Deliver tailored search results based on user behavior
-- **[Algolia Advanced Personalization API](https://www.algolia.com/doc/rest-api/advanced-personalization/)** - Extended personalization strategies and configuration
-- **[Algolia Query Suggestions API](https://www.algolia.com/doc/rest-api/query-suggestions/)** - Real-time autocomplete suggestions based on popular queries
-- **[Algolia A/B Testing API](https://www.algolia.com/doc/rest-api/abtesting/)** - Run experiments on search configurations
-- **[Algolia Monitoring API](https://www.algolia.com/doc/rest-api/monitoring/)** - Track search infrastructure performance and status
-- **[Algolia Ingestion API](https://www.algolia.com/doc/rest-api/ingestion/)** - Efficiently transfer and sync data into search indexes
-- **[Algolia Crawler API](https://www.algolia.com/doc/rest-api/crawler/)** - Web crawling and automatic content indexing
+### Algolia Search API
 
-## OpenAPI Specs
+Core indexing and search API for adding, updating, and deleting records and querying them with typo-tolerant, faceted, geo-aware, and rule-driven search served from globally distributed search nodes (DSN).
 
-OpenAPI specifications are available in the `openapi/` directory for most APIs.
+- **Human URL:** [https://www.algolia.com/doc/rest-api/search/](https://www.algolia.com/doc/rest-api/search/)
+- **Base URL:** `https://{appid}-dsn.algolia.net`
 
-## Links
+#### Tags
+
+- Search
+- Indexing
+- REST
+
+#### Properties
+
+- [Documentation](https://www.algolia.com/doc/rest-api/search/)
+- [API Reference](https://www.algolia.com/doc/api-reference/)
+
+### Algolia Insights API
+
+Inbound event-ingestion API for click, conversion, view, and purchase signals that feed Personalization, Recommend, A/B Testing, and Analytics. Accepts events; does not emit them.
+
+- **Human URL:** [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights/)
+- **Base URL:** `https://insights.algolia.io`
+
+#### Tags
+
+- Analytics
+- Events
+- REST
+
+#### Properties
+
+- [Documentation](https://www.algolia.com/doc/rest-api/insights/)
+
+### Algolia Recommend API
+
+Returns related-products, frequently-bought-together, trending, and look-alike recommendations trained from Insights events and catalog data.
+
+- **Human URL:** [https://www.algolia.com/doc/rest-api/recommend/](https://www.algolia.com/doc/rest-api/recommend/)
+- **Base URL:** `https://{appid}-dsn.algolia.net`
+
+#### Tags
+
+- Recommendations
+- REST
+
+#### Properties
+
+- [Documentation](https://www.algolia.com/doc/rest-api/recommend/)
+
+### Algolia Analytics API
+
+Reports top searches, no-result searches, click/conversion rates, and other search analytics aggregated from query and Insights data.
+
+- **Human URL:** [https://www.algolia.com/doc/rest-api/analytics/](https://www.algolia.com/doc/rest-api/analytics/)
+- **Base URL:** `https://analytics.algolia.com`
+
+#### Tags
+
+- Analytics
+- REST
+
+#### Properties
+
+- [Documentation](https://www.algolia.com/doc/rest-api/analytics/)
+
+### Algolia A/B Testing API
+
+Creates and manages A/B tests across index configurations and relevance settings, scoring variants on click-through and conversion.
+
+- **Human URL:** [https://www.algolia.com/doc/rest-api/abtesting/](https://www.algolia.com/doc/rest-api/abtesting/)
+- **Base URL:** `https://analytics.algolia.com`
+
+#### Tags
+
+- Experimentation
+- REST
+
+#### Properties
+
+- [Documentation](https://www.algolia.com/doc/rest-api/abtesting/)
+
+### Algolia Personalization API
+
+Configures and applies user-affinity profiles built from Insights events to re-rank search and browse results per user.
+
+- **Human URL:** [https://www.algolia.com/doc/rest-api/personalization/](https://www.algolia.com/doc/rest-api/personalization/)
+- **Base URL:** `https://{region}.algolia.com`
+
+#### Tags
+
+- Personalization
+- REST
+
+#### Properties
+
+- [Documentation](https://www.algolia.com/doc/rest-api/personalization/)
+
+### Algolia Crawler API
+
+Manages Algolia's hosted web crawler that extracts content from websites and pushes it into indices on a schedule.
+
+- **Human URL:** [https://www.algolia.com/doc/tools/crawler/getting-started/overview/](https://www.algolia.com/doc/tools/crawler/getting-started/overview/)
+- **Base URL:** `https://crawler.algolia.com`
+
+#### Tags
+
+- Crawler
+- Ingestion
+- REST
+
+#### Properties
+
+- [Documentation](https://www.algolia.com/doc/tools/crawler/getting-started/overview/)
+
+### Algolia Ingestion API
+
+Connector-based data ingestion that pulls records from sources (databases, storage, ecommerce platforms) into Algolia indices via managed tasks.
+
+- **Human URL:** [https://www.algolia.com/doc/rest-api/ingestion/](https://www.algolia.com/doc/rest-api/ingestion/)
+- **Base URL:** `https://data.{region}.algolia.com`
+
+#### Tags
+
+- Ingestion
+- Connectors
+- REST
+
+#### Properties
+
+- [Documentation](https://www.algolia.com/doc/rest-api/ingestion/)
+
+### Algolia Query Suggestions API
+
+Generates and maintains query-suggestion indices from popular searches to power as-you-type autocomplete.
+
+- **Human URL:** [https://www.algolia.com/doc/rest-api/query-suggestions/](https://www.algolia.com/doc/rest-api/query-suggestions/)
+- **Base URL:** `https://query-suggestions.{region}.algolia.com`
+
+#### Tags
+
+- Search
+- Autocomplete
+- REST
+
+#### Properties
+
+- [Documentation](https://www.algolia.com/doc/rest-api/query-suggestions/)
+
+### Algolia Monitoring API
+
+Exposes server status, latency, indexing, and reachability metrics for an application's Algolia infrastructure.
+
+- **Human URL:** [https://www.algolia.com/doc/rest-api/monitoring/](https://www.algolia.com/doc/rest-api/monitoring/)
+- **Base URL:** `https://status.algolia.com`
+
+#### Tags
+
+- Monitoring
+- REST
+
+#### Properties
+
+- [Documentation](https://www.algolia.com/doc/rest-api/monitoring/)
+
+### Algolia Usage API
+
+Returns per-application usage metrics (operations, records, search volume) for cost and quota tracking.
+
+- **Human URL:** [https://www.algolia.com/doc/rest-api/usage/](https://www.algolia.com/doc/rest-api/usage/)
+- **Base URL:** `https://usage.algolia.com`
+
+#### Tags
+
+- Usage
+- FinOps
+- REST
+
+#### Properties
+
+- [Documentation](https://www.algolia.com/doc/rest-api/usage/)
+
+## Common Properties
 
 - [Website](https://www.algolia.com)
 - [Documentation](https://www.algolia.com/doc/)
+- [API Reference](https://www.algolia.com/doc/api-reference/)
+- [Sign Up](https://dashboard.algolia.com/users/sign_up)
+- [Pricing](https://www.algolia.com/pricing/)
 - [GitHub Organization](https://github.com/algolia)
-- [Dashboard](https://dashboard.algolia.com)
 - [Status](https://status.algolia.com)
-- [Blog](https://www.algolia.com/blog/)
+- [Plans](plans/algolia-plans-pricing.yml)
+- [Rate Limits](rate-limits/algolia-rate-limits.yml)
+- [Fin Ops](finops/algolia-finops.yml)
+
+## Maintainers
+
+**FN:** Kin Lane
+**Email:** kin@apievangelist.com

@@ -1,0 +1,39 @@
+specification: API Commons Rate Limits
+specificationVersion: '0.1'
+schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
+provider: Algolia
+providerId: algolia
+created: '2026-05-04'
+# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
+# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
+method: generated
+modified: '2026-05-04'
+reconciled: true
+tags:
+  - Rate Limiting
+  - Search
+description: Algolia per-application rate limits scale with plan.
+sources:
+  - https://www.algolia.com/pricing/
+  - https://www.algolia.com/doc/guides/scaling/algolia-service-limits/
+headers: {}
+responseCodes:
+  throttled: 429
+limits:
+  - name: Search operations
+    scope: app
+    metric: operations_per_second
+    limit: scales with plan
+  - name: Indexing operations
+    scope: app
+    metric: operations_per_second
+    limit: scales with plan
+  - name: Records per index
+    scope: index
+    metric: records
+    limit: 100000000
+  - name: Index size per record
+    scope: record
+    metric: KB
+    limit: 100
+    timeFrame: record
