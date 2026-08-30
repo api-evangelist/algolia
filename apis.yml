@@ -45,10 +45,6 @@ tags:
 - Personalization
 - Analytics
 - E-Commerce
-- AI
-- Agents
-- MCP
-- Indexing
 tags_raw:
 - Search
 - Discovery
@@ -162,6 +158,10 @@ apis:
   baseURL: https://ai-personalization.{region}.algolia.com
   tags:
   - Personalization
+  - Artificial Intelligence
+  - REST
+  tags_raw:
+  - Personalization
   - AI
   - REST
   properties:
@@ -241,6 +241,10 @@ apis:
   humanURL: https://www.algolia.com/doc/guides/algolia-ai/agent-studio
   baseURL: https://{APPLICATION_ID}.algolia.net/agent-studio
   tags:
+  - Artificial Intelligence
+  - Agents
+  - REST
+  tags_raw:
   - AI
   - Agents
   - REST
@@ -285,6 +289,11 @@ apis:
   humanURL: https://www.algolia.com/doc/guides/model-context-protocol
   baseURL: https://mcp.algolia.com
   tags:
+  - MCP
+  - Artificial Intelligence
+  - Agents
+  - Search
+  tags_raw:
   - MCP
   - AI
   - Agents
