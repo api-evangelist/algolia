@@ -1,0 +1,204 @@
+specification: API Commons Tool Crosswalk
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: derived
+source: MCP tool names taken verbatim from the Algolia-published Agent Skill at https://raw.githubusercontent.com/algolia/skills/main/skills/algolia-mcp/SKILL.md
+  (saved to skills/_provider/algolia-mcp.md). REST operationIds read from the first-party OpenAPI documents in openapi/. The
+  live MCP tools/list is auth-gated, so no inputSchema was read from the server.
+gated_note: 'POST https://mcp.algolia.com/mcp {"method":"tools/list"} returned HTTP 401 with WWW-Authenticate: Bearer resource_metadata="https://mcp.algolia.com/.well-known/oauth-protected-resource",
+  scope="public". Tool inputSchemas require authenticated introspection; the bindings below are by name and documented semantics,
+  not by observed schema.'
+surfaces:
+  openapi:
+    path: openapi/
+    documents: 15
+    operations: 342
+    gated: false
+    upstream: https://github.com/algolia/api-clients-automation/tree/main/specs/bundled
+  mcp:
+    url: https://mcp.algolia.com/mcp
+    name: Algolia Productivity MCP
+    gated: true
+    auth: oauth
+  mcp_public:
+    url: https://{APP_ID}.algolia.net/mcp/1/{UNIQ_ID}/mcp
+    name: Algolia Public MCP
+    gated: false
+    auth: none
+    note: Per-instance URL created in the Algolia dashboard; access is governed by the Search API key bound to the instance.
+      There is no tenant-independent endpoint to probe.
+  graphql: null
+crosswalk:
+- tool: algolia_search_index
+  category: search
+  rest:
+  - searchSingleIndex
+  - search
+  binding: openapi/algolia-search-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of searchSingleIndex / search in openapi/algolia-search-api-openapi.yml.
+  note: Named 1:1 in the provider skill; searchSingleIndex is the single-index POST /1/indexes/{indexName}/query operation
+    the tool wraps.
+- tool: algolia_search_list_indices
+  category: search
+  rest:
+  - listIndices
+  binding: openapi/algolia-search-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of listIndices in openapi/algolia-search-api-openapi.yml.
+  note: GET /1/indexes.
+- tool: algolia_search_for_facet_values
+  category: search
+  rest:
+  - searchForFacetValues
+  binding: openapi/algolia-search-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of searchForFacetValues in openapi/algolia-search-api-openapi.yml.
+  note: POST /1/indexes/{indexName}/facets/{facetName}/query.
+- tool: algolia_analytics_top_searches
+  category: analytics
+  rest:
+  - getTopSearches
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getTopSearches in openapi/algolia-analytics-api-openapi.yml.
+  note: Skill documents clickAnalytics/revenueAnalytics flags, which are query parameters on getTopSearches.
+- tool: algolia_analytics_searches_no_results
+  category: analytics
+  rest:
+  - getSearchesNoResults
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getSearchesNoResults in openapi/algolia-analytics-api-openapi.yml.
+- tool: algolia_analytics_no_results_rate
+  category: analytics
+  rest:
+  - getNoResultsRate
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getNoResultsRate in openapi/algolia-analytics-api-openapi.yml.
+- tool: algolia_analytics_click_positions
+  category: analytics
+  rest:
+  - getClickPositions
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getClickPositions in openapi/algolia-analytics-api-openapi.yml.
+- tool: algolia_analytics_no_click_rate
+  category: analytics
+  rest:
+  - getNoClickRate
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getNoClickRate in openapi/algolia-analytics-api-openapi.yml.
+- tool: algolia_analytics_top_searches_without_clicks
+  category: analytics
+  rest:
+  - getSearchesNoClicks
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getSearchesNoClicks in openapi/algolia-analytics-api-openapi.yml.
+- tool: algolia_analytics_number_of_searches
+  category: analytics
+  rest:
+  - getSearchesCount
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getSearchesCount in openapi/algolia-analytics-api-openapi.yml.
+- tool: algolia_analytics_top_search_results
+  category: analytics
+  rest:
+  - getTopHits
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getTopHits in openapi/algolia-analytics-api-openapi.yml.
+  note: Skill documents clickAnalytics/revenueAnalytics flags, which are query parameters on getTopHits.
+- tool: algolia_analytics_number_of_users
+  category: analytics
+  rest:
+  - getUsersCount
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getUsersCount in openapi/algolia-analytics-api-openapi.yml.
+- tool: algolia_analytics_top_filters
+  category: analytics
+  rest:
+  - getTopFilterAttributes
+  - getTopFilterForAttribute
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: medium
+  input_schema_source: Inherits the parameters and requestBody of getTopFilterAttributes / getTopFilterForAttribute in openapi/algolia-analytics-api-openapi.yml.
+  note: The skill exposes one tool; the spec splits the surface into an attribute-list operation and a per-attribute operation.
+    Which one the tool calls depends on whether an attribute argument is supplied - not verifiable while the live schema is
+    gated.
+- tool: algolia_analytics_top_filters_no_results
+  category: analytics
+  rest:
+  - getTopFiltersNoResults
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getTopFiltersNoResults in openapi/algolia-analytics-api-openapi.yml.
+- tool: algolia_analytics_top_countries
+  category: analytics
+  rest:
+  - getTopCountries
+  binding: openapi/algolia-analytics-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getTopCountries in openapi/algolia-analytics-api-openapi.yml.
+- tool: algolia_recommendations
+  category: recommend
+  rest:
+  - getRecommendations
+  binding: openapi/algolia-recommend-api-openapi.yml
+  confidence: high
+  input_schema_source: Inherits the parameters and requestBody of getRecommendations in openapi/algolia-recommend-api-openapi.yml.
+  note: One tool covering all five Recommend models. The model parameter values documented in the skill (bought-together,
+    related-products, trending-items, trending-facets, looking-similar) match the RecommendationsRequest model enum in the
+    spec.
+mcp_only: []
+rest_only:
+  note: Both Algolia MCP servers are READ-ONLY by design - Algolia states they "search, recommend, and (for Productivity MCP)
+    report analytics" and neither creates or modifies indices, records, or settings. Every write operation in the OpenAPI
+    surface is therefore rest_only, as is the whole of Ingestion, Crawler, A/B Testing, Query Suggestions, Personalization,
+    Composition, Agent Studio and Monitoring.
+  docs: https://www.algolia.com/doc/guides/model-context-protocol
+  unmapped_by_document:
+    algolia-abtesting-api-openapi.yml: 11
+    algolia-abtesting-v3-api-openapi.yml: 12
+    algolia-advanced-personalization-api-openapi.yml: 12
+    algolia-agent-studio-api-openapi.yml: 42
+    algolia-algoliasearch-api-openapi.yml: 3
+    algolia-analytics-api-openapi.yml: 30
+    algolia-composition-api-openapi.yml: 20
+    algolia-crawler-api-openapi.yml: 20
+    algolia-ingestion-api-openapi.yml: 61
+    algolia-insights-api-openapi.yml: 7
+    algolia-monitoring-api-openapi.yml: 14
+    algolia-personalization-api-openapi.yml: 9
+    algolia-query-suggestions-api-openapi.yml: 12
+    algolia-recommend-api-openapi.yml: 11
+    algolia-search-api-openapi.yml: 78
+  notable_unmapped_surfaces:
+  - ingestion (61 ops)
+  - agent-studio (42 ops)
+  - composition (20 ops)
+  - crawler (20 ops)
+  - monitoring (14 ops)
+  - query-suggestions (12 ops)
+  - abtesting-v3 (12 ops)
+  - advanced-personalization (12 ops)
+  - personalization (9 ops)
+  write_path_alternative: Algolia directs write/admin work to the Algolia CLI (cli/algolia-cli.yml) or the API clients, not
+    to MCP.
+coverage:
+  mcp_tools: 16
+  mcp_tools_bound: 16
+  distinct_rest_operations_bound: 18
+  total_rest_operations: 342
+  rest_operations_unbound: 324
+  percent_rest_covered_by_mcp: 5.3
+  confidence_high: 15
+  confidence_medium: 1
+  confidence_low: 0

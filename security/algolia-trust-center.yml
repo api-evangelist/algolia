@@ -1,0 +1,77 @@
+specification: API Commons Trust Center
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: probed
+source: https://trust.algolia.com
+description: >-
+  Algolia publishes a Vanta-hosted Trust Center at trust.algolia.com. It is the canonical destination for Algolia's
+  compliance posture - the older marketing page at /distributed-secure/security-compliance/ now 301s to it, and
+  www.algolia.com/security serves the same Trust Center application.
+trust_center:
+  url: https://trust.algolia.com
+  http_status: 200
+  title: Algolia Trust Center
+  canonical: https://trust.algolia.com
+  vendor: Vanta
+  vendor_evidence: 'content-location header points at https://assets.vanta.com/static/index-trust-report.<hash>.html'
+  redirects_from:
+    - url: https://www.algolia.com/distributed-secure/security-compliance/
+      status: 301
+      target: https://trust.algolia.com/
+    - url: https://www.algolia.com/security
+      status: 200
+      note: Serves the same Vanta Trust Center application.
+certifications:
+  read: false
+  named: []
+  reason: >-
+    NOT recorded, deliberately. The Vanta Trust Center renders its certification list client-side - the served HTML
+    is a 6.4 KB application shell with the certification data fetched by JavaScript, and the Vanta API endpoint
+    behind it returns 401 Unauthorized to an anonymous caller. The supporting Algolia article
+    (support.algolia.com/hc/en-us/articles/4406981951889 "What is Algolia's product compliance?") returns HTTP 403
+    to automated fetches behind a Cloudflare bot challenge. Algolia's own llms.txt asserts "SOC2, GDPR, HIPAA
+    compliance details" behind that link, but that is a marketing summary line and not a machine-readable
+    attestation, so no certification name is asserted in this artifact. A human in a browser can read the list;
+    an agent cannot.
+  probed:
+    - url: https://trust.algolia.com
+      status: 200
+      note: 'JS-rendered SPA shell; no certification names in the served HTML.'
+    - url: https://api.vanta.com/v1/trust-centers/35qkoispbisbf5si15k7o
+      status: 401
+      note: Unauthorized.
+    - url: https://support.algolia.com/hc/en-us/articles/4406981951889-What-is-Algolia-s-product-compliance-
+      status: 403
+      note: Cloudflare bot challenge.
+compliance_program:
+  published: true
+  evidence: >-
+    A dedicated, canonical, vendor-operated Trust Center reachable at a first-party subdomain, with a 301 from the
+    provider's own security page. That establishes a published compliance program even though the individual
+    attestations were not machine-readable.
+related_security_documentation:
+  - name: Shared responsibility model
+    url: https://www.algolia.com/doc/guides/security/security-best-practices/in-depth/shared-responsibility.md
+    note: >-
+      States Algolia is responsible for "remaining compliant with standards and certifications" and for
+      "letting you know about potential vulnerabilities", and documents SAML SSO and AES256 encryption
+      (Algolia Vault) as Enterprise add-ons.
+  - name: Security best practices
+    url: https://www.algolia.com/doc/guides/security/security-best-practices
+  - name: Algolia Vault
+    url: https://www.algolia.com/doc/guides/security/algolia-vault
+    note: AES256 encryption at rest, Enterprise add-on.
+  - name: API key restrictions
+    url: https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions
+policies:
+  terms_of_service:
+    url: https://www.algolia.com/policies/terms/
+    status: 200
+  privacy_policy:
+    url: https://www.algolia.com/policies/privacy/
+    status: 200
+  sla:
+    url: https://www.algolia.com/policies/sla/
+    status: 200

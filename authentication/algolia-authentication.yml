@@ -1,0 +1,72 @@
+generated: '2026-08-27'
+method: derived
+source: openapi/algolia-abtesting-openapi.yml, openapi/algolia-abtesting-v3-openapi.yml, openapi/algolia-advanced-personalization-openapi.yml,
+  openapi/algolia-agent-studio-openapi.yml, openapi/algolia-algoliasearch-openapi.yml, openapi/algolia-composition-openapi.yml,
+  openapi/algolia-crawler-openapi.yml, openapi/algolia-ingestion-openapi.yml, openapi/algolia-insights-openapi.yml,
+  openapi/algolia-monitoring-openapi.yml, openapi/algolia-personalization-openapi.yml, openapi/algolia-query-suggestions-openapi.yml
+  ...
+summary:
+  types:
+  - apiKey
+  - http
+  api_key_in:
+  - header
+schemes:
+- name: appId
+  type: apiKey
+  in: header
+  parameter: x-algolia-application-id
+  description: Your Algolia application ID.
+  sources:
+  - openapi/algolia-abtesting-openapi.yml
+  - openapi/algolia-abtesting-v3-openapi.yml
+  - openapi/algolia-advanced-personalization-openapi.yml
+  - openapi/algolia-agent-studio-openapi.yml
+  - openapi/algolia-algoliasearch-openapi.yml
+  - openapi/algolia-composition-openapi.yml
+  - openapi/algolia-ingestion-openapi.yml
+  - openapi/algolia-insights-openapi.yml
+  - openapi/algolia-personalization-openapi.yml
+  - openapi/algolia-query-suggestions-openapi.yml
+  - openapi/algolia-recommend-openapi.yml
+  - openapi/algolia-search-openapi.yml
+- name: apiKey
+  type: apiKey
+  in: header
+  parameter: x-algolia-api-key
+  description: |-
+    Your Algolia API key with the necessary permissions to make the request.
+    Permissions are controlled through access control lists (ACL) and access restrictions.
+    The required ACL to make a request is listed in each endpoint's reference.
+  sources:
+  - openapi/algolia-abtesting-openapi.yml
+  - openapi/algolia-abtesting-v3-openapi.yml
+  - openapi/algolia-advanced-personalization-openapi.yml
+  - openapi/algolia-agent-studio-openapi.yml
+  - openapi/algolia-algoliasearch-openapi.yml
+  - openapi/algolia-composition-openapi.yml
+  - openapi/algolia-ingestion-openapi.yml
+  - openapi/algolia-insights-openapi.yml
+  - openapi/algolia-personalization-openapi.yml
+  - openapi/algolia-query-suggestions-openapi.yml
+  - openapi/algolia-recommend-openapi.yml
+  - openapi/algolia-search-openapi.yml
+- name: BasicAuth
+  type: http
+  scheme: basic
+  sources:
+  - openapi/algolia-crawler-openapi.yml
+- name: appId
+  type: apiKey
+  in: header
+  parameter: X-Algolia-Application-Id
+  description: Your Algolia application ID.
+  sources:
+  - openapi/algolia-monitoring-openapi.yml
+- name: apiKey
+  type: apiKey
+  in: header
+  parameter: X-Algolia-API-Key
+  description: Your Algolia Monitoring API key.
+  sources:
+  - openapi/algolia-monitoring-openapi.yml

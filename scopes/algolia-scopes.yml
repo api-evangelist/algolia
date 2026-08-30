@@ -1,0 +1,82 @@
+specification: API Commons OAuth Scopes
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: probed
+source: https://mcp.algolia.com/.well-known/oauth-protected-resource
+sources:
+  - https://mcp.algolia.com/.well-known/oauth-protected-resource
+  - https://mcp.algolia.com/.well-known/oauth-authorization-server
+  - https://www.algolia.com/doc/guides/model-context-protocol/productivity-mcp
+  - https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions
+description: >-
+  Algolia's REST APIs do NOT use OAuth - all 15 first-party OpenAPI documents declare apiKey-in-header
+  (x-algolia-application-id + x-algolia-api-key) or, for the Crawler, HTTP Basic. Running
+  derive-oauth-scopes.py over openapi/ finds zero oauth2 securitySchemes, correctly.
+  OAuth exists in exactly one place in the estate: the Algolia Productivity MCP server. Its scope set was read
+  from the RFC 9728 protected-resource metadata document, not inferred.
+rest_oauth: false
+rest_auth_model: api-key-with-acl
+oauth_surfaces:
+  - name: Algolia Productivity MCP
+    resource: https://mcp.algolia.com/mcp
+    issuer: https://dashboard.algolia.com
+    authorization_endpoint: https://dashboard.algolia.com/2/oauth/authorize
+    token_endpoint: https://dashboard.algolia.com/2/oauth/token
+    registration_endpoint: https://dashboard.algolia.com/2/oauth/register
+    introspection_endpoint: https://dashboard.algolia.com/2/oauth/introspect
+    revocation_endpoint: https://dashboard.algolia.com/2/oauth/token
+    grant_types: [authorization_code, refresh_token]
+    response_types: [code]
+    pkce_methods: [S256]
+    client_auth_methods: [none]
+    dynamic_registration: true
+    scopes:
+      - name: public
+        description: >-
+          The only scope Algolia advertises for the MCP resource. It is coarse by design: authorization is NOT
+          carried by the scope but by the signed-in user's own Algolia permissions, which decide which applications
+          and indices the agent can reach. A single scope string therefore expands to a different effective
+          permission set per user.
+        source: 'scopes_supported in https://mcp.algolia.com/.well-known/oauth-protected-resource'
+    probe:
+      url: https://mcp.algolia.com/mcp
+      http_status: 401
+      www_authenticate: 'Bearer resource_metadata="https://mcp.algolia.com/.well-known/oauth-protected-resource", scope="public"'
+effective_authorization_model:
+  note: >-
+    Where a scope string would normally sit, Algolia puts an ACL on the API key. This is the real permission
+    vocabulary for the REST surface and every operation reference names the ACL it requires.
+  mechanism: api-key-acl
+  docs: https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions
+  acls:
+    - search
+    - browse
+    - addObject
+    - deleteObject
+    - deleteIndex
+    - settings
+    - editSettings
+    - analytics
+    - recommendation
+    - usage
+    - logs
+    - seeUnretrievableAttributes
+    - listIndexes
+  acl_source: >-
+    Enumerated from the ACL values documented on the API key restrictions page and used across the Search API
+    operation reference. Not read from a machine-readable enum - Algolia does not publish the ACL list as one.
+  restrictions:
+    - validUntil (expiry)
+    - restrictIndices
+    - restrictSources (IP)
+    - referers
+    - maxQueriesPerIPPerHour
+    - maxHitsPerQuery
+  secured_api_keys:
+    note: >-
+      A search-only key can be signed client-side with embedded filters to produce a per-end-user key, which is
+      Algolia's answer to per-tenant authorization without an authorization server.
+    docs: https://www.algolia.com/doc/guides/security/api-keys/how-to/user-restricted-access-to-data
+  limit: 5,000 API keys per application (documented service limit).

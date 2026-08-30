@@ -1,0 +1,134 @@
+specification: API Commons MCP Server
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: searched
+source: https://www.algolia.com/doc/guides/model-context-protocol
+sources:
+  - https://www.algolia.com/doc/guides/model-context-protocol
+  - https://www.algolia.com/doc/guides/model-context-protocol/public-mcp
+  - https://www.algolia.com/doc/guides/model-context-protocol/productivity-mcp
+  - https://www.algolia.com/developers/lp-mcp
+  - https://github.com/algolia/skills/tree/main/skills/algolia-mcp
+description: >-
+  Algolia ships TWO first-party, Algolia-managed remote MCP servers. Neither is a stdio package a developer runs
+  locally - both are hosted HTTPS endpoints an MCP client POSTs to, which is the agent-reachable form. Both are
+  read-only by design: Algolia states they "search, recommend, and (for Productivity MCP) report analytics" and that
+  "neither one creates or modifies indices, records, or settings". Write and admin work is routed to the Algolia CLI.
+
+deployment:
+  mode: remote
+  endpoint: https://mcp.algolia.com/mcp
+  auth: oauth
+  verified: probed
+  note: >-
+    endpoint is the Productivity MCP server, the only tenant-independent URL Algolia publishes. The Public MCP
+    server is also remote but its URL is per-instance and minted in the dashboard
+    (https://{APP_ID}.algolia.net/mcp/1/{UNIQ_ID}/mcp), so there is no single URL to record for it. No stdio
+    package is published; the former github.com/algolia/mcp-node repository returns 404 as of this probe.
+
+servers:
+  - name: Algolia Productivity MCP
+    scope: user-scoped
+    endpoint: https://mcp.algolia.com/mcp
+    transport: http
+    auth: oauth
+    status: live
+    verified: probed
+    probe:
+      method: POST
+      body: '{"jsonrpc":"2.0","id":1,"method":"tools/list"}'
+      http_status: 401
+      response: '{"status":401,"detail":"Unauthorized: Missing or invalid Authorization header","code":"UNAUTHORIZED","instance":"/mcp"}'
+      www_authenticate: 'Bearer resource_metadata="https://mcp.algolia.com/.well-known/oauth-protected-resource", scope="public"'
+      note: >-
+        A correct RFC 9728 challenge - the server names its own protected-resource metadata document rather than
+        returning a bare 401. Tool inputSchemas need an authenticated introspection; the tool NAMES below come
+        from Algolia's own published Agent Skill, not from the live server.
+    oauth:
+      issuer: https://dashboard.algolia.com
+      authorization_endpoint: https://dashboard.algolia.com/2/oauth/authorize
+      token_endpoint: https://dashboard.algolia.com/2/oauth/token
+      registration_endpoint: https://dashboard.algolia.com/2/oauth/register
+      grant_types: [authorization_code, refresh_token]
+      pkce: S256
+      client_auth: none
+      scopes: [public]
+      discovery:
+        - https://mcp.algolia.com/.well-known/oauth-authorization-server
+        - https://mcp.algolia.com/.well-known/oauth-protected-resource
+      note: >-
+        Dynamic client registration is open, PKCE is required, and the client is public (no secret). Algolia's docs
+        say explicitly "You don't need to provide an OAuth client ID or client secret. If your MCP client asks for
+        these fields, leave them empty."
+    access_model: >-
+      Enabled once per Algolia account, then each user signs in with their own Algolia login; that user's Algolia
+      permissions determine which applications and indices the agent can reach.
+    install:
+      claude_code: claude mcp add --transport http algolia https://mcp.algolia.com/mcp
+      codex: codex mcp add algolia --url https://mcp.algolia.com/mcp
+      generic: 'Add a remote/custom MCP connector with URL https://mcp.algolia.com/mcp and authenticate via OAuth.'
+    clients_documented: [ChatGPT, Claude, Claude Code, Codex, Cursor, VS Code, Gemini CLI, OpenAI Playground]
+  - name: Algolia Public MCP
+    scope: application-scoped
+    endpoint: 'https://{APP_ID}.algolia.net/mcp/1/{UNIQ_ID}/mcp'
+    transport: http
+    auth: none
+    status: live
+    verified: searched
+    note: >-
+      Per-instance endpoint created from the Algolia dashboard (Generative AI > MCP servers). Up to five instances
+      per application, each exposing up to five indices plus selected Recommend models. Algolia's docs state
+      "The MCP server uses your Search API key permissions to control data access. Your MCP client doesn't require
+      separate authentication." Not probed: the URL is templated on a tenant's own APP_ID and a per-instance
+      UNIQ_ID, so there is no anonymous instance to call, and guessing one would be fabrication.
+    intended_use: >-
+      Exposing curated indices and Recommend models to external or customer-facing AI assistants
+      (ChatGPT, Claude, Vertex AI, Perplexity, Amazon Q, Microsoft Copilot, Salesforce Agentforce).
+    limits:
+      instances_per_application: 5
+      indices_per_instance: 5
+    pricing: Usage counts toward the existing Algolia plan; Algolia states there is no separate MCP fee.
+
+read_only: true
+read_only_source: https://www.algolia.com/doc/guides/model-context-protocol
+
+tools:
+  method: searched
+  source: https://raw.githubusercontent.com/algolia/skills/main/skills/algolia-mcp/SKILL.md
+  note: >-
+    Tool names are quoted verbatim from Algolia's own published Agent Skill (saved to skills/_provider/algolia-mcp.md).
+    Input schemas were NOT read - the live tools/list is OAuth-gated. See mcp/algolia-tool-crosswalk.yml for the
+    binding of each tool to its backing OpenAPI operation.
+  search:
+    - algolia_search_index
+    - algolia_search_list_indices
+    - algolia_search_for_facet_values
+  analytics:
+    - algolia_analytics_top_searches
+    - algolia_analytics_searches_no_results
+    - algolia_analytics_no_results_rate
+    - algolia_analytics_click_positions
+    - algolia_analytics_no_click_rate
+    - algolia_analytics_top_searches_without_clicks
+    - algolia_analytics_number_of_searches
+    - algolia_analytics_top_search_results
+    - algolia_analytics_number_of_users
+    - algolia_analytics_top_filters
+    - algolia_analytics_top_filters_no_results
+    - algolia_analytics_top_countries
+  recommendations:
+    - tool: algolia_recommendations
+      models: [bought-together, related-products, trending-items, trending-facets, looking-similar]
+
+related_agent_surfaces:
+  - name: Agent Studio
+    type: Algolia-hosted agent runtime (not MCP)
+    openapi: openapi/algolia-agent-studio-api-openapi.yml
+    operations: 42
+    docs: https://www.algolia.com/doc/guides/algolia-ai/agent-studio
+    note: >-
+      Distinct from the MCP servers: Agent Studio is Algolia's own agent platform, and it can itself CONSUME
+      third-party MCP tools (https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/tools/mcp-tools).
+      Algolia is therefore both an MCP server and an MCP client.
