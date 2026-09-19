@@ -338,6 +338,8 @@ apis:
   humanURL: https://www.algolia.com/doc/rest-api/search/
   baseURL: https://{appid}-dsn.algolia.net
   tags:
+  - A/B Testing
+  tags_raw:
   - Ab Testing
   properties:
   - type: OpenAPI
