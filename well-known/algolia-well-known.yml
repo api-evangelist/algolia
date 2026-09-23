@@ -1,0 +1,123 @@
+specification: API Commons Well-Known
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-09-19'
+method: probed
+source: One unauthenticated GET per path per host, run 2026-08-27 with a browser User-Agent. Hosts were
+  taken from apis.yml baseURL values, the servers[] blocks of the 15 first-party OpenAPI documents in
+  openapi/, the docs host, and the MCP host named in https://www.algolia.com/doc/guides/model-context-protocol.
+note: 'Algolia serves NO /.well-known documents on its website, docs, dashboard or REST API hosts - security.txt,
+  api-catalog, openid-configuration, oauth-authorization-server and ai-plugin.json all 404. The only real
+  /.well-known documents in the estate are the two OAuth discovery files on mcp.algolia.com, which are
+  genuine RFC 8414 / RFC 9728 metadata and are what makes the Productivity MCP server discoverable to
+  an agent. Two hosts (status.algolia.com and crawler.algolia.com) answer HTTP 200 with a single-page-app
+  HTML shell for EVERY /.well-known/* path; those are recorded as 200 but marked not_a_document and are
+  treated as misses.
+
+
+  MCP-host OAuth discovery added 2026-09-19 (roadmap#321/#337): the harvest visits a provider''s primary
+  hosts, and RFC 9728 protected-resource metadata lives on the MCP host, so these documents existed and
+  were invisible to the scorer. Fetched live and validated on `resource`/`issuer`; one negative control
+  per host.'
+hosts:
+- host: mcp.algolia.com
+  documents:
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: algolia-mcp-oauth-authorization-server.json
+    content_type: application/json
+    note: RFC 8414 authorization server metadata. issuer https://dashboard.algolia.com, authorization_code
+      + refresh_token grants, PKCE S256 required, token_endpoint_auth_methods_supported ["none"] (public
+      client), and a dynamic client registration endpoint at https://dashboard.algolia.com/2/oauth/register.
+  - path: /.well-known/oauth-protected-resource
+    status: 200
+    file: algolia-mcp-oauth-protected-resource.json
+    content_type: application/json
+    note: RFC 9728 protected resource metadata. resource https://mcp.algolia.com/mcp, authorization_servers
+      [https://dashboard.algolia.com], scopes_supported ["public"]. Also served at /.well-known/oauth-protected-resource/mcp
+      with an identical body.
+  - path: /.well-known/agent-card.json
+    status: 404
+  path_echo_control: passed
+- host: www.algolia.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/openid-configuration
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+  - path: /.well-known/api-catalog
+    status: 404
+  - path: /.well-known/ai-plugin.json
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/agent.json
+    status: 404
+- host: algolia.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+- host: dashboard.algolia.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 404
+  - path: /.well-known/agent-card.json
+    status: 404
+  - path: /.well-known/oauth-authorization-server
+    status: 200
+    file: algolia-dashboard-oauth-authorization-server.json
+    bytes: 626
+  path_echo_control: passed
+- host: insights.algolia.io
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404
+    note: 'Returns the Insights REST API JSON error envelope: {"status":404,"message":"Path not supported
+      by Insights REST API..."}'
+- host: analytics.algolia.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 404
+    note: Returns the Analytics REST API JSON error envelope.
+- host: status.algolia.com
+  documents:
+  - path: /.well-known/security.txt
+    status: 200
+    not_a_document: true
+    note: HTTP 200 but the body is the 559-byte status-page SPA shell (<!doctype html> ... Algolia Status
+      Page), not a security.txt. This host answers 200 with the same shell for every unknown path. Treated
+      as a miss.
+  - path: /.well-known/agent-card.json
+    status: 200
+    not_a_document: true
+    note: Same SPA shell. Treated as a miss.
+- host: crawler.algolia.com
+  documents:
+  - path: /.well-known/agent-card.json
+    status: 200
+    not_a_document: true
+    note: HTTP 200 but the body is the 3,603-byte Crawler console SPA shell. This host also answers 200
+      with the same shell for /openapi.json. Treated as a miss. The real Crawler contract is the Algolia-published
+      OpenAPI saved at openapi/algolia-crawler-openapi.yml.
+- host: usage.algolia.com
+  documents:
+  - path: /openapi.json
+    status: 404
+    note: Google frontend NotFound; probed while hunting for a spec, recorded here for completeness.
+x-mcp-probe:
+  probed: '2026-09-19'
+  issue: roadmap#321, roadmap#337
+  documents:
+  - host: https://mcp.algolia.com
+    path: /.well-known/oauth-protected-resource
+    file: algolia-mcp-oauth-protected-resource.json
+  - host: https://dashboard.algolia.com
+    path: /.well-known/oauth-authorization-server
+    file: algolia-dashboard-oauth-authorization-server.json
+  validated_on: resource (RFC 9728) / issuer (RFC 8414, OIDC)
+  negative_control: one per host; a 2xx JSON object at an impossible path discards the host

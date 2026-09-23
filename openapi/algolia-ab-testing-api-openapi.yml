@@ -2,7 +2,20 @@ openapi: 3.2.0
 info:
   title: A/B Testing Abtesting API
   summary: The Algolia A/B Testing API lets you manage your Algolia A/B tests to optimize your search experience
-  description: "## Base URLs\n\nBase URLs for the A/B testing API:\n\n- `https://analytics.us.algolia.com`\n- `https://analytics.de.algolia.com`\n- `https://analytics.algolia.com` (alias of `analytics.us.algolia.com`)\n\nUse the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).\n\n**All requests must use HTTPS.**\n\n## Availability and authentication\n\nAccess to the A/B testing API is available as part of the [Premium or Elevate plans](https://www.algolia.com/pricing).\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Rate limits\n\nYou can make up to **100 requests per minute per app** to the A/B testing API.\nThe response includes headers with information about the limits.\n\n## Parameters\n\nQuery parameters must be [URL-encoded](https://developer.mozilla.org/en-US/docs/Glossary/Percent-encoding).\nNon-ASCII characters must be UTF-8 encoded.\nPlus characters (`+`) are interpreted as spaces.\n\n## Response status and errors\n\nThe A/B testing API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\n## Version\n\nVersion 2 of the A/B Testing API, indicated by the `/2/` in each endpoint's URL, is deprecated.\nUse [version 3](https://www.algolia.com/doc/rest-api/abtesting-v3) instead.\n"
+  description: '## Base URLs
+
+
+    Base URLs for the A/B testing API:
+
+
+    - `https://analytics.us.algolia.com`
+
+    - `https://analytics.de.algolia.com`
+
+    - `https://analytics.algolia.com` (alias of `analytics.us.algolia.com`)
+
+
+    Use the URL that matches your analytics region.'
   version: 2.0.0
 servers:
 - url: https://analytics.{region}.algolia.com
@@ -18,7 +31,7 @@ security:
 - appId: []
   apiKey: []
 tags:
-- name: abtesting
+- name: Ab Testing
 paths:
   /{path}:
     get:
@@ -44,7 +57,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-      - abtesting
+      - Ab Testing
     post:
       operationId: customPost
       requestBody:
@@ -74,7 +87,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-      - abtesting
+      - Ab Testing
     put:
       operationId: customPut
       requestBody:
@@ -104,7 +117,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-      - abtesting
+      - Ab Testing
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -128,11 +141,11 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-      - abtesting
+      - Ab Testing
   /2/abtests:
     post:
       tags:
-      - abtesting
+      - Ab Testing
       operationId: addABTests
       deprecated: true
       x-acl:
@@ -144,9 +157,7 @@ paths:
         Replaced by `POST /3/abtests`.
 
 
-        Creates a new A/B test.
-
-        '
+        Creates a new A/B test.'
       requestBody:
         required: true
         content:
@@ -195,7 +206,7 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
     get:
       tags:
-      - abtesting
+      - Ab Testing
       operationId: listABTests
       deprecated: true
       x-mcp-tool: true
@@ -208,9 +219,7 @@ paths:
         Replaced by `GET /3/abtests`.
 
 
-        Lists all A/B tests you configured for this application.
-
-        '
+        Lists all A/B tests you configured for this application.'
       parameters:
       - name: offset
         in: query
@@ -281,7 +290,7 @@ paths:
   /2/abtests/{id}:
     get:
       tags:
-      - abtesting
+      - Ab Testing
       operationId: getABTest
       deprecated: true
       x-acl:
@@ -293,9 +302,7 @@ paths:
         Replaced by `GET /3/abtests/{id}`.
 
 
-        Retrieves the details for an A/B test by its ID.
-
-        '
+        Retrieves the details for an A/B test by its ID.'
       parameters:
       - $ref: '#/components/parameters/ID'
       responses:
@@ -322,7 +329,7 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
     delete:
       tags:
-      - abtesting
+      - Ab Testing
       operationId: deleteABTest
       deprecated: true
       x-acl:
@@ -334,9 +341,7 @@ paths:
         Replaced by `DELETE /3/abtests/{id}`.
 
 
-        Deletes an A/B test by its ID.
-
-        '
+        Deletes an A/B test by its ID.'
       parameters:
       - $ref: '#/components/parameters/ID'
       responses:
@@ -364,7 +369,7 @@ paths:
   /2/abtests/{id}/stop:
     post:
       tags:
-      - abtesting
+      - Ab Testing
       operationId: stopABTest
       deprecated: true
       x-acl:
@@ -379,9 +384,7 @@ paths:
         Stops an A/B test by its ID.
 
 
-        You can''t restart stopped A/B tests.
-
-        '
+        You can''t restart stopped A/B tests.'
       parameters:
       - $ref: '#/components/parameters/ID'
       responses:
@@ -409,7 +412,7 @@ paths:
   /2/abtests/estimate:
     post:
       tags:
-      - abtesting
+      - Ab Testing
       operationId: estimateABTest
       deprecated: true
       x-acl:
@@ -421,9 +424,7 @@ paths:
         Replaced by `POST /3/abtests/estimate`.
 
 
-        Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
-
-        '
+        Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.'
       requestBody:
         required: true
         content:
@@ -486,12 +487,10 @@ paths:
       x-asynchronous-helper: false
       x-acl: []
       tags:
-      - abtesting
+      - Ab Testing
       operationId: setClientApiKey
       summary: Switch the API key used to authenticate requests
-      description: 'Switch the API key used to authenticate requests.
-
-        '
+      description: Switch the API key used to authenticate requests.
       parameters:
       - in: query
         name: apiKey
@@ -504,243 +503,44 @@ paths:
           description: No content.
 components:
   schemas:
-    ABTests:
-      oneOf:
-      - type: array
-        description: The list of A/B tests, null if no A/B tests are configured for this application.
-        items:
-          $ref: '#/components/schemas/ABTest'
-      - type: 'null'
-    currency:
+    EstimateABTestResponse:
       type: object
       properties:
-        currency:
-          type: string
-          description: Currency code.
-          example: USD
-        revenue:
-          type: number
-          format: double
-          description: Revenue for this currency.
-          example: 120
-        mean:
-          type: number
-          format: double
-          description: Mean for this currency.
-          example: 53.7
-        standardDeviation:
-          type: number
-          format: double
-          description: Standard deviation for this currency.
-          example: 12.3
-        winsorizedAmount:
-          type: number
-          format: double
-          description: The amount of revenue for this currency that was removed after capping purchase amounts to the 95th percentile.
-          example: 23
-    variants:
-      type: array
-      description: 'A/B test variants.
+        durationDays:
+          type: integer
+          format: int64
+          description: Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
+          example: 21
+        sampleSizes:
+          type: array
+          description: 'Sample size estimates for each variant. The first element is the control variant.
 
+            Each element is the estimated number of searches required to achieve the desired statistical significance.
 
-        The first variant is your _control_ index, typically your production index.
+            '
+          items:
+            type: integer
+            format: int64
+            description: Number of tracked searches needed to be able to detect the configured effect for the control variant.
+            example: 23415
+    customSearchParams:
+      type: object
+      description: 'Search parameters to add to the test variant.
 
-        The second variant is an index with changed settings that you want to test against the control.
+        Only use this parameter if the two variants use the same index.
 
         '
-      items:
-        $ref: '#/components/schemas/variant'
-    createdAt:
-      type: string
-      description: Date and time when the A/B test was created, in RFC 3339 format.
-      example: '2023-06-15T15:06:04.249906Z'
-    ABTest:
-      type: object
+      example:
+        typoTolerance: false
+        synonyms: false
       additionalProperties: false
       properties:
-        abTestID:
-          $ref: '#/components/schemas/abTestID'
-        clickSignificance:
-          description: 'A/B test significance calculated from click events.
-
-
-            Values of 0.95 or higher can be considered significant,
-
-            that is, the difference between A and B variants is _not_ due to random variations.
-
-            Lower values have a.
-
-            '
-          oneOf:
-          - type: number
-            format: double
-            example: 1
-          - type: 'null'
-        conversionSignificance:
-          description: 'A/B test significance calculated from conversion events.
-
-
-            Values of 0.95 or higher can be considered significant,
-
-            that is, the difference between A and B variants is _not_ due to random variations.
-
-            '
-          oneOf:
-          - type: number
-            format: double
-            example: 1
-          - type: 'null'
-        addToCartSignificance:
-          description: 'A/B test significance calculated from add-to-cart events.
-
-
-            Values of 0.95 or higher can be considered significant,
-
-            that is, the difference between A and B variants is _not_ due to random variations.
-
-            '
-          oneOf:
-          - type: number
-            format: double
-            example: 1
-          - type: 'null'
-        purchaseSignificance:
-          description: 'A/B test significance calculated from purchase events.
-
-
-            Values of 0.95 or higher can be considered significant,
-
-            that is, the difference between A and B variants is _not_ due to random variations.
-
-            '
-          oneOf:
-          - type: number
-            format: double
-            example: 1
-          - type: 'null'
-        revenueSignificance:
-          description: 'A/B test significance calculated from revenue data.
-
-
-            Values of 0.95 or higher can be considered significant,
-
-            that is, the difference between A and B variants is _not_ due to random variations.
-
-            '
-          oneOf:
-          - type: object
-            additionalProperties:
-              type: number
-              format: double
-              x-additionalPropertiesName: currency code
-            example:
-              USD: 1
-              EUR: 0.87
-          - type: 'null'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        endAt:
-          $ref: '#/components/schemas/endAt'
-        stoppedAt:
-          $ref: '#/components/schemas/stoppedAt'
-        name:
-          $ref: '#/components/schemas/name'
-        status:
-          $ref: '#/components/schemas/Status'
-        variants:
-          $ref: '#/components/schemas/variants'
-        configuration:
-          $ref: '#/components/schemas/ABTestConfiguration'
+        customSearchParameters:
+          type: object
       required:
-      - status
-      - name
-      - createdAt
-      - endAt
-      - updatedAt
-      - abTestID
-      - variants
-    Outliers:
-      type: object
-      description: Configuration for handling outliers.
-      properties:
-        exclude:
-          type: boolean
-          description: Whether to exclude outliers when calculating A/B test results.
-          default: true
-    ABTestConfiguration:
-      title: configuration
-      type: object
-      description: A/B test configuration.
-      properties:
-        featureFilters:
-          $ref: '#/components/schemas/FeatureFilters'
-        outliers:
-          $ref: '#/components/schemas/Outliers'
-        emptySearch:
-          $ref: '#/components/schemas/EmptySearch'
-        minimumDetectableEffect:
-          $ref: '#/components/schemas/MinimumDetectableEffect'
-    MinimumDetectableEffect:
-      type: object
-      description: Configuration for the smallest difference between test variants you want to detect.
-      properties:
-        size:
-          type: number
-          format: double
-          minimum: 0
-          maximum: 1
-          description: 'Smallest difference in an observable metric between variants.
-
-            For example, to detect a 10% difference between variants, set this value to 0.1.
-
-            '
-        metric:
-          $ref: '#/components/schemas/EffectMetric'
-      required:
-      - size
-      - metric
-    trafficPercentage:
-      type: integer
-      description: Percentage of search requests each variant receives.
-      minimum: 0
-      maximum: 100
-      example: 60
-    EmptySearch:
-      type: object
-      description: Configuration for handling empty searches.
-      properties:
-        exclude:
-          type: boolean
-          description: Whether to exclude empty searches when calculating A/B test results.
-    EffectMetric:
-      type: string
-      description: Metric for which you want to detect the smallest relative difference.
-      enum:
-      - addToCartRate
-      - clickThroughRate
-      - conversionRate
-      - purchaseRate
-    FeatureFilters:
-      type: object
-      description: Configuration of feature-based filters applied to the A/B test population.
-      properties:
-        dynamicReRanking:
-          type: boolean
-          description: Whether to apply Dynamic Re-Ranking feature filters.
-        aiPerso:
-          type: boolean
-          description: Whether to apply AI Personalization feature filters.
-        multiSignalRanking:
-          type: boolean
-          description: Whether to apply Multi-Signal Re-Ranking feature filters.
-    AddABTestsVariant:
-      oneOf:
-      - title: Variant
-        $ref: '#/components/schemas/abTestsVariant'
-      - title: Variant with search parameters
-        $ref: '#/components/schemas/abTestsVariantSearchParams'
+      - customSearchParameters
+      x-discriminator-fields:
+      - customSearchParameters
     variant:
       type: object
       additionalProperties: false
@@ -862,34 +662,211 @@ components:
       - clickCount
       - addToCartCount
       - purchaseCount
-    stoppedAt:
-      type:
-      - string
-      - 'null'
-      description: Date and time when the A/B test was stopped, in RFC 3339 format.
-      example: '2023-06-15T15:06:44.400601Z'
-    updatedAt:
+    index:
       type: string
-      description: Date and time when the A/B test was last updated, in RFC 3339 format.
-      example: '2023-06-15T15:06:44.400601Z'
-    ABTestResponse:
+      description: Index name of the A/B test variant (case-sensitive).
+      example: delcourt_production
+    FeatureFilters:
+      type: object
+      description: Configuration of feature-based filters applied to the A/B test population.
+      properties:
+        dynamicReRanking:
+          type: boolean
+          description: Whether to apply Dynamic Re-Ranking feature filters.
+        aiPerso:
+          type: boolean
+          description: Whether to apply AI Personalization feature filters.
+        multiSignalRanking:
+          type: boolean
+          description: Whether to apply Multi-Signal Re-Ranking feature filters.
+    ABTestConfiguration:
+      title: configuration
+      type: object
+      description: A/B test configuration.
+      properties:
+        featureFilters:
+          $ref: '#/components/schemas/FeatureFilters'
+        outliers:
+          $ref: '#/components/schemas/Outliers'
+        emptySearch:
+          $ref: '#/components/schemas/EmptySearch'
+        minimumDetectableEffect:
+          $ref: '#/components/schemas/MinimumDetectableEffect'
+    ABTest:
+      type: object
+      additionalProperties: false
+      properties:
+        abTestID:
+          $ref: '#/components/schemas/abTestID'
+        clickSignificance:
+          description: 'A/B test significance calculated from click events.
+
+
+            Values of 0.95 or higher can be considered significant,
+
+            that is, the difference between A and B variants is _not_ due to random variations.
+
+            Lower values have a.
+
+            '
+          oneOf:
+          - type: number
+            format: double
+            example: 1
+          - type: 'null'
+        conversionSignificance:
+          description: 'A/B test significance calculated from conversion events.
+
+
+            Values of 0.95 or higher can be considered significant,
+
+            that is, the difference between A and B variants is _not_ due to random variations.
+
+            '
+          oneOf:
+          - type: number
+            format: double
+            example: 1
+          - type: 'null'
+        addToCartSignificance:
+          description: 'A/B test significance calculated from add-to-cart events.
+
+
+            Values of 0.95 or higher can be considered significant,
+
+            that is, the difference between A and B variants is _not_ due to random variations.
+
+            '
+          oneOf:
+          - type: number
+            format: double
+            example: 1
+          - type: 'null'
+        purchaseSignificance:
+          description: 'A/B test significance calculated from purchase events.
+
+
+            Values of 0.95 or higher can be considered significant,
+
+            that is, the difference between A and B variants is _not_ due to random variations.
+
+            '
+          oneOf:
+          - type: number
+            format: double
+            example: 1
+          - type: 'null'
+        revenueSignificance:
+          description: 'A/B test significance calculated from revenue data.
+
+
+            Values of 0.95 or higher can be considered significant,
+
+            that is, the difference between A and B variants is _not_ due to random variations.
+
+            '
+          oneOf:
+          - type: object
+            additionalProperties:
+              type: number
+              format: double
+              x-additionalPropertiesName: currency code
+            example:
+              USD: 1
+              EUR: 0.87
+          - type: 'null'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        endAt:
+          $ref: '#/components/schemas/endAt'
+        stoppedAt:
+          $ref: '#/components/schemas/stoppedAt'
+        name:
+          $ref: '#/components/schemas/name'
+        status:
+          $ref: '#/components/schemas/Status'
+        variants:
+          $ref: '#/components/schemas/variants'
+        configuration:
+          $ref: '#/components/schemas/ABTestConfiguration'
+      required:
+      - status
+      - name
+      - createdAt
+      - endAt
+      - updatedAt
+      - abTestID
+      - variants
+    name:
+      type: string
+      description: A/B test name.
+      example: Custom ranking sales rank test
+    ABTests:
+      oneOf:
+      - type: array
+        description: The list of A/B tests, null if no A/B tests are configured for this application.
+        items:
+          $ref: '#/components/schemas/ABTest'
+      - type: 'null'
+    abTestsVariant:
       type: object
       additionalProperties: false
       properties:
         index:
           $ref: '#/components/schemas/index'
-        abTestID:
-          $ref: '#/components/schemas/abTestID'
-        taskID:
-          $ref: '#/components/schemas/taskID'
+        trafficPercentage:
+          $ref: '#/components/schemas/trafficPercentage'
+        description:
+          $ref: '#/components/schemas/description'
       required:
-      - abTestID
       - index
-      - taskID
-    index:
+      - trafficPercentage
+    MinimumDetectableEffect:
+      type: object
+      description: Configuration for the smallest difference between test variants you want to detect.
+      properties:
+        size:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: 'Smallest difference in an observable metric between variants.
+
+            For example, to detect a 10% difference between variants, set this value to 0.1.
+
+            '
+        metric:
+          $ref: '#/components/schemas/EffectMetric'
+      required:
+      - size
+      - metric
+    updatedAt:
       type: string
-      description: Index name of the A/B test variant (case-sensitive).
-      example: delcourt_production
+      description: Date and time when the A/B test was last updated, in RFC 3339 format.
+      example: '2023-06-15T15:06:44.400601Z'
+    endAt:
+      type: string
+      description: End date and time of the A/B test, in RFC 3339 format.
+      example: '2023-06-17T00:00:00Z'
+    createdAt:
+      type: string
+      description: Date and time when the A/B test was created, in RFC 3339 format.
+      example: '2023-06-15T15:06:04.249906Z'
+    AddABTestsVariant:
+      oneOf:
+      - title: Variant
+        $ref: '#/components/schemas/abTestsVariant'
+      - title: Variant with search parameters
+        $ref: '#/components/schemas/abTestsVariantSearchParams'
+    EmptySearch:
+      type: object
+      description: Configuration for handling empty searches.
+      properties:
+        exclude:
+          type: boolean
+          description: Whether to exclude empty searches when calculating A/B test results.
     filterEffects:
       type: object
       description: A/B test filter effects resulting from configuration settings.
@@ -926,6 +903,119 @@ components:
               type: integer
               description: Number of tracked searches removed from the A/B test.
               example: 237
+    description:
+      type: string
+      description: Description for this variant.
+      example: Current production index
+    variants:
+      type: array
+      description: 'A/B test variants.
+
+
+        The first variant is your _control_ index, typically your production index.
+
+        The second variant is an index with changed settings that you want to test against the control.
+
+        '
+      items:
+        $ref: '#/components/schemas/variant'
+    currencies:
+      type: object
+      description: A/B test currencies.
+      example:
+        USD:
+          currency: USD
+          revenue: 120
+          mean: 53.7
+          standardDeviation: 12.3
+          winsorizedAmount: 23
+        EUR:
+          currency: EUR
+          revenue: 100
+          mean: 43.7
+          standardDeviation: 10.3
+          winsorizedAmount: 10
+      additionalProperties:
+        $ref: '#/components/schemas/currency'
+        x-additionalPropertiesName: currency code
+    abTestID:
+      type: integer
+      description: Unique A/B test identifier.
+      example: 224
+    trafficPercentage:
+      type: integer
+      description: Percentage of search requests each variant receives.
+      minimum: 0
+      maximum: 100
+      example: 60
+    EffectMetric:
+      type: string
+      description: Metric for which you want to detect the smallest relative difference.
+      enum:
+      - addToCartRate
+      - clickThroughRate
+      - conversionRate
+      - purchaseRate
+    abTestsVariantSearchParams:
+      allOf:
+      - $ref: '#/components/schemas/abTestsVariant'
+      - $ref: '#/components/schemas/customSearchParams'
+    ErrorBase:
+      description: Error.
+      type: object
+      x-keep-model: true
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    currency:
+      type: object
+      properties:
+        currency:
+          type: string
+          description: Currency code.
+          example: USD
+        revenue:
+          type: number
+          format: double
+          description: Revenue for this currency.
+          example: 120
+        mean:
+          type: number
+          format: double
+          description: Mean for this currency.
+          example: 53.7
+        standardDeviation:
+          type: number
+          format: double
+          description: Standard deviation for this currency.
+          example: 12.3
+        winsorizedAmount:
+          type: number
+          format: double
+          description: The amount of revenue for this currency that was removed after capping purchase amounts to the 95th percentile.
+          example: 23
+    taskID:
+      type: integer
+      format: int64
+      example: 1514562690001
+      description: 'Unique identifier of a task.
+
+
+        A successful API response means that a task was added to a queue.
+
+        It might not run immediately.
+
+        You can check the task''s progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task) and this task ID.
+
+        '
+    stoppedAt:
+      type:
+      - string
+      - 'null'
+      description: Date and time when the A/B test was stopped, in RFC 3339 format.
+      example: '2023-06-15T15:06:44.400601Z'
     Status:
       type: string
       description: 'A/B test status.
@@ -951,128 +1041,70 @@ components:
       example: 2
       default: 0
       description: Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
-    customSearchParams:
+    Outliers:
       type: object
-      description: 'Search parameters to add to the test variant.
-
-        Only use this parameter if the two variants use the same index.
-
-        '
-      example:
-        typoTolerance: false
-        synonyms: false
-      additionalProperties: false
+      description: Configuration for handling outliers.
       properties:
-        customSearchParameters:
-          type: object
-      required:
-      - customSearchParameters
-      x-discriminator-fields:
-      - customSearchParameters
-    description:
-      type: string
-      description: Description for this variant.
-      example: Current production index
-    endAt:
-      type: string
-      description: End date and time of the A/B test, in RFC 3339 format.
-      example: '2023-06-17T00:00:00Z'
-    abTestsVariant:
+        exclude:
+          type: boolean
+          description: Whether to exclude outliers when calculating A/B test results.
+          default: true
+    ABTestResponse:
       type: object
       additionalProperties: false
       properties:
         index:
           $ref: '#/components/schemas/index'
-        trafficPercentage:
-          $ref: '#/components/schemas/trafficPercentage'
-        description:
-          $ref: '#/components/schemas/description'
+        abTestID:
+          $ref: '#/components/schemas/abTestID'
+        taskID:
+          $ref: '#/components/schemas/taskID'
       required:
+      - abTestID
       - index
-      - trafficPercentage
-    currencies:
-      type: object
-      description: A/B test currencies.
-      example:
-        USD:
-          currency: USD
-          revenue: 120
-          mean: 53.7
-          standardDeviation: 12.3
-          winsorizedAmount: 23
-        EUR:
-          currency: EUR
-          revenue: 100
-          mean: 43.7
-          standardDeviation: 10.3
-          winsorizedAmount: 10
-      additionalProperties:
-        $ref: '#/components/schemas/currency'
-        x-additionalPropertiesName: currency code
-    abTestID:
-      type: integer
-      description: Unique A/B test identifier.
-      example: 224
-    taskID:
-      type: integer
-      format: int64
-      example: 1514562690001
-      description: 'Unique identifier of a task.
-
-
-        A successful API response means that a task was added to a queue.
-
-        It might not run immediately.
-
-        You can check the task''s progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task) and this task ID.
-
-        '
-    EstimateABTestResponse:
-      type: object
-      properties:
-        durationDays:
-          type: integer
-          format: int64
-          description: Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
-          example: 21
-        sampleSizes:
-          type: array
-          description: 'Sample size estimates for each variant. The first element is the control variant.
-
-            Each element is the estimated number of searches required to achieve the desired statistical significance.
-
-            '
-          items:
-            type: integer
-            format: int64
-            description: Number of tracked searches needed to be able to detect the configured effect for the control variant.
-            example: 23415
-    ErrorBase:
-      description: Error.
-      type: object
-      x-keep-model: true
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    name:
-      type: string
-      description: A/B test name.
-      example: Custom ranking sales rank test
-    abTestsVariantSearchParams:
-      allOf:
-      - $ref: '#/components/schemas/abTestsVariant'
-      - $ref: '#/components/schemas/customSearchParams'
-  parameters:
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, for example `1/newFeature`.
-      required: true
+      - taskID
+  responses:
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+  headers:
+    x-ratelimit-limit:
+      description: Number of allowed requests per one minute.
+      example: 100
       schema:
-        type: string
-        example: /keys
+        type: integer
+    x-ratelimit-reset:
+      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
+      example: 1710682486
+      schema:
+        type: integer
+    x-ratelimit-remaining:
+      description: Number of remaining requests in the current period.
+      example: 99
+      schema:
+        type: integer
+  parameters:
     Parameters:
       name: parameters
       in: query
@@ -1087,47 +1119,14 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/abTestID'
-  headers:
-    x-ratelimit-remaining:
-      description: Number of remaining requests in the current period.
-      example: 99
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, for example `1/newFeature`.
+      required: true
       schema:
-        type: integer
-    x-ratelimit-reset:
-      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
-      example: 1710682486
-      schema:
-        type: integer
-    x-ratelimit-limit:
-      description: Number of allowed requests per one minute.
-      example: 100
-      schema:
-        type: integer
-  responses:
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    BadRequest:
-      description: Bad request or request arguments.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
+        type: string
+        example: /keys
   securitySchemes:
     appId:
       type: apiKey

@@ -1,0 +1,205 @@
+specification: API Commons Conformance
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: derived
+source: >-
+  Derived from the 15 first-party Algolia OpenAPI documents in openapi/ and the live probes recorded in
+  well-known/algolia-well-known.yml, mcp/algolia-mcp.yml and security/. Documentation claims were checked against
+  https://www.algolia.com/doc/ before any entry was marked conforms:true.
+description: >-
+  Cross-cutting standards conformance for Algolia. The headline finding is a split posture: the REST estate
+  conforms to almost no cross-cutting standard - no OAuth, no RFC 9457, no RFC 8594, no /.well-known anything -
+  while the MCP estate, which Algolia shipped much more recently, conforms cleanly to MCP, RFC 8414 and RFC 9728.
+  The newer surface is the standards-conformant one.
+
+standards:
+  - id: openapi
+    name: OpenAPI Specification
+    conforms: true
+    version: 3.0.2
+    evidence: >-
+      15 first-party bundled documents published by Algolia at
+      https://github.com/algolia/api-clients-automation/tree/main/specs/bundled, all declaring openapi: 3.0.2,
+      totalling 342 operations. Saved verbatim to openapi/. Algolia generates every API client and its docs from
+      these, so the specs are load-bearing internally rather than a marketing artifact.
+  - id: mcp
+    name: Model Context Protocol
+    conforms: true
+    evidence: >-
+      Two Algolia-managed remote MCP servers. https://mcp.algolia.com/mcp answered a tools/list POST with HTTP 401
+      and a correct WWW-Authenticate Bearer challenge naming its own resource metadata document. See mcp/algolia-mcp.yml.
+  - id: rfc9728
+    name: 'RFC 9728 - OAuth 2.0 Protected Resource Metadata'
+    conforms: true
+    evidence: >-
+      https://mcp.algolia.com/.well-known/oauth-protected-resource returns HTTP 200 with
+      {"resource":"https://mcp.algolia.com/mcp","authorization_servers":["https://dashboard.algolia.com"],"scopes_supported":["public"]},
+      and the 401 challenge points at it via resource_metadata. Saved verbatim to
+      well-known/algolia-mcp-oauth-protected-resource.json.
+  - id: rfc8414
+    name: 'RFC 8414 - OAuth 2.0 Authorization Server Metadata'
+    conforms: true
+    evidence: >-
+      https://mcp.algolia.com/.well-known/oauth-authorization-server returns HTTP 200 with issuer, authorization,
+      token, registration, introspection and revocation endpoints. Saved verbatim to
+      well-known/algolia-mcp-oauth-authorization-server.json.
+  - id: rfc7591
+    name: 'RFC 7591 - OAuth 2.0 Dynamic Client Registration'
+    conforms: true
+    evidence: 'registration_endpoint https://dashboard.algolia.com/2/oauth/register declared in the authorization server metadata.'
+  - id: rfc7636
+    name: 'RFC 7636 - PKCE'
+    conforms: true
+    evidence: 'code_challenge_methods_supported ["S256"] with token_endpoint_auth_methods_supported ["none"] - a public client that must use PKCE.'
+  - id: oauth2
+    name: OAuth 2.0
+    conforms: partial
+    evidence: >-
+      True for the MCP surface only. ZERO of the 15 OpenAPI documents declare an oauth2 securityScheme; the REST
+      APIs authenticate with x-algolia-application-id + x-algolia-api-key headers (Crawler uses HTTP Basic).
+      derive-oauth-scopes.py over openapi/ found 0 providers with oauth2, correctly.
+  - id: oidc
+    name: OpenID Connect
+    conforms: false
+    evidence: '/.well-known/openid-configuration returned 404 on www.algolia.com. Algolia offers SAML SSO for dashboard login (an Enterprise add-on), not OIDC for API access.'
+  - id: rfc9457
+    name: 'RFC 9457 - Problem Details for HTTP APIs'
+    conforms: false
+    evidence: >-
+      No application/problem+json response is declared anywhere in the 342 operations. Errors are flat
+      application/json {message, status}. Observed live on insights.algolia.io and analytics.algolia.com 404s.
+      See errors/algolia-problem-types.yml.
+  - id: rfc8594
+    name: 'RFC 8594 - Sunset HTTP Header'
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation response header is declared in any document. Algolia does mark 25 operations
+      deprecated:true IN the specs, which is a real machine signal, but there is no sunset date on any of them.
+      See lifecycle/algolia-lifecycle.yml.
+  - id: rfc9116
+    name: 'RFC 9116 - security.txt'
+    conforms: false
+    evidence: '/.well-known/security.txt returned 404 on www.algolia.com, algolia.com and dashboard.algolia.com; status.algolia.com returned a 200 SPA shell, not a document.'
+  - id: rfc9110-ratelimit
+    name: RateLimit header fields
+    conforms: partial
+    evidence: >-
+      x-ratelimit-limit / x-ratelimit-remaining / x-ratelimit-reset are declared as response headers in 6 of 15
+      documents (analytics, abtesting, abtesting-v3, insights, personalization, advanced-personalization). The
+      legacy X- prefixed form, not the RFC 9331 RateLimit-* form. The search, recommend, ingestion, crawler,
+      query-suggestions, monitoring, composition and agent-studio documents declare none.
+  - id: idempotency-key
+    name: 'Idempotency-Key header (draft-ietf-httpapi-idempotency-key-header)'
+    conforms: false
+    evidence: >-
+      No idempotency header appears in any of the 15 documents. Algolia relies on key-addressed upsert semantics
+      instead; batch operations containing addObject are NOT retry-safe. See conventions/algolia-conventions.yml.
+  - id: pagination
+    name: Documented pagination
+    conforms: true
+    evidence: >-
+      Four styles across the estate, all declared in the specs: page/hitsPerPage, offset/length, cursor (browse),
+      and page/itemsPerPage (ingestion). Documented per operation.
+  - id: json-schema
+    name: JSON Schema
+    conforms: true
+    evidence: 'Request and response schemas declared throughout via the OpenAPI 3.0.2 subset of JSON Schema; the Search document alone carries several hundred component schemas.'
+  - id: asyncapi
+    name: AsyncAPI
+    conforms: false
+    evidence: >-
+      No AsyncAPI document published; https://www.algolia.com/asyncapi.yaml returned 404 and none exists in the
+      api-clients-automation specs directory. NOT a gap in practice - Algolia is an event RECEIVER, not an emitter.
+      The Insights API ingests click/conversion/view/purchase events; Algolia publishes no outbound webhook or
+      streaming surface, so there is no event contract to write. Scored N/A rather than absent.
+  - id: webhooks
+    name: Outbound webhooks
+    conforms: false
+    evidence: >-
+      No webhooks root key in any document. The only occurrence of the word in the whole estate is a prose
+      description of an Ingestion task trigger ("Trigger the task after an event is received, such as, a webhook"),
+      i.e. Algolia consuming someone else's webhook.
+  - id: graphql
+    name: GraphQL
+    conforms: false
+    evidence: 'No /graphql surface published on any Algolia host; the entire API estate is REST.'
+  - id: grpc
+    name: gRPC / Protobuf
+    conforms: false
+    evidence: 'No .proto files published in the github.com/algolia organization or referenced from the docs.'
+  - id: soap
+    name: SOAP / WSDL
+    conforms: false
+    evidence: >-
+      ?wsdl probed on analytics.algolia.com, crawler.algolia.com and insights.algolia.io - all returned HTTP 200
+      with an EMPTY body, not a WSDL. Recorded as a miss, not a hit.
+  - id: llmstxt
+    name: llms.txt
+    conforms: true
+    evidence: >-
+      TWO published files, both HTTP 200: https://www.algolia.com/llms.txt (7,872 bytes, product-level) and
+      https://www.algolia.com/doc/llms.txt (99,988 bytes, 810 lines, a full documentation index in which every
+      docs page has a .md twin). Saved to llms/.
+  - id: agent-skills
+    name: Agent Skills
+    conforms: true
+    evidence: >-
+      18 provider-authored Agent Skills published at https://github.com/algolia/skills with proper
+      name/description/license/metadata frontmatter, installable as a Claude Code plugin marketplace. Saved
+      verbatim to skills/_provider/.
+  - id: a2a
+    name: 'A2A Agent Card'
+    conforms: false
+    evidence: >-
+      /.well-known/agent-card.json and /.well-known/agent.json probed on www.algolia.com, dashboard.algolia.com,
+      insights.algolia.io, analytics.algolia.com, status.algolia.com, crawler.algolia.com and mcp.algolia.com.
+      All 404 except status.algolia.com and crawler.algolia.com, which return their SPA shell for every path and
+      are therefore misses. No agent card exists.
+  - id: openapi-overlay
+    name: OpenAPI Overlay 1.0.0
+    conforms: false
+    evidence: 'Algolia publishes no overlays. The 15 overlays in overlays/ are API Evangelist enhancements over the Algolia documents, not provider-published.'
+
+domain_standards:
+  note: >-
+    REWARD-ONLY check. Algolia's market is hosted search and discovery, which has NO ratified interchange standard -
+    there is no SCIM, OData, OpenRTB or HL7 equivalent for a search index. The nearest neighbours are OpenSearch's
+    Search/Suggest description formats and SRU/CQL from library search, neither of which is used by any modern
+    commercial search API. Algolia is not penalised for the absence, and nothing was invented to fill the slot.
+  probed:
+    - id: opensearch-description
+      name: OpenSearch Description Document
+      conforms: false
+      evidence: 'No /opensearch.xml or type="application/opensearchdescription+xml" link published on www.algolia.com.'
+    - id: odata
+      name: OData
+      conforms: false
+      evidence: 'No $metadata surface; query semantics are Algolia-proprietary (filters, facetFilters, numericFilters).'
+    - id: scim
+      name: 'SCIM (urn:ietf:params:scim:schemas:*)'
+      conforms: false
+      evidence: 'No SCIM schema URN in any document. Algolia offers SAML SSO for dashboard login but publishes no SCIM provisioning contract.'
+  adjacent_standards_supported:
+    - id: mcp
+      note: 'The one standard Algolia''s market HAS converged on is MCP, and Algolia ships two conformant servers plus MCP tool consumption inside Agent Studio.'
+
+compliance:
+  note: >-
+    Algolia runs a published compliance program behind a Vanta-hosted Trust Center. See
+    security/algolia-trust-center.yml. The specific certifications could not be read machine-side - the Trust Center
+    is a JS-rendered SPA and the supporting support-centre article 403s to automated fetches - so no certification
+    name is asserted here.
+  trust_center: https://trust.algolia.com
+  detail: security/algolia-trust-center.yml
+
+summary:
+  conforms_true: 8
+  conforms_partial: 2
+  conforms_false: 12
+  headline: >-
+    Algolia's REST estate is standards-light and contract-heavy: 342 operations across 15 first-party OpenAPI
+    documents, but no OAuth, no RFC 9457, no RFC 8594, no security.txt and no /.well-known anything on the REST or
+    web hosts. Its MCP estate is the opposite - small, new, and conformant to MCP, RFC 8414, RFC 9728, RFC 7591
+    and PKCE. The agent-facing surface is where Algolia adopted standards.

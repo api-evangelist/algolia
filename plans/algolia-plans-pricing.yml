@@ -4,136 +4,166 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Algolia
 providerId: algolia
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-reconciled: true
+modified: '2026-08-27'
+generated: '2026-08-27'
+method: searched
+source: https://www.algolia.com/pricing/
+sources:
+  - https://www.algolia.com/pricing/
+  - https://www.algolia.com/doc/guides/scaling/algolia-service-limits
+supersedes: >-
+  The 2026-05-04 bulk-sweep version of this file, which was method:generated and listed a Build/Grow/Grow Plus/
+  Elevate ladder with 1M records and 10K searches on the free tier. Algolia has since renamed the entry tier to
+  Free and restated its allowances. Figures below were read from the live pricing page on 2026-08-27.
 tags:
   - Search
   - Discovery
-description: Algolia plans across Build (free), Grow, Grow Plus, Elevate.
-sources:
-  - https://www.algolia.com/pricing/
+description: >-
+  Four tiers. Three are self-serve and usage-priced; the fourth is annual-contract, contact-sales. The pricing
+  meter is two-dimensional - search REQUESTS and RECORDS are metered and billed separately, and the overage rate
+  on search requests is what separates Grow from Grow Plus.
+billing_model: usage-based
+metered_dimensions:
+  - name: search requests
+    unit: 1,000 requests
+  - name: records
+    unit: 1,000 records
+plan_count: 4
 plans:
-  - id: algolia-build
-    name: Build
+  - id: algolia-free
+    name: Free
     type: freemium
-    description: Free; 1M records, 10K searches/mo.
+    price: '0.00'
+    currency: USD
+    timeFrame: month
+    contract_required: false
+    description: 'Free tier, no credit card required.'
     entries:
+      - label: Search requests
+        name: search_requests
+        type: quota
+        metric: search_request
+        limit: 10000
+        timeFrame: month
+        unit: 1
+        price: '0.00'
+        quote: '10K search requests/month'
       - label: Records
         name: records
         type: quota
         metric: record
-        limit: 1000000
+        limit: 50000
         timeFrame: month
-        geo: global
         unit: 1
         price: '0.00'
-        userMultiplied: false
-      - label: Searches
-        name: searches
-        type: quota
-        metric: search
-        limit: 10000
-        timeFrame: month
-        geo: global
-        unit: 1
-        price: '0.00'
-        userMultiplied: false
-    elements:
-      - name: Keyword search + browse
-      - name: Query suggestions
-      - name: AI Dynamic Re-ranking
-      - name: AI Synonyms
-      - name: Personalization
-      - name: 10K AI Recommendation requests
-      - name: 10K crawls/mo
+        quote: '50K records included'
+    limits:
+      application_size: 1 GB
+      index_size: 1 GB
+      indices_per_application: 10
+      record_size: 10 KB
+      synonyms_per_index: 1000
   - id: algolia-grow
     name: Grow
-    type: paid
-    description: $0.50 per 1K searches above 10K free; $0.40 per 1K records above 100K.
+    type: pay-as-you-go
+    price: null
+    price_note: No base price published; billed on usage above the included allowances.
+    currency: USD
+    timeFrame: month
+    contract_required: false
+    description: 'Pay-as-you-go, monthly billing, no contract required.'
     entries:
-      - label: Searches above free
-        name: searches_extra
-        type: metered
-        metric: search
-        limit: -1
+      - label: Search requests
+        name: search_requests
+        type: quota
+        metric: search_request
+        limit: 10000
         timeFrame: month
-        geo: global
-        unit: 1000
-        price: '0.50'
-        userMultiplied: false
-      - label: Records above free
-        name: records_extra
-        type: metered
+        overage_price: '0.50'
+        overage_unit: 1000
+        currency: USD
+        quote: '10K search requests /month included then $0.50 per additional 1K'
+      - label: Records
+        name: records
+        type: quota
         metric: record
-        limit: -1
+        limit: 100000
         timeFrame: month
-        geo: global
-        unit: 1000
-        price: '0.40'
-        userMultiplied: false
-    elements:
-      - name: 'Rules: 10/index'
-      - name: Manual synonyms
-      - name: Data transformation
-      - name: 30 days analytics
-      - name: US/UK/EU hosting
+        overage_price: '0.40'
+        overage_unit: 1000
+        currency: USD
+        quote: '100K records included then $0.40 per additional 1K records'
+    limits:
+      indices_per_application: 50
   - id: algolia-grow-plus
     name: Grow Plus
-    type: paid
-    description: $1.75 per 1K searches above 10K free.
+    type: pay-as-you-go
+    price: null
+    price_note: No base price published; billed on usage above the included allowances.
+    currency: USD
+    timeFrame: month
+    contract_required: false
+    badge: NEW
+    description: >-
+      Same included allowances as Grow, with a search-request overage rate 3.5x higher ($1.75 vs $0.50 per 1K).
+      The pricing page does not state on this row which additional capabilities the higher rate buys.
     entries:
-      - label: Searches above free
-        name: searches_extra
-        type: metered
-        metric: search
-        limit: -1
+      - label: Search requests
+        name: search_requests
+        type: quota
+        metric: search_request
+        limit: 10000
         timeFrame: month
-        geo: global
-        unit: 1000
-        price: '1.75'
-        userMultiplied: false
-      - label: Records above free
-        name: records_extra
-        type: metered
+        overage_price: '1.75'
+        overage_unit: 1000
+        currency: USD
+        quote: '10K search requests /month included then $1.75 per additional 1K'
+      - label: Records
+        name: records
+        type: quota
         metric: record
-        limit: -1
+        limit: 100000
         timeFrame: month
-        geo: global
-        unit: 1000
-        price: '0.40'
-        userMultiplied: false
-    elements:
-      - name: 'Rules: 10,000/index'
-      - name: AI Synonyms
-      - name: AI Ranking
-      - name: Advanced Personalization
-      - name: Query Categorization
-      - name: Collections
-      - name: 90 days analytics
+        overage_price: '0.40'
+        overage_unit: 1000
+        currency: USD
+        quote: '100K records included then $0.40 per additional 1K records'
   - id: algolia-elevate
     name: Elevate
     type: enterprise
-    description: Custom annual contract.
+    price: null
+    price_note: Contact sales - "Request pricing". Volume-based discounts available.
+    currency: USD
+    contract_required: true
+    contract_term: annual
+    description: 'Custom search requests and records; annual contract required.'
     entries:
-      - label: Annual (custom)
-        name: annual
-        type: subscription
-        metric: year
-        limit: -1
-        timeFrame: year
-        geo: global
-        unit: 1
-        price: custom
-        userMultiplied: false
-    elements:
-      - name: NeuralSearch
-      - name: AI Collections
-      - name: Smart Groups
-      - name: Real-time personalization
-      - name: 99.999% availability
-      - name: SSO
-      - name: Enterprise support
-      - name: Enhanced SLA
+      - label: Search requests
+        name: search_requests
+        type: custom
+        metric: search_request
+        limit: null
+        quote: 'Custom search requests and records'
+      - label: Records
+        name: records
+        type: custom
+        metric: record
+        limit: null
+    limits:
+      collections_per_index: 1000
+add_ons:
+  - name: Enterprise add-on
+    url: https://dashboard.algolia.com/info/plans/
+    includes: [SAML SSO, AES256 encryption via Algolia Vault, index restoration assistance, multi-cluster user-ID mapping]
+    note: >-
+      Referenced from the security and delete-indices documentation rather than priced on the pricing page.
+free_products:
+  - name: DocSearch
+    url: https://docsearch.algolia.com/
+    price: '0.00'
+    note: >-
+      Free hosted documentation search with its own limits - 25 GB application/index size, 20 indices, 3 queries
+      per second, 10 team members. Separate from the plan ladder above.
+mcp_pricing:
+  note: 'Algolia states MCP usage counts toward the existing plan and carries no separate fee.'
+  source: https://www.algolia.com/doc/guides/model-context-protocol

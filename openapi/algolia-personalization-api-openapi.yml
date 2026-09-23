@@ -2,7 +2,18 @@ openapi: 3.2.0
 info:
   title: Personalization API
   summary: The Personalization API lets you access user profiles built from the personalization strategy
-  description: "## Base URLs\n\nBase URLs for the Personalization API:\n\n- `https://personalization.us.algolia.com`\n- `https://personalization.eu.algolia.com`\n\nUse the URL that matches your [analytics region](https://dashboard.algolia.com/account/infrastructure/analytics).\n\n**All requests must use HTTPS.**\n\n## Authentication\n\nAdd these headers to authenticate requests:\n\n- `x-algolia-application-id`. Your Algolia application ID.\n- `x-algolia-api-key`. An API key with the necessary permissions to make the request.\n  The required access control list (ACL) to make a request is listed in each endpoint's reference.\n\nYou can find your application ID and API key in the [Algolia dashboard](https://dashboard.algolia.com/account/api-keys).\n\n## Request format\n\nRequest bodies must be JSON objects.\n\n## Response status and errors\n\nThe Personalization API returns JSON responses.\nSince JSON doesn't guarantee any specific ordering, don't rely on the order of attributes in the API response.\n\nSuccessful responses return `2xx` statuses. Client errors return `4xx` statuses. Server errors return `5xx` statuses.\nError responses have a `message` property with more information.\n\n## Rate limiting\n\nWhen making requests to the Personalization API, you are limited to 40 API calls per second per application.\n\nThe following headers provide information about your current limit:\n\n- `x-ratelimit-limit`: The number of requests allowed every second.\n- `x-ratelimit-remaining`: The number of requests remaining in the current\nsecond period.\n- `x-ratelimit-reset`: Timestamp when the next time period starts, measured in seconds since the Unix epoch.\n\n## Version\n\nThe current version of the Personalization API is version 1, indicated by the `/1/` in each endpoint's URL.\n"
+  description: '## Base URLs
+
+
+    Base URLs for the Personalization API:
+
+
+    - `https://personalization.us.algolia.com`
+
+    - `https://personalization.eu.algolia.com`
+
+
+    Use the URL that matches your analytics region.'
   version: 1.0.0
 servers:
 - url: https://personalization.{region}.algolia.com
@@ -17,7 +28,7 @@ security:
 - appId: []
   apiKey: []
 tags:
-- name: personalization
+- name: Personalization
 paths:
   /{path}:
     get:
@@ -43,7 +54,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-      - personalization
+      - Personalization
     post:
       operationId: customPost
       requestBody:
@@ -73,7 +84,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-      - personalization
+      - Personalization
     put:
       operationId: customPut
       requestBody:
@@ -103,7 +114,7 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-      - personalization
+      - Personalization
     delete:
       operationId: customDelete
       summary: Send requests to the Algolia REST API
@@ -127,11 +138,11 @@ paths:
         '404':
           $ref: '#/components/responses/IndexNotFound'
       tags:
-      - personalization
+      - Personalization
   /1/profiles/personalization/{userToken}:
     get:
       tags:
-      - personalization
+      - Personalization
       operationId: getUserTokenProfile
       x-acl:
       - recommendation
@@ -186,7 +197,7 @@ paths:
   /1/profiles/{userToken}:
     delete:
       tags:
-      - personalization
+      - Personalization
       operationId: deleteUserProfile
       x-acl:
       - recommendation
@@ -194,9 +205,7 @@ paths:
       description: 'Deletes a user profile.
 
 
-        The response includes a date and time when the user profile can safely be considered deleted.
-
-        '
+        The response includes a date and time when the user profile can safely be considered deleted.'
       parameters:
       - $ref: '#/components/parameters/UserToken'
       responses:
@@ -239,7 +248,7 @@ paths:
   /1/strategies/personalization:
     get:
       tags:
-      - personalization
+      - Personalization
       operationId: getPersonalizationStrategy
       x-acl:
       - recommendation
@@ -269,7 +278,7 @@ paths:
           $ref: '#/components/responses/IndexNotFound'
     post:
       tags:
-      - personalization
+      - Personalization
       operationId: setPersonalizationStrategy
       x-acl:
       - recommendation
@@ -311,12 +320,10 @@ paths:
       x-asynchronous-helper: false
       x-acl: []
       tags:
-      - personalization
+      - Personalization
       operationId: setClientApiKey
       summary: Switch the API key used to authenticate requests
-      description: 'Switch the API key used to authenticate requests.
-
-        '
+      description: Switch the API key used to authenticate requests.
       parameters:
       - in: query
         name: apiKey
@@ -329,18 +336,31 @@ paths:
           description: No content.
 components:
   schemas:
-    facetsScoring:
+    userToken:
+      type: string
+      description: 'Unique pseudonymous or anonymous user identifier.
+
+
+        This helps with analytics and click and conversion events.
+
+        For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
+
+        '
+      example: test-user-123
+      x-categories:
+      - Personalization
+    score:
+      type: integer
+      description: Event score.
+    ErrorBase:
+      description: Error.
       type: object
-      additionalProperties: false
-      required:
-      - score
-      - facetName
+      x-keep-model: true
+      additionalProperties: true
       properties:
-        score:
-          $ref: '#/components/schemas/score'
-        facetName:
+        message:
           type: string
-          description: Facet attribute name.
+          example: Invalid Application-Id or API-Key
     EventType:
       title: eventType
       type: string
@@ -387,6 +407,18 @@ components:
             If set to 0, personalization has no impact on the search results.
 
             '
+    facetsScoring:
+      type: object
+      additionalProperties: false
+      required:
+      - score
+      - facetName
+      properties:
+        score:
+          $ref: '#/components/schemas/score'
+        facetName:
+          type: string
+          description: Facet attribute name.
     eventsScoring:
       type: object
       additionalProperties: false
@@ -402,79 +434,6 @@ components:
           description: Event name.
         eventType:
           $ref: '#/components/schemas/EventType'
-    score:
-      type: integer
-      description: Event score.
-    userToken:
-      type: string
-      description: 'Unique pseudonymous or anonymous user identifier.
-
-
-        This helps with analytics and click and conversion events.
-
-        For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
-
-        '
-      example: test-user-123
-      x-categories:
-      - Personalization
-    ErrorBase:
-      description: Error.
-      type: object
-      x-keep-model: true
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-  responses:
-    BadRequest:
-      description: Bad request or request arguments.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-  parameters:
-    UserToken:
-      name: userToken
-      in: path
-      required: true
-      description: Unique identifier representing a user for which to fetch the personalization profile.
-      schema:
-        $ref: '#/components/schemas/userToken'
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, for example `1/newFeature`.
-      required: true
-      schema:
-        type: string
-        example: /keys
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
   headers:
     x-ratelimit-reset:
       description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
@@ -491,6 +450,54 @@ components:
       example: 100
       schema:
         type: integer
+  responses:
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+  parameters:
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, for example `1/newFeature`.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    UserToken:
+      name: userToken
+      in: path
+      required: true
+      description: Unique identifier representing a user for which to fetch the personalization profile.
+      schema:
+        $ref: '#/components/schemas/userToken'
   securitySchemes:
     appId:
       type: apiKey

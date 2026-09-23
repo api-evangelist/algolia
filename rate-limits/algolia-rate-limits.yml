@@ -4,36 +4,190 @@ schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main
 provider: Algolia
 providerId: algolia
 created: '2026-05-04'
-# Provenance stamped 2026-08-11: this artifact was written by the API Evangelist
-# bulk sweep dated 2026-05-04, not harvested from the provider. See roadmap#35.
-method: generated
-modified: '2026-05-04'
-reconciled: true
+modified: '2026-08-27'
+generated: '2026-08-27'
+method: searched
+source: https://www.algolia.com/doc/guides/scaling/algolia-service-limits
+sources:
+  - https://www.algolia.com/doc/guides/scaling/algolia-service-limits
+  - https://www.algolia.com/pricing/
+  - https://github.com/algolia/api-clients-automation/tree/main/specs/bundled
+supersedes: >-
+  The 2026-05-04 bulk-sweep version of this file, which was method:generated and recorded only "scales with plan"
+  for the two headline limits. Every figure below is now quoted from Algolia's own service-limits page, and the
+  response headers were read from the first-party OpenAPI documents.
 tags:
   - Rate Limiting
   - Search
-description: Algolia per-application rate limits scale with plan.
-sources:
-  - https://www.algolia.com/pricing/
-  - https://www.algolia.com/doc/guides/scaling/algolia-service-limits/
-headers: {}
+description: >-
+  Algolia publishes a genuinely detailed service-limits page. The important structural finding for an agent is that
+  the runtime signal is INCONSISTENT across the estate: the Analytics-family APIs return x-ratelimit-* response
+  headers, and the Search-family APIs return none at all.
+
+headers:
+  x-ratelimit-limit:
+    description: Request quota for the window.
+    declared_in: [analytics, abtesting, abtesting-v3, insights, personalization, advanced-personalization]
+  x-ratelimit-remaining:
+    description: Requests remaining in the window.
+    declared_in: [analytics, abtesting, abtesting-v3, insights, personalization, advanced-personalization]
+  x-ratelimit-reset:
+    description: When the window resets.
+    declared_in: [analytics, abtesting, abtesting-v3, insights, personalization, advanced-personalization]
+headers_absent_from:
+  - search
+  - recommend
+  - ingestion
+  - crawler
+  - query-suggestions
+  - monitoring
+  - composition
+  - agent-studio
+  - algoliasearch
+headers_note: >-
+  6 of 15 first-party OpenAPI documents declare rate-limit response headers; 9 declare none. An agent driving
+  indexing or search therefore has NO runtime budget signal and must respect the documented 100-pending-request
+  throttling limit by construction. Note the legacy X- prefixed form rather than the RFC 9331 RateLimit-* form.
+  No Retry-After header is declared anywhere in the estate.
+retry_after: false
 responseCodes:
   throttled: 429
+
 limits:
-  - name: Search operations
-    scope: app
-    metric: operations_per_second
-    limit: scales with plan
-  - name: Indexing operations
-    scope: app
-    metric: operations_per_second
-    limit: scales with plan
-  - name: Records per index
-    scope: index
-    metric: records
-    limit: 100000000
-  - name: Index size per record
-    scope: record
-    metric: KB
+  - name: Pending requests (throttling limit)
+    scope: application
+    metric: concurrent_pending_requests
     limit: 100
-    timeFrame: record
+    note: >-
+      The operative rate limit for the Search API. Algolia queues up to 5,000 pending requests but throttles at 100
+      pending, which is the number an agent must design around.
+  - name: Pending requests (queue ceiling)
+    scope: application
+    metric: pending_requests
+    limit: 5000
+  - name: Analytics API calls
+    scope: application
+    metric: calls_per_minute
+    limit: 100
+    timeFrame: minute
+    quote: '100 API calls per minute per app'
+  - name: Indexing rate
+    scope: application
+    metric: indexing_operations_per_unit
+    limit: 10000
+    quote: '10,000 indexing operations per Unit (as applicable)'
+  - name: Ingestion push endpoint
+    scope: ip
+    metric: calls_per_minute
+    limit: 2000
+    timeFrame: minute
+    quote: '2000 calls per minute per IP'
+  - name: Ingestion observability endpoints
+    scope: ip
+    metric: calls_per_minute
+    limit: 2000
+    timeFrame: minute
+  - name: Ingestion runTask
+    scope: task
+    metric: calls_per_10_minutes
+    limit: 10
+    timeFrame: 10 minutes
+    quote: '10 calls per 10 minute per taskID'
+  - name: Ingestion other endpoints
+    scope: ip
+    metric: calls_per_minute
+    limit: 200
+    timeFrame: minute
+  - name: Agent Studio completions
+    scope: application
+    metric: completions_per_minute
+    limit: 3000
+    timeFrame: minute
+  - name: AI Assist tokens
+    scope: application
+    metric: combined_tokens_per_day
+    limit: 25000000
+    timeFrame: day
+  - name: DocSearch queries
+    scope: application
+    metric: queries_per_second
+    limit: 3
+    note: Applies to the free hosted DocSearch tier only.
+  - name: Insights tag processing
+    scope: index
+    metric: unique_tag_combinations_per_5_minutes
+    limit: 1750
+    timeFrame: 5 minutes
+
+quotas:
+  - name: Application size
+    scope: application
+    limit: 100 GB (1 GB on the Free plan)
+  - name: Index size
+    scope: index
+    limit: 100 GB (1 GB on the Free plan)
+  - name: Indices per application
+    scope: application
+    limit: 1,000 (Premium), 50 (Grow), 10 (Free)
+  - name: Record size
+    scope: record
+    limit: 10 KB to 100 KB by plan (10 KB maximum on the Free plan)
+  - name: objectID length
+    scope: record
+    limit: 200 characters
+  - name: Indexing request body size
+    scope: request
+    limit: 1 GB per batch
+  - name: Search request body size
+    scope: request
+    limit: 50 MB per request
+  - name: Query size
+    scope: request
+    limit: 512 bytes
+  - name: Query parameter size
+    scope: request
+    limit: 16 KiB
+  - name: Pagination depth
+    scope: query
+    limit: 20000
+    note: Hits reachable through page/hitsPerPage pagination. Use browse (cursor) to walk beyond it.
+  - name: Values per facet per query
+    scope: query
+    limit: 1000
+  - name: Synonyms per index
+    scope: index
+    limit: 10,000 (1,000 on the Free plan)
+  - name: API keys per application
+    scope: application
+    limit: 5000
+  - name: Virtual replicas per index
+    scope: index
+    limit: 20
+  - name: Number of filters
+    scope: query
+    limit: 1000
+  - name: Data transformations
+    scope: application
+    limit: 5,000,000 per month
+  - name: Fetch enrichment requests
+    scope: application
+    limit: 1,000,000 per month, counted within the 5,000,000 transformation budget
+  - name: Agent Studio agents
+    scope: application
+    limit: 500
+  - name: Agent Studio conversations retained
+    scope: application
+    limit: 100,000 (90-day retention)
+  - name: MCP server instances
+    scope: application
+    limit: 5
+    source: https://www.algolia.com/doc/guides/model-context-protocol/public-mcp
+  - name: Indices exposed per Public MCP instance
+    scope: mcp-instance
+    limit: 5
+    source: https://www.algolia.com/doc/guides/model-context-protocol/public-mcp
+
+limit_count: 12
+plan_dependent_note: >-
+  Search and indexing OPERATION volume is a plan quota rather than a rate limit - see
+  plans/algolia-plans-pricing.yml for the per-tier search request and record allowances and overage pricing.

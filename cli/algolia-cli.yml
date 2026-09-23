@@ -1,0 +1,91 @@
+specification: API Commons CLI
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: searched
+source: https://www.algolia.com/doc/tools/cli/get-started
+sources:
+  - https://www.algolia.com/doc/tools/cli/get-started
+  - https://github.com/algolia/cli
+name: Algolia CLI
+binary: algolia
+repo: https://github.com/algolia/cli
+latest_release:
+  tag: v1.16.0
+  published: '2026-08-04'
+  source: https://api.github.com/repos/algolia/cli/releases/latest
+description: >-
+  First-party CLI for working with Algolia's APIs from a terminal, script, or CI pipeline. Algolia positions it as
+  the WRITE path for agents - its MCP servers are read-only, and the MCP docs explicitly redirect create/update/delete
+  work to the CLI, the dashboard, or an API client.
+platforms:
+  os: [macOS, Linux, Windows]
+  arch: [amd64, arm64]
+install:
+  - method: npx
+    command: npx @algolia/cli --help
+  - method: npm
+    command: npm install -g @algolia/cli
+  - method: homebrew
+    command: brew install algolia
+    tap: https://github.com/algolia/homebrew-algolia-cli
+  - method: chocolatey
+    command: choco install algolia
+  - method: deb
+    command: sudo dpkg -i /path/to/algolia_*.deb
+  - method: rpm
+    command: sudo rpm -i /path/to/algolia_*.rpm
+  - method: archive
+    command: tar xf algolia_*_macOS_*.tar.gz
+    url: https://github.com/algolia/cli/releases
+authentication:
+  - method: oauth-browser
+    command: algolia auth login
+    note: Opens a browser to sign in or create an account.
+  - method: oauth-headless
+    command: algolia auth login --no-browser
+    note: Prints an authorization URL for SSH sessions and containers.
+  - method: status
+    command: algolia auth status
+  - method: flags
+    note: '--application-id and --api-key, or the equivalent environment variables, for CI and scripts.'
+    docs: https://www.algolia.com/doc/tools/cli/authentication
+commands:
+  - group: auth
+    commands: [auth login, auth status]
+    purpose: Sign in and check credential state.
+  - group: application
+    commands: [application list, application select]
+    purpose: >-
+      Choose the working Algolia application. `application select` creates a local profile and an API key so
+      --application-id/--api-key are not needed on every command.
+  - group: objects
+    commands: [objects import]
+    purpose: Import newline-delimited JSON records into an index.
+    example: algolia objects import MOVIES -F movies.ndjson
+  - group: search
+    commands: [search]
+    purpose: Query an index from the terminal.
+    example: algolia search MOVIES --query "toy story"
+  - group: indices
+    commands: [indices list]
+    purpose: List the indices in the selected application.
+key_flows:
+  - name: First index and search
+    steps:
+      - algolia auth login
+      - algolia application select
+      - algolia objects import MOVIES -F movies.ndjson
+      - algolia search MOVIES --query "toy story"
+automation:
+  docs: https://www.algolia.com/doc/tools/cli/automation
+  features: [structured output, exit codes, dry runs, shell completion]
+  note: >-
+    Algolia documents the CLI for "scripts, CI, and agent workflows" and ships an agent-facing Skill for it
+    (skills/_provider/algolia-cli.md), which is why it is treated here as an agent surface and not only a
+    developer convenience.
+telemetry:
+  docs: https://www.algolia.com/doc/tools/cli/telemetry
+  opt_out: true
+package: packages/algolia-packages.yml

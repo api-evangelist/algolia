@@ -1,0 +1,1783 @@
+specification: API Commons Data Model
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: derived
+source: Derived from the components.schemas $ref graph and id-reference fields across the 15 first-party Algolia OpenAPI documents
+  in openapi/.
+shape_note: 'Algolia is unusual in that its PRIMARY entity - the record - has NO schema. Records are free-form caller-supplied
+  JSON, so the $ref graph below describes the CONTROL PLANE (indices, settings, rules, tasks, connectors, experiments), not
+  the searched data. An agent modelling Algolia has to hold both: a rich, fully specified configuration model and a completely
+  open data model.'
+root_entities:
+- name: Application
+  identifier: appId
+  scope: servers[] variable
+  description: The top-level Algolia tenant, addressed as a server variable rather than a schema. Owns indices, API keys,
+    analytics, connectors, and MCP server instances. This is why almost every Algolia base URL is templated.
+- name: Index
+  identifier: indexName
+  description: A searchable dataset of records plus its settings, replicas, rules and synonyms. Path parameter on most Search,
+    Recommend, Query Suggestions and Analytics operations.
+- name: Record
+  identifier: objectID
+  description: 'A single searchable JSON object. Free-form: no schema, max 10-100 KB by plan, objectID max 200 characters.
+    addObject mints an objectID; saveObject requires one.'
+- name: Task
+  identifier: taskID
+  description: Every write enqueues a job and returns a taskID. The write is not visible until the task completes.
+identifier_conventions:
+- field: objectID
+  entity: Record
+  note: Caller-supplied or Algolia-minted. Whether it is supplied is what makes a write idempotent - see conventions/algolia-conventions.yml.
+- field: indexName
+  entity: Index
+  note: Path parameter, not an opaque ID - the human-readable name IS the key.
+- field: taskID
+  entity: Task
+  note: Poll with waitTask/getTask before reading back.
+- field: queryID
+  entity: Query
+  note: Returned by search when clickAnalytics is enabled; the join key between a search and the Insights events attributed
+    to it.
+- field: userToken
+  entity: User
+  note: Caller-supplied pseudonymous identifier linking Insights events to Personalization affinity profiles. The only cross-product
+    identity in the estate.
+cross_product_joins:
+- from: Search (queryID)
+  to: Insights (queryID)
+  note: Attributes a click or conversion to the search that produced it.
+- from: Insights (userToken)
+  to: Personalization / Advanced Personalization
+  note: Builds the affinity profile that re-ranks results.
+- from: Insights events
+  to: Recommend models
+  note: Trains bought-together, related-products, trending and looking-similar.
+- from: Insights events
+  to: A/B Testing
+  note: Scores variants on click-through and conversion.
+entities:
+- name: baseRecommendIndexSettings
+  spec: algolia-algoliasearch-api-openapi.yml
+  identifiers: []
+  property_count: 36
+  description: null
+  relationships:
+  - type: has_one
+    target: attributesToRetrieve
+    via: attributesToRetrieve
+  - type: has_one
+    target: relevancyStrictness
+    via: relevancyStrictness
+  - type: has_one
+    target: attributesToHighlight
+    via: attributesToHighlight
+  - type: has_one
+    target: attributesToSnippet
+    via: attributesToSnippet
+  - type: has_one
+    target: highlightPreTag
+    via: highlightPreTag
+  - type: has_one
+    target: highlightPostTag
+    via: highlightPostTag
+  - type: has_one
+    target: snippetEllipsisText
+    via: snippetEllipsisText
+  - type: has_one
+    target: restrictHighlightAndSnippetArrays
+    via: restrictHighlightAndSnippetArrays
+  - type: has_one
+    target: minWordSizefor1Typo
+    via: minWordSizefor1Typo
+  - type: has_one
+    target: minWordSizefor2Typos
+    via: minWordSizefor2Typos
+  - type: has_one
+    target: typoTolerance
+    via: typoTolerance
+  - type: has_one
+    target: allowTyposOnNumericTokens
+    via: allowTyposOnNumericTokens
+  - type: has_one
+    target: disableTypoToleranceOnAttributes
+    via: disableTypoToleranceOnAttributes
+  - type: has_one
+    target: ignorePlurals
+    via: ignorePlurals
+  - type: has_one
+    target: removeStopWords
+    via: removeStopWords
+  - type: has_one
+    target: queryLanguages
+    via: queryLanguages
+  - type: has_one
+    target: decompoundQuery
+    via: decompoundQuery
+  - type: has_one
+    target: enablePersonalization
+    via: enablePersonalization
+  - type: has_one
+    target: queryType
+    via: queryType
+  - type: has_one
+    target: removeWordsIfNoResults
+    via: removeWordsIfNoResults
+  - type: has_one
+    target: advancedSyntax
+    via: advancedSyntax
+  - type: has_one
+    target: optionalWords
+    via: optionalWords
+  - type: has_one
+    target: disableExactOnAttributes
+    via: disableExactOnAttributes
+  - type: has_one
+    target: exactOnSingleWordQuery
+    via: exactOnSingleWordQuery
+  - type: has_one
+    target: IndexSettings_alternativesAsExact
+    via: alternativesAsExact
+- name: indexSettingsAsSearchParams
+  spec: algolia-algoliasearch-api-openapi.yml
+  identifiers: []
+  property_count: 41
+  description: null
+  relationships:
+  - type: has_one
+    target: attributesToRetrieve
+    via: attributesToRetrieve
+  - type: has_one
+    target: relevancyStrictness
+    via: relevancyStrictness
+  - type: has_one
+    target: attributesToHighlight
+    via: attributesToHighlight
+  - type: has_one
+    target: attributesToSnippet
+    via: attributesToSnippet
+  - type: has_one
+    target: highlightPreTag
+    via: highlightPreTag
+  - type: has_one
+    target: highlightPostTag
+    via: highlightPostTag
+  - type: has_one
+    target: snippetEllipsisText
+    via: snippetEllipsisText
+  - type: has_one
+    target: restrictHighlightAndSnippetArrays
+    via: restrictHighlightAndSnippetArrays
+  - type: has_one
+    target: hitsPerPage
+    via: hitsPerPage
+  - type: has_one
+    target: minWordSizefor1Typo
+    via: minWordSizefor1Typo
+  - type: has_one
+    target: minWordSizefor2Typos
+    via: minWordSizefor2Typos
+  - type: has_one
+    target: typoTolerance
+    via: typoTolerance
+  - type: has_one
+    target: allowTyposOnNumericTokens
+    via: allowTyposOnNumericTokens
+  - type: has_one
+    target: disableTypoToleranceOnAttributes
+    via: disableTypoToleranceOnAttributes
+  - type: has_one
+    target: ignorePlurals
+    via: ignorePlurals
+  - type: has_one
+    target: removeStopWords
+    via: removeStopWords
+  - type: has_one
+    target: queryLanguages
+    via: queryLanguages
+  - type: has_one
+    target: decompoundQuery
+    via: decompoundQuery
+  - type: has_one
+    target: enableRules
+    via: enableRules
+  - type: has_one
+    target: enablePersonalization
+    via: enablePersonalization
+  - type: has_one
+    target: queryType
+    via: queryType
+  - type: has_one
+    target: removeWordsIfNoResults
+    via: removeWordsIfNoResults
+  - type: has_one
+    target: mode
+    via: mode
+  - type: has_one
+    target: semanticSearch
+    via: semanticSearch
+  - type: has_one
+    target: advancedSyntax
+    via: advancedSyntax
+- name: Task
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers:
+  - taskID
+  property_count: 17
+  description: null
+  relationships:
+  - type: has_one
+    target: taskID
+    via: taskID
+  - type: belongs_to
+    target: Source
+    via: sourceID
+  - type: has_one
+    target: sourceID
+    via: sourceID
+  - type: belongs_to
+    target: Destination
+    via: destinationID
+  - type: has_one
+    target: destinationID
+    via: destinationID
+  - type: has_one
+    target: Cron
+    via: cron
+  - type: has_one
+    target: LastRun
+    via: lastRun
+  - type: has_one
+    target: NextRun
+    via: nextRun
+  - type: has_one
+    target: owner
+    via: owner
+  - type: has_one
+    target: TaskInput
+    via: input
+  - type: has_one
+    target: failureThreshold
+    via: failureThreshold
+  - type: has_one
+    target: ActionType
+    via: action
+  - type: has_one
+    target: ActionType
+    via: subscriptionAction
+  - type: has_one
+    target: cursor
+    via: cursor
+  - type: has_one
+    target: Notifications
+    via: notifications
+  - type: has_one
+    target: Policies
+    via: policies
+  - type: has_one
+    target: CreatedAt
+    via: createdAt
+  - type: has_one
+    target: updatedAt
+    via: updatedAt
+- name: AddedToCartObjectIDsAfterSearch
+  spec: algolia-insights-api-openapi.yml
+  identifiers: []
+  property_count: 12
+  description: 'Use this event to track when users add items to their shopping cart after a previous Algolia request.
+
+    If you''re building your category pages with Algolia, you''ll also use this event.'
+  relationships:
+  - type: has_one
+    target: eventName
+    via: eventName
+  - type: has_one
+    target: ConversionEvent
+    via: eventType
+  - type: has_one
+    target: AddToCartEvent
+    via: eventSubtype
+  - type: has_one
+    target: index
+    via: index
+  - type: belongs_to
+    target: Query
+    via: queryID
+  - type: has_one
+    target: queryID
+    via: queryID
+  - type: has_one
+    target: objectIDs
+    via: objectIDs
+  - type: belongs_to
+    target: User
+    via: userToken
+  - type: has_one
+    target: userToken
+    via: userToken
+  - type: has_one
+    target: authenticatedUserToken
+    via: authenticatedUserToken
+  - type: has_one
+    target: currency
+    via: currency
+  - type: has_one
+    target: objectDataAfterSearchList
+    via: objectData
+  - type: has_one
+    target: timestamp
+    via: timestamp
+  - type: has_one
+    target: value
+    via: value
+- name: TaskV1
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers:
+  - taskID
+  property_count: 13
+  description: The V1 task object. Use methods and types that don't contain the V1 suffix.
+  relationships:
+  - type: has_one
+    target: taskID
+    via: taskID
+  - type: belongs_to
+    target: Source
+    via: sourceID
+  - type: has_one
+    target: sourceID
+    via: sourceID
+  - type: belongs_to
+    target: Destination
+    via: destinationID
+  - type: has_one
+    target: destinationID
+    via: destinationID
+  - type: has_one
+    target: Trigger
+    via: trigger
+  - type: has_one
+    target: TaskInput
+    via: input
+  - type: has_one
+    target: failureThreshold
+    via: failureThreshold
+  - type: has_one
+    target: ActionType
+    via: action
+  - type: has_one
+    target: cursor
+    via: cursor
+  - type: has_one
+    target: Notifications
+    via: notifications
+  - type: has_one
+    target: Policies
+    via: policies
+  - type: has_one
+    target: CreatedAt
+    via: createdAt
+  - type: has_one
+    target: updatedAt
+    via: updatedAt
+- name: AddedToCartObjectIDs
+  spec: algolia-insights-api-openapi.yml
+  identifiers: []
+  property_count: 11
+  description: 'Use this event to track when users add items to their shopping cart unrelated to a previous Algolia request.
+    For example, if you don''t use Algolia to build your category pages, use this event.
+
+
+    To tra'
+  relationships:
+  - type: has_one
+    target: eventName
+    via: eventName
+  - type: has_one
+    target: ConversionEvent
+    via: eventType
+  - type: has_one
+    target: AddToCartEvent
+    via: eventSubtype
+  - type: has_one
+    target: index
+    via: index
+  - type: has_one
+    target: objectIDs
+    via: objectIDs
+  - type: belongs_to
+    target: User
+    via: userToken
+  - type: has_one
+    target: userToken
+    via: userToken
+  - type: has_one
+    target: authenticatedUserToken
+    via: authenticatedUserToken
+  - type: has_one
+    target: currency
+    via: currency
+  - type: has_one
+    target: objectDataList
+    via: objectData
+  - type: has_one
+    target: timestamp
+    via: timestamp
+  - type: has_one
+    target: value
+    via: value
+- name: PurchasedObjectIDs
+  spec: algolia-insights-api-openapi.yml
+  identifiers: []
+  property_count: 11
+  description: 'Use this event to track when users make a purchase unrelated to a previous Algolia request. For example, if
+    you don''t use Algolia to build your category pages, use this event.
+
+
+    To track purchase event'
+  relationships:
+  - type: has_one
+    target: eventName
+    via: eventName
+  - type: has_one
+    target: ConversionEvent
+    via: eventType
+  - type: has_one
+    target: PurchaseEvent
+    via: eventSubtype
+  - type: has_one
+    target: index
+    via: index
+  - type: has_one
+    target: objectIDs
+    via: objectIDs
+  - type: belongs_to
+    target: User
+    via: userToken
+  - type: has_one
+    target: userToken
+    via: userToken
+  - type: has_one
+    target: authenticatedUserToken
+    via: authenticatedUserToken
+  - type: has_one
+    target: currency
+    via: currency
+  - type: has_one
+    target: objectDataList
+    via: objectData
+  - type: has_one
+    target: timestamp
+    via: timestamp
+  - type: has_one
+    target: value
+    via: value
+- name: PurchasedObjectIDsAfterSearch
+  spec: algolia-insights-api-openapi.yml
+  identifiers: []
+  property_count: 11
+  description: 'Use this event to track when users make a purchase after a previous Algolia request.
+
+    If you''re building your category pages with Algolia, you''ll also use this event.'
+  relationships:
+  - type: has_one
+    target: eventName
+    via: eventName
+  - type: has_one
+    target: ConversionEvent
+    via: eventType
+  - type: has_one
+    target: PurchaseEvent
+    via: eventSubtype
+  - type: has_one
+    target: index
+    via: index
+  - type: has_one
+    target: objectIDs
+    via: objectIDs
+  - type: belongs_to
+    target: User
+    via: userToken
+  - type: has_one
+    target: userToken
+    via: userToken
+  - type: has_one
+    target: authenticatedUserToken
+    via: authenticatedUserToken
+  - type: has_one
+    target: currency
+    via: currency
+  - type: has_one
+    target: objectDataAfterSearchList
+    via: objectData
+  - type: has_one
+    target: timestamp
+    via: timestamp
+  - type: has_one
+    target: value
+    via: value
+- name: TaskCreate
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 11
+  description: API request body for creating a task.
+  relationships:
+  - type: belongs_to
+    target: Source
+    via: sourceID
+  - type: has_one
+    target: sourceID
+    via: sourceID
+  - type: belongs_to
+    target: Destination
+    via: destinationID
+  - type: has_one
+    target: destinationID
+    via: destinationID
+  - type: has_one
+    target: ActionType
+    via: action
+  - type: has_one
+    target: ActionType
+    via: subscriptionAction
+  - type: has_one
+    target: Cron
+    via: cron
+  - type: has_one
+    target: failureThreshold
+    via: failureThreshold
+  - type: has_one
+    target: TaskInput
+    via: input
+  - type: has_one
+    target: cursor
+    via: cursor
+  - type: has_one
+    target: Notifications
+    via: notifications
+  - type: has_one
+    target: Policies
+    via: policies
+- name: ClickedObjectIDsAfterSearch
+  spec: algolia-insights-api-openapi.yml
+  identifiers: []
+  property_count: 9
+  description: 'Click event after an Algolia request.
+
+    Use this event to track when users click items in the search results.
+
+    If you''re building your category pages with Algolia,
+
+    you''ll also use this event.'
+  relationships:
+  - type: has_one
+    target: eventName
+    via: eventName
+  - type: has_one
+    target: ClickEvent
+    via: eventType
+  - type: has_one
+    target: index
+    via: index
+  - type: has_one
+    target: objectIDs
+    via: objectIDs
+  - type: has_one
+    target: positions
+    via: positions
+  - type: belongs_to
+    target: Query
+    via: queryID
+  - type: has_one
+    target: queryID
+    via: queryID
+  - type: belongs_to
+    target: User
+    via: userToken
+  - type: has_one
+    target: userToken
+    via: userToken
+  - type: has_one
+    target: authenticatedUserToken
+    via: authenticatedUserToken
+  - type: has_one
+    target: timestamp
+    via: timestamp
+- name: Run
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers:
+  - runID
+  property_count: 13
+  description: null
+  relationships:
+  - type: has_one
+    target: RunID
+    via: runID
+  - type: belongs_to
+    target: Task
+    via: taskID
+  - type: has_one
+    target: taskID
+    via: taskID
+  - type: has_one
+    target: RunStatus
+    via: status
+  - type: has_one
+    target: RunOutcome
+    via: outcome
+  - type: has_one
+    target: failureThreshold
+    via: failureThreshold
+  - type: has_one
+    target: RunReasonCode
+    via: reasonCode
+  - type: has_one
+    target: RunType
+    via: type
+  - type: has_one
+    target: CreatedAt
+    via: createdAt
+  - type: has_one
+    target: startedAt
+    via: startedAt
+  - type: has_one
+    target: finishedAt
+    via: finishedAt
+- name: Configuration
+  spec: algolia-crawler-api-openapi.yml
+  identifiers: []
+  property_count: 26
+  description: Crawler configuration.
+  relationships:
+  - type: has_many
+    target: Action
+    via: actions
+  - type: has_one
+    target: applicationID
+    via: appId
+  - type: has_one
+    target: ignoreCanonicalTo
+    via: ignoreCanonicalTo
+  - type: has_one
+    target: indexSettings
+    via: initialIndexSettings
+  - type: has_one
+    target: configurationRecordExtractorType
+    via: linkExtractor
+  - type: has_one
+    target: login
+    via: login
+  - type: has_one
+    target: renderJavaScript
+    via: renderJavaScript
+  - type: has_one
+    target: requestOptions
+    via: requestOptions
+  - type: has_one
+    target: safetyChecks
+    via: safetyChecks
+  - type: has_one
+    target: schedule
+    via: schedule
+- name: ConvertedObjectIDsAfterSearch
+  spec: algolia-insights-api-openapi.yml
+  identifiers: []
+  property_count: 8
+  description: 'Use this event to track when users convert after a previous Algolia request.
+
+    For example, a user clicks on an item in the search results to view the product detail page.
+
+    Then, the user adds the item t'
+  relationships:
+  - type: has_one
+    target: eventName
+    via: eventName
+  - type: has_one
+    target: ConversionEvent
+    via: eventType
+  - type: has_one
+    target: index
+    via: index
+  - type: has_one
+    target: objectIDs
+    via: objectIDs
+  - type: belongs_to
+    target: Query
+    via: queryID
+  - type: has_one
+    target: queryID
+    via: queryID
+  - type: belongs_to
+    target: User
+    via: userToken
+  - type: has_one
+    target: userToken
+    via: userToken
+  - type: has_one
+    target: authenticatedUserToken
+    via: authenticatedUserToken
+  - type: has_one
+    target: timestamp
+    via: timestamp
+- name: Destination
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers:
+  - destinationID
+  property_count: 9
+  description: Destinations are Algolia resources like indices or event streams.
+  relationships:
+  - type: has_one
+    target: destinationID
+    via: destinationID
+  - type: has_one
+    target: DestinationType
+    via: type
+  - type: has_one
+    target: name
+    via: name
+  - type: has_one
+    target: owner
+    via: owner
+  - type: has_one
+    target: DestinationInput
+    via: input
+  - type: has_one
+    target: CreatedAt
+    via: createdAt
+  - type: has_one
+    target: updatedAt
+    via: updatedAt
+  - type: belongs_to
+    target: Authentication
+    via: authenticationID
+  - type: has_one
+    target: authenticationID
+    via: authenticationID
+  - type: has_one
+    target: transformationIDs
+    via: transformationIDs
+- name: TaskReplace
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 10
+  description: API request body for updating a task.
+  relationships:
+  - type: belongs_to
+    target: Destination
+    via: destinationID
+  - type: has_one
+    target: destinationID
+    via: destinationID
+  - type: has_one
+    target: ActionType
+    via: action
+  - type: has_one
+    target: ActionType
+    via: subscriptionAction
+  - type: has_one
+    target: Cron
+    via: cron
+  - type: has_one
+    target: failureThreshold
+    via: failureThreshold
+  - type: has_one
+    target: TaskInput
+    via: input
+  - type: has_one
+    target: cursor
+    via: cursor
+  - type: has_one
+    target: Notifications
+    via: notifications
+  - type: has_one
+    target: Policies
+    via: policies
+- name: Transformation
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers:
+  - transformationID
+  property_count: 10
+  description: null
+  relationships:
+  - type: has_one
+    target: transformationID
+    via: transformationID
+  - type: has_one
+    target: AuthenticationIDs
+    via: authenticationIDs
+  - type: has_one
+    target: Code
+    via: code
+  - type: has_one
+    target: TransformationType
+    via: type
+  - type: has_one
+    target: TransformationInput
+    via: input
+  - type: has_one
+    target: Name
+    via: name
+  - type: has_one
+    target: Description
+    via: description
+  - type: has_one
+    target: owner
+    via: owner
+  - type: has_one
+    target: CreatedAt
+    via: createdAt
+  - type: has_one
+    target: updatedAt
+    via: updatedAt
+- name: ABTest
+  spec: algolia-abtesting-api-openapi.yml
+  identifiers:
+  - abTestID
+  property_count: 14
+  description: null
+  relationships:
+  - type: has_one
+    target: abTestID
+    via: abTestID
+  - type: has_one
+    target: updatedAt
+    via: updatedAt
+  - type: has_one
+    target: createdAt
+    via: createdAt
+  - type: has_one
+    target: endAt
+    via: endAt
+  - type: has_one
+    target: stoppedAt
+    via: stoppedAt
+  - type: has_one
+    target: name
+    via: name
+  - type: has_one
+    target: Status
+    via: status
+  - type: has_one
+    target: variants
+    via: variants
+  - type: has_one
+    target: ABTestConfiguration
+    via: configuration
+- name: TaskCreateV1
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 8
+  description: API request body for creating a task using the V1 shape. Use methods and types that don't contain the V1 suffix.
+  relationships:
+  - type: belongs_to
+    target: Source
+    via: sourceID
+  - type: has_one
+    target: sourceID
+    via: sourceID
+  - type: belongs_to
+    target: Destination
+    via: destinationID
+  - type: has_one
+    target: destinationID
+    via: destinationID
+  - type: has_one
+    target: TaskCreateTrigger
+    via: trigger
+  - type: has_one
+    target: ActionType
+    via: action
+  - type: has_one
+    target: failureThreshold
+    via: failureThreshold
+  - type: has_one
+    target: TaskInput
+    via: input
+  - type: has_one
+    target: cursor
+    via: cursor
+- name: Authentication
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers:
+  - authenticationID
+  property_count: 8
+  description: Resource representing the information required to authenticate with a source or a destination.
+  relationships:
+  - type: has_one
+    target: authenticationID
+    via: authenticationID
+  - type: has_one
+    target: AuthenticationType
+    via: type
+  - type: has_one
+    target: name
+    via: name
+  - type: has_one
+    target: Platform
+    via: platform
+  - type: has_one
+    target: owner
+    via: owner
+  - type: has_one
+    target: AuthInputPartial
+    via: input
+  - type: has_one
+    target: CreatedAt
+    via: createdAt
+  - type: has_one
+    target: updatedAt
+    via: updatedAt
+- name: ClickedObjectIDs
+  spec: algolia-insights-api-openapi.yml
+  identifiers: []
+  property_count: 7
+  description: 'Use this event to track when users click items unrelated to a previous Algolia request.
+
+    For example, if you don''t use Algolia to build your category pages, use this event.
+
+
+    To track click events relat'
+  relationships:
+  - type: has_one
+    target: eventName
+    via: eventName
+  - type: has_one
+    target: ClickEvent
+    via: eventType
+  - type: has_one
+    target: index
+    via: index
+  - type: has_one
+    target: objectIDs
+    via: objectIDs
+  - type: belongs_to
+    target: User
+    via: userToken
+  - type: has_one
+    target: userToken
+    via: userToken
+  - type: has_one
+    target: authenticatedUserToken
+    via: authenticatedUserToken
+  - type: has_one
+    target: timestamp
+    via: timestamp
+- name: ConvertedObjectIDs
+  spec: algolia-insights-api-openapi.yml
+  identifiers: []
+  property_count: 7
+  description: 'Use this event to track when users convert on items unrelated to a previous Algolia request.
+
+    For example, if you don''t use Algolia to build your category pages, use this event.
+
+
+    To track conversion ev'
+  relationships:
+  - type: has_one
+    target: eventName
+    via: eventName
+  - type: has_one
+    target: ConversionEvent
+    via: eventType
+  - type: has_one
+    target: index
+    via: index
+  - type: has_one
+    target: objectIDs
+    via: objectIDs
+  - type: belongs_to
+    target: User
+    via: userToken
+  - type: has_one
+    target: userToken
+    via: userToken
+  - type: has_one
+    target: authenticatedUserToken
+    via: authenticatedUserToken
+  - type: has_one
+    target: timestamp
+    via: timestamp
+- name: Source
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers:
+  - sourceID
+  property_count: 8
+  description: null
+  relationships:
+  - type: has_one
+    target: sourceID
+    via: sourceID
+  - type: has_one
+    target: SourceType
+    via: type
+  - type: has_one
+    target: owner
+    via: owner
+  - type: has_one
+    target: SourceInput
+    via: input
+  - type: belongs_to
+    target: Authentication
+    via: authenticationID
+  - type: has_one
+    target: authenticationID
+    via: authenticationID
+  - type: has_one
+    target: CreatedAt
+    via: createdAt
+  - type: has_one
+    target: updatedAt
+    via: updatedAt
+- name: TaskUpdate
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 8
+  description: API request body for partially updating a task.
+  relationships:
+  - type: belongs_to
+    target: Destination
+    via: destinationID
+  - type: has_one
+    target: destinationID
+    via: destinationID
+  - type: has_one
+    target: Cron
+    via: cron
+  - type: has_one
+    target: TaskInput
+    via: input
+  - type: has_one
+    target: ActionType
+    via: subscriptionAction
+  - type: has_one
+    target: failureThreshold
+    via: failureThreshold
+  - type: has_one
+    target: Notifications
+    via: notifications
+  - type: has_one
+    target: Policies
+    via: policies
+- name: ViewedObjectIDs
+  spec: algolia-insights-api-openapi.yml
+  identifiers: []
+  property_count: 7
+  description: Use this event to track when users viewed items in the search results.
+  relationships:
+  - type: has_one
+    target: eventName
+    via: eventName
+  - type: has_one
+    target: ViewEvent
+    via: eventType
+  - type: has_one
+    target: index
+    via: index
+  - type: has_one
+    target: objectIDs
+    via: objectIDs
+  - type: belongs_to
+    target: User
+    via: userToken
+  - type: has_one
+    target: userToken
+    via: userToken
+  - type: has_one
+    target: authenticatedUserToken
+    via: authenticatedUserToken
+  - type: has_one
+    target: timestamp
+    via: timestamp
+- name: configurationObject
+  spec: algolia-advanced-personalization-api-openapi.yml
+  identifiers: []
+  property_count: 5
+  description: null
+  relationships:
+  - type: has_many
+    target: sourceType
+    via: indices
+  - type: has_many
+    target: events
+    via: indices
+  - type: has_many
+    target: issue
+    via: indices
+  - type: has_one
+    target: personalizationReRanking
+    via: personalizationReRanking
+  - type: has_one
+    target: profileType
+    via: profileType
+  - type: has_one
+    target: Configuration_status
+    via: status
+  - type: has_one
+    target: features
+    via: features
+- name: DestinationCreate
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 5
+  description: API request body for creating a new destination.
+  relationships:
+  - type: has_one
+    target: DestinationType
+    via: type
+  - type: has_one
+    target: name
+    via: name
+  - type: has_one
+    target: DestinationInput
+    via: input
+  - type: belongs_to
+    target: Authentication
+    via: authenticationID
+  - type: has_one
+    target: authenticationID
+    via: authenticationID
+  - type: has_one
+    target: transformationIDs
+    via: transformationIDs
+- name: Event
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 7
+  description: An event describe a step of the task execution flow.
+  relationships:
+  - type: has_one
+    target: EventID
+    via: eventID
+  - type: belongs_to
+    target: Run
+    via: runID
+  - type: has_one
+    target: RunID
+    via: runID
+  - type: has_one
+    target: EventStatus
+    via: status
+  - type: has_one
+    target: EventType
+    via: type
+  - type: has_one
+    target: PublishedAt
+    via: publishedAt
+- name: IndexSearchParameters
+  spec: algolia-agent-studio-api-openapi.yml
+  identifiers: []
+  property_count: 7
+  description: 'Structured search parameters configuration for an Algolia index.
+
+
+    Each parameter controls whether it is exposed to the LLM, its default value,
+
+    optional constraints, and merge behavior.'
+  relationships:
+  - type: has_one
+    target: TextParam
+    via: query
+  - type: has_one
+    target: NumberParam
+    via: hitsPerPage
+  - type: has_one
+    target: NumberParam
+    via: page
+  - type: has_one
+    target: StringArrayParam
+    via: attributesToRetrieve
+  - type: has_one
+    target: StringArrayParam
+    via: responseFields
+  - type: has_one
+    target: FacetsParam
+    via: facets
+- name: RecommendRule
+  spec: algolia-recommend-api-openapi.yml
+  identifiers: []
+  property_count: 7
+  description: Recommend rule.
+  relationships:
+  - type: has_one
+    target: updatedAt
+    via: _metadata
+  - type: belongs_to
+    target: Record
+    via: objectID
+  - type: has_one
+    target: ruleID
+    via: objectID
+  - type: has_one
+    target: Condition
+    via: condition
+  - type: has_one
+    target: Consequence
+    via: consequence
+  - type: has_many
+    target: timeRange
+    via: validity
+- name: TaskUpdateV1
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 5
+  description: API request body for updating a task using the V1 shape. Use methods and types that don't contain the V1 suffix.
+  relationships:
+  - type: belongs_to
+    target: Destination
+    via: destinationID
+  - type: has_one
+    target: destinationID
+    via: destinationID
+  - type: has_one
+    target: TriggerUpdateInput
+    via: trigger
+  - type: has_one
+    target: TaskInput
+    via: input
+  - type: has_one
+    target: Enabled
+    via: enabled
+  - type: has_one
+    target: failureThreshold
+    via: failureThreshold
+- name: TransformationCreate
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 6
+  description: API request body for creating a transformation.
+  relationships:
+  - type: has_one
+    target: Code
+    via: code
+  - type: has_one
+    target: Name
+    via: name
+  - type: has_one
+    target: TransformationType
+    via: type
+  - type: has_one
+    target: TransformationInput
+    via: input
+  - type: has_one
+    target: Description
+    via: description
+  - type: has_one
+    target: AuthenticationIDs
+    via: authenticationIDs
+- name: rule
+  spec: algolia-search-api-openapi.yml
+  identifiers: []
+  property_count: 9
+  description: Rule object.
+  relationships:
+  - type: belongs_to
+    target: Record
+    via: objectID
+  - type: has_one
+    target: ruleID
+    via: objectID
+  - type: has_many
+    target: condition
+    via: conditions
+  - type: has_one
+    target: consequence
+    via: consequence
+  - type: has_many
+    target: timeRange
+    via: validity
+  - type: has_one
+    target: condition
+    via: condition
+- name: variant
+  spec: algolia-abtesting-api-openapi.yml
+  identifiers: []
+  property_count: 20
+  description: null
+  relationships:
+  - type: has_one
+    target: currencies
+    via: currencies
+  - type: has_one
+    target: description
+    via: description
+  - type: has_one
+    target: filterEffects
+    via: filterEffects
+  - type: has_one
+    target: index
+    via: index
+  - type: has_one
+    target: trackedSearchCount
+    via: trackedSearchCount
+  - type: has_one
+    target: trafficPercentage
+    via: trafficPercentage
+- name: DestinationUpdate
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 4
+  description: API request body for updating a destination.
+  relationships:
+  - type: has_one
+    target: name
+    via: name
+  - type: has_one
+    target: DestinationUpdateInput
+    via: input
+  - type: belongs_to
+    target: Authentication
+    via: authenticationID
+  - type: has_one
+    target: authenticationID
+    via: authenticationID
+  - type: has_one
+    target: transformationIDs
+    via: transformationIDs
+- name: WatchResponse
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 6
+  description: null
+  relationships:
+  - type: belongs_to
+    target: Run
+    via: runID
+  - type: has_one
+    target: RunID
+    via: runID
+  - type: has_one
+    target: EventID
+    via: eventID
+  - type: has_many
+    target: Event
+    via: events
+  - type: has_one
+    target: CreatedAt
+    via: createdAt
+- name: compositionRule
+  spec: algolia-composition-api-openapi.yml
+  identifiers: []
+  property_count: 7
+  description: null
+  relationships:
+  - type: belongs_to
+    target: Record
+    via: objectID
+  - type: has_one
+    target: compositionRuleObjectID
+    via: objectID
+  - type: has_many
+    target: condition
+    via: conditions
+  - type: has_one
+    target: compositionBehavior
+    via: consequence
+  - type: has_many
+    target: timeRange
+    via: validity
+- name: ABTestConfiguration
+  spec: algolia-abtesting-api-openapi.yml
+  identifiers: []
+  property_count: 4
+  description: A/B test configuration.
+  relationships:
+  - type: has_one
+    target: FeatureFilters
+    via: featureFilters
+  - type: has_one
+    target: Outliers
+    via: outliers
+  - type: has_one
+    target: EmptySearch
+    via: emptySearch
+  - type: has_one
+    target: MinimumDetectableEffect
+    via: minimumDetectableEffect
+- name: ABTestResponse
+  spec: algolia-abtesting-api-openapi.yml
+  identifiers:
+  - abTestID
+  property_count: 3
+  description: null
+  relationships:
+  - type: has_one
+    target: index
+    via: index
+  - type: has_one
+    target: abTestID
+    via: abTestID
+  - type: belongs_to
+    target: Task
+    via: taskID
+  - type: has_one
+    target: taskID
+    via: taskID
+- name: AuthenticationCreate
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 4
+  description: Request body for creating a new authentication resource.
+  relationships:
+  - type: has_one
+    target: AuthenticationType
+    via: type
+  - type: has_one
+    target: name
+    via: name
+  - type: has_one
+    target: Platform
+    via: platform
+  - type: has_one
+    target: AuthInput
+    via: input
+- name: ConversationFullResponse
+  spec: algolia-agent-studio-api-openapi.yml
+  identifiers: []
+  property_count: 15
+  description: Response model for a conversation with all its messages.
+  relationships:
+  - type: belongs_to
+    target: User
+    via: userToken
+  - type: has_one
+    target: ConversationMetadata
+    via: conversationMetadata
+  - type: has_one
+    target: FeedbackUnion
+    via: feedback
+  - type: has_many
+    target: MessageResponse
+    via: messages
+- name: DomainCatalog
+  spec: algolia-analytics-api-openapi.yml
+  identifiers: []
+  property_count: 4
+  description: null
+  relationships:
+  - type: has_many
+    target: CatalogEntry
+    via: metrics
+  - type: has_many
+    target: CatalogEntry
+    via: filters
+  - type: has_many
+    target: CatalogEntry
+    via: groups
+  - type: has_many
+    target: CatalogEntry
+    via: distributions
+- name: SourceCreate
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 4
+  description: null
+  relationships:
+  - type: has_one
+    target: SourceType
+    via: type
+  - type: has_one
+    target: SourceInput
+    via: input
+  - type: belongs_to
+    target: Authentication
+    via: authenticationID
+  - type: has_one
+    target: authenticationID
+    via: authenticationID
+- name: SourceIndex
+  spec: algolia-query-suggestions-api-openapi.yml
+  identifiers:
+  - indexName
+  property_count: 8
+  description: Configuration of an Algolia index for Query Suggestions.
+  relationships:
+  - type: has_one
+    target: AnalyticsTags
+    via: analyticsTags
+  - type: has_one
+    target: Facets
+    via: facets
+  - type: has_one
+    target: Generate
+    via: generate
+  - type: has_one
+    target: External
+    via: external
+- name: TransformationTry
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 5
+  description: null
+  relationships:
+  - type: has_one
+    target: Code
+    via: code
+  - type: has_one
+    target: TransformationType
+    via: type
+  - type: has_one
+    target: TransformationInput
+    via: input
+  - type: has_many
+    target: AuthenticationCreate
+    via: authentications
+- name: composition
+  spec: algolia-composition-api-openapi.yml
+  identifiers: []
+  property_count: 5
+  description: null
+  relationships:
+  - type: belongs_to
+    target: Record
+    via: objectID
+  - type: has_one
+    target: compositionObjectID
+    via: objectID
+  - type: has_one
+    target: compositionBehavior
+    via: behavior
+  - type: has_one
+    target: sortingStrategy
+    via: sortingStrategy
+- name: dictionaryEntry
+  spec: algolia-search-api-openapi.yml
+  identifiers: []
+  property_count: 7
+  description: Dictionary entry.
+  relationships:
+  - type: belongs_to
+    target: Record
+    via: objectID
+  - type: has_one
+    target: supportedLanguage
+    via: language
+  - type: has_one
+    target: dictionaryEntryState
+    via: state
+  - type: has_one
+    target: dictionaryEntryType
+    via: type
+- name: events
+  spec: algolia-advanced-personalization-api-openapi.yml
+  identifiers: []
+  property_count: 4
+  description: null
+  relationships:
+  - type: has_many
+    target: event
+    via: viewDetails
+  - type: has_many
+    target: event
+    via: viewListing
+  - type: has_many
+    target: event
+    via: addToCart
+  - type: has_many
+    target: event
+    via: purchase
+- name: objectDataAfterSearch
+  spec: algolia-insights-api-openapi.yml
+  identifiers: []
+  property_count: 4
+  description: null
+  relationships:
+  - type: belongs_to
+    target: Query
+    via: queryID
+  - type: has_one
+    target: price
+    via: price
+  - type: has_one
+    target: quantity
+    via: quantity
+  - type: has_one
+    target: discount
+    via: discount
+- name: searchDictionaryEntriesResponse
+  spec: algolia-search-api-openapi.yml
+  identifiers: []
+  property_count: 4
+  description: null
+  relationships:
+  - type: has_many
+    target: dictionaryEntry
+    via: hits
+  - type: has_one
+    target: parameters_page
+    via: page
+  - type: has_one
+    target: nbHits
+    via: nbHits
+  - type: has_one
+    target: nbPages
+    via: nbPages
+- name: AgentCompletionRequest
+  spec: algolia-agent-studio-api-openapi.yml
+  identifiers: []
+  property_count: 5
+  description: Request model for creating a completion for an assistant.
+  relationships:
+  - type: has_one
+    target: AgentTestConfiguration
+    via: configuration
+  - type: has_one
+    target: MessagesUnion
+    via: messages
+  - type: has_one
+    target: AgentCompletionAlgoliaParams
+    via: algolia
+- name: AuthenticationCreateResponse
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers:
+  - authenticationID
+  property_count: 3
+  description: API response for the successful creation of an authentication resource.
+  relationships:
+  - type: has_one
+    target: authenticationID
+    via: authenticationID
+  - type: has_one
+    target: name
+    via: name
+  - type: has_one
+    target: CreatedAt
+    via: createdAt
+- name: AuthenticationUpdateResponse
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers:
+  - authenticationID
+  property_count: 3
+  description: API response for a successful update of an authentication resource.
+  relationships:
+  - type: has_one
+    target: authenticationID
+    via: authenticationID
+  - type: has_one
+    target: name
+    via: name
+  - type: has_one
+    target: updatedAt
+    via: updatedAt
+- name: ConversationBaseResponse
+  spec: algolia-agent-studio-api-openapi.yml
+  identifiers: []
+  property_count: 14
+  description: Lightweight response model without its messages.
+  relationships:
+  - type: belongs_to
+    target: User
+    via: userToken
+  - type: has_one
+    target: ConversationMetadata
+    via: conversationMetadata
+  - type: has_one
+    target: FeedbackUnion
+    via: feedback
+- name: DestinationCreateResponse
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers:
+  - destinationID
+  property_count: 3
+  description: API response for creating a new destination.
+  relationships:
+  - type: has_one
+    target: destinationID
+    via: destinationID
+  - type: has_one
+    target: name
+    via: name
+  - type: has_one
+    target: CreatedAt
+    via: createdAt
+- name: DestinationInput
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 3
+  description: null
+  relationships:
+  - type: belongs_to
+    target: Index
+    via: indexName
+  - type: has_one
+    target: RecordType
+    via: recordType
+  - type: has_one
+    target: AttributesToExclude
+    via: attributesToExclude
+- name: DestinationUpdateInput
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 3
+  description: null
+  relationships:
+  - type: belongs_to
+    target: Index
+    via: indexName
+  - type: has_one
+    target: RecordType
+    via: recordType
+  - type: has_one
+    target: AttributesToExclude
+    via: attributesToExclude
+- name: DestinationUpdateResponse
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers:
+  - destinationID
+  property_count: 3
+  description: API response for updating a destination.
+  relationships:
+  - type: has_one
+    target: destinationID
+    via: destinationID
+  - type: has_one
+    target: name
+    via: name
+  - type: has_one
+    target: updatedAt
+    via: updatedAt
+- name: RunListResponse
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 3
+  description: null
+  relationships:
+  - type: has_many
+    target: Run
+    via: runs
+  - type: has_one
+    target: Pagination
+    via: pagination
+  - type: has_one
+    target: Window
+    via: window
+- name: SourceBigCommerce
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 5
+  description: Specific configuration attributes of a `bigcommerce` source.
+  relationships:
+  - type: has_one
+    target: BigCommerceChannel
+    via: channel
+  - type: has_many
+    target: BigCommerceMetafield
+    via: productMetafields
+  - type: has_many
+    target: BigCommerceMetafield
+    via: variantMetafields
+- name: SourceCSV
+  spec: algolia-ingestion-api-openapi.yml
+  identifiers: []
+  property_count: 5
+  description: Specific configuration attributes of a `csv` source.
+  relationships:
+  - type: has_one
+    target: UniqueIDColumn
+    via: uniqueIDColumn
+  - type: has_one
+    target: MappingTypeCSV
+    via: mapping
+  - type: has_one
+    target: MethodType
+    via: method

@@ -1,0 +1,160 @@
+specification: API Commons Error Catalog
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: derived
+source: Derived from the 4xx/5xx responses declared across the 15 first-party Algolia OpenAPI documents in openapi/, harvested
+  verbatim from https://github.com/algolia/api-clients-automation/tree/main/specs/bundled and archived at openapi/_original/.
+  Live 4xx bodies were observed by direct probe.
+format: vendor-json
+rfc9457: false
+format_note: Algolia does NOT use RFC 9457. There is no application/problem+json response anywhere in the 342 operations.
+  Errors are flat application/json.
+envelope:
+  media_type: application/json
+  fields:
+  - name: message
+    type: string
+    description: 'Human-readable error message. The Search API info.description states plainly: "Error responses have a message
+      property with more information."'
+  - name: status
+    type: integer
+    description: HTTP status echoed in the body by several Algolia services. Observed live on insights.algolia.io and analytics.algolia.com.
+mcp_envelope:
+  media_type: application/json
+  fields:
+  - status
+  - detail
+  - code
+  - instance
+  note: The MCP surface uses a RICHER envelope than the REST APIs - it adds a machine-readable code and an instance path,
+    and pairs the 401 with an RFC 9728 WWW-Authenticate challenge. The newer surface has the better errors.
+observed_live:
+- url: https://insights.algolia.io/openapi.json
+  http_status: 404
+  body: '{"status":404,"message":"Path not supported by Insights REST API. Please have a look at https://www.algolia.com/doc/rest-api/insights/
+    for the list of valid commands."}'
+- url: https://analytics.algolia.com/openapi.json
+  http_status: 404
+  body: '{"status":404,"message":"Path not supported by Analytics REST API. Please have a look at https://www.algolia.com/doc/rest-api/analytics/
+    for the list of valid commands."}'
+- url: https://mcp.algolia.com/mcp
+  http_status: 401
+  body: '{"status":401,"detail":"Unauthorized: Missing or invalid Authorization header","code":"UNAUTHORIZED","instance":"/mcp"}'
+status_codes:
+- code: 400
+  title: Bad request
+  occurrences: 273
+  media_types:
+  - text/html
+  schemas: []
+  common_description: Bad Request.
+  remediation: Validate the request body and query parameters against the operation schema before retrying; the message names
+    the offending field.
+- code: 401
+  title: Unauthorized
+  occurrences: 36
+  media_types:
+  - application/json
+  schemas:
+  - EventsResponse
+  common_description: Unauthorized
+  remediation: Send x-algolia-application-id and x-algolia-api-key (or HTTP Basic for the Crawler API). Do not retry without
+    new credentials.
+- code: 402
+  title: Payment required
+  occurrences: 176
+  media_types:
+  - application/json
+  schemas: []
+  common_description: null
+  remediation: null
+- code: 403
+  title: Forbidden - API key lacks the required ACL
+  occurrences: 193
+  media_types:
+  - application/json
+  schemas: []
+  common_description: Invalid credentials.
+  remediation: The API key lacks the required ACL for this operation. Grant the ACL on the key rather than retrying - see
+    https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions.
+- code: 404
+  title: Not found
+  occurrences: 181
+  media_types:
+  - application/json
+  schemas:
+  - EventsResponse
+  common_description: Not found.
+  remediation: The index, object, task or resource does not exist. Indexing is asynchronous, so a resource created moments
+    ago may not be readable yet - poll waitTask before reading.
+- code: 405
+  title: Method not allowed
+  occurrences: 1
+  media_types:
+  - application/json
+  schemas:
+  - EventsResponse
+  common_description: Method Not Allowed.
+  remediation: Check the HTTP method against the operation; several Algolia paths accept POST only.
+- code: 409
+  title: Error
+  occurrences: 1
+  media_types:
+  - application/json
+  schemas: []
+  common_description: null
+  remediation: null
+- code: 413
+  title: Error
+  occurrences: 1
+  media_types:
+  - application/json
+  schemas:
+  - EventsResponse
+  common_description: Payload Too Large.
+  remediation: null
+- code: 421
+  title: Error
+  occurrences: 2
+  media_types:
+  - application/json
+  schemas: []
+  common_description: null
+  remediation: null
+- code: 422
+  title: Unprocessable entity
+  occurrences: 47
+  media_types:
+  - application/json
+  schemas:
+  - EventsResponse
+  - HTTPValidationError
+  common_description: Validation Error.
+  remediation: The request was well-formed but semantically rejected; read message for the specific constraint.
+- code: 429
+  title: Too many requests
+  occurrences: 1
+  media_types:
+  - application/json
+  schemas:
+  - EventsResponse
+  common_description: Too Many Requests. This operation is rate-limited. Check the `x-ratelimit-limit` and `x-ratelimit-reset`
+    headers of the response.
+  remediation: Back off and retry. Algolia throttles at 100 pending requests per application; Ingestion push endpoints throttle
+    at 2,000 calls/minute/IP and runTask at 10 calls per 10 minutes per taskID.
+- code: 500
+  title: Internal server error
+  occurrences: 10
+  media_types:
+  - application/json
+  schemas: []
+  common_description: null
+  remediation: Retry with exponential backoff against the next host in the retry strategy (algolia.net, then -1/-2/-3.algolianet.com).
+domain_error_codes:
+  published: true
+  url: https://www.algolia.com/doc/guides/personalization/advanced-personalization/monitor/in-depth/error-codes
+  scope: Advanced Personalization only
+  note: The only per-product error-code reference Algolia publishes. There is no estate-wide error code catalogue - the message
+    string is the only discriminator on every other API.

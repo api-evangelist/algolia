@@ -1,0 +1,84 @@
+specification: API Commons ChangeLog
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: searched
+source: https://www.algolia.com/doc/libraries/sdk/changelog/javascript
+sources:
+  - https://www.algolia.com/doc/libraries/sdk/changelog/javascript
+  - https://changelog.algolia.com/
+  - https://github.com/algolia/api-clients-automation
+description: >-
+  Algolia publishes TWO changelogs with different audiences. The product changelog at changelog.algolia.com is a
+  Beamer-hosted single-page app and is not machine-readable - it returns the same 110 KB JS shell for /, /rss and
+  /feed. The one that matters for an API consumer is the per-language API client changelog in the docs, which is
+  generated from the same monorepo that generates the specs and therefore records SPEC changes, not just client
+  changes. Entries below come from the JavaScript client changelog, which is the canonical one - the same release
+  notes appear under each of the ten languages.
+scheme: semver
+scheme_note: >-
+  Client versions are semver per language and do NOT track each other (JS 5.57.0, Python 4.45.0, PHP 4.47.0,
+  Ruby 3.43.0, Go v4.45.0, C# 7.47.0, Java 4.42.0, Kotlin 3.47.0). The minor number moves in lockstep across the
+  train; the major differs by language.
+current_version:
+  javascript: 5.57.0
+  released: '2026-08-18'
+machine_readable:
+  docs_changelog: true
+  docs_changelog_url: https://www.algolia.com/doc/libraries/sdk/changelog/javascript.md
+  docs_changelog_note: Served as clean markdown at the .md URL, one section per version, with PR links.
+  product_changelog: false
+  product_changelog_url: https://changelog.algolia.com/
+  product_changelog_note: 'JS-rendered Beamer widget; /rss and /feed both return the HTML shell, HTTP 200, no feed.'
+per_language_changelogs:
+  - https://www.algolia.com/doc/libraries/sdk/changelog/javascript
+  - https://www.algolia.com/doc/libraries/sdk/changelog/python
+  - https://www.algolia.com/doc/libraries/sdk/changelog/php
+  - https://www.algolia.com/doc/libraries/sdk/changelog/ruby
+  - https://www.algolia.com/doc/libraries/sdk/changelog/go
+  - https://www.algolia.com/doc/libraries/sdk/changelog/java
+  - https://www.algolia.com/doc/libraries/sdk/changelog/csharp
+  - https://www.algolia.com/doc/libraries/sdk/changelog/kotlin
+  - https://www.algolia.com/doc/libraries/sdk/changelog/scala
+  - https://www.algolia.com/doc/libraries/sdk/changelog/swift
+entries:
+  - version: 5.57.0
+    date: '2026-08-18'
+    breaking: false
+    highlights:
+      - 'feat: Request-ID and Correlation-ID support in the client (#6747).'
+      - 'feat(specs): agentic analytics support added to the Insights spec (#6876).'
+      - 'feat(specs): decision (declared winner) added to the abtesting-v3 ABTest model (#6732).'
+      - 'feat(specs): Analytics v3 pattern endpoints added (#6795).'
+      - 'fix: warning in replaceAllObjects for empty objects (#6608).'
+    spec_changes: true
+    note: >-
+      Three of the five entries are spec changes, which is why this changelog is treated as the API changelog and
+      not merely an SDK one.
+  - version: 5.56.0
+    date: '2026-07'
+    breaking: false
+    highlights:
+      - 'feat: WithHTTPInfo methods added (#6682).'
+      - 'fix(specs): facetFilters restored to recommend fallbackParameters (#6727).'
+  - version: 5.55.2
+    date: '2026-07'
+    breaking: true
+    highlights:
+      - 'BREAKING CHANGE - removed recommend query params overridden by the API: ranking, facetFilters and enableABTest from the Recommend request, and enableRules from its fallback parameters (#6604).'
+      - 'fix: chunked push polling offset and batchSize forwarding (#6598).'
+      - 'fix: browseSynonyms pagination, CR-11727 (#6652).'
+    migration: 'API behaviour is unchanged, but code setting these fields must be updated.'
+  - version: 5.55.1
+    date: '2026-07'
+    breaking: true
+    highlights:
+      - 'BREAKING CHANGE - getObjects may return null records; the response type widened to a list of nullable objects (#6582).'
+      - 'fix: replaceAllObjects default maxRetries raised from 100 to 800 (#6580).'
+  - version: 5.55.0
+    date: '2026-06'
+    breaking: false
+    highlights:
+      - 'feat: Agent Studio package updates released (#6573).'
+window: 'Five most recent minor/patch releases as of 2026-08-27.'

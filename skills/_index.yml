@@ -1,0 +1,313 @@
+specification: API Commons Agent Skills
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: searched
+source: https://github.com/algolia/skills
+description: Algolia is one of the few providers in the catalog that AUTHORS AND PUBLISHES ITS OWN AGENT SKILLS. The 18 skills
+  under _provider/ are Algolia-written, MIT-licensed, and distributed as an installable Claude Code plugin marketplace (`/plugin
+  marketplace add algolia/skills`). They are saved here verbatim, unmodified. The three at the top level are API Evangelist
+  skills that complement them by working at operationId level - the provider skills are written for a human implementer choosing
+  between the CLI, MCP and InstantSearch, and do not name the REST operations an agent calling the API directly has to invoke.
+provider_published:
+  count: 18
+  repo: https://github.com/algolia/skills
+  license: MIT
+  install: /plugin marketplace add algolia/skills
+  companion_repo: https://github.com/algolia/implementation-skills
+  commands:
+  - /algolia-mcp:mcp-connect
+  - /algolia-cli:cli-setup
+  bundles:
+  - name: algolia-implementation
+    entry_point: algolia-discovery-planning
+    note: A planning suite that routes live operations to algolia-cli / algolia-mcp / algobot-cli and code-level UI work to
+      instantsearch.
+  skills:
+  - name: algobot-cli
+    file: _provider/algobot-cli.md
+    description: 'Use for anything AI/agent/conversational built on Algolia: algobot CLI, Agent Studio, RAG systems, conversational
+      product discovery, genAI content generation from search results (carousels, descriptions, headers), chatbots or recommendation
+      agents using Algolia as retrieval, config-as-code workflows, multi-environment deploy (dev/staging/prod), memory and
+      personalization, MCP tool integrations, conversation history / GDPR retention, or adding a chat widget alongside InstantSearch.
+      Trigger on: "algobot", "Agent Studio", "RAG with Algolia", "conversational experience", "AI agent" + Algolia, "genAI
+      carousel", "chat widget", or building AI features on top of Algolia search. Do NOT use for raw index ops (records, synonyms,
+      settings) — use algolia-cli. Do NOT use for pure frontend search UI (InstantSearch, autocomplete) with no AI/agent layer.'
+    license: MIT
+    version: '1.1'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algobot-cli/SKILL.md
+  - name: algolia-agent-studio
+    file: _provider/algolia-agent-studio.md
+    description: Product-specific Algolia Agent Studio implementation, validation, and optimization guidance. Use when planning,
+      building, integrating, or auditing Agent Studio agents, AI-powered conversational experiences, LLM provider setup, Algolia
+      Search tools, client-side tools, MCP tools, memory, prompting, conversations, turn context, caching, analytics, feedback,
+      authentication, approved domains, guardrails, or tool security. Do NOT use for live Agent Studio configuration, dry
+      runs, publish/deploy actions, or config-as-code operations; use the official algobot-cli skill instead. Do NOT use for
+      generic non-Algolia RAG or chatbot architecture unless Agent Studio is the target product.
+    license: MIT
+    version: '0.4'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-agent-studio/SKILL.md
+  - name: algolia-autocomplete
+    file: _provider/algolia-autocomplete.md
+    description: Build and review Algolia Autocomplete and query suggestion experiences. Use when planning or implementing
+      typeahead, query suggestions, recent searches, popular searches, federated autocomplete panels, product/content suggestions,
+      detached mobile mode, plugins, keyboard navigation, insights events, or Autocomplete integration with InstantSearch.
+      For net-new search or ecommerce builds, start with algolia-discovery-planning, which loads algolia-search-implementation
+      so source strategy, data contract, and event taxonomy decisions are visible before autocomplete is marked ready. Do
+      NOT use for full search results pages, browse pages, filters, pagination, or current refinements; use algolia-instantsearch-ui
+      instead. Do NOT use for choosing between Algolia UI libraries; use algolia-ui-libraries. Do NOT use as the source of
+      truth for current Autocomplete package APIs; use the official instantsearch skill and current docs alongside this customer-readiness
+      skill.
+    license: MIT
+    version: '0.5'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-autocomplete/SKILL.md
+  - name: algolia-cli
+    file: _provider/algolia-cli.md
+    description: Use this skill whenever a user wants to execute operations against Algolia indices or accounts — deleting
+      records, copying/migrating indices, backing up data, importing/exporting records, managing API keys, editing synonyms,
+      configuring rules, changing settings like facets, clearing indices, or automating Algolia in CI/CD pipelines. The key
+      signal is that the user wants to *act on* their Algolia data or configuration (server-side / backend / admin operations),
+      regardless of whether they mention "CLI" or "command line." If someone names a specific Algolia index and wants to change,
+      move, query, or manage it, use this skill. Do NOT use for frontend search UI work (InstantSearch, React components,
+      autocomplete widgets), Algolia dashboard GUI questions, or evaluating Algolia vs. other providers.
+    license: MIT
+    version: '1.0'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-cli/SKILL.md
+  - name: algolia-crawler
+    file: _provider/algolia-crawler.md
+    description: 'Use this skill whenever a user wants to crawl one or more web pages or a whole site and turn them into an
+      Algolia index using the Algolia CLI — especially for RAG, AI search, semantic search, or Agent Studio retrieval. Triggers:
+      "index my website/docs with Algolia", "set up the Algolia Crawler", "crawl this page for RAG", "scrape my site into
+      Algolia", "build a knowledge base for my AI agent from these URLs", writing or debugging a crawler recordExtractor,
+      or handling JavaScript-rendered pages that won''t index. It guides ingestion end-to-end with `algolia crawler` commands:
+      inspect the page, write a RAG-optimized recordExtractor, validate with `algolia crawler test` BEFORE indexing, apply
+      index settings explicitly, then reindex. Do NOT use for building the chatbot/agent layer itself (use algobot-cli), raw
+      record/synonym/settings ops on an existing index (use algolia-cli), frontend search UI (use instantsearch), or read-only
+      search/analytics (use algolia-mcp).'
+    license: MIT
+    version: '1.0'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-crawler/SKILL.md
+  - name: algolia-data-modeling
+    file: _provider/algolia-data-modeling.md
+    description: Algolia data modeling and indexing guidance. Use before or alongside indexing records or building Algolia
+      search UI for net-new search, browse, autocomplete, ecommerce, personalization, Dynamic Re-Ranking, recommendations,
+      or analytics-aware implementations. Makes record shape, objectID, display fields, facets, ranking fields, and event
+      attribution explicit decisions. Use for records, variants, SKUs, indices, replicas, searchable and faceting attributes,
+      denormalization, merchandising fields, timestamps, inventory, event attribution, indexing pipelines, partial updates,
+      secured data, multi-language or multi-region strategies, and migrations. Do NOT use for live imports, exports, record
+      mutations, settings changes, or account actions; use algolia-cli or algolia-mcp. Do NOT use for frontend UI implementation;
+      use algolia-instantsearch-ui, algolia-autocomplete, algolia-ui-libraries, or the official instantsearch skill.
+    license: MIT
+    version: '0.5'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-data-modeling/SKILL.md
+  - name: algolia-discovery-planning
+    file: _provider/algolia-discovery-planning.md
+    description: 'START HERE for any non-trivial Algolia work — building, adding, migrating, redesigning, auditing, or configuring
+      search, browse, autocomplete, indexing, relevance, recommendations, personalization, merchandising, events, or analytics.
+      Invoke this FIRST even when the task already seems scoped or the user names one specific feature (e.g. "add InstantSearch",
+      "build a storefront search"): its job is to map the request to the full Algolia implementation lifecycle and load every
+      companion skill each in-scope phase needs (algolia-search-implementation, algolia-data-modeling, algolia-index-configuration,
+      algolia-ui-libraries, algolia-instantsearch-ui, algolia-autocomplete, algolia-events-insights, algolia-neuralsearch,
+      algolia-agent-studio, algolia-release-qa) rather than jumping straight into a single skill. This skill plans and orchestrates;
+      the focused companion skills and the official Algolia skills execute. Do NOT use for live account inspection or write
+      actions; use algolia-mcp or algolia-cli for those.'
+    license: MIT
+    version: '0.4'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-discovery-planning/SKILL.md
+  - name: algolia-events-insights
+    file: _provider/algolia-events-insights.md
+    description: Algolia event instrumentation guidance for Insights, analytics, personalization, Dynamic Re-Ranking, Recommend,
+      and merchandising feedback loops. Use for search, autocomplete, browse, ecommerce, personalization, recommendations,
+      or analytics instrumentation. Makes event decisions explicit before an Algolia UI is considered ready. Use when implementing
+      or auditing clickedObjectIDsAfterSearch, convertedObjectIDsAfterSearch, viewedObjectIDs, addedToCartObjectIDsAfterSearch,
+      purchasedObjectIDsAfterSearch, userToken, queryID, eventName, eventSubtype, or frontend/backend event pipelines. Do
+      NOT use for live analytics retrieval, top-query inspection, or account-aware diagnostics; use algolia-mcp. Do NOT use
+      for framework-specific InstantSearch or Autocomplete APIs; use the official instantsearch skill alongside this planning
+      and validation skill.
+    license: MIT
+    version: '0.5'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-events-insights/SKILL.md
+  - name: algolia-index-configuration
+    file: _provider/algolia-index-configuration.md
+    description: Algolia index settings and relevance configuration guidance. Use when configuring searchableAttributes, attributesForFaceting,
+      customRanking, ranking, replicas, virtual replicas, rules, synonyms, typo tolerance, distinct, filters, optional filters,
+      merchandising, browse/category relevance, or A/B-testable relevance changes. Do NOT use for live settings writes, backups,
+      copies, or operational account tasks; use algolia-cli or algolia-mcp instead. Do NOT use for record-shape or variant
+      strategy; use algolia-data-modeling instead.
+    license: MIT
+    version: '0.3'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-index-configuration/SKILL.md
+  - name: algolia-instantsearch-ui
+    file: _provider/algolia-instantsearch-ui.md
+    description: Build and review Algolia InstantSearch experiences in JavaScript, React, Vue, Angular (via InstantSearch.js;
+      Angular InstantSearch is deprecated), or compatible frontend stacks. Use when planning or reviewing search results pages,
+      browse/category pages, routing, widgets, filters, facets, sort-by, pagination, infinite hits, current refinements, insights
+      middleware, SSR, or UI-state synchronization. For net-new search UI builds, start with algolia-discovery-planning, which
+      loads algolia-search-implementation so data contract and event taxonomy decisions are visible before UI is marked ready.
+      Do NOT use for autocomplete/typeahead experiences before the user commits to a results page; use algolia-autocomplete
+      instead. Do NOT use for choosing between Algolia UI libraries; use algolia-ui-libraries. Do NOT use as the source of
+      truth for current framework APIs or code-level implementation details; use the official instantsearch skill and current
+      docs alongside this customer-readiness skill.
+    license: MIT
+    version: '0.4'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-instantsearch-ui/SKILL.md
+  - name: algolia-mcp
+    file: _provider/algolia-mcp.md
+    description: Search Algolia indices via the Algolia MCP server, retrieve analytics (top searches, no-result rates, click
+      positions, user counts), and get product recommendations (bought-together, related, trending). Triggers on search, indexing,
+      analytics, Algolia, recommendations, MCP.
+    license: MIT
+    version: '1.0'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-mcp/SKILL.md
+  - name: algolia-migration
+    file: _provider/algolia-migration.md
+    description: 'Migrate existing Algolia API client code to a newer major version. Triggers on: upgrading algoliasearch,
+      moving from initIndex to client methods, fixing "initIndex is not a function", updating imports after a version bump,
+      handling breaking changes from v3→v4 or v4→v5, replacing .wait() chaining, or any mention of "migrate Algolia client",
+      "upgrade Algolia SDK", or a specific old-to-new version (e.g. "Python v3 to v4", "JS v4 to v5"). Covers JavaScript,
+      Python, Go, PHP, Java, C#, Ruby, Kotlin, Scala, Swift. Dart is a new client and is excluded from scope. Do NOT use for
+      new project setup (use algolia-cli or algolia-mcp instead), InstantSearch / frontend frameworks, analytics queries,
+      or recommendations.'
+    license: MIT
+    version: '1.0'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-migration/SKILL.md
+  - name: algolia-neuralsearch
+    file: _provider/algolia-neuralsearch.md
+    description: Product-specific Algolia NeuralSearch implementation, validation, and optimization guidance. Use when planning,
+      enabling, configuring, testing, or tuning NeuralSearch, AI relevance, semantic retrieval, adaptive intent, model training,
+      A/B testing, limitations review, query analysis, relevance diagnostics, event readiness, and data preparation for neural
+      or hybrid search experiences. Do NOT use for generic vector database, embeddings, or non-Algolia semantic search architecture.
+      Do NOT use for live settings changes, replica creation, or analytics retrieval; use algolia-cli or algolia-mcp first,
+      then this skill for readiness and rollout guidance.
+    license: MIT
+    version: '0.4'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-neuralsearch/SKILL.md
+  - name: algolia-quickstart
+    file: _provider/algolia-quickstart.md
+    description: 'Use this skill to set up and provision Algolia from scratch: create a new Algolia account, sign up, log
+      in / authenticate the Algolia CLI, or provision a new application to obtain an App ID and API key. Trigger when a user
+      is getting started with Algolia and has no account, no application, or no credentials yet — e.g. "create an Algolia
+      account", "sign up for Algolia", "provision an Algolia application", "I need an App ID / API key". Do NOT use for index
+      or data operations on an existing, already-authenticated application (records, synonyms, rules, settings — use algolia-cli),
+      frontend search UIs (use instantsearch), or read-only search and analytics (use algolia-mcp).'
+    license: MIT
+    version: '1.0'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-quickstart/SKILL.md
+  - name: algolia-release-qa
+    file: _provider/algolia-release-qa.md
+    description: Algolia launch, regression, and implementation QA. Use when auditing an Algolia build before release, validating
+      relevance changes, checking search UI behavior, verifying event instrumentation, diagnosing analytics gaps, reviewing
+      secured keys, or creating a smoke test plan for search, browse, autocomplete, indexing, and configuration changes. Do
+      NOT use to make live account changes or inspect live account data; use algolia-mcp or algolia-cli first. Do NOT use
+      as the primary implementation skill when the task is clearly data modeling, events setup, InstantSearch, Autocomplete,
+      NeuralSearch, or Agent Studio; use the focused skill first and this skill for final QA.
+    license: MIT
+    version: '0.3'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-release-qa/SKILL.md
+  - name: algolia-search-implementation
+    file: _provider/algolia-search-implementation.md
+    description: Execution checklist for net-new Algolia search, browse, autocomplete, ecommerce search, recommendations,
+      personalization, Dynamic Re-Ranking, or search UI builds. Use during a greenfield build to keep data contract, event
+      taxonomy, index configuration, UI, and release QA visible as explicit checkpoints with completion signposts and suggested
+      artifacts, so agents proceed deliberately and document tradeoffs and deferrals. Do NOT use as the entry point for Algolia
+      work; start with algolia-discovery-planning, which maps the request to the lifecycle and loads this skill for net-new
+      builds.
+    license: MIT
+    version: '0.2'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-search-implementation/SKILL.md
+  - name: algolia-ui-libraries
+    file: _provider/algolia-ui-libraries.md
+    description: Living selector and reference workflow for current Algolia UI libraries. Use when choosing, installing, upgrading,
+      implementing, or auditing InstantSearch.js, React InstantSearch, Vue InstantSearch, InstantSearch Android, InstantSearch
+      iOS, Algolia for Flutter, Autocomplete, legacy Angular InstantSearch audits or migrations, DocSearch-style autocomplete,
+      routing, SSR, events, mobile SDKs, framework integrations, UI examples, styling, performance, secured API keys, or frontend
+      search library architecture. Do NOT use as a frozen API reference or package-version source; verify current docs. Do
+      NOT use for full implementation once the library is selected; use algolia-instantsearch-ui, algolia-autocomplete, or
+      the official instantsearch skill.
+    license: MIT
+    version: '0.3'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/algolia-ui-libraries/SKILL.md
+  - name: instantsearch
+    file: _provider/instantsearch.md
+    description: Build production-quality search experiences (autocomplete, search results pages, faceted search) using InstantSearch.
+      Use when user asks to add search, autocomplete, search-as-you-type, faceted filtering, or a search results page to a
+      React, Vue, or vanilla JS application, or mentions Algolia, InstantSearch, or react-instantsearch. Do NOT use for backend
+      index operations (records, synonyms, settings, API keys), use algolia-cli instead. Do NOT use for analytics, recommendations,
+      or MCP server queries, use algolia-mcp instead. Do NOT use for AI/agent/conversational search, use algobot-cli instead.
+    license: MIT
+    version: '1.1'
+    author: algolia
+    source: https://github.com/algolia/skills/blob/main/skills/instantsearch/SKILL.md
+generated_skills:
+  count: 3
+  method: generated
+  grounding: Every operationId listed was read from the first-party OpenAPI documents in openapi/; none was invented.
+  skills:
+  - name: algolia-agent-safe-key
+    file: algolia-agent-safe-key.md
+    description: Mint the narrowest possible Algolia API key for an agent or an untrusted client, and restore one that was
+      deleted by mistake. Use before giving any agent access to an Algolia application, or when a key has been leaked, over-scoped,
+      or accidentally removed.
+    api: Algolia Search API
+    openapi: openapi/algolia-search-api-openapi.yml
+    operations:
+    - addApiKey
+    - getApiKey
+    - listApiKeys
+    - updateApiKey
+    - deleteApiKey
+    - restoreApiKey
+    - waitForApiKey
+    - generateSecuredApiKey
+    method: generated
+  - name: algolia-atomic-reindex
+    file: algolia-atomic-reindex.md
+    description: Replace the entire contents of an Algolia index with no downtime and a working rollback, using replaceAllObjects
+      or an explicit temporary-index move. Use when reloading a full catalog, migrating a data source, or recovering from
+      a bad bulk write.
+    api: Algolia Search API
+    openapi: openapi/algolia-search-api-openapi.yml
+    operations:
+    - replaceAllObjects
+    - saveObjects
+    - operationIndex
+    - getSettings
+    - setSettings
+    - getTask
+    - waitForTask
+    - indexExists
+    method: generated
+  - name: algolia-search-with-attribution
+    file: algolia-search-with-attribution.md
+    description: Run an Algolia search and correctly attribute the resulting clicks, conversions and purchases back to it,
+      so Analytics, Recommend, Personalization and A/B Testing all receive usable signal. Use when wiring search telemetry
+      or debugging why analytics or recommendations look empty.
+    api: Algolia Search API, Algolia Insights API
+    openapi:
+    - openapi/algolia-search-api-openapi.yml
+    - openapi/algolia-insights-api-openapi.yml
+    operations:
+    - searchSingleIndex
+    - search
+    - searchForFacetValues
+    - browse
+    - pushEvents
+    method: generated

@@ -1,0 +1,108 @@
+specification: API Commons Components
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: searched
+source: https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/
+sources:
+  - https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/
+  - https://www.algolia.com/developers/
+  - https://github.com/algolia/instantsearch
+  - https://github.com/algolia/autocomplete
+  - https://github.com/algolia/docsearch
+description: >-
+  Algolia's client-side surface is unusually large for an API company: three distinct embeddable component families
+  plus a hosted documentation-search widget. These are DISTINCT from the API clients in packages/ - a consumer
+  installs an API client to talk to the REST API, and installs these to render a search experience.
+families:
+  - name: InstantSearch
+    kind: widget-library
+    description: >-
+      The flagship widget library for building full search and browse experiences - SearchBox, Hits, RefinementList,
+      Pagination, SortBy, RangeSlider, Breadcrumb, and the surrounding state machine.
+    docs: https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/
+    repo: https://github.com/algolia/instantsearch
+    flavors:
+      - platform: JavaScript
+        package: instantsearch.js
+        registry: npm
+        version: 4.113.0
+        published: '2026-08-25'
+      - platform: React
+        package: react-instantsearch
+        registry: npm
+        version: 7.46.0
+        published: '2026-08-25'
+      - platform: Vue
+        package: vue-instantsearch
+        registry: npm
+        version: 4.29.5
+        published: '2026-08-25'
+      - platform: Angular
+        package: angular-instantsearch
+        registry: npm
+        version: 4.4.3
+        published: '2024-09-05'
+        note: Stale relative to the other flavors.
+      - platform: iOS
+        repo: https://github.com/algolia/instantsearch-ios
+      - platform: Android
+        repo: https://github.com/algolia/instantsearch-android
+    loader:
+      package: algoliasearch-helper
+      registry: npm
+      version: 3.29.3
+      published: '2026-08-06'
+      note: The shared search-state engine every InstantSearch flavor builds on.
+  - name: Autocomplete
+    kind: widget-library
+    description: >-
+      Standalone as-you-type autocomplete library with a source-based architecture - typically fed by an Algolia
+      index plus a Query Suggestions index, but source-agnostic.
+    docs: https://www.algolia.com/doc/ui-libraries/autocomplete/introduction/what-is-autocomplete/
+    repo: https://github.com/algolia/autocomplete
+    flavors:
+      - platform: JavaScript
+        package: '@algolia/autocomplete-js'
+        registry: npm
+        version: 1.19.9
+        published: '2026-06-23'
+    backing_api: Algolia Query Suggestions API (openapi/algolia-query-suggestions-api-openapi.yml)
+  - name: DocSearch
+    kind: hosted-widget
+    description: >-
+      Algolia's free, hosted documentation search - Algolia runs the crawler and the index, the site embeds the
+      widget. Carries its own service limits (25 GB application/index size, 20 indices, 3 queries per second,
+      10 team members) separate from the paid plans.
+    docs: https://docsearch.algolia.com/
+    repo: https://github.com/algolia/docsearch
+    flavors:
+      - platform: React
+        package: '@docsearch/react'
+        registry: npm
+        version: 5.0.4
+        published: '2026-08-24'
+      - platform: Sphinx
+        repo: https://github.com/algolia/sphinx-docsearch
+    hosted: true
+  - name: Merchandising Studio
+    kind: hosted-console
+    description: >-
+      Algolia-hosted visual tool for curating, pinning, and boosting search results. Not embeddable - listed here
+      because it is the no-code surface over the same Rules and Collections objects the Search API exposes.
+    docs: https://www.algolia.com/products/merchandising-studio/
+    hosted: true
+    backing_api: Algolia Search API rules operations (saveRule, saveRules, searchRules, deleteRule)
+  - name: Agent Studio
+    kind: hosted-console-and-runtime
+    description: >-
+      Algolia's agent builder and runtime. Has its own 42-operation REST contract, client-side tools, and an
+      embeddable conversational surface.
+    docs: https://www.algolia.com/doc/guides/algolia-ai/agent-studio
+    openapi: openapi/algolia-agent-studio-api-openapi.yml
+    hosted: true
+distribution_note: >-
+  All component families are distributed through npm rather than a pinned CDN bundle, so every version above was
+  read from registry.npmjs.org metadata. Algolia also serves unpinned jsDelivr builds in its documentation
+  examples; those float to latest and a consumer cannot tell from the URL which version they are loading.

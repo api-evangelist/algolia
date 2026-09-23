@@ -1,0 +1,226 @@
+specification: API Commons Lifecycle
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-08-27'
+method: searched
+source: https://www.algolia.com/doc/api-reference/
+sources:
+- https://www.algolia.com/doc/api-reference/
+- https://github.com/algolia/api-clients-automation/tree/main/specs/bundled
+- https://www.algolia.com/policies/sla/
+- https://status.algolia.com
+- https://www.algolia.com/doc/libraries/sdk/changelog/javascript
+versioning:
+  scheme: url-path
+  current: /1/
+  quote: The current version of the Search API is version 1, indicated by the /1/ in each endpoint's URL.
+  note: 'Version lives in the path, not in a header or a media type. Per-product exceptions: A/B Testing runs /2/ (deprecated)
+    and /3/ side by side, and Analytics added v3 pattern endpoints in the 2026-08-18 release while keeping the v2 surface.'
+deprecation_policy:
+  published_policy_page: null
+  mechanism: in-contract
+  note: Algolia does not publish a standalone deprecation-policy page. What it does instead is mark operations deprecated:true
+    IN the OpenAPI documents it generates its clients from, so the signal reaches every SDK and every consumer of the spec.
+    That is a stronger machine signal than a prose policy page, and it is why this artifact can enumerate 25 deprecated operations
+    by operationId. What is MISSING is a stated sunset date or removal window for any of them.
+  sunset_header: false
+  deprecation_header: false
+  rfc8594: false
+  rfc8594_note: No Sunset or Deprecation response header is declared in any of the 15 OpenAPI documents, and none was observed
+    on a live response.
+deprecated_operations:
+  count: 25
+  source: 'deprecated: true flags read from the first-party OpenAPI documents in openapi/'
+  clusters:
+  - name: A/B Testing v2
+    spec: algolia-abtesting-api-openapi.yml
+    count: 6
+    successor: openapi/algolia-abtesting-v3-api-openapi.yml (A/B Testing API 3.0.0, 12 operations, none deprecated)
+    note: The entire v2 A/B Testing surface is deprecated in favour of v3.
+  - name: Ingestion Tasks V1
+    spec: algolia-ingestion-api-openapi.yml
+    count: 9
+    successor: The non-V1 task operations in the same document (listTasks, createTask, getTask, updateTask, runTask, enableTask,
+      disableTask).
+    note: A within-document v1 to v2 migration - the deprecated operations are suffixed V1 and sit alongside their replacements.
+  - name: Search cluster / user-ID mapping
+    spec: algolia-search-api-openapi.yml
+    count: 9
+    successor: null
+    note: The multi-cluster user-ID mapping surface (/1/clusters/*) is deprecated with no in-spec successor. This is the MCM
+      feature, which is Enterprise-only.
+  - name: Advanced Personalization realtime compute
+    spec: algolia-advanced-personalization-api-openapi.yml
+    count: 1
+    successor: null
+  operations:
+  - spec: algolia-abtesting-api-openapi.yml
+    operationId: addABTests
+    method: POST
+    path: /2/abtests
+    summary: Create an A/B test
+  - spec: algolia-abtesting-api-openapi.yml
+    operationId: listABTests
+    method: GET
+    path: /2/abtests
+    summary: List all A/B tests
+  - spec: algolia-abtesting-api-openapi.yml
+    operationId: getABTest
+    method: GET
+    path: /2/abtests/{id}
+    summary: Retrieve A/B test details
+  - spec: algolia-abtesting-api-openapi.yml
+    operationId: deleteABTest
+    method: DELETE
+    path: /2/abtests/{id}
+    summary: Delete an A/B test
+  - spec: algolia-abtesting-api-openapi.yml
+    operationId: stopABTest
+    method: POST
+    path: /2/abtests/{id}/stop
+    summary: Stop an A/B test
+  - spec: algolia-abtesting-api-openapi.yml
+    operationId: estimateABTest
+    method: POST
+    path: /2/abtests/estimate
+    summary: Estimate the sample size and duration of an A/B test
+  - spec: algolia-advanced-personalization-api-openapi.yml
+    operationId: computeRealtimeUser
+    method: POST
+    path: /2/realtime/users/{userToken}/compute
+    summary: Compute the real-time user's personalization profile
+  - spec: algolia-ingestion-api-openapi.yml
+    operationId: listTasksV1
+    method: GET
+    path: /1/tasks
+    summary: List tasks V1
+  - spec: algolia-ingestion-api-openapi.yml
+    operationId: createTaskV1
+    method: POST
+    path: /1/tasks
+    summary: Create a task V1
+  - spec: algolia-ingestion-api-openapi.yml
+    operationId: searchTasksV1
+    method: POST
+    path: /1/tasks/search
+    summary: Search for tasks V1
+  - spec: algolia-ingestion-api-openapi.yml
+    operationId: getTaskV1
+    method: GET
+    path: /1/tasks/{taskID}
+    summary: Retrieve a task V1
+  - spec: algolia-ingestion-api-openapi.yml
+    operationId: updateTaskV1
+    method: PATCH
+    path: /1/tasks/{taskID}
+    summary: Update a task V1
+  - spec: algolia-ingestion-api-openapi.yml
+    operationId: deleteTaskV1
+    method: DELETE
+    path: /1/tasks/{taskID}
+    summary: Delete a task
+  - spec: algolia-ingestion-api-openapi.yml
+    operationId: runTaskV1
+    method: POST
+    path: /1/tasks/{taskID}/run
+    summary: Run a task V1
+  - spec: algolia-ingestion-api-openapi.yml
+    operationId: enableTaskV1
+    method: PUT
+    path: /1/tasks/{taskID}/enable
+    summary: Enable a task V1
+  - spec: algolia-ingestion-api-openapi.yml
+    operationId: disableTaskV1
+    method: PUT
+    path: /1/tasks/{taskID}/disable
+    summary: Disable a task V1
+  - spec: algolia-search-api-openapi.yml
+    operationId: assignUserId
+    method: POST
+    path: /1/clusters/mapping
+    summary: Assign or move a user ID
+  - spec: algolia-search-api-openapi.yml
+    operationId: listUserIds
+    method: GET
+    path: /1/clusters/mapping
+    summary: List user IDs
+  - spec: algolia-search-api-openapi.yml
+    operationId: batchAssignUserIds
+    method: POST
+    path: /1/clusters/mapping/batch
+    summary: Assign multiple userIDs
+  - spec: algolia-search-api-openapi.yml
+    operationId: getTopUserIds
+    method: GET
+    path: /1/clusters/mapping/top
+    summary: Get top user IDs
+  - spec: algolia-search-api-openapi.yml
+    operationId: getUserId
+    method: GET
+    path: /1/clusters/mapping/{userID}
+    summary: Retrieve user ID
+  - spec: algolia-search-api-openapi.yml
+    operationId: removeUserId
+    method: DELETE
+    path: /1/clusters/mapping/{userID}
+    summary: Delete user ID
+  - spec: algolia-search-api-openapi.yml
+    operationId: listClusters
+    method: GET
+    path: /1/clusters
+    summary: List clusters
+  - spec: algolia-search-api-openapi.yml
+    operationId: searchUserIds
+    method: POST
+    path: /1/clusters/mapping/search
+    summary: Search for user IDs
+  - spec: algolia-search-api-openapi.yml
+    operationId: hasPendingMappings
+    method: GET
+    path: /1/clusters/mapping/pending
+    summary: Get migration and user mapping status
+breaking_change_practice:
+  note: Algolia flags breaking changes explicitly in its per-language client changelogs, with a note describing the migration.
+    Two examples from the recent window.
+  examples:
+  - version: 5.55.2
+    date: 2026-07
+    change: BREAKING CHANGE - removed recommend query params overridden by the API (ranking, facetFilters, enableABTest, and
+      enableRules from fallbackParameters).
+    impact: API behaviour unchanged; code setting these fields must be updated.
+  - version: 5.55.1
+    date: 2026-07
+    change: BREAKING CHANGE - allow null records in getObjects response.
+    impact: The response type widened to a list of nullable objects.
+  migration_tooling: Algolia ships an Agent Skill, algolia-migration, that migrates API client code to the latest major version
+    across JS, Python, Go, PHP, Java, C#, Ruby, Kotlin, Scala and Swift (skills/_provider/algolia-migration.md).
+sla:
+  published: true
+  url: https://www.algolia.com/policies/sla/
+  http_status: 200
+  headline: 99.999% uptime SLA
+  headline_source: https://www.algolia.com/llms.txt
+  note: The SLA is a policy document, gated to committed subscribers for the specific commitments.
+status_page:
+  url: https://status.algolia.com
+  http_status: 200
+  type: first-party
+  note: 'Algolia runs its own status page rather than a third-party one, and exposes it as an API - the Monitoring API (openapi/algolia-monitoring-api-openapi.yml,
+    14 operations) serves server status, latency, indexing and reachability metrics for a specific application from the same
+    host. That is materially more than a status page: an agent can query the health of ITS OWN cluster, not just the global
+    service.'
+  api: openapi/algolia-monitoring-api-openapi.yml
+support:
+  url: https://support.algolia.com/hc/en-us
+  http_status: 403
+  note: 403 to an automated fetch (Cloudflare bot challenge); the help centre is publicly reachable in a browser and is linked
+    from Algolia docs throughout.
+release_cadence:
+  note: Every first-party API client is generated from the specs in github.com/algolia/api-clients-automation and released
+    on one train. Nine of the ten clients last published on 2026-08-18.
+  detail: packages/algolia-packages.yml
+  changelog: changelog/algolia-changelog.yml
+end_of_life:
+  announced: []
+  note: No end-of-life or sunset announcements were found for any Algolia API.

@@ -1,0 +1,35 @@
+# Front Door AI Index — algolia — 2026-09-17
+# AI vocabulary counted on the provider's root page. Generated; do not edit.
+# `score` is null unless ownership is `own` — see front_door_ai.py.
+front_door_ai:
+  slug: algolia
+  lexicon_version: '1.0'
+  probed_at: '2026-09-17'
+  host: www.algolia.com
+  final_host: www.algolia.com
+  ownership: own
+  owner: algolia
+  shares_host_with: null
+  inherited_from: null
+  verdict: scored
+  score: 66
+  host_score: 66
+  density: 49.0
+  words: 1347
+  tiers:
+    agentic: 32
+    core: 34
+    model: 0
+  ambiguous: 9
+  top_terms:
+    AI: 30
+    agentic: 19
+    agent: 7
+    MCP: 5
+    AI agent: 3
+    RAG: 3
+    LLMs: 2
+    intelligence: 2
+    retrieval-augmented: 2
+    artificial intelligence: 1
+    generative ai: 1
