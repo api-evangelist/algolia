@@ -6,274 +6,275 @@ generated: '2026-08-27'
 method: searched
 source: https://www.algolia.com/developers/
 sources:
-  - https://www.algolia.com/developers/
-  - https://github.com/algolia
-  - https://github.com/algolia/api-clients-automation
-description: >-
-  Algolia generates every first-party API client from the OpenAPI documents in
-  github.com/algolia/api-clients-automation, and releases them on one train - the JavaScript, Python, PHP, Ruby,
-  Go, Java, Kotlin, C# and Swift clients all published on 2026-08-18 from the same generation run. The version
-  numbers differ per language because each client carries its own major line, but the release DATES move together.
-  Versions and dates below were read from each registry's metadata endpoint on 2026-08-27.
-currency_note: >-
-  The API clients are current. The decay is concentrated in the older UI and framework integrations:
-  angular-instantsearch last shipped 2024-09-05, search-insights 2024-11-18, algoliasearch-rails 2025-03-28, and the
-  Maven-hosted Scala client 2026-06-23. The legacy Java v3 artifacts (com.algolia:algoliasearch-core and friends)
-  stopped at 3.16.10 on 2024-10-29 and are superseded by com.algolia:algoliasearch v4.
-
+- https://www.algolia.com/developers/
+- https://github.com/algolia
+- https://github.com/algolia/api-clients-automation
+description: Algolia generates every first-party API client from the OpenAPI documents in github.com/algolia/api-clients-automation, and releases
+  them on one train - the JavaScript, Python, PHP, Ruby, Go, Java, Kotlin, C# and Swift clients all published on 2026-08-18 from the same generation
+  run. The version numbers differ per language because each client carries its own major line, but the release DATES move together. Versions and
+  dates below were read from each registry's metadata endpoint on 2026-08-27.
+currency_note: 'The API clients are current. The decay is concentrated in the older UI and framework integrations: angular-instantsearch last
+  shipped 2024-09-05, search-insights 2024-11-18, algoliasearch-rails 2025-03-28, and the Maven-hosted Scala client 2026-06-23. The legacy Java
+  v3 artifacts (com.algolia:algoliasearch-core and friends) stopped at 3.16.10 on 2024-10-29 and are superseded by com.algolia:algoliasearch v4.'
 packages:
-  # ---- generated API clients (one release train) ----
-  - name: algoliasearch
-    registry: npm
-    url: https://www.npmjs.com/package/algoliasearch
-    language: JavaScript/TypeScript
-    kind: api-client
-    official: true
-    version: 5.57.0
-    published: '2026-08-18'
-    repo: https://github.com/algolia/algoliasearch-client-javascript
-  - name: algoliasearch
-    registry: pypi
-    url: https://pypi.org/project/algoliasearch/
-    language: Python
-    kind: api-client
-    official: true
-    version: 4.45.0
-    published: '2026-08-18'
-    repo: https://github.com/algolia/algoliasearch-client-python
-  - name: algolia
-    registry: rubygems
-    url: https://rubygems.org/gems/algolia
-    language: Ruby
-    kind: api-client
-    official: true
-    version: 3.43.0
-    published: '2026-08-18'
-    repo: https://github.com/algolia/algoliasearch-client-ruby
-  - name: algolia/algoliasearch-client-php
-    registry: packagist
-    url: https://packagist.org/packages/algolia/algoliasearch-client-php
-    language: PHP
-    kind: api-client
-    official: true
-    version: 4.47.0
-    published: '2026-08-18'
-    repo: https://github.com/algolia/algoliasearch-client-php
-  - name: github.com/algolia/algoliasearch-client-go/v4
-    registry: go
-    url: https://pkg.go.dev/github.com/algolia/algoliasearch-client-go/v4
-    language: Go
-    kind: api-client
-    official: true
-    version: v4.45.0
-    published: '2026-08-18'
-    repo: https://github.com/algolia/algoliasearch-client-go
-  - name: Algolia.Search
-    registry: nuget
-    url: https://www.nuget.org/packages/Algolia.Search
-    language: C#/.NET
-    kind: api-client
-    official: true
-    version: 7.47.0
-    published: '2026-08-18'
-    repo: https://github.com/algolia/algoliasearch-client-csharp
-  - name: com.algolia:algoliasearch
-    registry: maven
-    url: https://central.sonatype.com/artifact/com.algolia/algoliasearch
-    language: Java
-    kind: api-client
-    official: true
-    version: 4.42.0
-    published: '2026-08-18'
-    repo: https://github.com/algolia/algoliasearch-client-java
-    note: Read from repo1.maven.org/maven2/com/algolia/algoliasearch/maven-metadata.xml (release + lastUpdated 20260818).
-  - name: com.algolia:algoliasearch-client-kotlin
-    registry: maven
-    url: https://central.sonatype.com/artifact/com.algolia/algoliasearch-client-kotlin
-    language: Kotlin/Android
-    kind: api-client
-    official: true
-    version: 3.47.0
-    published: '2026-08-18'
-    repo: https://github.com/algolia/algoliasearch-client-kotlin
-  - name: com.algolia:algoliasearch-scala_3
-    registry: maven
-    url: https://central.sonatype.com/artifact/com.algolia/algoliasearch-scala_3
-    language: Scala
-    kind: api-client
-    official: true
-    version: 2.43.1
-    published: '2026-06-23'
-    repo: https://github.com/algolia/algoliasearch-client-scala
-    note: Two months behind the rest of the release train.
-  - name: algoliasearch
-    registry: pub.dev
-    url: https://pub.dev/packages/algoliasearch
-    language: Dart/Flutter
-    kind: api-client
-    official: true
-    version: 1.49.2
-    published: '2026-05-29'
-    repo: https://github.com/algolia/algoliasearch-client-dart
-  - name: AlgoliaSearchClient
-    registry: swift-package-manager
-    url: https://github.com/algolia/algoliasearch-client-swift
-    language: Swift
-    kind: api-client
-    official: true
-    version: null
-    published: null
-    note: >-
-      Distributed only through Swift Package Manager from the GitHub repository - there is no package registry
-      metadata endpoint to query, so no version/date could be read the way the other clients were. The repository
-      was pushed 2026-08-27, in line with the rest of the release train.
-
-  # ---- per-product generated clients (JS scoped packages) ----
-  - name: '@algolia/client-search'
-    registry: npm
-    url: https://www.npmjs.com/package/@algolia/client-search
-    language: JavaScript/TypeScript
-    kind: api-client
-    official: true
-    version: 5.57.0
-    published: '2026-08-18'
-  - name: '@algolia/recommend'
-    registry: npm
-    url: https://www.npmjs.com/package/@algolia/recommend
-    language: JavaScript/TypeScript
-    kind: api-client
-    official: true
-    version: 5.57.0
-    published: '2026-08-18'
-  - name: '@algolia/client-abtesting'
-    registry: npm
-    url: https://www.npmjs.com/package/@algolia/client-abtesting
-    language: JavaScript/TypeScript
-    kind: api-client
-    official: true
-    version: 5.57.0
-    published: '2026-08-18'
-  - name: '@algolia/ingestion'
-    registry: npm
-    url: https://www.npmjs.com/package/@algolia/ingestion
-    language: JavaScript/TypeScript
-    kind: api-client
-    official: true
-    version: 1.57.0
-    published: '2026-08-18'
-  - name: '@algolia/monitoring'
-    registry: npm
-    url: https://www.npmjs.com/package/@algolia/monitoring
-    language: JavaScript/TypeScript
-    kind: api-client
-    official: true
-    version: 1.57.0
-    published: '2026-08-18'
-
-  # ---- CLI ----
-  - name: '@algolia/cli'
-    registry: npm
-    url: https://www.npmjs.com/package/@algolia/cli
-    language: Go (distributed via npm, Homebrew, Chocolatey, deb/rpm)
-    kind: cli
-    official: true
-    version: null
-    published: null
-    note: >-
-      The CLI binary is released from github.com/algolia/cli (latest tag v1.16.0, published 2026-08-04). The npm
-      wrapper is documented by Algolia as `npx @algolia/cli --help`, but the registry metadata for that name was not
-      readable in this pass, so version/published are recorded null rather than guessed. See cli/algolia-cli.yml.
-    repo: https://github.com/algolia/cli
-
-  # ---- UI libraries ----
-  - name: instantsearch.js
-    registry: npm
-    url: https://www.npmjs.com/package/instantsearch.js
-    language: JavaScript
-    kind: ui-library
-    official: true
-    version: 4.113.0
-    published: '2026-08-25'
-    repo: https://github.com/algolia/instantsearch
-  - name: react-instantsearch
-    registry: npm
-    url: https://www.npmjs.com/package/react-instantsearch
-    language: React
-    kind: ui-library
-    official: true
-    version: 7.46.0
-    published: '2026-08-25'
-  - name: vue-instantsearch
-    registry: npm
-    url: https://www.npmjs.com/package/vue-instantsearch
-    language: Vue
-    kind: ui-library
-    official: true
-    version: 4.29.5
-    published: '2026-08-25'
-  - name: angular-instantsearch
-    registry: npm
-    url: https://www.npmjs.com/package/angular-instantsearch
-    language: Angular
-    kind: ui-library
-    official: true
-    version: 4.4.3
-    published: '2024-09-05'
-    note: >-
-      DECAY SIGNAL - nearly two years behind the JS/React/Vue InstantSearch packages, which all shipped 2026-08-25.
-  - name: algoliasearch-helper
-    registry: npm
-    url: https://www.npmjs.com/package/algoliasearch-helper
-    language: JavaScript
-    kind: ui-library
-    official: true
-    version: 3.29.3
-    published: '2026-08-06'
-  - name: '@algolia/autocomplete-js'
-    registry: npm
-    url: https://www.npmjs.com/package/@algolia/autocomplete-js
-    language: JavaScript
-    kind: ui-library
-    official: true
-    version: 1.19.9
-    published: '2026-06-23'
-    repo: https://github.com/algolia/autocomplete
-  - name: '@docsearch/react'
-    registry: npm
-    url: https://www.npmjs.com/package/@docsearch/react
-    language: React
-    kind: ui-library
-    official: true
-    version: 5.0.4
-    published: '2026-08-24'
-    repo: https://github.com/algolia/docsearch
-  - name: search-insights
-    registry: npm
-    url: https://www.npmjs.com/package/search-insights
-    language: JavaScript
-    kind: sdk
-    official: true
-    version: 2.17.3
-    published: '2024-11-18'
-    note: >-
-      DECAY SIGNAL - the browser library that reports click/conversion/view events to the Insights API has not
-      published since 2024-11-18, while the Insights spec itself gained agentic-analytics support in the
-      2026-08-18 release train.
-
-  # ---- framework integrations ----
-  - name: algoliasearch-rails
-    registry: rubygems
-    url: https://rubygems.org/gems/algoliasearch-rails
-    language: Ruby on Rails
-    kind: integration
-    official: true
-    version: 3.0.2
-    published: '2025-03-28'
-  - name: algolia/search-bundle
-    registry: packagist
-    url: https://packagist.org/packages/algolia/search-bundle
-    language: Symfony
-    kind: integration
-    official: true
-    version: 8.1.0
-    published: '2026-04-07'
+- name: algoliasearch
+  registry: npm
+  url: https://www.npmjs.com/package/algoliasearch
+  language: JavaScript/TypeScript
+  kind: api-client
+  official: true
+  version: 5.57.0
+  published: '2026-08-18'
+  repo: https://github.com/algolia/algoliasearch-client-javascript
+  ownership_audit: metadata names algolia.com
+- name: algoliasearch
+  registry: pypi
+  url: https://pypi.org/project/algoliasearch/
+  language: Python
+  kind: api-client
+  official: true
+  version: 4.45.0
+  published: '2026-08-18'
+  repo: https://github.com/algolia/algoliasearch-client-python
+  ownership_audit: metadata names algolia.com
+- name: algolia
+  registry: rubygems
+  url: https://rubygems.org/gems/algolia
+  language: Ruby
+  kind: api-client
+  official: true
+  version: 3.43.0
+  published: '2026-08-18'
+  repo: https://github.com/algolia/algoliasearch-client-ruby
+  ownership_audit: metadata names algolia.com
+- name: algolia/algoliasearch-client-php
+  registry: packagist
+  url: https://packagist.org/packages/algolia/algoliasearch-client-php
+  language: PHP
+  kind: api-client
+  official: false
+  version: 4.47.0
+  published: '2026-08-18'
+  repo: https://github.com/algolia/algoliasearch-client-php
+  ownership_audit: 'registry metadata names neither the provider''s domain nor its GitHub org: official downgraded (harvest-packages.py --audit)'
+- name: github.com/algolia/algoliasearch-client-go/v4
+  registry: go
+  url: https://pkg.go.dev/github.com/algolia/algoliasearch-client-go/v4
+  language: Go
+  kind: api-client
+  official: true
+  version: v4.45.0
+  published: '2026-08-18'
+  repo: https://github.com/algolia/algoliasearch-client-go
+- name: Algolia.Search
+  registry: nuget
+  url: https://www.nuget.org/packages/Algolia.Search
+  language: C#/.NET
+  kind: api-client
+  official: false
+  version: 7.47.0
+  published: '2026-08-18'
+  repo: https://github.com/algolia/algoliasearch-client-csharp
+  ownership_audit: 'registry metadata names neither the provider''s domain nor its GitHub org: official downgraded (harvest-packages.py --audit)'
+- name: com.algolia:algoliasearch
+  registry: maven
+  url: https://central.sonatype.com/artifact/com.algolia/algoliasearch
+  language: Java
+  kind: api-client
+  official: true
+  version: 4.42.0
+  published: '2026-08-18'
+  repo: https://github.com/algolia/algoliasearch-client-java
+  note: Read from repo1.maven.org/maven2/com/algolia/algoliasearch/maven-metadata.xml (release + lastUpdated 20260818).
+- name: com.algolia:algoliasearch-client-kotlin
+  registry: maven
+  url: https://central.sonatype.com/artifact/com.algolia/algoliasearch-client-kotlin
+  language: Kotlin/Android
+  kind: api-client
+  official: true
+  version: 3.47.0
+  published: '2026-08-18'
+  repo: https://github.com/algolia/algoliasearch-client-kotlin
+- name: com.algolia:algoliasearch-scala_3
+  registry: maven
+  url: https://central.sonatype.com/artifact/com.algolia/algoliasearch-scala_3
+  language: Scala
+  kind: api-client
+  official: true
+  version: 2.43.1
+  published: '2026-06-23'
+  repo: https://github.com/algolia/algoliasearch-client-scala
+  note: Two months behind the rest of the release train.
+- name: algoliasearch
+  registry: pub.dev
+  url: https://pub.dev/packages/algoliasearch
+  language: Dart/Flutter
+  kind: api-client
+  official: true
+  version: 1.49.2
+  published: '2026-05-29'
+  repo: https://github.com/algolia/algoliasearch-client-dart
+- name: AlgoliaSearchClient
+  registry: swift-package-manager
+  url: https://github.com/algolia/algoliasearch-client-swift
+  language: Swift
+  kind: api-client
+  official: true
+  version: null
+  published: null
+  note: Distributed only through Swift Package Manager from the GitHub repository - there is no package registry metadata endpoint to query, so
+    no version/date could be read the way the other clients were. The repository was pushed 2026-08-27, in line with the rest of the release train.
+- name: '@algolia/client-search'
+  registry: npm
+  url: https://www.npmjs.com/package/@algolia/client-search
+  language: JavaScript/TypeScript
+  kind: api-client
+  official: true
+  version: 5.57.0
+  published: '2026-08-18'
+  ownership_audit: metadata names algolia.com
+- name: '@algolia/recommend'
+  registry: npm
+  url: https://www.npmjs.com/package/@algolia/recommend
+  language: JavaScript/TypeScript
+  kind: api-client
+  official: true
+  version: 5.57.0
+  published: '2026-08-18'
+  ownership_audit: metadata names algolia.com
+- name: '@algolia/client-abtesting'
+  registry: npm
+  url: https://www.npmjs.com/package/@algolia/client-abtesting
+  language: JavaScript/TypeScript
+  kind: api-client
+  official: true
+  version: 5.57.0
+  published: '2026-08-18'
+  ownership_audit: metadata names algolia.com
+- name: '@algolia/ingestion'
+  registry: npm
+  url: https://www.npmjs.com/package/@algolia/ingestion
+  language: JavaScript/TypeScript
+  kind: api-client
+  official: true
+  version: 1.57.0
+  published: '2026-08-18'
+  ownership_audit: metadata names algolia.com
+- name: '@algolia/monitoring'
+  registry: npm
+  url: https://www.npmjs.com/package/@algolia/monitoring
+  language: JavaScript/TypeScript
+  kind: api-client
+  official: true
+  version: 1.57.0
+  published: '2026-08-18'
+  ownership_audit: metadata names algolia.com
+- name: '@algolia/cli'
+  registry: npm
+  url: https://www.npmjs.com/package/@algolia/cli
+  language: Go (distributed via npm, Homebrew, Chocolatey, deb/rpm)
+  kind: cli
+  official: true
+  version: null
+  published: null
+  note: The CLI binary is released from github.com/algolia/cli (latest tag v1.16.0, published 2026-08-04). The npm wrapper is documented by Algolia
+    as `npx @algolia/cli --help`, but the registry metadata for that name was not readable in this pass, so version/published are recorded null
+    rather than guessed. See cli/algolia-cli.yml.
+  repo: https://github.com/algolia/cli
+  ownership_audit: metadata names algolia.com
+- name: instantsearch.js
+  registry: npm
+  url: https://www.npmjs.com/package/instantsearch.js
+  language: JavaScript
+  kind: ui-library
+  official: false
+  version: 4.113.0
+  published: '2026-08-25'
+  repo: https://github.com/algolia/instantsearch
+  ownership_audit: 'registry has no such package: official downgraded (harvest-packages.py --audit)'
+- name: react-instantsearch
+  registry: npm
+  url: https://www.npmjs.com/package/react-instantsearch
+  language: React
+  kind: ui-library
+  official: true
+  version: 7.46.0
+  published: '2026-08-25'
+  ownership_audit: metadata names algolia.com
+- name: vue-instantsearch
+  registry: npm
+  url: https://www.npmjs.com/package/vue-instantsearch
+  language: Vue
+  kind: ui-library
+  official: true
+  version: 4.29.5
+  published: '2026-08-25'
+  ownership_audit: metadata names algolia.com
+- name: angular-instantsearch
+  registry: npm
+  url: https://www.npmjs.com/package/angular-instantsearch
+  language: Angular
+  kind: ui-library
+  official: true
+  version: 4.4.3
+  published: '2024-09-05'
+  note: DECAY SIGNAL - nearly two years behind the JS/React/Vue InstantSearch packages, which all shipped 2026-08-25.
+  ownership_audit: metadata names algolia.com
+- name: algoliasearch-helper
+  registry: npm
+  url: https://www.npmjs.com/package/algoliasearch-helper
+  language: JavaScript
+  kind: ui-library
+  official: true
+  version: 3.29.3
+  published: '2026-08-06'
+  ownership_audit: metadata names algolia.com
+- name: '@algolia/autocomplete-js'
+  registry: npm
+  url: https://www.npmjs.com/package/@algolia/autocomplete-js
+  language: JavaScript
+  kind: ui-library
+  official: true
+  version: 1.19.9
+  published: '2026-06-23'
+  repo: https://github.com/algolia/autocomplete
+  ownership_audit: metadata names algolia.com
+- name: '@docsearch/react'
+  registry: npm
+  url: https://www.npmjs.com/package/@docsearch/react
+  language: React
+  kind: ui-library
+  official: true
+  version: 5.0.4
+  published: '2026-08-24'
+  repo: https://github.com/algolia/docsearch
+  ownership_audit: metadata names algolia.com
+- name: search-insights
+  registry: npm
+  url: https://www.npmjs.com/package/search-insights
+  language: JavaScript
+  kind: sdk
+  official: true
+  version: 2.17.3
+  published: '2024-11-18'
+  note: DECAY SIGNAL - the browser library that reports click/conversion/view events to the Insights API has not published since 2024-11-18, while
+    the Insights spec itself gained agentic-analytics support in the 2026-08-18 release train.
+  ownership_audit: metadata names algolia.com
+- name: algoliasearch-rails
+  registry: rubygems
+  url: https://rubygems.org/gems/algoliasearch-rails
+  language: Ruby on Rails
+  kind: integration
+  official: false
+  version: 3.0.2
+  published: '2025-03-28'
+  ownership_audit: 'registry metadata names neither the provider''s domain nor its GitHub org: official downgraded (harvest-packages.py --audit)'
+- name: algolia/search-bundle
+  registry: packagist
+  url: https://packagist.org/packages/algolia/search-bundle
+  language: Symfony
+  kind: integration
+  official: false
+  version: 8.1.0
+  published: '2026-04-07'
+  ownership_audit: 'registry metadata names neither the provider''s domain nor its GitHub org: official downgraded (harvest-packages.py --audit)'

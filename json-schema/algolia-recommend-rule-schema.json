@@ -1,0 +1,195 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-recommend-rule-schema.json",
+  "title": "RecommendRule",
+  "description": "Recommend rule.",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-recommend-api-openapi.yml#/components/schemas/RecommendRule",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "_metadata": {
+      "title": "ruleMetadata",
+      "type": "object",
+      "description": "Rule metadata.",
+      "properties": {
+        "lastUpdate": {
+          "$ref": "#/$defs/updatedAt"
+        }
+      }
+    },
+    "objectID": {
+      "$ref": "#/$defs/ruleID"
+    },
+    "condition": {
+      "$ref": "#/$defs/Condition"
+    },
+    "consequence": {
+      "$ref": "#/$defs/Consequence"
+    },
+    "description": {
+      "type": "string",
+      "description": "Description of the rule's purpose. This can be helpful for display in the Algolia dashboard."
+    },
+    "enabled": {
+      "type": "boolean",
+      "default": true,
+      "description": "Indicates whether to enable the rule. If it isn't enabled, it isn't applied at query time."
+    },
+    "validity": {
+      "type": "array",
+      "description": "Time periods when the rule is active.",
+      "items": {
+        "$ref": "#/$defs/timeRange"
+      }
+    }
+  },
+  "$defs": {
+    "AutoFacetFilter": {
+      "type": "object",
+      "description": "Facet attribute. Only recommendations with the same value (or only recommendations with a different value) as the original viewed item are included.",
+      "properties": {
+        "facet": {
+          "type": "string",
+          "description": "Facet attribute."
+        },
+        "negative": {
+          "type": "boolean",
+          "description": "Whether the filter is negative.\nIf true, recommendations must not have the same value for the `facet` attribute.\nIf false, recommendations must have the same value for the `facet` attribute.\n"
+        }
+      }
+    },
+    "Condition": {
+      "type": "object",
+      "description": "Condition that triggers the rule.\nIf not specified, the rule is triggered for all recommendations.\n",
+      "properties": {
+        "filters": {
+          "$ref": "#/$defs/filters"
+        },
+        "context": {
+          "$ref": "#/$defs/context"
+        }
+      }
+    },
+    "Consequence": {
+      "type": "object",
+      "description": "Effect of the rule.",
+      "properties": {
+        "hide": {
+          "$ref": "#/$defs/HideConsequence"
+        },
+        "promote": {
+          "$ref": "#/$defs/PromoteConsequence"
+        },
+        "params": {
+          "$ref": "#/$defs/ParamsConsequence"
+        }
+      }
+    },
+    "HideConsequence": {
+      "type": "array",
+      "description": "Exclude items from recommendations.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/HideConsequenceObject"
+      }
+    },
+    "HideConsequenceObject": {
+      "type": "object",
+      "description": "Object ID of the recommendation you want to exclude.",
+      "properties": {
+        "objectID": {
+          "$ref": "#/$defs/objectID"
+        }
+      }
+    },
+    "ParamsConsequence": {
+      "type": "object",
+      "description": "Filter or boost recommendations matching a facet filter.",
+      "properties": {
+        "automaticFacetFilters": {
+          "type": "array",
+          "description": "Filter recommendations that match or don't match the same `facet:facet_value` combination as the viewed item.",
+          "items": {
+            "$ref": "#/$defs/AutoFacetFilter"
+          }
+        },
+        "filters": {
+          "$ref": "#/$defs/filters"
+        },
+        "optionalFilters": {
+          "type": "array",
+          "description": "Filters to promote or demote records in the search results.\n\nOptional filters work like facet filters, but they don't exclude records from the search results.\nRecords that match the optional filter rank before records that don't match.\nMatches with higher weights (`<score=N>`) rank before matches with lower weights.\nIf you're using a negative filter `facet:-value`, matching records rank after records that don't match.\n",
+          "items": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "PromoteConsequence": {
+      "type": "array",
+      "description": "Place items at specific positions in the list of recommendations.",
+      "minItems": 1,
+      "items": {
+        "$ref": "#/$defs/PromoteConsequenceObject"
+      }
+    },
+    "PromoteConsequenceObject": {
+      "type": "object",
+      "description": "Object ID and position of the recommendation you want to pin.",
+      "properties": {
+        "objectID": {
+          "$ref": "#/$defs/objectID"
+        },
+        "position": {
+          "type": "integer",
+          "description": "Index in the list of recommendations where to place this item.",
+          "minimum": 0
+        }
+      }
+    },
+    "context": {
+      "type": "string",
+      "pattern": "[A-Za-z0-9_-]+",
+      "description": "An additional restriction that only triggers the rule, when the search has the same value as `ruleContexts` parameter.\nFor example, if `context: mobile`, the rule is only triggered when the search request has a matching `ruleContexts: mobile`.\nA rule context must only contain alphanumeric characters.\n"
+    },
+    "filters": {
+      "type": "string",
+      "description": "Filter expression to only include items that match the filter criteria in the response.\n\nYou can use these filter expressions:\n\n- **Numeric filters.** `<facet> <op> <number>`, where `<op>` is one of `<`, `<=`, `=`, `!=`, `>`, `>=`.\n- **Ranges.** `<facet>:<lower> TO <upper>`, where `<lower>` and `<upper>` are the lower and upper limits of the range (inclusive).\n- **Facet filters.** `<facet>:<value>`, where `<facet>` is a facet attribute (case-sensitive) and `<value>` a facet value.\n- **Tag filters.** `_tags:<value>` or just `<value>` (case-sensitive).\n- **Boolean filters.** `<facet>: true | false`.\n\nYou can combine filters with `AND`, `OR`, and `NOT` operators with the following restrictions:\n\n- You can only combine filters of the same type with `OR`.\n  **Not supported:** `facet:value OR num > 3`.\n- You can't use `NOT` with combinations of filters.\n  **Not supported:** `NOT(facet:value OR facet:value)`\n- You can't combine conjunctions (`AND`) with `OR`.\n  **Not supported:** `facet:value OR (facet:value AND facet:value)`\n\nUse quotes if the facet attribute name or facet value contains spaces, keywords (`OR`, `AND`, `NOT`), or quotes.\nIf a facet attribute is an array, the filter matches if it matches at least one element of the array.\n\nFor more information, see [Filters](https://www.algolia.com/doc/guides/managing-results/refine-results/filtering).\n",
+      "x-categories": [
+        "Filtering"
+      ]
+    },
+    "objectID": {
+      "type": "string",
+      "description": "Unique record identifier."
+    },
+    "ruleID": {
+      "title": "objectID",
+      "type": "string",
+      "description": "Unique identifier of a rule object."
+    },
+    "timeRange": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "from": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Timestamp when the rule should start to be active, measured in seconds since the Unix epoch."
+        },
+        "until": {
+          "type": "integer",
+          "format": "int64",
+          "description": "Timestamp when the rule should stop to be active, measured in seconds since the Unix epoch."
+        }
+      }
+    },
+    "updatedAt": {
+      "type": "string",
+      "description": "Date and time when the object was updated, in RFC 3339 format."
+    }
+  }
+}

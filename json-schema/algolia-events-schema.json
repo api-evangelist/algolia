@@ -1,0 +1,77 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-events-schema.json",
+  "title": "events",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/events",
+  "type": "object",
+  "properties": {
+    "viewDetails": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "viewListing": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "addToCart": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    },
+    "purchase": {
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/event"
+      }
+    }
+  },
+  "required": [
+    "viewDetails",
+    "viewListing",
+    "addToCart",
+    "purchase"
+  ],
+  "$defs": {
+    "event": {
+      "type": "object",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/eventType"
+        },
+        "subtype": {
+          "$ref": "#/$defs/subtype"
+        },
+        "name": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "type",
+        "name"
+      ]
+    },
+    "eventType": {
+      "type": "string",
+      "enum": [
+        "view",
+        "click",
+        "conversion"
+      ]
+    },
+    "subtype": {
+      "type": "string",
+      "enum": [
+        "addToCart",
+        "purchase"
+      ]
+    }
+  }
+}

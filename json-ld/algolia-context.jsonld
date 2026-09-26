@@ -1,0 +1,780 @@
+{
+  "@context": {
+    "@vocab": "https://algolia.com/schema#",
+    "schema": "https://schema.org/",
+    "xsd": "http://www.w3.org/2001/XMLSchema#",
+    "dcterms": "http://purl.org/dc/terms/",
+    "algolia": "https://algolia.com/schema#",
+    "EstimateABTestResponse": "algolia:EstimateABTestResponse",
+    "durationDays": {
+      "@id": "algolia:durationDays",
+      "@type": "xsd:integer"
+    },
+    "sampleSizes": {
+      "@id": "algolia:sampleSizes",
+      "@container": "@list"
+    },
+    "customSearchParams": "algolia:customSearchParams",
+    "customSearchParameters": {
+      "@id": "algolia:customSearchParameters"
+    },
+    "variant": "algolia:variant",
+    "addToCartCount": {
+      "@id": "algolia:addToCartCount",
+      "@type": "xsd:integer"
+    },
+    "addToCartRate": {
+      "@id": "algolia:addToCartRate"
+    },
+    "averageClickPosition": {
+      "@id": "algolia:averageClickPosition"
+    },
+    "clickCount": {
+      "@id": "algolia:clickCount",
+      "@type": "xsd:integer"
+    },
+    "clickThroughRate": {
+      "@id": "algolia:clickThroughRate"
+    },
+    "conversionCount": {
+      "@id": "algolia:conversionCount",
+      "@type": "xsd:integer"
+    },
+    "conversionRate": {
+      "@id": "algolia:conversionRate"
+    },
+    "currencies": {
+      "@id": "algolia:currencies",
+      "@type": "@id"
+    },
+    "description": {
+      "@id": "algolia:description",
+      "@type": "@id"
+    },
+    "estimatedSampleSize": {
+      "@id": "algolia:estimatedSampleSize",
+      "@type": "xsd:integer"
+    },
+    "filterEffects": {
+      "@id": "algolia:filterEffects",
+      "@type": "@id"
+    },
+    "index": {
+      "@id": "algolia:index",
+      "@type": "@id"
+    },
+    "noResultCount": {
+      "@id": "algolia:noResultCount"
+    },
+    "purchaseCount": {
+      "@id": "algolia:purchaseCount",
+      "@type": "xsd:integer"
+    },
+    "purchaseRate": {
+      "@id": "algolia:purchaseRate"
+    },
+    "searchCount": {
+      "@id": "algolia:searchCount"
+    },
+    "trackedSearchCount": {
+      "@id": "algolia:trackedSearchCount",
+      "@type": "@id"
+    },
+    "trafficPercentage": {
+      "@id": "algolia:trafficPercentage",
+      "@type": "@id"
+    },
+    "userCount": {
+      "@id": "algolia:userCount"
+    },
+    "trackedUserCount": {
+      "@id": "algolia:trackedUserCount"
+    },
+    "FeatureFilters": "algolia:FeatureFilters",
+    "dynamicReRanking": {
+      "@id": "algolia:dynamicReRanking",
+      "@type": "xsd:boolean"
+    },
+    "aiPerso": {
+      "@id": "algolia:aiPerso",
+      "@type": "xsd:boolean"
+    },
+    "multiSignalRanking": {
+      "@id": "algolia:multiSignalRanking",
+      "@type": "xsd:boolean"
+    },
+    "ABTestConfiguration": "algolia:ABTestConfiguration",
+    "featureFilters": {
+      "@id": "algolia:featureFilters",
+      "@type": "@id"
+    },
+    "outliers": {
+      "@id": "algolia:outliers",
+      "@type": "@id"
+    },
+    "emptySearch": {
+      "@id": "algolia:emptySearch",
+      "@type": "@id"
+    },
+    "minimumDetectableEffect": {
+      "@id": "algolia:minimumDetectableEffect",
+      "@type": "@id"
+    },
+    "ABTest": "algolia:ABTest",
+    "abTestID": {
+      "@id": "algolia:abTestID",
+      "@type": "@id"
+    },
+    "clickSignificance": {
+      "@id": "algolia:clickSignificance"
+    },
+    "conversionSignificance": {
+      "@id": "algolia:conversionSignificance"
+    },
+    "addToCartSignificance": {
+      "@id": "algolia:addToCartSignificance"
+    },
+    "purchaseSignificance": {
+      "@id": "algolia:purchaseSignificance"
+    },
+    "revenueSignificance": {
+      "@id": "algolia:revenueSignificance"
+    },
+    "updatedAt": {
+      "@id": "algolia:updatedAt",
+      "@type": "@id"
+    },
+    "createdAt": {
+      "@id": "algolia:createdAt",
+      "@type": "@id"
+    },
+    "endAt": {
+      "@id": "algolia:endAt",
+      "@type": "@id"
+    },
+    "stoppedAt": {
+      "@id": "algolia:stoppedAt",
+      "@type": "@id"
+    },
+    "name": {
+      "@id": "algolia:name",
+      "@type": "@id"
+    },
+    "status": {
+      "@id": "algolia:status",
+      "@type": "@id"
+    },
+    "variants": {
+      "@id": "algolia:variants",
+      "@type": "@id"
+    },
+    "configuration": {
+      "@id": "algolia:configuration",
+      "@type": "@id"
+    },
+    "abTestsVariant": "algolia:abTestsVariant",
+    "MinimumDetectableEffect": "algolia:MinimumDetectableEffect",
+    "size": {
+      "@id": "algolia:size",
+      "@type": "xsd:decimal"
+    },
+    "metric": {
+      "@id": "algolia:metric",
+      "@type": "@id"
+    },
+    "EmptySearch": "algolia:EmptySearch",
+    "exclude": {
+      "@id": "algolia:exclude",
+      "@type": "xsd:boolean"
+    },
+    "EffectMetric": "algolia:EffectMetric",
+    "ErrorBase": "algolia:ErrorBase",
+    "message": {
+      "@id": "algolia:message",
+      "@type": "xsd:string"
+    },
+    "currency": "algolia:currency",
+    "revenue": {
+      "@id": "algolia:revenue",
+      "@type": "xsd:decimal"
+    },
+    "mean": {
+      "@id": "algolia:mean",
+      "@type": "xsd:decimal"
+    },
+    "standardDeviation": {
+      "@id": "algolia:standardDeviation",
+      "@type": "xsd:decimal"
+    },
+    "winsorizedAmount": {
+      "@id": "algolia:winsorizedAmount",
+      "@type": "xsd:decimal"
+    },
+    "Status": "algolia:Status",
+    "Outliers": "algolia:Outliers",
+    "ABTestResponse": "algolia:ABTestResponse",
+    "taskID": {
+      "@id": "algolia:taskID",
+      "@type": "@id"
+    },
+    "metricMetadata": "algolia:metricMetadata",
+    "winsorizedValue": {
+      "@id": "algolia:winsorizedValue",
+      "@type": "xsd:decimal"
+    },
+    "metricResult": "algolia:metricResult",
+    "value": {
+      "@id": "algolia:value",
+      "@type": "xsd:decimal"
+    },
+    "valueCIHigh": {
+      "@id": "algolia:valueCIHigh",
+      "@type": "xsd:decimal"
+    },
+    "valueCILow": {
+      "@id": "algolia:valueCILow",
+      "@type": "xsd:decimal"
+    },
+    "pValue": {
+      "@id": "algolia:pValue",
+      "@type": "xsd:decimal"
+    },
+    "dimension": {
+      "@id": "algolia:dimension",
+      "@type": "xsd:string"
+    },
+    "metadata": {
+      "@id": "algolia:metadata",
+      "@type": "@id"
+    },
+    "criticalValue": {
+      "@id": "algolia:criticalValue",
+      "@type": "xsd:decimal"
+    },
+    "significant": {
+      "@id": "algolia:significant",
+      "@type": "xsd:boolean"
+    },
+    "Timeseries": "algolia:Timeseries",
+    "variantMetadata": "algolia:variantMetadata",
+    "timeseriesVariant": "algolia:timeseriesVariant",
+    "dates": {
+      "@id": "algolia:dates",
+      "@type": "@id"
+    },
+    "direction": "algolia:direction",
+    "ErrorCorrectionType": "algolia:ErrorCorrectionType",
+    "createMetric": "algolia:createMetric",
+    "MetricName": "algolia:MetricName",
+    "metricDate": "algolia:metricDate",
+    "date": {
+      "@id": "algolia:date",
+      "@type": "xsd:string"
+    },
+    "metrics": {
+      "@id": "algolia:metrics",
+      "@type": "@id"
+    },
+    "Decision": "algolia:Decision",
+    "winnerVariantId": {
+      "@id": "algolia:winnerVariantId",
+      "@type": "xsd:integer"
+    },
+    "declaredAt": {
+      "@id": "algolia:declaredAt",
+      "@type": "xsd:string"
+    },
+    "MetricsFilter": "algolia:MetricsFilter",
+    "domain": {
+      "@id": "algolia:domain",
+      "@type": "xsd:string"
+    },
+    "trackEffects": {
+      "@id": "algolia:trackEffects",
+      "@type": "xsd:boolean"
+    },
+    "includes": {
+      "@id": "algolia:includes",
+      "@type": "xsd:boolean"
+    },
+    "ErrorResponses_badUserID": "algolia:ErrorResponses_badUserID",
+    "ErrorResponses_internalServerError": "algolia:ErrorResponses_internalServerError",
+    "sourceType": "algolia:sourceType",
+    "ErrorResponses_unauthorized": "algolia:ErrorResponses_unauthorized",
+    "issue": "algolia:issue",
+    "code": {
+      "@id": "algolia:code",
+      "@type": "xsd:string"
+    },
+    "notFound": "algolia:notFound",
+    "strategy": "algolia:strategy",
+    "eventType": "algolia:eventType",
+    "paymentRequired": "algolia:paymentRequired",
+    "ErrorMessages_unauthorized": "algolia:ErrorMessages_unauthorized",
+    "ErrorResponses_genericNotFound": "algolia:ErrorResponses_genericNotFound",
+    "event": "algolia:event",
+    "type": {
+      "@id": "algolia:type",
+      "@type": "@id"
+    },
+    "subtype": {
+      "@id": "algolia:subtype",
+      "@type": "@id"
+    },
+    "personalizationReRanking": "algolia:personalizationReRanking",
+    "invalidUserID": "algolia:invalidUserID",
+    "profileType": "algolia:profileType",
+    "user": "algolia:user",
+    "userID": {
+      "@id": "algolia:userID",
+      "@type": "xsd:string"
+    },
+    "affinities": {
+      "@id": "algolia:affinities",
+      "@container": "@list"
+    },
+    "lastUpdatedAt": {
+      "@id": "algolia:lastUpdatedAt",
+      "@type": "xsd:string"
+    },
+    "ErrorResponses_featureNotEnabled": "algolia:ErrorResponses_featureNotEnabled",
+    "badRequest": "algolia:badRequest",
+    "features": "algolia:features",
+    "realtime": {
+      "@id": "algolia:realtime",
+      "@type": "@id"
+    },
+    "RealtimeUser": "algolia:RealtimeUser",
+    "version": {
+      "@id": "algolia:version",
+      "@type": "xsd:string"
+    },
+    "search": {
+      "@id": "algolia:search"
+    },
+    "ErrorResponses_badRequest": "algolia:ErrorResponses_badRequest",
+    "searchFilter": "algolia:searchFilter",
+    "session": {
+      "@id": "algolia:session",
+      "@container": "@list"
+    },
+    "ErrorResponses_genericUnprocessableEntity": "algolia:ErrorResponses_genericUnprocessableEntity",
+    "errorCodes": "algolia:errorCodes",
+    "Configuration_status": "algolia:Configuration_status",
+    "errors": {
+      "@id": "algolia:errors",
+      "@container": "@list"
+    },
+    "genericNotFound": "algolia:genericNotFound",
+    "userType": "algolia:userType",
+    "ErrorMessages_badRequest": "algolia:ErrorMessages_badRequest",
+    "events": "algolia:events",
+    "viewDetails": {
+      "@id": "algolia:viewDetails",
+      "@container": "@list"
+    },
+    "viewListing": {
+      "@id": "algolia:viewListing",
+      "@container": "@list"
+    },
+    "addToCart": {
+      "@id": "algolia:addToCart",
+      "@container": "@list"
+    },
+    "purchase": {
+      "@id": "algolia:purchase",
+      "@container": "@list"
+    },
+    "searchFilters": "algolia:searchFilters",
+    "indices": {
+      "@id": "algolia:indices",
+      "@container": "@list"
+    },
+    "filters": {
+      "@id": "algolia:filters",
+      "@type": "@id"
+    },
+    "featureNotEnabled": "algolia:featureNotEnabled",
+    "unprocessableEntity": "algolia:unprocessableEntity",
+    "badUserID": "algolia:badUserID",
+    "configurationObject": "algolia:configurationObject",
+    "ErrorMessages_internalServerError": "algolia:ErrorMessages_internalServerError",
+    "internalServerError": "algolia:internalServerError",
+    "ErrorResponses_invalidUserID": "algolia:ErrorResponses_invalidUserID",
+    "genericUnprocessableEntity": "algolia:genericUnprocessableEntity",
+    "unauthorized": "algolia:unauthorized",
+    "ClientSideToolConfig": "algolia:ClientSideToolConfig",
+    "inputSchema": {
+      "@id": "algolia:inputSchema",
+      "@type": "@id"
+    },
+    "ConversationMetadata": "algolia:ConversationMetadata",
+    "cachedAt": {
+      "@id": "algolia:cachedAt"
+    },
+    "ApplicationConfigPatch": "algolia:ApplicationConfigPatch",
+    "maxRetentionDays": {
+      "@id": "algolia:maxRetentionDays"
+    },
+    "AnthropicProviderInput": "algolia:AnthropicProviderInput",
+    "apiKey": {
+      "@id": "algolia:apiKey",
+      "@type": "xsd:string"
+    },
+    "baseUrl": {
+      "@id": "algolia:baseUrl"
+    },
+    "TextPart": "algolia:TextPart",
+    "text": {
+      "@id": "algolia:text",
+      "@type": "xsd:string"
+    },
+    "ExactOnSingleWordQuery": "algolia:ExactOnSingleWordQuery",
+    "AgentStatus": "algolia:AgentStatus",
+    "ToolApprovalRequestPart": "algolia:ToolApprovalRequestPart",
+    "toolCallId": {
+      "@id": "algolia:toolCallId",
+      "@type": "xsd:string"
+    },
+    "toolName": {
+      "@id": "algolia:toolName",
+      "@type": "xsd:string"
+    },
+    "args": {
+      "@id": "algolia:args"
+    },
+    "providerOptions": {
+      "@id": "algolia:providerOptions"
+    },
+    "argsHash": {
+      "@id": "algolia:argsHash"
+    },
+    "appId": {
+      "@id": "algolia:appId"
+    },
+    "MessageRole": "algolia:MessageRole",
+    "AllowedDomainBulkInsert": "algolia:AllowedDomainBulkInsert",
+    "domains": {
+      "@id": "algolia:domains",
+      "@container": "@list"
+    },
+    "ConversationFullResponse": "algolia:ConversationFullResponse",
+    "id": {
+      "@id": "algolia:id",
+      "@type": "xsd:string"
+    },
+    "agentId": {
+      "@id": "algolia:agentId",
+      "@type": "xsd:string"
+    },
+    "title": {
+      "@id": "algolia:title"
+    },
+    "lastActivityAt": {
+      "@id": "algolia:lastActivityAt"
+    },
+    "userToken": {
+      "@id": "algolia:userToken"
+    },
+    "isFromDashboard": {
+      "@id": "algolia:isFromDashboard",
+      "@type": "xsd:boolean"
+    },
+    "messageCount": {
+      "@id": "algolia:messageCount",
+      "@type": "xsd:integer"
+    },
+    "totalInputTokens": {
+      "@id": "algolia:totalInputTokens",
+      "@type": "xsd:integer"
+    },
+    "totalOutputTokens": {
+      "@id": "algolia:totalOutputTokens",
+      "@type": "xsd:integer"
+    },
+    "totalTokens": {
+      "@id": "algolia:totalTokens",
+      "@type": "xsd:integer"
+    },
+    "conversationMetadata": {
+      "@id": "algolia:conversationMetadata"
+    },
+    "feedback": {
+      "@id": "algolia:feedback",
+      "@type": "@id"
+    },
+    "messages": {
+      "@id": "algolia:messages",
+      "@container": "@list"
+    },
+    "ToolResultPart": "algolia:ToolResultPart",
+    "output": {
+      "@id": "algolia:output",
+      "@type": "@id"
+    },
+    "FeedbackResponse": "algolia:FeedbackResponse",
+    "messageId": {
+      "@id": "algolia:messageId",
+      "@type": "xsd:string"
+    },
+    "vote": {
+      "@id": "algolia:vote",
+      "@type": "xsd:integer"
+    },
+    "tags": {
+      "@id": "algolia:tags",
+      "@container": "@list"
+    },
+    "notes": {
+      "@id": "algolia:notes"
+    },
+    "model": {
+      "@id": "algolia:model"
+    },
+    "PaginatedConversationsResponse": "algolia:PaginatedConversationsResponse",
+    "data": {
+      "@id": "algolia:data",
+      "@container": "@list"
+    },
+    "pagination": {
+      "@id": "algolia:pagination",
+      "@type": "@id"
+    },
+    "SecretKeyPatch": "algolia:SecretKeyPatch",
+    "agentIds": {
+      "@id": "algolia:agentIds"
+    },
+    "MessageResponse": "algolia:MessageResponse",
+    "conversationId": {
+      "@id": "algolia:conversationId",
+      "@type": "xsd:string"
+    },
+    "role": {
+      "@id": "algolia:role",
+      "@type": "@id"
+    },
+    "parts": {
+      "@id": "algolia:parts",
+      "@container": "@list"
+    },
+    "inputTokens": {
+      "@id": "algolia:inputTokens"
+    },
+    "outputTokens": {
+      "@id": "algolia:outputTokens"
+    },
+    "turnContext": {
+      "@id": "algolia:turnContext"
+    },
+    "ReasoningPartV5": "algolia:ReasoningPartV5",
+    "StartStepPart": "algolia:StartStepPart",
+    "AlgoliaDisplayResultsToolConfig": "algolia:AlgoliaDisplayResultsToolConfig",
+    "minGroups": {
+      "@id": "algolia:minGroups",
+      "@type": "xsd:integer"
+    },
+    "maxGroups": {
+      "@id": "algolia:maxGroups",
+      "@type": "xsd:integer"
+    },
+    "minResultsPerGroup": {
+      "@id": "algolia:minResultsPerGroup",
+      "@type": "xsd:integer"
+    },
+    "maxResultsPerGroup": {
+      "@id": "algolia:maxResultsPerGroup",
+      "@type": "xsd:integer"
+    },
+    "AgentCompletionAlgoliaParams": "algolia:AgentCompletionAlgoliaParams",
+    "mcpServers": {
+      "@id": "algolia:mcpServers"
+    },
+    "searchParameters": {
+      "@id": "algolia:searchParameters",
+      "@type": "@id"
+    },
+    "NumberParam": "algolia:NumberParam",
+    "exposed": {
+      "@id": "algolia:exposed",
+      "@type": "xsd:boolean"
+    },
+    "default": {
+      "@id": "algolia:default"
+    },
+    "constraint": {
+      "@id": "algolia:constraint"
+    },
+    "OpenAICompatibleProviderInput": "algolia:OpenAICompatibleProviderInput",
+    "defaultModel": {
+      "@id": "algolia:defaultModel",
+      "@type": "xsd:string"
+    },
+    "UserMessageMetadataV5": "algolia:UserMessageMetadataV5",
+    "AgentWithVersionResponse": "algolia:AgentWithVersionResponse",
+    "providerId": {
+      "@id": "algolia:providerId"
+    },
+    "instructions": {
+      "@id": "algolia:instructions",
+      "@type": "xsd:string"
+    },
+    "systemPrompt": {
+      "@id": "algolia:systemPrompt"
+    },
+    "config": {
+      "@id": "algolia:config"
+    },
+    "tools": {
+      "@id": "algolia:tools",
+      "@container": "@list"
+    },
+    "templateType": {
+      "@id": "algolia:templateType"
+    },
+    "lastUsedAt": {
+      "@id": "algolia:lastUsedAt"
+    },
+    "ReasoningPart": "algolia:ReasoningPart",
+    "BaseProviderInput": "algolia:BaseProviderInput",
+    "PaginationMetadata": "algolia:PaginationMetadata",
+    "page": {
+      "@id": "algolia:page",
+      "@type": "xsd:integer"
+    },
+    "limit": {
+      "@id": "algolia:limit",
+      "@type": "xsd:integer"
+    },
+    "totalCount": {
+      "@id": "algolia:totalCount",
+      "@type": "xsd:integer"
+    },
+    "totalPages": {
+      "@id": "algolia:totalPages",
+      "@type": "xsd:integer"
+    },
+    "AgentConfigCreate": "algolia:AgentConfigCreate",
+    "TextParam": "algolia:TextParam",
+    "PaginatedAgentsResponse": "algolia:PaginatedAgentsResponse",
+    "AllowedDomainListResponse": "algolia:AllowedDomainListResponse",
+    "McpToolConfig": "algolia:McpToolConfig",
+    "requiresApproval": {
+      "@id": "algolia:requiresApproval"
+    },
+    "alias": {
+      "@id": "algolia:alias"
+    },
+    "ToolInvocationPartV4": "algolia:ToolInvocationPartV4",
+    "toolInvocation": {
+      "@id": "algolia:toolInvocation",
+      "@type": "@id"
+    },
+    "AlternativesAsExact": "algolia:AlternativesAsExact",
+    "AllowedDomainResponse": "algolia:AllowedDomainResponse",
+    "ClientToolsArgsSchema": "algolia:ClientToolsArgsSchema",
+    "properties": {
+      "@id": "algolia:properties"
+    },
+    "required": {
+      "@id": "algolia:required",
+      "@container": "@list"
+    },
+    "ReasoningPartV4": "algolia:ReasoningPartV4",
+    "reasoning": {
+      "@id": "algolia:reasoning",
+      "@type": "xsd:string"
+    },
+    "ProviderName": "algolia:ProviderName",
+    "TextPartV4": "algolia:TextPartV4",
+    "AssistantMessageV4": "algolia:AssistantMessageV4",
+    "content": {
+      "@id": "algolia:content",
+      "@type": "xsd:string"
+    },
+    "toolInvocations": {
+      "@id": "algolia:toolInvocations",
+      "@type": "@id"
+    },
+    "ValidationError": "algolia:ValidationError",
+    "loc": {
+      "@id": "algolia:loc",
+      "@container": "@list"
+    },
+    "msg": {
+      "@id": "algolia:msg",
+      "@type": "xsd:string"
+    },
+    "input": {
+      "@id": "algolia:input"
+    },
+    "ctx": {
+      "@id": "algolia:ctx"
+    },
+    "AlgoliaRecommendToolConfig-Input": "algolia:AlgoliaRecommendToolConfig-Input",
+    "allowedConfigs": {
+      "@id": "algolia:allowedConfigs",
+      "@container": "@list"
+    },
+    "predefinedRecommendParameters": {
+      "@id": "algolia:predefinedRecommendParameters"
+    },
+    "ProviderAuthenticationResponse": "algolia:ProviderAuthenticationResponse",
+    "providerName": {
+      "@id": "algolia:providerName",
+      "@type": "xsd:string"
+    },
+    "AlgoliaRecommendToolIndexConfig": "algolia:AlgoliaRecommendToolIndexConfig",
+    "modelName": {
+      "@id": "algolia:modelName",
+      "@type": "xsd:string"
+    },
+    "ProviderAuthenticationPatch": "algolia:ProviderAuthenticationPatch",
+    "StepStartPartV5": "algolia:StepStartPartV5",
+    "UnknownToolConfig": "algolia:UnknownToolConfig",
+    "TextPartV5": "algolia:TextPartV5",
+    "ToolPartV5": "algolia:ToolPartV5",
+    "state": {
+      "@id": "algolia:state",
+      "@type": "@id"
+    },
+    "errorText": {
+      "@id": "algolia:errorText",
+      "@type": "xsd:string"
+    },
+    "AdvancedSyntaxFeatures": "algolia:AdvancedSyntaxFeatures",
+    "Episode": "algolia:Episode",
+    "observation": {
+      "@id": "algolia:observation",
+      "@type": "xsd:string"
+    },
+    "thoughts": {
+      "@id": "algolia:thoughts",
+      "@type": "xsd:string"
+    },
+    "action": {
+      "@id": "algolia:action",
+      "@type": "xsd:string"
+    },
+    "result": {
+      "@id": "algolia:result",
+      "@type": "xsd:string"
+    },
+    "AgentCompletionRequest": "algolia:AgentCompletionRequest",
+    "toolApprovals": {
+      "@id": "algolia:toolApprovals"
+    },
+    "MemoryType": "algolia:MemoryType",
+    "UserMessageV5": "algolia:UserMessageV5"
+  },
+  "@type": "schema:Dataset",
+  "schema:name": "Algolia API JSON-LD context",
+  "schema:description": "A JSON-LD @context for the objects Algolia's own API contract declares: one class per component schema, one property per declared field, typed from the contract. Derived by script (derive-json-ld.py, 2026-09-23) from openapi/algolia-ab-testing-api-openapi.yml, openapi/algolia-abtesting-v3-api-openapi.yml, openapi/algolia-advanced-personalization-api-openapi.yml.",
+  "dcterms:created": "2026-09-23",
+  "dcterms:source": [
+    "openapi/algolia-ab-testing-api-openapi.yml",
+    "openapi/algolia-abtesting-v3-api-openapi.yml",
+    "openapi/algolia-advanced-personalization-api-openapi.yml",
+    "openapi/algolia-agent-studio-api-openapi.yml",
+    "openapi/algolia-algoliasearch-api-openapi.yml"
+  ]
+}

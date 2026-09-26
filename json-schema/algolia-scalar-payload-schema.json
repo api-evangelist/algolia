@@ -1,0 +1,151 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-scalar-payload-schema.json",
+  "title": "Scalar query",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-analytics-api-openapi.yml#/components/schemas/ScalarPayload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "metrics",
+    "parameters"
+  ],
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "Default domain propagated to entries that omit their own."
+    },
+    "metrics": {
+      "type": "array",
+      "description": "Fields to aggregate.",
+      "items": {
+        "$ref": "#/$defs/FieldReference"
+      }
+    },
+    "filters": {
+      "type": "array",
+      "description": "Filter conditions.",
+      "items": {
+        "$ref": "#/$defs/FilterDefinition"
+      }
+    },
+    "parameters": {
+      "type": "array",
+      "description": "Literal values referenced by the query.",
+      "items": {
+        "$ref": "#/$defs/ParameterDefinition"
+      }
+    }
+  },
+  "$defs": {
+    "FieldReference": {
+      "type": "object",
+      "title": "Field reference",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain the field belongs to. Defaults to the payload's top-level `domain` when omitted."
+        },
+        "kind": {
+          "type": "string",
+          "description": "Field identifier within the domain, as listed by the `/3/patterns/fields` catalog."
+        }
+      }
+    },
+    "FilterDefinition": {
+      "type": "object",
+      "title": "Filter definition",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain the field belongs to."
+        },
+        "kind": {
+          "type": "string",
+          "description": "Field to filter on. With no `operator`, the field must be boolean."
+        },
+        "operator": {
+          "$ref": "#/$defs/filterOperator"
+        },
+        "parameter": {
+          "$ref": "#/$defs/ParameterReference"
+        }
+      }
+    },
+    "ParameterDefinition": {
+      "type": "object",
+      "title": "Parameter definition",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "value"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain the parameter belongs to."
+        },
+        "kind": {
+          "type": "string",
+          "description": "Parameter identifier, for example `indices`, `startDate`, `endDate`, `tags`, or `country`."
+        },
+        "value": {
+          "$ref": "#/$defs/parameterValue"
+        }
+      }
+    },
+    "ParameterReference": {
+      "type": "object",
+      "title": "Parameter reference",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain the parameter belongs to."
+        },
+        "kind": {
+          "type": "string",
+          "description": "Parameter identifier that resolves to a value supplied in `parameters`."
+        }
+      }
+    },
+    "filterOperator": {
+      "type": "string",
+      "description": "Comparison operator applied to a filter field, one of: `=`, `!=`, `>`, `<`, `>=`, `<=`, `IN`, `TAG_TREE`, `CONTAINS`, `STARTS_WITH`, `CONTAINS_PREFIX`. Requires a `parameter` to carry the operand."
+    },
+    "parameterValue": {
+      "description": "Literal value. Its JSON type depends on `kind` (array of strings for `indices`, string for dates, tags, and country, number for numeric operands, and so on).",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number",
+          "format": "double"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    }
+  }
+}

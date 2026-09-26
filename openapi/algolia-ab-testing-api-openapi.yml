@@ -503,26 +503,218 @@ paths:
           description: No content.
 components:
   schemas:
-    EstimateABTestResponse:
+    ABTest:
       type: object
+      additionalProperties: false
       properties:
-        durationDays:
-          type: integer
-          format: int64
-          description: Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
-          example: 21
-        sampleSizes:
-          type: array
-          description: 'Sample size estimates for each variant. The first element is the control variant.
+        abTestID:
+          $ref: '#/components/schemas/abTestID'
+        clickSignificance:
+          description: 'A/B test significance calculated from click events.
 
-            Each element is the estimated number of searches required to achieve the desired statistical significance.
+
+            Values of 0.95 or higher can be considered significant,
+
+            that is, the difference between A and B variants is _not_ due to random variations.
+
+            Lower values have a.
 
             '
-          items:
-            type: integer
-            format: int64
-            description: Number of tracked searches needed to be able to detect the configured effect for the control variant.
-            example: 23415
+          oneOf:
+          - type: number
+            format: double
+            example: 1
+          - type: 'null'
+        conversionSignificance:
+          description: 'A/B test significance calculated from conversion events.
+
+
+            Values of 0.95 or higher can be considered significant,
+
+            that is, the difference between A and B variants is _not_ due to random variations.
+
+            '
+          oneOf:
+          - type: number
+            format: double
+            example: 1
+          - type: 'null'
+        addToCartSignificance:
+          description: 'A/B test significance calculated from add-to-cart events.
+
+
+            Values of 0.95 or higher can be considered significant,
+
+            that is, the difference between A and B variants is _not_ due to random variations.
+
+            '
+          oneOf:
+          - type: number
+            format: double
+            example: 1
+          - type: 'null'
+        purchaseSignificance:
+          description: 'A/B test significance calculated from purchase events.
+
+
+            Values of 0.95 or higher can be considered significant,
+
+            that is, the difference between A and B variants is _not_ due to random variations.
+
+            '
+          oneOf:
+          - type: number
+            format: double
+            example: 1
+          - type: 'null'
+        revenueSignificance:
+          description: 'A/B test significance calculated from revenue data.
+
+
+            Values of 0.95 or higher can be considered significant,
+
+            that is, the difference between A and B variants is _not_ due to random variations.
+
+            '
+          oneOf:
+          - type: object
+            additionalProperties:
+              type: number
+              format: double
+              x-additionalPropertiesName: currency code
+            example:
+              USD: 1
+              EUR: 0.87
+          - type: 'null'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        endAt:
+          $ref: '#/components/schemas/endAt'
+        stoppedAt:
+          $ref: '#/components/schemas/stoppedAt'
+        name:
+          $ref: '#/components/schemas/name'
+        status:
+          $ref: '#/components/schemas/Status'
+        variants:
+          $ref: '#/components/schemas/variants'
+        configuration:
+          $ref: '#/components/schemas/ABTestConfiguration'
+      required:
+      - status
+      - name
+      - createdAt
+      - endAt
+      - updatedAt
+      - abTestID
+      - variants
+    updatedAt:
+      type: string
+      description: Date and time when the A/B test was last updated, in RFC 3339 format.
+      example: '2023-06-15T15:06:44.400601Z'
+    EffectMetric:
+      type: string
+      description: Metric for which you want to detect the smallest relative difference.
+      enum:
+      - addToCartRate
+      - clickThroughRate
+      - conversionRate
+      - purchaseRate
+    trackedSearchCount:
+      type: integer
+      example: 2
+      default: 0
+      description: Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+    taskID:
+      type: integer
+      format: int64
+      example: 1514562690001
+      description: 'Unique identifier of a task.
+
+
+        A successful API response means that a task was added to a queue.
+
+        It might not run immediately.
+
+        You can check the task''s progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task) and this task ID.
+
+        '
+    endAt:
+      type: string
+      description: End date and time of the A/B test, in RFC 3339 format.
+      example: '2023-06-17T00:00:00Z'
+    name:
+      type: string
+      description: A/B test name.
+      example: Custom ranking sales rank test
+    EmptySearch:
+      type: object
+      description: Configuration for handling empty searches.
+      properties:
+        exclude:
+          type: boolean
+          description: Whether to exclude empty searches when calculating A/B test results.
+    ABTestResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          $ref: '#/components/schemas/index'
+        abTestID:
+          $ref: '#/components/schemas/abTestID'
+        taskID:
+          $ref: '#/components/schemas/taskID'
+      required:
+      - abTestID
+      - index
+      - taskID
+    currencies:
+      type: object
+      description: A/B test currencies.
+      example:
+        USD:
+          currency: USD
+          revenue: 120
+          mean: 53.7
+          standardDeviation: 12.3
+          winsorizedAmount: 23
+        EUR:
+          currency: EUR
+          revenue: 100
+          mean: 43.7
+          standardDeviation: 10.3
+          winsorizedAmount: 10
+      additionalProperties:
+        $ref: '#/components/schemas/currency'
+        x-additionalPropertiesName: currency code
+    description:
+      type: string
+      description: Description for this variant.
+      example: Current production index
+    ErrorBase:
+      description: Error.
+      type: object
+      x-keep-model: true
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    FeatureFilters:
+      type: object
+      description: Configuration of feature-based filters applied to the A/B test population.
+      properties:
+        dynamicReRanking:
+          type: boolean
+          description: Whether to apply Dynamic Re-Ranking feature filters.
+        aiPerso:
+          type: boolean
+          description: Whether to apply AI Personalization feature filters.
+        multiSignalRanking:
+          type: boolean
+          description: Whether to apply Multi-Signal Re-Ranking feature filters.
     customSearchParams:
       type: object
       description: 'Search parameters to add to the test variant.
@@ -541,6 +733,45 @@ components:
       - customSearchParameters
       x-discriminator-fields:
       - customSearchParameters
+    MinimumDetectableEffect:
+      type: object
+      description: Configuration for the smallest difference between test variants you want to detect.
+      properties:
+        size:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: 'Smallest difference in an observable metric between variants.
+
+            For example, to detect a 10% difference between variants, set this value to 0.1.
+
+            '
+        metric:
+          $ref: '#/components/schemas/EffectMetric'
+      required:
+      - size
+      - metric
+    abTestsVariant:
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          $ref: '#/components/schemas/index'
+        trafficPercentage:
+          $ref: '#/components/schemas/trafficPercentage'
+        description:
+          $ref: '#/components/schemas/description'
+      required:
+      - index
+      - trafficPercentage
+    ABTests:
+      oneOf:
+      - type: array
+        description: The list of A/B tests, null if no A/B tests are configured for this application.
+        items:
+          $ref: '#/components/schemas/ABTest'
+      - type: 'null'
     variant:
       type: object
       additionalProperties: false
@@ -662,211 +893,42 @@ components:
       - clickCount
       - addToCartCount
       - purchaseCount
-    index:
-      type: string
-      description: Index name of the A/B test variant (case-sensitive).
-      example: delcourt_production
-    FeatureFilters:
-      type: object
-      description: Configuration of feature-based filters applied to the A/B test population.
-      properties:
-        dynamicReRanking:
-          type: boolean
-          description: Whether to apply Dynamic Re-Ranking feature filters.
-        aiPerso:
-          type: boolean
-          description: Whether to apply AI Personalization feature filters.
-        multiSignalRanking:
-          type: boolean
-          description: Whether to apply Multi-Signal Re-Ranking feature filters.
-    ABTestConfiguration:
-      title: configuration
-      type: object
-      description: A/B test configuration.
-      properties:
-        featureFilters:
-          $ref: '#/components/schemas/FeatureFilters'
-        outliers:
-          $ref: '#/components/schemas/Outliers'
-        emptySearch:
-          $ref: '#/components/schemas/EmptySearch'
-        minimumDetectableEffect:
-          $ref: '#/components/schemas/MinimumDetectableEffect'
-    ABTest:
-      type: object
-      additionalProperties: false
-      properties:
-        abTestID:
-          $ref: '#/components/schemas/abTestID'
-        clickSignificance:
-          description: 'A/B test significance calculated from click events.
+    variants:
+      type: array
+      description: 'A/B test variants.
 
 
-            Values of 0.95 or higher can be considered significant,
+        The first variant is your _control_ index, typically your production index.
 
-            that is, the difference between A and B variants is _not_ due to random variations.
+        The second variant is an index with changed settings that you want to test against the control.
 
-            Lower values have a.
-
-            '
-          oneOf:
-          - type: number
-            format: double
-            example: 1
-          - type: 'null'
-        conversionSignificance:
-          description: 'A/B test significance calculated from conversion events.
-
-
-            Values of 0.95 or higher can be considered significant,
-
-            that is, the difference between A and B variants is _not_ due to random variations.
-
-            '
-          oneOf:
-          - type: number
-            format: double
-            example: 1
-          - type: 'null'
-        addToCartSignificance:
-          description: 'A/B test significance calculated from add-to-cart events.
-
-
-            Values of 0.95 or higher can be considered significant,
-
-            that is, the difference between A and B variants is _not_ due to random variations.
-
-            '
-          oneOf:
-          - type: number
-            format: double
-            example: 1
-          - type: 'null'
-        purchaseSignificance:
-          description: 'A/B test significance calculated from purchase events.
-
-
-            Values of 0.95 or higher can be considered significant,
-
-            that is, the difference between A and B variants is _not_ due to random variations.
-
-            '
-          oneOf:
-          - type: number
-            format: double
-            example: 1
-          - type: 'null'
-        revenueSignificance:
-          description: 'A/B test significance calculated from revenue data.
-
-
-            Values of 0.95 or higher can be considered significant,
-
-            that is, the difference between A and B variants is _not_ due to random variations.
-
-            '
-          oneOf:
-          - type: object
-            additionalProperties:
-              type: number
-              format: double
-              x-additionalPropertiesName: currency code
-            example:
-              USD: 1
-              EUR: 0.87
-          - type: 'null'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        endAt:
-          $ref: '#/components/schemas/endAt'
-        stoppedAt:
-          $ref: '#/components/schemas/stoppedAt'
-        name:
-          $ref: '#/components/schemas/name'
-        status:
-          $ref: '#/components/schemas/Status'
-        variants:
-          $ref: '#/components/schemas/variants'
-        configuration:
-          $ref: '#/components/schemas/ABTestConfiguration'
-      required:
-      - status
-      - name
-      - createdAt
-      - endAt
-      - updatedAt
-      - abTestID
-      - variants
-    name:
-      type: string
-      description: A/B test name.
-      example: Custom ranking sales rank test
-    ABTests:
-      oneOf:
-      - type: array
-        description: The list of A/B tests, null if no A/B tests are configured for this application.
-        items:
-          $ref: '#/components/schemas/ABTest'
-      - type: 'null'
-    abTestsVariant:
-      type: object
-      additionalProperties: false
-      properties:
-        index:
-          $ref: '#/components/schemas/index'
-        trafficPercentage:
-          $ref: '#/components/schemas/trafficPercentage'
-        description:
-          $ref: '#/components/schemas/description'
-      required:
-      - index
-      - trafficPercentage
-    MinimumDetectableEffect:
-      type: object
-      description: Configuration for the smallest difference between test variants you want to detect.
-      properties:
-        size:
-          type: number
-          format: double
-          minimum: 0
-          maximum: 1
-          description: 'Smallest difference in an observable metric between variants.
-
-            For example, to detect a 10% difference between variants, set this value to 0.1.
-
-            '
-        metric:
-          $ref: '#/components/schemas/EffectMetric'
-      required:
-      - size
-      - metric
-    updatedAt:
-      type: string
-      description: Date and time when the A/B test was last updated, in RFC 3339 format.
-      example: '2023-06-15T15:06:44.400601Z'
-    endAt:
-      type: string
-      description: End date and time of the A/B test, in RFC 3339 format.
-      example: '2023-06-17T00:00:00Z'
+        '
+      items:
+        $ref: '#/components/schemas/variant'
     createdAt:
       type: string
       description: Date and time when the A/B test was created, in RFC 3339 format.
       example: '2023-06-15T15:06:04.249906Z'
+    abTestID:
+      type: integer
+      description: Unique A/B test identifier.
+      example: 224
+    abTestsVariantSearchParams:
+      allOf:
+      - $ref: '#/components/schemas/abTestsVariant'
+      - $ref: '#/components/schemas/customSearchParams'
+    trafficPercentage:
+      type: integer
+      description: Percentage of search requests each variant receives.
+      minimum: 0
+      maximum: 100
+      example: 60
     AddABTestsVariant:
       oneOf:
       - title: Variant
         $ref: '#/components/schemas/abTestsVariant'
       - title: Variant with search parameters
         $ref: '#/components/schemas/abTestsVariantSearchParams'
-    EmptySearch:
-      type: object
-      description: Configuration for handling empty searches.
-      properties:
-        exclude:
-          type: boolean
-          description: Whether to exclude empty searches when calculating A/B test results.
     filterEffects:
       type: object
       description: A/B test filter effects resulting from configuration settings.
@@ -903,72 +965,19 @@ components:
               type: integer
               description: Number of tracked searches removed from the A/B test.
               example: 237
-    description:
-      type: string
-      description: Description for this variant.
-      example: Current production index
-    variants:
-      type: array
-      description: 'A/B test variants.
-
-
-        The first variant is your _control_ index, typically your production index.
-
-        The second variant is an index with changed settings that you want to test against the control.
-
-        '
-      items:
-        $ref: '#/components/schemas/variant'
-    currencies:
+    ABTestConfiguration:
+      title: configuration
       type: object
-      description: A/B test currencies.
-      example:
-        USD:
-          currency: USD
-          revenue: 120
-          mean: 53.7
-          standardDeviation: 12.3
-          winsorizedAmount: 23
-        EUR:
-          currency: EUR
-          revenue: 100
-          mean: 43.7
-          standardDeviation: 10.3
-          winsorizedAmount: 10
-      additionalProperties:
-        $ref: '#/components/schemas/currency'
-        x-additionalPropertiesName: currency code
-    abTestID:
-      type: integer
-      description: Unique A/B test identifier.
-      example: 224
-    trafficPercentage:
-      type: integer
-      description: Percentage of search requests each variant receives.
-      minimum: 0
-      maximum: 100
-      example: 60
-    EffectMetric:
-      type: string
-      description: Metric for which you want to detect the smallest relative difference.
-      enum:
-      - addToCartRate
-      - clickThroughRate
-      - conversionRate
-      - purchaseRate
-    abTestsVariantSearchParams:
-      allOf:
-      - $ref: '#/components/schemas/abTestsVariant'
-      - $ref: '#/components/schemas/customSearchParams'
-    ErrorBase:
-      description: Error.
-      type: object
-      x-keep-model: true
-      additionalProperties: true
+      description: A/B test configuration.
       properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
+        featureFilters:
+          $ref: '#/components/schemas/FeatureFilters'
+        outliers:
+          $ref: '#/components/schemas/Outliers'
+        emptySearch:
+          $ref: '#/components/schemas/EmptySearch'
+        minimumDetectableEffect:
+          $ref: '#/components/schemas/MinimumDetectableEffect'
     currency:
       type: object
       properties:
@@ -996,26 +1005,14 @@ components:
           format: double
           description: The amount of revenue for this currency that was removed after capping purchase amounts to the 95th percentile.
           example: 23
-    taskID:
-      type: integer
-      format: int64
-      example: 1514562690001
-      description: 'Unique identifier of a task.
-
-
-        A successful API response means that a task was added to a queue.
-
-        It might not run immediately.
-
-        You can check the task''s progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task) and this task ID.
-
-        '
-    stoppedAt:
-      type:
-      - string
-      - 'null'
-      description: Date and time when the A/B test was stopped, in RFC 3339 format.
-      example: '2023-06-15T15:06:44.400601Z'
+    Outliers:
+      type: object
+      description: Configuration for handling outliers.
+      properties:
+        exclude:
+          type: boolean
+          description: Whether to exclude outliers when calculating A/B test results.
+          default: true
     Status:
       type: string
       description: 'A/B test status.
@@ -1036,34 +1033,59 @@ components:
       - stopped
       - expired
       - failed
-    trackedSearchCount:
-      type: integer
-      example: 2
-      default: 0
-      description: Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
-    Outliers:
+    EstimateABTestResponse:
       type: object
-      description: Configuration for handling outliers.
       properties:
-        exclude:
-          type: boolean
-          description: Whether to exclude outliers when calculating A/B test results.
-          default: true
-    ABTestResponse:
-      type: object
-      additionalProperties: false
-      properties:
-        index:
-          $ref: '#/components/schemas/index'
-        abTestID:
-          $ref: '#/components/schemas/abTestID'
-        taskID:
-          $ref: '#/components/schemas/taskID'
-      required:
-      - abTestID
-      - index
-      - taskID
+        durationDays:
+          type: integer
+          format: int64
+          description: Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
+          example: 21
+        sampleSizes:
+          type: array
+          description: 'Sample size estimates for each variant. The first element is the control variant.
+
+            Each element is the estimated number of searches required to achieve the desired statistical significance.
+
+            '
+          items:
+            type: integer
+            format: int64
+            description: Number of tracked searches needed to be able to detect the configured effect for the control variant.
+            example: 23415
+    index:
+      type: string
+      description: Index name of the A/B test variant (case-sensitive).
+      example: delcourt_production
+    stoppedAt:
+      type:
+      - string
+      - 'null'
+      description: Date and time when the A/B test was stopped, in RFC 3339 format.
+      example: '2023-06-15T15:06:44.400601Z'
+  headers:
+    x-ratelimit-reset:
+      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
+      example: 1710682486
+      schema:
+        type: integer
+    x-ratelimit-limit:
+      description: Number of allowed requests per one minute.
+      example: 100
+      schema:
+        type: integer
+    x-ratelimit-remaining:
+      description: Number of remaining requests in the current period.
+      example: 99
+      schema:
+        type: integer
   responses:
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
     IndexNotFound:
       description: Index not found.
       content:
@@ -1076,42 +1098,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
     BadRequest:
       description: Bad request or request arguments.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
-  headers:
-    x-ratelimit-limit:
-      description: Number of allowed requests per one minute.
-      example: 100
-      schema:
-        type: integer
-    x-ratelimit-reset:
-      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
-      example: 1710682486
-      schema:
-        type: integer
-    x-ratelimit-remaining:
-      description: Number of remaining requests in the current period.
-      example: 99
-      schema:
-        type: integer
   parameters:
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
     ID:
       in: path
       name: id
@@ -1127,6 +1120,13 @@ components:
       schema:
         type: string
         example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
   securitySchemes:
     appId:
       type: apiKey

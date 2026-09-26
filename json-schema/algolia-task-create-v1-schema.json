@@ -1,0 +1,418 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-task-create-v1-schema.json",
+  "title": "TaskCreateV1",
+  "description": "API request body for creating a task using the V1 shape. Use methods and types that don't contain the V1 suffix.",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-ingestion-api-openapi.yml#/components/schemas/TaskCreateV1",
+  "type": "object",
+  "additionalProperties": false,
+  "deprecated": true,
+  "properties": {
+    "sourceID": {
+      "$ref": "#/$defs/sourceID"
+    },
+    "destinationID": {
+      "$ref": "#/$defs/destinationID"
+    },
+    "trigger": {
+      "$ref": "#/$defs/TaskCreateTrigger"
+    },
+    "action": {
+      "$ref": "#/$defs/ActionType"
+    },
+    "enabled": {
+      "type": "boolean",
+      "description": "Whether the task is enabled."
+    },
+    "failureThreshold": {
+      "$ref": "#/$defs/failureThreshold"
+    },
+    "input": {
+      "$ref": "#/$defs/TaskInput"
+    },
+    "cursor": {
+      "$ref": "#/$defs/cursor"
+    }
+  },
+  "required": [
+    "sourceID",
+    "destinationID",
+    "trigger",
+    "action"
+  ],
+  "$defs": {
+    "ActionType": {
+      "type": "string",
+      "description": "Action to perform on the Algolia index.",
+      "enum": [
+        "replace",
+        "save",
+        "partial",
+        "partialNoCreate",
+        "append"
+      ]
+    },
+    "Cron": {
+      "type": "string",
+      "description": "Cron expression for the task's schedule."
+    },
+    "DockerStreams": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string",
+          "description": "The name of the stream to fetch the data from (e.g. table name)."
+        },
+        "properties": {
+          "type": "array",
+          "description": "The properties of the stream to select (e.g. column).",
+          "items": {
+            "type": "string"
+          }
+        },
+        "syncMode": {
+          "$ref": "#/$defs/DockerStreamsSyncMode"
+        }
+      },
+      "required": [
+        "name",
+        "syncMode"
+      ]
+    },
+    "DockerStreamsInput": {
+      "title": "Docker streams",
+      "description": "The selected streams of an airbyte connector.",
+      "type": "object",
+      "properties": {
+        "streams": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/DockerStreams"
+          }
+        }
+      },
+      "required": [
+        "streams"
+      ],
+      "x-discriminator-fields": [
+        "streams"
+      ]
+    },
+    "DockerStreamsSyncMode": {
+      "type": "string",
+      "description": "The strategy to use to fetch the data.",
+      "enum": [
+        "incremental",
+        "fullTable"
+      ]
+    },
+    "MappingFieldDirective": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Describes how a field should be resolved by applying a set of directives.",
+      "properties": {
+        "fieldKey": {
+          "description": "Destination field key.",
+          "type": "string"
+        },
+        "value": {
+          "type": "object",
+          "additionalProperties": true,
+          "description": "How the destination field should be resolved from the source."
+        }
+      },
+      "required": [
+        "fieldKey",
+        "value"
+      ]
+    },
+    "MappingFormatSchema": {
+      "type": "string",
+      "description": "Mapping format schema.",
+      "enum": [
+        "mappingkit/v1"
+      ]
+    },
+    "MappingInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Transformations to apply to the source, serialized as a JSON string.",
+      "properties": {
+        "format": {
+          "$ref": "#/$defs/MappingFormatSchema"
+        },
+        "actions": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MappingKitAction"
+          }
+        }
+      },
+      "required": [
+        "format",
+        "actions"
+      ],
+      "x-discriminator-fields": [
+        "format",
+        "actions"
+      ]
+    },
+    "MappingKitAction": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Describes how a destination object should be resolved by means of applying a set of directives.",
+      "properties": {
+        "id": {
+          "description": "ID to uniquely identify this action.",
+          "type": "string"
+        },
+        "enabled": {
+          "description": "Whether this action has any effect.",
+          "type": "boolean"
+        },
+        "trigger": {
+          "description": "Condition which must be satisfied to apply the action. If this evaluates to false, the action is not applied, and the process attempts to apply the next action, if any.",
+          "type": "string"
+        },
+        "fieldDirectives": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/MappingFieldDirective"
+          }
+        }
+      },
+      "required": [
+        "enabled",
+        "trigger",
+        "fieldDirectives"
+      ]
+    },
+    "OnDemandTriggerInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Trigger information for manually-triggered tasks.",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/OnDemandTriggerType"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "OnDemandTriggerType": {
+      "type": "string",
+      "description": "Task is run manually, with the `/run` endpoint.",
+      "enum": [
+        "onDemand"
+      ]
+    },
+    "ScheduleTriggerInput": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Trigger input for scheduled tasks.",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/ScheduleTriggerType"
+        },
+        "cron": {
+          "$ref": "#/$defs/Cron"
+        }
+      },
+      "required": [
+        "type",
+        "cron"
+      ],
+      "x-discriminator-fields": [
+        "cron"
+      ]
+    },
+    "ScheduleTriggerType": {
+      "type": "string",
+      "description": "Task runs on a schedule.",
+      "enum": [
+        "schedule"
+      ]
+    },
+    "ShopifyInput": {
+      "title": "Shopify input",
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Represents the required elements of the task input when using a `shopify` source.",
+      "properties": {
+        "metafields": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/ShopifyMetafield"
+          }
+        },
+        "market": {
+          "$ref": "#/$defs/ShopifyMarket"
+        }
+      },
+      "required": [
+        "metafields",
+        "market"
+      ]
+    },
+    "ShopifyMarket": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Represents a market in Shopify.",
+      "properties": {
+        "countries": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "currencies": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        "locales": {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      },
+      "required": [
+        "countries",
+        "currencies",
+        "locales"
+      ]
+    },
+    "ShopifyMetafield": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Represents a metafield in Shopify.",
+      "properties": {
+        "namespace": {
+          "type": "string"
+        },
+        "key": {
+          "type": "string"
+        },
+        "value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "namespace",
+        "key",
+        "value"
+      ]
+    },
+    "StreamingInput": {
+      "title": "Streaming input",
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.",
+      "properties": {
+        "mapping": {
+          "$ref": "#/$defs/MappingInput"
+        }
+      },
+      "required": [
+        "mapping"
+      ],
+      "x-discriminator-fields": [
+        "mapping"
+      ]
+    },
+    "StreamingTrigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Trigger input for continuously running tasks.",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/StreamingTriggerType"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "StreamingTriggerType": {
+      "type": "string",
+      "description": "Task runs continuously.",
+      "enum": [
+        "streaming"
+      ]
+    },
+    "SubscriptionTrigger": {
+      "type": "object",
+      "additionalProperties": false,
+      "description": "Trigger input for subscription tasks.",
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/SubscriptionTriggerType"
+        }
+      },
+      "required": [
+        "type"
+      ]
+    },
+    "SubscriptionTriggerType": {
+      "type": "string",
+      "description": "Task runs after receiving subscribed event.",
+      "enum": [
+        "subscription"
+      ]
+    },
+    "TaskCreateTrigger": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/OnDemandTriggerInput"
+        },
+        {
+          "$ref": "#/$defs/ScheduleTriggerInput"
+        },
+        {
+          "$ref": "#/$defs/SubscriptionTrigger"
+        },
+        {
+          "$ref": "#/$defs/StreamingTrigger"
+        }
+      ]
+    },
+    "TaskInput": {
+      "description": "Configuration of the task, depending on its type.",
+      "oneOf": [
+        {
+          "$ref": "#/$defs/StreamingInput"
+        },
+        {
+          "$ref": "#/$defs/DockerStreamsInput"
+        },
+        {
+          "$ref": "#/$defs/ShopifyInput"
+        }
+      ]
+    },
+    "cursor": {
+      "type": "string",
+      "description": "Date and time when the last cursor was created, in RFC 3339 format."
+    },
+    "destinationID": {
+      "type": "string",
+      "description": "Universally unique identifier (UUID) of a destination resource."
+    },
+    "failureThreshold": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Maximum accepted percentage of failures for a task run to finish successfully."
+    },
+    "sourceID": {
+      "type": "string",
+      "description": "Universally uniqud identifier (UUID) of a source."
+    }
+  }
+}

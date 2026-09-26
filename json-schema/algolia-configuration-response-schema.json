@@ -1,0 +1,255 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-configuration-response-schema.json",
+  "title": "ConfigurationResponse",
+  "description": "API response for retrieving Query Suggestions configurations.",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-query-suggestions-api-openapi.yml#/components/schemas/ConfigurationResponse",
+  "type": "object",
+  "allOf": [
+    {
+      "$ref": "#/$defs/AppID"
+    },
+    {
+      "$ref": "#/$defs/ConfigurationWithIndex"
+    }
+  ],
+  "required": [
+    "appID",
+    "allowSpecialCharacters",
+    "enablePersonalization",
+    "exclude",
+    "languages",
+    "sourceIndices"
+  ],
+  "$defs": {
+    "AnalyticsTags": {
+      "title": "analyticsTags",
+      "description": "Analytics tags for filtering the popular searches.\nFor more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).\n",
+      "default": null,
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "AppID": {
+      "type": "object",
+      "properties": {
+        "appID": {
+          "type": "string",
+          "description": "Algolia application ID to which this Query Suggestions configuration belongs."
+        }
+      }
+    },
+    "Configuration": {
+      "type": "object",
+      "description": "Query Suggestions configuration.",
+      "required": [
+        "sourceIndices"
+      ],
+      "properties": {
+        "sourceIndices": {
+          "type": "array",
+          "description": "Algolia indices from which to get the popular searches for query suggestions.",
+          "minItems": 1,
+          "items": {
+            "$ref": "#/$defs/SourceIndex"
+          }
+        },
+        "languages": {
+          "$ref": "#/$defs/Languages"
+        },
+        "exclude": {
+          "$ref": "#/$defs/Exclude"
+        },
+        "enablePersonalization": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to turn on personalized query suggestions."
+        },
+        "allowSpecialCharacters": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to include suggestions with special characters."
+        }
+      }
+    },
+    "ConfigurationWithIndex": {
+      "type": "object",
+      "description": "Query Suggestions configuration.",
+      "required": [
+        "indexName",
+        "sourceIndices"
+      ],
+      "allOf": [
+        {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "indexName": {
+              "$ref": "#/$defs/IndexName"
+            }
+          }
+        },
+        {
+          "$ref": "#/$defs/Configuration"
+        }
+      ]
+    },
+    "Exclude": {
+      "title": "exclude",
+      "description": "Words or regular expressions to exclude from the suggestions.",
+      "default": null,
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "External": {
+      "description": "Algolia indices with popular searches to use as query suggestions.\n\nRecords of these indices must have these attributes:\n\n- `query`: search query which will be added as a suggestion\n- `count`: measure of popularity of that search query\n\nFor example, you can export popular searches from an external analytics provider, such as Google Analytics or Adobe Analytics,\nand feed this data into an Algolia index.\nYou can use this index to generate query suggestions until your Algolia Analytics has collected enough data.\n",
+      "default": null,
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Facet": {
+      "type": "object",
+      "description": "Facet to use as category.",
+      "properties": {
+        "attribute": {
+          "type": "string",
+          "description": "Facet name."
+        },
+        "amount": {
+          "type": "integer",
+          "description": "Number of suggestions."
+        }
+      }
+    },
+    "Facets": {
+      "title": "facets",
+      "description": "Facets to use as top categories with your suggestions.\n\nIf provided, Query Suggestions adds the top facet values to each suggestion.\n",
+      "default": null,
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/Facet"
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "Generate": {
+      "title": "generate",
+      "description": "Facets used for generating query suggestions from facet values.\n\nFor example, if you set `generate: [\"color\", \"brand\"]`, combinations from the facet values are added as query suggestions,\nsuch as \"blue adidas\", \"red adidas\", \"blue nike\", \"red nike\", etc.\n\nYou can include nested lists.\n",
+      "default": null,
+      "oneOf": [
+        {
+          "type": "array",
+          "items": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "IndexName": {
+      "title": "indexName",
+      "type": "string",
+      "description": "Name of the Query Suggestions index (case-sensitive)."
+    },
+    "Languages": {
+      "title": "languages",
+      "description": "Languages for deduplicating singular and plural suggestions.\nIf specified, only the more popular form is included.\n",
+      "default": false,
+      "oneOf": [
+        {
+          "type": "array",
+          "description": "Languages for which to deduplicate singular and plural forms.",
+          "items": {
+            "type": "string",
+            "description": "Two-letter country code."
+          }
+        },
+        {
+          "type": "boolean",
+          "description": "If true, deduplication is enabled for all languages."
+        }
+      ]
+    },
+    "SourceIndex": {
+      "type": "object",
+      "description": "Configuration of an Algolia index for Query Suggestions.",
+      "required": [
+        "indexName"
+      ],
+      "properties": {
+        "indexName": {
+          "type": "string",
+          "description": "Name of the Algolia index (case-sensitive) to use as source for query suggestions."
+        },
+        "replicas": {
+          "type": "boolean",
+          "default": false,
+          "description": "If true, Query Suggestions uses all replica indices to find popular searches.\nIf false, only the primary index is used.\n"
+        },
+        "analyticsTags": {
+          "$ref": "#/$defs/AnalyticsTags"
+        },
+        "facets": {
+          "$ref": "#/$defs/Facets"
+        },
+        "minHits": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 5,
+          "description": "Minimum number of hits required to be included as a suggestion.\n\nA search query must at least generate `minHits` search results to be included in the Query Suggestions index.\n"
+        },
+        "minLetters": {
+          "type": "integer",
+          "minimum": 0,
+          "default": 4,
+          "description": "Minimum letters required to be included as a suggestion.\n\nA search query must be at least `minLetters` long to be included in the Query Suggestions index.\n"
+        },
+        "generate": {
+          "$ref": "#/$defs/Generate"
+        },
+        "external": {
+          "$ref": "#/$defs/External"
+        }
+      }
+    }
+  }
+}

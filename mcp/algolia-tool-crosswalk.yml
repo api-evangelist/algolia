@@ -159,13 +159,14 @@ crosswalk:
     spec.
 mcp_only: []
 rest_only:
+  count: 324
   note: Both Algolia MCP servers are READ-ONLY by design - Algolia states they "search, recommend, and (for Productivity MCP)
     report analytics" and neither creates or modifies indices, records, or settings. Every write operation in the OpenAPI
     surface is therefore rest_only, as is the whole of Ingestion, Crawler, A/B Testing, Query Suggestions, Personalization,
     Composition, Agent Studio and Monitoring.
   docs: https://www.algolia.com/doc/guides/model-context-protocol
   unmapped_by_document:
-    algolia-abtesting-api-openapi.yml: 11
+    algolia-ab-testing-api-openapi.yml: 11
     algolia-abtesting-v3-api-openapi.yml: 12
     algolia-advanced-personalization-api-openapi.yml: 12
     algolia-agent-studio-api-openapi.yml: 42

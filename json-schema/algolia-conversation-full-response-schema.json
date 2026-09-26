@@ -1,0 +1,602 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-conversation-full-response-schema.json",
+  "title": "conversationFullResponse",
+  "description": "Response model for a conversation with all its messages.",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-agent-studio-api-openapi.yml#/components/schemas/ConversationFullResponse",
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "id"
+    },
+    "agentId": {
+      "type": "string",
+      "title": "agentid"
+    },
+    "title": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "title"
+    },
+    "createdAt": {
+      "type": "string",
+      "title": "createdat"
+    },
+    "updatedAt": {
+      "type": "string",
+      "title": "updatedat"
+    },
+    "lastActivityAt": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "lastactivityat"
+    },
+    "userToken": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "usertoken"
+    },
+    "isFromDashboard": {
+      "type": "boolean",
+      "title": "isfromdashboard",
+      "default": false
+    },
+    "messageCount": {
+      "type": "integer",
+      "title": "messagecount",
+      "default": 0
+    },
+    "totalInputTokens": {
+      "type": "integer",
+      "title": "totalinputtokens",
+      "default": 0
+    },
+    "totalOutputTokens": {
+      "type": "integer",
+      "title": "totaloutputtokens",
+      "default": 0
+    },
+    "totalTokens": {
+      "type": "integer",
+      "title": "totaltokens",
+      "default": 0
+    },
+    "conversationMetadata": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/ConversationMetadata"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "feedback": {
+      "$ref": "#/$defs/FeedbackUnion"
+    },
+    "messages": {
+      "items": {
+        "$ref": "#/$defs/MessageResponse"
+      },
+      "type": "array",
+      "title": "messages"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "agentId",
+    "createdAt",
+    "updatedAt",
+    "messages"
+  ],
+  "$defs": {
+    "ConversationMetadata": {
+      "properties": {
+        "cachedAt": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "cachedat"
+        }
+      },
+      "type": "object",
+      "title": "conversationMetadata",
+      "description": "Public metadata exposed on conversation responses."
+    },
+    "FeedbackResponse": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "agentId": {
+          "type": "string",
+          "title": "agentid"
+        },
+        "messageId": {
+          "type": "string",
+          "title": "messageid"
+        },
+        "vote": {
+          "type": "integer",
+          "title": "vote"
+        },
+        "tags": {
+          "items": {
+            "type": "string"
+          },
+          "type": "array",
+          "title": "tags"
+        },
+        "notes": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "notes"
+        },
+        "model": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "model"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "createdat"
+        },
+        "updatedAt": {
+          "type": "string",
+          "title": "updatedat"
+        }
+      },
+      "type": "object",
+      "required": [
+        "id",
+        "agentId",
+        "messageId",
+        "vote",
+        "tags",
+        "createdAt",
+        "updatedAt"
+      ],
+      "title": "feedbackResponse"
+    },
+    "FeedbackUnion": {
+      "oneOf": [
+        {
+          "items": {
+            "$ref": "#/$defs/FeedbackResponse"
+          },
+          "type": "array"
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "MessagePart": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/TextPart"
+        },
+        {
+          "$ref": "#/$defs/ToolCallPart"
+        },
+        {
+          "$ref": "#/$defs/ToolResultPart"
+        },
+        {
+          "$ref": "#/$defs/StartPart"
+        },
+        {
+          "$ref": "#/$defs/StartStepPart"
+        },
+        {
+          "$ref": "#/$defs/ReasoningPart"
+        },
+        {
+          "$ref": "#/$defs/ToolApprovalRequestPart"
+        }
+      ]
+    },
+    "MessageResponse": {
+      "properties": {
+        "id": {
+          "type": "string",
+          "title": "id"
+        },
+        "conversationId": {
+          "type": "string",
+          "title": "conversationid"
+        },
+        "role": {
+          "$ref": "#/$defs/MessageRole"
+        },
+        "parts": {
+          "items": {
+            "$ref": "#/$defs/MessagePart"
+          },
+          "type": "array",
+          "title": "parts"
+        },
+        "createdAt": {
+          "type": "string",
+          "title": "createdat"
+        },
+        "updatedAt": {
+          "type": "string",
+          "title": "updatedat"
+        },
+        "model": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "model"
+        },
+        "inputTokens": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "inputtokens"
+        },
+        "outputTokens": {
+          "oneOf": [
+            {
+              "type": "integer"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "outputtokens"
+        },
+        "turnContext": {
+          "oneOf": [
+            {
+              "additionalProperties": {
+                "type": "string"
+              },
+              "type": "object"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "turncontext"
+        }
+      },
+      "type": "object",
+      "required": [
+        "id",
+        "conversationId",
+        "role",
+        "parts",
+        "createdAt",
+        "updatedAt"
+      ],
+      "title": "messageResponse",
+      "description": "Response model for a message."
+    },
+    "MessageRole": {
+      "type": "string",
+      "enum": [
+        "user",
+        "assistant"
+      ],
+      "title": "messageRole",
+      "description": "Role of a message in the conversation."
+    },
+    "ReasoningPart": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "reasoning",
+          "title": "type",
+          "default": "reasoning"
+        },
+        "text": {
+          "type": "string",
+          "title": "text"
+        }
+      },
+      "type": "object",
+      "required": [
+        "type",
+        "text"
+      ],
+      "title": "reasoningPart"
+    },
+    "StartPart": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "start",
+          "title": "type",
+          "default": "start"
+        }
+      },
+      "type": "object",
+      "title": "startPart",
+      "required": [
+        "type"
+      ]
+    },
+    "StartStepPart": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "start-step",
+          "title": "type",
+          "default": "start-step"
+        }
+      },
+      "type": "object",
+      "title": "startStepPart",
+      "required": [
+        "type"
+      ]
+    },
+    "TextPart": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "text",
+          "title": "type",
+          "default": "text"
+        },
+        "text": {
+          "type": "string",
+          "title": "text"
+        }
+      },
+      "type": "object",
+      "required": [
+        "type",
+        "text"
+      ],
+      "title": "textPart"
+    },
+    "ToolApprovalRequestPart": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "tool-approval-request",
+          "title": "type",
+          "default": "tool-approval-request"
+        },
+        "toolCallId": {
+          "type": "string",
+          "title": "toolcallid"
+        },
+        "toolName": {
+          "type": "string",
+          "title": "toolname"
+        },
+        "args": {
+          "title": "args"
+        },
+        "description": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "description"
+        },
+        "providerOptions": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": true
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "provideroptions"
+        },
+        "argsHash": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "argshash"
+        },
+        "appId": {
+          "oneOf": [
+            {
+              "type": "string"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "appid"
+        }
+      },
+      "type": "object",
+      "required": [
+        "type",
+        "toolCallId",
+        "toolName",
+        "args"
+      ],
+      "title": "toolApprovalRequestPart"
+    },
+    "ToolCallPart": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "tool-call",
+          "title": "type",
+          "default": "tool-call"
+        },
+        "toolCallId": {
+          "type": "string",
+          "title": "toolcallid"
+        },
+        "toolName": {
+          "type": "string",
+          "title": "toolname"
+        },
+        "args": {
+          "title": "args"
+        },
+        "requiresApproval": {
+          "oneOf": [
+            {
+              "type": "boolean"
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "requiresapproval"
+        },
+        "providerOptions": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": true
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "provideroptions"
+        }
+      },
+      "type": "object",
+      "required": [
+        "type",
+        "toolCallId",
+        "toolName",
+        "args"
+      ],
+      "title": "toolCallPart"
+    },
+    "ToolResultOutput": {
+      "properties": {
+        "type": {
+          "$ref": "#/$defs/ToolResultOutputType"
+        },
+        "value": {
+          "title": "value"
+        }
+      },
+      "type": "object",
+      "required": [
+        "type",
+        "value"
+      ],
+      "title": "toolResultOutput"
+    },
+    "ToolResultOutputType": {
+      "type": "string",
+      "enum": [
+        "text",
+        "json",
+        "error-text",
+        "error-json",
+        "content"
+      ],
+      "title": "toolResultOutputType",
+      "description": "The valid 'type' of tool results."
+    },
+    "ToolResultPart": {
+      "properties": {
+        "type": {
+          "type": "string",
+          "const": "tool-result",
+          "title": "type",
+          "default": "tool-result"
+        },
+        "toolCallId": {
+          "type": "string",
+          "title": "toolcallid"
+        },
+        "toolName": {
+          "type": "string",
+          "title": "toolname"
+        },
+        "output": {
+          "$ref": "#/$defs/ToolResultOutput"
+        },
+        "providerOptions": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": true
+            },
+            {
+              "type": "null"
+            }
+          ],
+          "title": "provideroptions"
+        }
+      },
+      "type": "object",
+      "required": [
+        "type",
+        "toolCallId",
+        "toolName",
+        "output"
+      ],
+      "title": "toolResultPart"
+    }
+  }
+}

@@ -1,0 +1,319 @@
+generated: '2026-09-23'
+method: derived
+source: the pre-flight dossier, apis.yml pointers, spec servers, well-known, vendors -- nothing fetched here
+generator: derive-hosts.py
+summary:
+  hosts: 28
+  own: 22
+  other_domain: 5
+  platform: 1
+  roles:
+  - api
+  - community
+  - data
+  - identity
+  - marketing
+  - other
+  - source
+  - status
+  - support
+  - website
+hosts:
+- host: academy.algolia.com
+  found_by:
+  - probed
+  - site-links
+  types: []
+  serves: []
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: ai-personalization.{region}.algolia.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: algolia.com
+  found_by:
+  - probed
+  - site-links
+  types: []
+  serves: []
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: analytics.algolia.com
+  found_by:
+  - apis[]
+  - probed
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: api.algolia.com
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: algolia.com
+  role: api
+  relation: own
+- host: api.algolia.io
+  found_by:
+  - contract-discovery
+  types: []
+  serves: []
+  registrable_domain: algolia.io
+  role: api
+  relation: other-domain
+- host: blog.algolia.com
+  found_by:
+  - probed
+  - site-links
+  types: []
+  serves: []
+  registrable_domain: algolia.com
+  role: marketing
+  relation: own
+- host: changelog.algolia.com
+  found_by:
+  - probed
+  - site-links
+  types: []
+  serves: []
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: community.algolia.com
+  found_by:
+  - probed
+  - site-links
+  types: []
+  serves: []
+  registrable_domain: algolia.com
+  role: community
+  relation: own
+- host: crawler.algolia.com
+  found_by:
+  - apis[]
+  - probed
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: dashboard.algolia.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - docs-index
+  types:
+  - Signup
+  - Login
+  serves:
+  - docs
+  registrable_domain: algolia.com
+  role: identity
+  relation: own
+- host: data.{region}.algolia.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.com
+  role: data
+  relation: own
+- host: discourse.algolia.com
+  found_by:
+  - probed
+  - site-links
+  types: []
+  serves: []
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: docsearch.algolia.com
+  found_by:
+  - probed
+  - site-links
+  types: []
+  serves: []
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: github.com
+  found_by:
+  - pointer
+  types:
+  - GitHubOrganization
+  serves: []
+  registrable_domain: github.com
+  role: source
+  relation: platform
+- host: insights.algolia.io
+  found_by:
+  - apis[]
+  - probed
+  - contract-discovery
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.io
+  role: other
+  relation: other-domain
+- host: mcp.algolia.com
+  found_by:
+  - apis[]
+  - probed
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: personalization.{region}.algolia.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: query-suggestions.{region}.algolia.com
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: status.algolia.com
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - site-links
+  - docs-index
+  - well-known
+  types:
+  - Status
+  - StatusPage
+  serves:
+  - api
+  - docs
+  registrable_domain: algolia.com
+  role: status
+  relation: own
+- host: stories.algolia.com
+  found_by:
+  - probed
+  - site-links
+  types: []
+  serves: []
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: support.algolia.com
+  found_by:
+  - pointer
+  - probed
+  - site-links
+  - well-known
+  types:
+  - Support
+  serves: []
+  registrable_domain: algolia.com
+  role: support
+  relation: own
+- host: trust.algolia.com
+  found_by:
+  - probed
+  - site-links
+  types: []
+  serves: []
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: usage.algolia.com
+  found_by:
+  - apis[]
+  - probed
+  - well-known
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.com
+  role: other
+  relation: own
+- host: www.algolia.com
+  found_by:
+  - pointer
+  - apis[]
+  - probed
+  - docs-index
+  - well-known
+  - vendor-detect
+  types:
+  - Newsroom
+  - Leadership
+  - Website
+  - DeveloperPortal
+  - Documentation
+  - APIReference
+  - GettingStarted
+  - Blog
+  - Pricing
+  - TermsOfService
+  - PrivacyPolicy
+  - ChangeLog
+  serves:
+  - docs
+  - cdn
+  vendor: cloudflare
+  registrable_domain: algolia.com
+  role: website
+  relation: own
+- host: '{appid}-dsn.algolia.net'
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.net
+  role: other
+  relation: other-domain
+- host: '{appid}.algolia.net'
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.net
+  role: other
+  relation: other-domain
+- host: '{application_id}.algolia.net'
+  found_by:
+  - apis[]
+  types: []
+  serves:
+  - api
+  registrable_domain: algolia.net
+  role: other
+  relation: other-domain

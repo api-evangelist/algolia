@@ -434,114 +434,315 @@ paths:
         '204':
           description: No content.
 components:
+  parameters:
+    UserToken:
+      name: userToken
+      in: path
+      required: true
+      description: Unique identifier representing a user for which to fetch the personalization profile.
+      schema:
+        $ref: '#/components/schemas/userToken'
+    startDate:
+      name: startDate
+      description: 'Filter users by start date and time, in RFC 3339 format.
+
+        Only users that were updated after the passed date will be returned.
+
+        '
+      in: query
+      schema:
+        type: string
+        example: '2024-06-27T08:27:26Z'
+    limit:
+      name: limit
+      description: 'Limit the number of users in the response.
+
+        The value of this parameter ranges from 1 to 1000.
+
+        '
+      in: query
+      schema:
+        type: integer
+        default: 10
+        minimum: 1
+        maximum: 1000
+    endDate:
+      name: endDate
+      description: 'Filter users by end date and time, in RFC 3339 format.
+
+        Only users that were updated before the passed date will be returned.
+
+        '
+      in: query
+      schema:
+        type: string
+        example: '2024-06-28T08:27:26Z'
+    affinity:
+      name: affinity
+      description: 'Filter users by affinity name and value.
+
+        If multiple values are passed, returned users will match all values.
+
+        '
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+      examples:
+        affinityName:
+          value: brand
+          summary: Filter by single affinity name
+        affinityValuePair:
+          value: brand:Nike
+          summary: Filter by single affinity name and value
+        multipleAffinityNames:
+          value: brand,color
+          summary: Filter by multiple affinity names
+        multipleAffinityValuePairs:
+          value: brand:Nike,color:white
+          summary: Filter by multiple affinity name and value pairs
+    previousPageToken:
+      name: previousPageToken
+      description: 'Reference for the previous page, when navigating backward using pagination.
+
+        Can''t be used in the same request as `nextPageToken`.
+
+        '
+      in: query
+      schema:
+        type: string
+    userID:
+      name: userID
+      description: ID of the user.
+      in: path
+      required: true
+      schema:
+        type: string
+    indices:
+      name: indices
+      description: 'Filter users by matching indices.
+
+        If multiple indices are passed, returned users will match all indices.
+
+        '
+      in: query
+      schema:
+        type: array
+        items:
+          type: string
+      examples:
+        singleIndex:
+          value:
+          - products_EN
+          summary: Filter by single index
+        multipleIndices:
+          value:
+          - products_EN
+          - products_FR
+          summary: Filter by multiple indices
+      style: form
+      explode: false
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
+    nextPageToken:
+      name: nextPageToken
+      description: 'Reference for the next page, when navigating forward using pagination.
+
+        Can''t be used in the same request as `previousPageToken`.
+
+        '
+      in: query
+      schema:
+        type: string
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, for example `1/newFeature`.
+      required: true
+      schema:
+        type: string
+        example: /keys
+  responses:
+    BadUserID:
+      description: Bad user ID.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponses_badUserID'
+    StatusUnprocessableEntity:
+      description: Unprocessable Entity.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    GenericUnprocessableEntity:
+      description: Unprocessable entity.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponses_genericUnprocessableEntity'
+    InternalError:
+      description: Internal error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    Accepted:
+      description: Accepted.
+      content:
+        application/json:
+          schema:
+            title: acceptedResponse
+            type: object
+            additionalProperties: false
+            required:
+            - status
+            - message
+            properties:
+              status:
+                type: integer
+                example: 202
+                description: Status code.
+              message:
+                type: string
+                example: Accepted
+                description: Response message.
+    Conflict:
+      description: Conflict.
+      content:
+        application/json:
+          schema:
+            title: conflictResponse
+            type: object
+            additionalProperties: false
+            required:
+            - status
+            - message
+            properties:
+              status:
+                type: integer
+                example: 409
+                description: Status code.
+              message:
+                type: string
+                example: Conflict
+                description: Response message.
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    InvalidUserID:
+      description: Invalid user ID format.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponses_invalidUserID'
+    InternalServerError:
+      description: Internal server error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponses_internalServerError'
+    TooManyRequests:
+      description: Too Many Requests.
+      content:
+        application/json:
+          schema:
+            title: tooManyRequestsResponse
+            type: object
+            additionalProperties: false
+            required:
+            - status
+            - message
+            properties:
+              status:
+                type: integer
+                example: 421
+                description: Status code.
+              message:
+                type: string
+                example: Too Many Requests
+                description: Response message.
+    BadRequest-2:
+      description: Bad request.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponses_badRequest'
+    FeatureNotEnabled-2:
+      description: Feature not enabled.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponses_featureNotEnabled'
+    GenericNotFound:
+      description: Not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponses_genericNotFound'
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    Unauthorized:
+      description: Not authorized to access this resource.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorResponses_unauthorized'
   schemas:
-    ErrorResponses_badUserID:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/badRequest'
-        message:
-          $ref: '#/components/schemas/badUserID'
-    ErrorResponses_internalServerError:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/internalServerError'
-        message:
-          $ref: '#/components/schemas/ErrorMessages_internalServerError'
-    sourceType:
-      title: type
-      type: string
-      enum:
-      - insights
-    ErrorResponses_unauthorized:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/unauthorized'
-        message:
-          $ref: '#/components/schemas/ErrorMessages_unauthorized'
-    issue:
-      type: object
-      description: An issue is either an 'error' or a 'warning' that is generated by the validator.
-      properties:
-        code:
-          type: string
-        index:
-          type: string
-        message:
-          type: string
-      required:
-      - code
-      - index
-      - message
-    notFound:
-      type: integer
-      description: HTTP status code for a not found error.
-      enum:
-      - 404
-    strategy:
-      type: string
-      enum:
-      - session
-      - historical
-      - hybrid
-      example: session
-    eventType:
-      type: string
-      enum:
-      - view
-      - click
-      - conversion
-    paymentRequired:
-      type: integer
-      description: HTTP status code for a payment required error.
-      enum:
-      - 402
-    ErrorMessages_unauthorized:
+    genericUnprocessableEntity:
       type: string
       description: Details about the response, such as error messages.
       enum:
-      - Unauthorized
-    ErrorResponses_genericNotFound:
+      - Unprocessable Entity
+    events:
       type: object
       properties:
-        status:
-          $ref: '#/components/schemas/notFound'
-        message:
-          $ref: '#/components/schemas/genericNotFound'
-    event:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/eventType'
-        subtype:
-          $ref: '#/components/schemas/subtype'
-        name:
-          type: string
+        viewDetails:
+          type: array
+          items:
+            $ref: '#/components/schemas/event'
+        viewListing:
+          type: array
+          items:
+            $ref: '#/components/schemas/event'
+        addToCart:
+          type: array
+          items:
+            $ref: '#/components/schemas/event'
+        purchase:
+          type: array
+          items:
+            $ref: '#/components/schemas/event'
       required:
-      - type
-      - name
-    personalizationReRanking:
-      type: string
-      description: The impact that personalization has on the re-ranking of search results.
-      enum:
-      - none
-      - low
-      - medium
-      - high
-      - maximum
-    invalidUserID:
-      type: string
-      description: Details about the response, such as error messages.
-      enum:
-      - UserID must contain only alphanumeric
-      - equal
-      - plus
-      - slash
-      - hyphen
-      - or underscore characters
-      - and be between 1 and 129 characters long
+      - viewDetails
+      - viewListing
+      - addToCart
+      - purchase
     profileType:
       type: string
       enum:
@@ -552,64 +753,6 @@ components:
         Basic profiles are based on past behaviors, ensuring search results align with previous interests.
 
         '
-    user:
-      type: object
-      properties:
-        userID:
-          type: string
-        type:
-          $ref: '#/components/schemas/userType'
-        affinities:
-          type: array
-          items:
-            title: affinity
-            type: object
-            properties:
-              name:
-                type: string
-              indices:
-                type: array
-                items:
-                  type: string
-                  minimum: 1
-              value:
-                type: string
-              score:
-                type: number
-                minimum: 1
-                maximum: 20
-              lastUpdatedAt:
-                type: string
-            required:
-            - name
-            - indices
-            - value
-            - score
-            - lastUpdatedAt
-        lastUpdatedAt:
-          type: string
-      required:
-      - userID
-      - type
-      - affinities
-      - lastUpdatedAt
-    ErrorResponses_featureNotEnabled:
-      type: object
-      properties:
-        status:
-          $ref: '#/components/schemas/paymentRequired'
-        message:
-          $ref: '#/components/schemas/featureNotEnabled'
-    badRequest:
-      type: integer
-      description: HTTP status code for a bad request error.
-      enum:
-      - 400
-    features:
-      type: object
-      properties:
-        realtime:
-          $ref: '#/components/schemas/realtime'
     RealtimeUser:
       title: RealtimeUser
       type: object
@@ -637,6 +780,37 @@ components:
             '
           additionalProperties:
             $ref: '#/components/schemas/searchFilters'
+    issue:
+      type: object
+      description: An issue is either an 'error' or a 'warning' that is generated by the validator.
+      properties:
+        code:
+          type: string
+        index:
+          type: string
+        message:
+          type: string
+      required:
+      - code
+      - index
+      - message
+    ErrorResponses_genericUnprocessableEntity:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/unprocessableEntity'
+        message:
+          $ref: '#/components/schemas/genericUnprocessableEntity'
+    unprocessableEntity:
+      type: integer
+      description: HTTP status code for an unprocessable entity error.
+      enum:
+      - 422
+    sourceType:
+      title: type
+      type: string
+      enum:
+      - insights
     ErrorResponses_badRequest:
       type: object
       properties:
@@ -644,6 +818,24 @@ components:
           $ref: '#/components/schemas/badRequest'
         message:
           $ref: '#/components/schemas/ErrorMessages_badRequest'
+    personalizationReRanking:
+      type: string
+      description: The impact that personalization has on the re-ranking of search results.
+      enum:
+      - none
+      - low
+      - medium
+      - high
+      - maximum
+    ErrorBase:
+      description: Error.
+      type: object
+      x-keep-model: true
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
     searchFilter:
       type: object
       additionalProperties: false
@@ -654,26 +846,56 @@ components:
             type: string
           example:
           - brand:Dyson<score=12>
-    userToken:
-      type: string
-      description: 'Unique pseudonymous or anonymous user identifier.
-
-
-        This helps with analytics and click and conversion events.
-
-        For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
-
-        '
-      example: test-user-123
-      x-categories:
-      - Personalization
-    ErrorResponses_genericUnprocessableEntity:
+    ErrorResponses_badUserID:
       type: object
       properties:
         status:
-          $ref: '#/components/schemas/unprocessableEntity'
+          $ref: '#/components/schemas/badRequest'
         message:
-          $ref: '#/components/schemas/genericUnprocessableEntity'
+          $ref: '#/components/schemas/badUserID'
+    ErrorMessages_badRequest:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+      - Invalid request body
+    unauthorized:
+      type: integer
+      description: HTTP status code for an authorization error.
+      enum:
+      - 401
+    genericNotFound:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+      - Not Found
+    event:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/eventType'
+        subtype:
+          $ref: '#/components/schemas/subtype'
+        name:
+          type: string
+      required:
+      - type
+      - name
+    subtype:
+      type: string
+      enum:
+      - addToCart
+      - purchase
+    ErrorMessages_internalServerError:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+      - Internal Server Error
+    eventType:
+      type: string
+      enum:
+      - view
+      - click
+      - conversion
     errorCodes:
       title: errorCodes
       type: string
@@ -687,22 +909,6 @@ components:
       - pending_pipelines
       - invalid_config
       - all_facets_invalid
-    Configuration_status:
-      type: object
-      properties:
-        type:
-          $ref: '#/components/schemas/status'
-        errors:
-          type: array
-          items:
-            $ref: '#/components/schemas/errorCodes'
-        lastUpdatedAt:
-          type: string
-    genericNotFound:
-      type: string
-      description: Details about the response, such as error messages.
-      enum:
-      - Not Found
     status:
       title: status
       type: string
@@ -710,94 +916,18 @@ components:
       - pending
       - active
       - paused
-    userType:
-      title: userType
-      type: string
-      enum:
-      - basic
-      - predictive
-      - realtime
-    ErrorMessages_badRequest:
-      type: string
-      description: Details about the response, such as error messages.
-      enum:
-      - Invalid request body
-    events:
+    ErrorResponses_genericNotFound:
       type: object
       properties:
-        viewDetails:
-          type: array
-          items:
-            $ref: '#/components/schemas/event'
-        viewListing:
-          type: array
-          items:
-            $ref: '#/components/schemas/event'
-        addToCart:
-          type: array
-          items:
-            $ref: '#/components/schemas/event'
-        purchase:
-          type: array
-          items:
-            $ref: '#/components/schemas/event'
-      required:
-      - viewDetails
-      - viewListing
-      - addToCart
-      - purchase
-    searchFilters:
-      type: object
-      additionalProperties: false
-      properties:
-        indices:
-          type: array
-          items:
-            type: string
-          example:
-          - storefront
-          - storefront_price_asc
-          - storefront_price_desc
-        strategy:
-          $ref: '#/components/schemas/strategy'
-        filters:
-          $ref: '#/components/schemas/searchFilter'
-    featureNotEnabled:
-      type: string
-      description: Details about the response, such as error messages.
-      enum:
-      - 'Predictive profiles are not allowed for this app. Please contact support to upgrade your plan: https://support.algolia.com/'
-      - 'Realtime Personalization is not allowed for this app. Please contact support to upgrade your plan: https://support.algolia.com/'
-    unprocessableEntity:
-      type: integer
-      description: HTTP status code for an unprocessable entity error.
-      enum:
-      - 422
-    realtime:
-      type: object
-      properties:
-        enabled:
-          type: boolean
-          description: Whether the realtime personalization feature is enabled.
-    ErrorBase:
-      description: Error.
-      type: object
-      x-keep-model: true
-      additionalProperties: true
-      properties:
+        status:
+          $ref: '#/components/schemas/notFound'
         message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    subtype:
-      type: string
+          $ref: '#/components/schemas/genericNotFound'
+    badRequest:
+      type: integer
+      description: HTTP status code for a bad request error.
       enum:
-      - addToCart
-      - purchase
-    badUserID:
-      type: string
-      description: Details about the response, such as error messages.
-      enum:
-      - Invalid userID format
+      - 400
     configurationObject:
       type: object
       properties:
@@ -852,16 +982,30 @@ components:
       - profileType
       - status
       - features
-    ErrorMessages_internalServerError:
+    Configuration_status:
+      type: object
+      properties:
+        type:
+          $ref: '#/components/schemas/status'
+        errors:
+          type: array
+          items:
+            $ref: '#/components/schemas/errorCodes'
+        lastUpdatedAt:
+          type: string
+    userToken:
       type: string
-      description: Details about the response, such as error messages.
-      enum:
-      - Internal Server Error
-    internalServerError:
-      type: integer
-      description: HTTP status code for an internal server error.
-      enum:
-      - 500
+      description: 'Unique pseudonymous or anonymous user identifier.
+
+
+        This helps with analytics and click and conversion events.
+
+        For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
+
+        '
+      example: test-user-123
+      x-categories:
+      - Personalization
     ErrorResponses_invalidUserID:
       type: object
       properties:
@@ -869,295 +1013,151 @@ components:
           $ref: '#/components/schemas/unprocessableEntity'
         message:
           $ref: '#/components/schemas/invalidUserID'
-    genericUnprocessableEntity:
+    strategy:
+      type: string
+      enum:
+      - session
+      - historical
+      - hybrid
+      example: session
+    featureNotEnabled:
       type: string
       description: Details about the response, such as error messages.
       enum:
-      - Unprocessable Entity
-    unauthorized:
-      type: integer
-      description: HTTP status code for an authorization error.
+      - 'Predictive profiles are not allowed for this app. Please contact support to upgrade your plan: https://support.algolia.com/'
+      - 'Realtime Personalization is not allowed for this app. Please contact support to upgrade your plan: https://support.algolia.com/'
+    features:
+      type: object
+      properties:
+        realtime:
+          $ref: '#/components/schemas/realtime'
+    userType:
+      title: userType
+      type: string
       enum:
-      - 401
-  responses:
-    Unauthorized:
-      description: Not authorized to access this resource.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponses_unauthorized'
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    InvalidUserID:
-      description: Invalid user ID format.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponses_invalidUserID'
-    TooManyRequests:
-      description: Too Many Requests.
-      content:
-        application/json:
-          schema:
-            title: tooManyRequestsResponse
-            type: object
-            additionalProperties: false
-            required:
-            - status
-            - message
-            properties:
-              status:
-                type: integer
-                example: 421
-                description: Status code.
-              message:
-                type: string
-                example: Too Many Requests
-                description: Response message.
-    FeatureNotEnabled-2:
-      description: Feature not enabled.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponses_featureNotEnabled'
-    BadRequest-2:
-      description: Bad request.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponses_badRequest'
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    Conflict:
-      description: Conflict.
-      content:
-        application/json:
-          schema:
-            title: conflictResponse
-            type: object
-            additionalProperties: false
-            required:
-            - status
-            - message
-            properties:
-              status:
-                type: integer
-                example: 409
-                description: Status code.
-              message:
-                type: string
-                example: Conflict
-                description: Response message.
-    GenericNotFound:
-      description: Not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponses_genericNotFound'
-    StatusUnprocessableEntity:
-      description: Unprocessable Entity.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    InternalServerError:
-      description: Internal server error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponses_internalServerError'
-    GenericUnprocessableEntity:
-      description: Unprocessable entity.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponses_genericUnprocessableEntity'
-    BadUserID:
-      description: Bad user ID.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorResponses_badUserID'
-    Accepted:
-      description: Accepted.
-      content:
-        application/json:
-          schema:
-            title: acceptedResponse
-            type: object
-            additionalProperties: false
-            required:
-            - status
-            - message
-            properties:
-              status:
-                type: integer
-                example: 202
-                description: Status code.
-              message:
-                type: string
-                example: Accepted
-                description: Response message.
-    InternalError:
-      description: Internal error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    BadRequest:
-      description: Bad request or request arguments.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-  parameters:
-    previousPageToken:
-      name: previousPageToken
-      description: 'Reference for the previous page, when navigating backward using pagination.
-
-        Can''t be used in the same request as `nextPageToken`.
-
-        '
-      in: query
-      schema:
-        type: string
-    limit:
-      name: limit
-      description: 'Limit the number of users in the response.
-
-        The value of this parameter ranges from 1 to 1000.
-
-        '
-      in: query
-      schema:
-        type: integer
-        default: 10
-        minimum: 1
-        maximum: 1000
-    indices:
-      name: indices
-      description: 'Filter users by matching indices.
-
-        If multiple indices are passed, returned users will match all indices.
-
-        '
-      in: query
-      schema:
-        type: array
-        items:
+      - basic
+      - predictive
+      - realtime
+    internalServerError:
+      type: integer
+      description: HTTP status code for an internal server error.
+      enum:
+      - 500
+    ErrorResponses_internalServerError:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/internalServerError'
+        message:
+          $ref: '#/components/schemas/ErrorMessages_internalServerError'
+    badUserID:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+      - Invalid userID format
+    invalidUserID:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+      - UserID must contain only alphanumeric
+      - equal
+      - plus
+      - slash
+      - hyphen
+      - or underscore characters
+      - and be between 1 and 129 characters long
+    paymentRequired:
+      type: integer
+      description: HTTP status code for a payment required error.
+      enum:
+      - 402
+    ErrorMessages_unauthorized:
+      type: string
+      description: Details about the response, such as error messages.
+      enum:
+      - Unauthorized
+    ErrorResponses_featureNotEnabled:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/paymentRequired'
+        message:
+          $ref: '#/components/schemas/featureNotEnabled'
+    realtime:
+      type: object
+      properties:
+        enabled:
+          type: boolean
+          description: Whether the realtime personalization feature is enabled.
+    searchFilters:
+      type: object
+      additionalProperties: false
+      properties:
+        indices:
+          type: array
+          items:
+            type: string
+          example:
+          - storefront
+          - storefront_price_asc
+          - storefront_price_desc
+        strategy:
+          $ref: '#/components/schemas/strategy'
+        filters:
+          $ref: '#/components/schemas/searchFilter'
+    notFound:
+      type: integer
+      description: HTTP status code for a not found error.
+      enum:
+      - 404
+    ErrorResponses_unauthorized:
+      type: object
+      properties:
+        status:
+          $ref: '#/components/schemas/unauthorized'
+        message:
+          $ref: '#/components/schemas/ErrorMessages_unauthorized'
+    user:
+      type: object
+      properties:
+        userID:
           type: string
-      examples:
-        singleIndex:
-          value:
-          - products_EN
-          summary: Filter by single index
-        multipleIndices:
-          value:
-          - products_EN
-          - products_FR
-          summary: Filter by multiple indices
-      style: form
-      explode: false
-    userID:
-      name: userID
-      description: ID of the user.
-      in: path
-      required: true
-      schema:
-        type: string
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
-    UserToken:
-      name: userToken
-      in: path
-      required: true
-      description: Unique identifier representing a user for which to fetch the personalization profile.
-      schema:
-        $ref: '#/components/schemas/userToken'
-    affinity:
-      name: affinity
-      description: 'Filter users by affinity name and value.
-
-        If multiple values are passed, returned users will match all values.
-
-        '
-      in: query
-      schema:
-        type: array
-        items:
+        type:
+          $ref: '#/components/schemas/userType'
+        affinities:
+          type: array
+          items:
+            title: affinity
+            type: object
+            properties:
+              name:
+                type: string
+              indices:
+                type: array
+                items:
+                  type: string
+                  minimum: 1
+              value:
+                type: string
+              score:
+                type: number
+                minimum: 1
+                maximum: 20
+              lastUpdatedAt:
+                type: string
+            required:
+            - name
+            - indices
+            - value
+            - score
+            - lastUpdatedAt
+        lastUpdatedAt:
           type: string
-      examples:
-        affinityName:
-          value: brand
-          summary: Filter by single affinity name
-        affinityValuePair:
-          value: brand:Nike
-          summary: Filter by single affinity name and value
-        multipleAffinityNames:
-          value: brand,color
-          summary: Filter by multiple affinity names
-        multipleAffinityValuePairs:
-          value: brand:Nike,color:white
-          summary: Filter by multiple affinity name and value pairs
-    nextPageToken:
-      name: nextPageToken
-      description: 'Reference for the next page, when navigating forward using pagination.
-
-        Can''t be used in the same request as `previousPageToken`.
-
-        '
-      in: query
-      schema:
-        type: string
-    startDate:
-      name: startDate
-      description: 'Filter users by start date and time, in RFC 3339 format.
-
-        Only users that were updated after the passed date will be returned.
-
-        '
-      in: query
-      schema:
-        type: string
-        example: '2024-06-27T08:27:26Z'
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, for example `1/newFeature`.
-      required: true
-      schema:
-        type: string
-        example: /keys
-    endDate:
-      name: endDate
-      description: 'Filter users by end date and time, in RFC 3339 format.
-
-        Only users that were updated before the passed date will be returned.
-
-        '
-      in: query
-      schema:
-        type: string
-        example: '2024-06-28T08:27:26Z'
+      required:
+      - userID
+      - type
+      - affinities
+      - lastUpdatedAt
   securitySchemes:
     appId:
       type: apiKey

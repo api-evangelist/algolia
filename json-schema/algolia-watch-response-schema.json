@@ -1,0 +1,135 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-watch-response-schema.json",
+  "title": "WatchResponse",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-ingestion-api-openapi.yml#/components/schemas/WatchResponse",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "runID": {
+      "$ref": "#/$defs/RunID"
+    },
+    "eventID": {
+      "$ref": "#/$defs/EventID"
+    },
+    "data": {
+      "type": "array",
+      "description": "This field is always null when used with the Push endpoint.\nWhen used for a source discover or source validate run, it will include the sampled data of the source.\n",
+      "items": {
+        "type": "object"
+      }
+    },
+    "events": {
+      "description": "in case of error, observability events will be added to the response.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/Event"
+      }
+    },
+    "message": {
+      "description": "a message describing the outcome of the operation that has been ran (push, discover or validate) run.",
+      "type": "string"
+    },
+    "createdAt": {
+      "$ref": "#/$defs/CreatedAt"
+    }
+  },
+  "required": [
+    "runID"
+  ],
+  "$defs": {
+    "CreatedAt": {
+      "type": "string",
+      "description": "Date and time when the resource was created, in RFC 3339 format."
+    },
+    "Event": {
+      "type": "object",
+      "description": "An event describe a step of the task execution flow.",
+      "additionalProperties": false,
+      "properties": {
+        "eventID": {
+          "$ref": "#/$defs/EventID"
+        },
+        "runID": {
+          "$ref": "#/$defs/RunID"
+        },
+        "status": {
+          "$ref": "#/$defs/EventStatus"
+        },
+        "type": {
+          "$ref": "#/$defs/EventType"
+        },
+        "batchSize": {
+          "type": "integer",
+          "description": "The extracted record batch size.",
+          "minimum": 0,
+          "multipleOf": 1
+        },
+        "data": {
+          "oneOf": [
+            {
+              "type": "object",
+              "additionalProperties": true
+            },
+            {
+              "type": "null"
+            }
+          ]
+        },
+        "publishedAt": {
+          "$ref": "#/$defs/PublishedAt"
+        }
+      },
+      "required": [
+        "eventID",
+        "runID",
+        "status",
+        "type",
+        "batchSize",
+        "publishedAt"
+      ]
+    },
+    "EventID": {
+      "type": "string",
+      "description": "Universally unique identifier (UUID) of an event."
+    },
+    "EventStatus": {
+      "oneOf": [
+        {
+          "type": "string",
+          "enum": [
+            "created",
+            "started",
+            "retried",
+            "failed",
+            "succeeded",
+            "critical"
+          ]
+        },
+        {
+          "type": "null"
+        }
+      ]
+    },
+    "EventType": {
+      "type": "string",
+      "enum": [
+        "fetch",
+        "record",
+        "log",
+        "transform"
+      ]
+    },
+    "PublishedAt": {
+      "type": "string",
+      "description": "Date and time when the resource was published, in RFC 3339 format."
+    },
+    "RunID": {
+      "type": "string",
+      "description": "Universally unique identifier (UUID) of a task run."
+    }
+  }
+}

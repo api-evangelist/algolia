@@ -1,0 +1,79 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-crawlers-response-schema.json",
+  "title": "crawlersResponse",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-crawler-api-openapi.yml#/components/schemas/crawlersResponse",
+  "allOf": [
+    {
+      "$ref": "#/$defs/Pagination"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Crawlers.",
+          "items": {
+            "title": "crawlerResponse",
+            "type": "object",
+            "properties": {
+              "id": {
+                "$ref": "#/$defs/CrawlerID"
+              },
+              "name": {
+                "$ref": "#/$defs/CrawlerName"
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "CrawlerID": {
+      "type": "string",
+      "description": "Universally unique identifier (UUID) of the crawler."
+    },
+    "CrawlerName": {
+      "type": "string",
+      "maxLength": 64,
+      "description": "Name of the crawler."
+    },
+    "Pagination": {
+      "type": "object",
+      "description": "Pagination information.",
+      "properties": {
+        "itemsPerPage": {
+          "$ref": "#/$defs/itemsPerPage"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        },
+        "total": {
+          "$ref": "#/$defs/total"
+        }
+      }
+    },
+    "itemsPerPage": {
+      "type": "integer",
+      "description": "Number of items per page of the paginated API response.",
+      "minimum": 1,
+      "maximum": 100,
+      "default": 20
+    },
+    "page": {
+      "type": "integer",
+      "description": "Current page of the paginated API response.",
+      "minimum": 1,
+      "maximum": 100,
+      "default": 1
+    },
+    "total": {
+      "type": "integer",
+      "description": "Total number of retrievable items."
+    }
+  }
+}

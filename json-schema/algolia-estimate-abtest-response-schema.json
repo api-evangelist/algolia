@@ -1,0 +1,26 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-estimate-abtest-response-schema.json",
+  "title": "EstimateABTestResponse",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/EstimateABTestResponse",
+  "type": "object",
+  "properties": {
+    "durationDays": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic."
+    },
+    "sampleSizes": {
+      "type": "array",
+      "description": "Sample size estimates for each variant. The first element is the control variant.\nEach element is the estimated number of searches required to achieve the desired statistical significance.\n",
+      "items": {
+        "type": "integer",
+        "format": "int64",
+        "description": "Number of tracked searches needed to be able to detect the configured effect for the control variant."
+      }
+    }
+  }
+}

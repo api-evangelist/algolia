@@ -3,12 +3,14 @@ specificationVersion: '0.1'
 schema: https://raw.githubusercontent.com/api-evangelist/interface-research/main/schema/api-commons.yml#/$defs/RateLimits
 provider: Algolia
 providerId: algolia
+name: Algolia Service Limits
 created: '2026-05-04'
-modified: '2026-08-27'
-generated: '2026-08-27'
+modified: '2026-09-23'
+generated: '2026-09-23'
 method: searched
-source: https://www.algolia.com/doc/guides/scaling/algolia-service-limits
+source: https://www.algolia.com/doc/guides/scaling/algolia-service-limits.md
 sources:
+  - https://www.algolia.com/doc/guides/scaling/algolia-service-limits.md
   - https://www.algolia.com/doc/guides/scaling/algolia-service-limits
   - https://www.algolia.com/pricing/
   - https://github.com/algolia/api-clients-automation/tree/main/specs/bundled
@@ -55,137 +57,129 @@ responseCodes:
 
 limits:
   - name: Pending requests (throttling limit)
+    limit_text: 100 pending requests
     scope: application
-    metric: concurrent_pending_requests
-    limit: 100
+    max: 100
     note: >-
       The operative rate limit for the Search API. Algolia queues up to 5,000 pending requests but throttles at 100
       pending, which is the number an agent must design around.
   - name: Pending requests (queue ceiling)
+    limit_text: '5,000'
     scope: application
-    metric: pending_requests
-    limit: 5000
+    max: 5000
   - name: Analytics API calls
+    limit_text: 100 API calls per minute per app
     scope: application
-    metric: calls_per_minute
-    limit: 100
-    timeFrame: minute
-    quote: '100 API calls per minute per app'
+    window: minute
+    max: 100
   - name: Indexing rate
+    limit_text: 10,000 indexing operations per Unit (as applicable)
     scope: application
-    metric: indexing_operations_per_unit
-    limit: 10000
-    quote: '10,000 indexing operations per Unit (as applicable)'
+    max: 10000
   - name: Ingestion push endpoint
+    limit_text: 2000 calls per minute per IP
     scope: ip
-    metric: calls_per_minute
-    limit: 2000
-    timeFrame: minute
-    quote: '2000 calls per minute per IP'
+    window: minute
+    max: 2000
   - name: Ingestion observability endpoints
+    limit_text: 2000 calls per minute per IP
     scope: ip
-    metric: calls_per_minute
-    limit: 2000
-    timeFrame: minute
+    window: minute
+    max: 2000
   - name: Ingestion runTask
+    limit_text: 10 calls per 10 minute per taskID
     scope: task
-    metric: calls_per_10_minutes
-    limit: 10
-    timeFrame: 10 minutes
-    quote: '10 calls per 10 minute per taskID'
+    window: 10 minutes
+    max: 10
   - name: Ingestion other endpoints
+    limit_text: 200 calls per minute per IP
     scope: ip
-    metric: calls_per_minute
-    limit: 200
-    timeFrame: minute
-  - name: Agent Studio completions
+    window: minute
+    max: 200
+  - name: Agent Studio completions per minute
+    limit_text: '3,000'
     scope: application
-    metric: completions_per_minute
-    limit: 3000
-    timeFrame: minute
-  - name: AI Assist tokens
+    window: minute
+    max: 3000
+  - name: AI Assist combined tokens per app per day
+    limit_text: 25 million
     scope: application
-    metric: combined_tokens_per_day
-    limit: 25000000
-    timeFrame: day
-  - name: DocSearch queries
+    window: day
+    max: 25000000
+  - name: DocSearch queries per second
+    limit_text: '3'
     scope: application
-    metric: queries_per_second
-    limit: 3
+    window: second
+    max: 3
     note: Applies to the free hosted DocSearch tier only.
   - name: Insights tag processing
+    limit_text: 1,750 unique tag combinations every 5 minutes
     scope: index
-    metric: unique_tag_combinations_per_5_minutes
-    limit: 1750
-    timeFrame: 5 minutes
+    window: 5 minutes
+    max: 1750
 
 quotas:
   - name: Application size
+    limit_text: 100 GB (or 1 GB for the Free plan)
     scope: application
-    limit: 100 GB (1 GB on the Free plan)
   - name: Index size
+    limit_text: 100 GB (or 1 GB for the Free plan)
     scope: index
-    limit: 100 GB (1 GB on the Free plan)
   - name: Indices per application
+    limit_text: 1,000 (Premium), 50 (Grow), or 10 (Free)
     scope: application
-    limit: 1,000 (Premium), 50 (Grow), 10 (Free)
   - name: Record size
+    limit_text: 10 KB to 100 KB—based on your plan (10 KB maximum for the Free plan)
     scope: record
-    limit: 10 KB to 100 KB by plan (10 KB maximum on the Free plan)
   - name: objectID length
+    limit_text: 200 characters
     scope: record
-    limit: 200 characters
   - name: Indexing request body size
+    limit_text: 1 GB per batch
     scope: request
-    limit: 1 GB per batch
   - name: Search request body size
+    limit_text: 50 MB per request
     scope: request
-    limit: 50 MB per request
   - name: Query size
+    limit_text: 512 bytes
     scope: request
-    limit: 512 bytes
   - name: Query parameter size
+    limit_text: 16 KiB
     scope: request
-    limit: 16 KiB
   - name: Pagination depth
+    limit_text: '20,000'
     scope: query
-    limit: 20000
     note: Hits reachable through page/hitsPerPage pagination. Use browse (cursor) to walk beyond it.
   - name: Values per facet per query
+    limit_text: '1,000'
     scope: query
-    limit: 1000
   - name: Synonyms per index
+    limit_text: 10,000 (or 1,000 for the Free plan)
     scope: index
-    limit: 10,000 (1,000 on the Free plan)
   - name: API keys per application
+    limit_text: '5,000'
     scope: application
-    limit: 5000
   - name: Virtual replicas per index
+    limit_text: '20'
     scope: index
-    limit: 20
   - name: Number of filters
+    limit_text: '1,000'
     scope: query
-    limit: 1000
-  - name: Data transformations
+  - name: Data transformations per application
+    limit_text: 5 million per month
     scope: application
-    limit: 5,000,000 per month
   - name: Fetch enrichment requests
+    limit_text: Up to 1 million Fetch requests per Application per month, as part the 5 million transformations per Application per month limit.
     scope: application
-    limit: 1,000,000 per month, counted within the 5,000,000 transformation budget
-  - name: Agent Studio agents
+  - name: Agent Studio agents per app
+    limit_text: '500'
     scope: application
-    limit: 500
   - name: Agent Studio conversations retained
+    limit_text: '100,000'
     scope: application
-    limit: 100,000 (90-day retention)
-  - name: MCP server instances
+  - name: Agent Studio retention policy
+    limit_text: 90 days
     scope: application
-    limit: 5
-    source: https://www.algolia.com/doc/guides/model-context-protocol/public-mcp
-  - name: Indices exposed per Public MCP instance
-    scope: mcp-instance
-    limit: 5
-    source: https://www.algolia.com/doc/guides/model-context-protocol/public-mcp
 
 limit_count: 12
 plan_dependent_note: >-

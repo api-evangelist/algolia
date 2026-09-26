@@ -1,4 +1,5 @@
 aid: algolia
+
 deliveryModel:
   model: saas
   open_source: false
@@ -10,6 +11,7 @@ deliveryModel:
   - pricing
   generated: '2026-08-28'
   method: derived
+
 accessModel:
   pricing: paid
   onboarding: unknown
@@ -22,22 +24,35 @@ accessModel:
   - plans
   generated: '2026-07-22'
   method: derived
+
 image: https://kinlane-images.s3.amazonaws.com/shared/apis-json/icons/algolia.png
+
 name: Algolia
+
 description: Algolia is a hosted search and discovery platform that delivers fast, typo-tolerant search, browse, recommendations and personalization
   through a suite of REST APIs and edge-distributed infrastructure. It powers search experiences for ecommerce, media, SaaS and content sites,
   pairing a synchronous indexing and query control plane with event-driven Insights, Recommend, A/B Testing and Personalization products. Algolia
   generates every first-party API client and its reference documentation from 15 public OpenAPI documents totalling 342 operations, and has extended
   the platform into the agent layer with two managed MCP servers, an Agent Studio runtime and 18 self-published Agent Skills.
+
 url: https://raw.githubusercontent.com/api-evangelist/algolia/refs/heads/main/apis.yml
+
 specificationVersion: '0.23'
+
 created: '2026-05-04'
+
 modified: '2026-08-27'
+
 x-source: api-evangelist
+
 x-category: Search
+
 x-type: company
+
 x-tier: 2
+
 x-tier-reason: enriched-from-existing-artifacts
+
 tags:
 - Search
 - Discovery
@@ -45,6 +60,7 @@ tags:
 - Personalization
 - Analytics
 - E-Commerce
+
 tags_raw:
 - Search
 - Discovery
@@ -52,299 +68,32 @@ tags_raw:
 - Personalization
 - Analytics
 - Ecommerce
-apis:
-- name: Algolia Search API
-  description: >-
-    Core indexing and search API for adding, updating and deleting records and querying them with typo-tolerant,
-    faceted, geo-aware and rule-driven search served from globally distributed search nodes. The largest
-    surface in the estate at 78 operations, and the one carrying the retry strategy, asynchronous-task
-    and API-key ACL semantics the rest of the platform inherits.
-  humanURL: https://www.algolia.com/doc/rest-api/search/
-  baseURL: https://{appid}-dsn.algolia.net
-  tags:
-  - Search
-  - Indexing
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/rest-api/search/
-  - type: APIReference
-    url: https://www.algolia.com/doc/api-reference/
-  - type: OpenAPI
-    url: openapi/algolia-search-api-openapi.yml
-  - type: OpenAPI
-    url: openapi/algolia-algoliasearch-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-search-api-overlay.yaml
-- name: Algolia Insights API
-  description: >-
-    Inbound event-ingestion API for click, conversion, view and purchase signals that feed Personalization,
-    Recommend, A/B Testing and Analytics. Accepts events; does not emit them, which is why Algolia publishes
-    no AsyncAPI or webhook contract.
-  humanURL: https://www.algolia.com/doc/rest-api/insights/
-  baseURL: https://insights.algolia.io
-  tags:
-  - Analytics
-  - Event
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/rest-api/insights/
-  - type: OpenAPI
-    url: openapi/algolia-insights-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-insights-api-overlay.yaml
-- name: Algolia Recommend API
-  description: >-
-    Returns related-products, frequently-bought-together, trending and look-alike recommendations trained
-    from Insights events and catalog data, plus the Recommend rules that override them.
-  humanURL: https://www.algolia.com/doc/rest-api/recommend/
-  baseURL: https://{appid}-dsn.algolia.net
-  tags:
-  - Recommendations
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/rest-api/recommend/
-  - type: OpenAPI
-    url: openapi/algolia-recommend-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-recommend-api-overlay.yaml
-- name: Algolia Analytics API
-  description: >-
-    Reports top searches, no-result searches, click and conversion rates, revenue and other search analytics
-    aggregated from query and Insights data. One of only six Algolia APIs that returns machine-readable
-    x-ratelimit-* response headers.
-  humanURL: https://www.algolia.com/doc/rest-api/analytics/
-  baseURL: https://analytics.algolia.com
-  tags:
-  - Analytics
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/rest-api/analytics/
-  - type: OpenAPI
-    url: openapi/algolia-analytics-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-analytics-api-overlay.yaml
-- name: Algolia A/B Testing API
-  description: >-
-    Creates and manages A/B tests across index configurations and relevance settings, scoring variants
-    on click-through and conversion. Two live versions: v3 is current, and the entire v2 surface is marked
-    deprecated in Algolia's own contract.
-  humanURL: https://www.algolia.com/doc/rest-api/abtesting/
-  baseURL: https://analytics.algolia.com
-  tags:
-  - Experimentation
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/rest-api/abtesting/
-  - type: OpenAPI
-    url: openapi/algolia-abtesting-v3-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-abtesting-v3-api-overlay.yaml
-- name: Algolia Personalization API
-  description: >-
-    Configures and applies user-affinity profiles built from Insights events to re-rank search and browse
-    results per user.
-  humanURL: https://www.algolia.com/doc/rest-api/personalization/
-  baseURL: https://personalization.{region}.algolia.com
-  tags:
-  - Personalization
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/rest-api/personalization/
-  - type: OpenAPI
-    url: openapi/algolia-personalization-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-personalization-api-overlay.yaml
-- name: Algolia Advanced Personalization API
-  description: >-
-    The successor to classic Personalization: real-time user profiles, personalization strategies and
-    a dedicated error-code reference. Runs on its own AI personalization host and publishes the only per-product
-    error catalogue in the estate.
-  humanURL: >-
-    https://www.algolia.com/doc/guides/personalization/advanced-personalization/what-is-advanced-personalization/
-  baseURL: https://ai-personalization.{region}.algolia.com
-  tags:
-  - Personalization
-  - Artificial Intelligence
-  - REST
-  tags_raw:
-  - Personalization
-  - AI
-  - REST
-  properties:
-  - type: Documentation
-    url: >-
-      https://www.algolia.com/doc/guides/personalization/advanced-personalization/what-is-advanced-personalization/
-  - type: OpenAPI
-    url: openapi/algolia-advanced-personalization-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-advanced-personalization-api-overlay.yaml
-- name: Algolia Crawler API
-  description: >-
-    Manages Algolia's hosted web crawler that extracts content from websites and pushes it into indices
-    on a schedule. The only Algolia API that authenticates with HTTP Basic rather than the x-algolia-*
-    header pair.
-  humanURL: https://www.algolia.com/doc/tools/crawler/getting-started/overview/
-  baseURL: https://crawler.algolia.com/api
-  tags:
-  - Crawler
-  - Ingestion
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/tools/crawler/getting-started/overview/
-  - type: OpenAPI
-    url: openapi/algolia-crawler-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-crawler-api-overlay.yaml
-- name: Algolia Ingestion API
-  description: >-
-    Connector-based data ingestion that pulls records from databases, storage and ecommerce platforms
-    into Algolia indices via managed sources, destinations, transformations and tasks. The largest connector
-    surface at 61 operations, and the only Algolia API with real dry-run operations.
-  humanURL: https://www.algolia.com/doc/rest-api/ingestion/
-  baseURL: https://data.{region}.algolia.com
-  tags:
-  - Ingestion
-  - Connectors
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/rest-api/ingestion/
-  - type: OpenAPI
-    url: openapi/algolia-ingestion-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-ingestion-api-overlay.yaml
-- name: Algolia Query Suggestions API
-  description: >-
-    Generates and maintains query-suggestion indices from popular searches to power as-you-type autocomplete.
-  humanURL: https://www.algolia.com/doc/rest-api/query-suggestions/
-  baseURL: https://query-suggestions.{region}.algolia.com
-  tags:
-  - Search
-  - Autocomplete
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/rest-api/query-suggestions/
-  - type: OpenAPI
-    url: openapi/algolia-query-suggestions-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-query-suggestions-api-overlay.yaml
-- name: Algolia Composition API
-  description: >-
-    Composes multiple search sources into one curated result set - smart groups, curated queries and composition
-    rules - so a single request returns a merchandised, multi-source response.
-  humanURL: https://www.algolia.com/doc/rest-api/composition/
-  baseURL: https://{appId}.algolia.net
-  tags:
-  - Search
-  - Merchandising
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/rest-api/composition/
-  - type: OpenAPI
-    url: openapi/algolia-composition-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-composition-api-overlay.yaml
-- name: Algolia Agent Studio API
-  description: >-
-    Algolia's agent-building runtime: agents, conversations, tools, memory, guardrails and per-turn context,
-    exposed as 42 REST operations. Notably, Agent Studio can itself consume third-party MCP tools, so
-    Algolia is both an MCP server and an MCP client.
-  humanURL: https://www.algolia.com/doc/guides/algolia-ai/agent-studio
-  baseURL: https://{APPLICATION_ID}.algolia.net/agent-studio
-  tags:
-  - Artificial Intelligence
-  - Agents
-  - REST
-  tags_raw:
-  - AI
-  - Agents
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/guides/algolia-ai/agent-studio
-  - type: OpenAPI
-    url: openapi/algolia-agent-studio-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-agent-studio-api-overlay.yaml
-- name: Algolia Monitoring API
-  description: >-
-    Exposes server status, latency, indexing and reachability metrics for a specific application's Algolia
-    infrastructure. More than a status page: an agent can query the health of its own cluster rather than
-    the global service.
-  humanURL: https://www.algolia.com/doc/rest-api/monitoring/
-  baseURL: https://status.algolia.com
-  tags:
-  - Monitoring
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/rest-api/monitoring/
-  - type: OpenAPI
-    url: openapi/algolia-monitoring-api-openapi.yml
-  - type: Overlay
-    url: overlays/algolia-monitoring-api-overlay.yaml
-- name: Algolia Usage API
-  description: >-
-    Returns per-application usage metrics (operations, records, search volume) for cost and quota tracking.
-    The one documented Algolia REST API for which no OpenAPI document is published in the api-clients-automation
-    spec repository.
-  humanURL: https://www.algolia.com/doc/rest-api/usage/
-  baseURL: https://usage.algolia.com
-  tags:
-  - Usage
-  - FinOps
-  - REST
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/rest-api/usage/
-- name: Algolia Productivity MCP Server
-  description: >-
-    Algolia-managed remote MCP server giving an agent user-scoped, read-only access to search, index listing
-    and the full analytics surface, authorized by the signed-in user's own Algolia permissions. OAuth
-    2.1 with PKCE and dynamic client registration, discoverable via RFC 8414 and RFC 9728 metadata.
-  humanURL: https://www.algolia.com/doc/guides/model-context-protocol
-  baseURL: https://mcp.algolia.com
-  tags:
-  - MCP
-  - Artificial Intelligence
-  - Agents
-  - Search
-  tags_raw:
-  - MCP
-  - AI
-  - Agents
-  - Search
-  properties:
-  - type: Documentation
-    url: https://www.algolia.com/doc/guides/model-context-protocol
-  - type: MCPServer
-    url: mcp/algolia-mcp.yml
-  - type: ToolCrosswalk
-    url: mcp/algolia-tool-crosswalk.yml
-  - type: OAuthScopes
-    url: scopes/algolia-scopes.yml
-- aid: algolia:algolia-ab-testing-api
-  name: Algolia Ab Testing API
-  description: The Ab Testing API from Algolia — 6 operation(s) for ab testing.
-  humanURL: https://www.algolia.com/doc/rest-api/search/
-  baseURL: https://{appid}-dsn.algolia.net
-  tags:
-  - A/B Testing
-  tags_raw:
-  - Ab Testing
-  properties:
-  - type: OpenAPI
-    url: openapi/algolia-ab-testing-api-openapi.yml
+
+maintainers:
+- FN: Kin Lane
+  email: kin@apievangelist.com
+
 common:
+- type: Idempotency
+  url: conventions/algolia-conventions.yml
+- type: Deprecation
+  url: lifecycle/algolia-lifecycle.yml
+- type: AgenticAccess
+  url: agentic-access/algolia-agentic-access.yml
+- type: Spectral
+  url: rules/algolia-rules.yml
+- type: JSONLD
+  url: json-ld/algolia-context.jsonld
+- type: Vocabulary
+  url: vocabulary/algolia-vocabulary.yml
+- type: Hosts
+  url: hosts/algolia-hosts.yml
+- type: Vendors
+  url: vendors/algolia-vendors.yml
+- type: Newsroom
+  url: https://www.algolia.com/about/news
+- type: Leadership
+  url: https://www.algolia.com/about/leadership
 - type: Website
   url: https://www.algolia.com
 - type: DeveloperPortal
@@ -363,6 +112,8 @@ common:
   url: https://github.com/algolia
 - type: Signup
   url: https://dashboard.algolia.com/users/sign_up
+- type: Login
+  url: https://dashboard.algolia.com/
 - type: Pricing
   url: https://www.algolia.com/pricing/
 - type: TermsOfService
@@ -425,6 +176,438 @@ common:
   url: mcp/algolia-mcp.yml
 - type: ToolCrosswalk
   url: mcp/algolia-tool-crosswalk.yml
+
+apis:
+- name: Algolia Search API
+  description: >-
+    Core indexing and search API for adding, updating and deleting records and querying them with typo-tolerant,
+    faceted, geo-aware and rule-driven search served from globally distributed search nodes. The largest
+    surface in the estate at 78 operations, and the one carrying the retry strategy, asynchronous-task
+    and API-key ACL semantics the rest of the platform inherits.
+  humanURL: https://www.algolia.com/doc/rest-api/search/
+  baseURL: https://{appid}-dsn.algolia.net
+  tags:
+  - Search
+  - Indexing
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/rest-api/search/
+  - type: APIReference
+    url: https://www.algolia.com/doc/api-reference/
+  - type: OpenAPI
+    url: openapi/algolia-search-api-openapi.yml
+  - type: OpenAPI
+    url: openapi/algolia-algoliasearch-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-search-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-api-key-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-synonym-hit-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-rule-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-action-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-search-for-facet-values-response-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-dictionary-entry-schema.json
+  aid: algolia:algolia-search-api
+- name: Algolia Insights API
+  description: >-
+    Inbound event-ingestion API for click, conversion, view and purchase signals that feed Personalization,
+    Recommend, A/B Testing and Analytics. Accepts events; does not emit them, which is why Algolia publishes
+    no AsyncAPI or webhook contract.
+  humanURL: https://www.algolia.com/doc/rest-api/insights/
+  baseURL: https://insights.algolia.io
+  tags:
+  - Analytics
+  - Event
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/rest-api/insights/
+  - type: OpenAPI
+    url: openapi/algolia-insights-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-insights-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-events-items-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-events-response-schema.json
+  aid: algolia:algolia-insights-api
+- name: Algolia Recommend API
+  description: >-
+    Returns related-products, frequently-bought-together, trending and look-alike recommendations trained
+    from Insights events and catalog data, plus the Recommend rules that override them.
+  humanURL: https://www.algolia.com/doc/rest-api/recommend/
+  baseURL: https://{appid}-dsn.algolia.net
+  tags:
+  - Recommendations
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/rest-api/recommend/
+  - type: OpenAPI
+    url: openapi/algolia-recommend-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-recommend-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-recommend-rule-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-parameters-hits-per-page-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-parameters-page-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-recommendations-request-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-recommendations-results-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-task-status-schema.json
+  aid: algolia:algolia-recommend-api
+- name: Algolia Analytics API
+  description: >-
+    Reports top searches, no-result searches, click and conversion rates, revenue and other search analytics
+    aggregated from query and Insights data. One of only six Algolia APIs that returns machine-readable
+    x-ratelimit-* response headers.
+  humanURL: https://www.algolia.com/doc/rest-api/analytics/
+  baseURL: https://analytics.algolia.com
+  tags:
+  - Analytics
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/rest-api/analytics/
+  - type: OpenAPI
+    url: openapi/algolia-analytics-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-analytics-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-table-payload-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-timeseries-payload-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-timeseries-response-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-click-positions-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-distribution-payload-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-scalar-payload-schema.json
+  aid: algolia:algolia-analytics-api
+- name: Algolia A/B Testing API
+  description: >-
+    Creates and manages A/B tests across index configurations and relevance settings, scoring variants
+    on click-through and conversion. Two live versions: v3 is current, and the entire v2 surface is marked
+    deprecated in Algolia's own contract.
+  humanURL: https://www.algolia.com/doc/rest-api/abtesting/
+  baseURL: https://analytics.algolia.com
+  tags:
+  - Experimentation
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/rest-api/abtesting/
+  - type: OpenAPI
+    url: openapi/algolia-abtesting-v3-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-abtesting-v3-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-abtest-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-estimate-abtest-response-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-create-metric-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-minimum-detectable-effect-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-abtest-configuration-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-abtest-response-schema.json
+  aid: algolia:algolia-a-b-testing-api
+- name: Algolia Personalization API
+  description: >-
+    Configures and applies user-affinity profiles built from Insights events to re-rank search and browse
+    results per user.
+  humanURL: https://www.algolia.com/doc/rest-api/personalization/
+  baseURL: https://personalization.{region}.algolia.com
+  tags:
+  - Personalization
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/rest-api/personalization/
+  - type: OpenAPI
+    url: openapi/algolia-personalization-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-personalization-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-personalization-strategy-params-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-user-token-schema.json
+  aid: algolia:algolia-personalization-api
+- name: Algolia Advanced Personalization API
+  description: >-
+    The successor to classic Personalization: real-time user profiles, personalization strategies and
+    a dedicated error-code reference. Runs on its own AI personalization host and publishes the only per-product
+    error catalogue in the estate.
+  humanURL: >-
+    https://www.algolia.com/doc/guides/personalization/advanced-personalization/what-is-advanced-personalization/
+  baseURL: https://ai-personalization.{region}.algolia.com
+  tags:
+  - Personalization
+  - Artificial Intelligence
+  - REST
+  tags_raw:
+  - Personalization
+  - AI
+  - REST
+  properties:
+  - type: Documentation
+    url: >-
+      https://www.algolia.com/doc/guides/personalization/advanced-personalization/what-is-advanced-personalization/
+  - type: OpenAPI
+    url: openapi/algolia-advanced-personalization-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-advanced-personalization-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-configuration-object-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-realtime-user-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-user-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-events-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-issue-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-profile-type-schema.json
+  aid: algolia:algolia-advanced-personalization-api
+- name: Algolia Crawler API
+  description: >-
+    Manages Algolia's hosted web crawler that extracts content from websites and pushes it into indices
+    on a schedule. The only Algolia API that authenticates with HTTP Basic rather than the x-algolia-*
+    header pair.
+  humanURL: https://www.algolia.com/doc/tools/crawler/getting-started/overview/
+  baseURL: https://crawler.algolia.com/api
+  tags:
+  - Crawler
+  - Ingestion
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/tools/crawler/getting-started/overview/
+  - type: OpenAPI
+    url: openapi/algolia-crawler-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-crawler-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-configuration-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-urls-crawled-group-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-crawler-config-versions-response-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-domains-response-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-crawlers-response-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-partial-config-schema.json
+  aid: algolia:algolia-crawler-api
+- name: Algolia Ingestion API
+  description: >-
+    Connector-based data ingestion that pulls records from databases, storage and ecommerce platforms
+    into Algolia indices via managed sources, destinations, transformations and tasks. The largest connector
+    surface at 61 operations, and the only Algolia API with real dry-run operations.
+  humanURL: https://www.algolia.com/doc/rest-api/ingestion/
+  baseURL: https://data.{region}.algolia.com
+  tags:
+  - Ingestion
+  - Connectors
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/rest-api/ingestion/
+  - type: OpenAPI
+    url: openapi/algolia-ingestion-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-ingestion-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-task-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-run-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-task-v1-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-task-create-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-watch-response-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-task-create-v1-schema.json
+  aid: algolia:algolia-ingestion-api
+- name: Algolia Query Suggestions API
+  description: >-
+    Generates and maintains query-suggestion indices from popular searches to power as-you-type autocomplete.
+  humanURL: https://www.algolia.com/doc/rest-api/query-suggestions/
+  baseURL: https://query-suggestions.{region}.algolia.com
+  tags:
+  - Search
+  - Autocomplete
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/rest-api/query-suggestions/
+  - type: OpenAPI
+    url: openapi/algolia-query-suggestions-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-query-suggestions-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-configuration-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-log-level-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-configuration-response-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-configuration-with-index-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-base-response-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-index-name-schema.json
+  aid: algolia:algolia-query-suggestions-api
+- name: Algolia Composition API
+  description: >-
+    Composes multiple search sources into one curated result set - smart groups, curated queries and composition
+    rules - so a single request returns a merchandised, multi-source response.
+  humanURL: https://www.algolia.com/doc/rest-api/composition/
+  baseURL: https://{appId}.algolia.net
+  tags:
+  - Search
+  - Merchandising
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/rest-api/composition/
+  - type: OpenAPI
+    url: openapi/algolia-composition-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-composition-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-params-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-composition-rule-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-sorting-strategy-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-parameters-hits-per-page-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-parameters-page-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-list-compositions-response-schema.json
+  aid: algolia:algolia-composition-api
+- name: Algolia Agent Studio API
+  description: >-
+    Algolia's agent-building runtime: agents, conversations, tools, memory, guardrails and per-turn context,
+    exposed as 42 REST operations. Notably, Agent Studio can itself consume third-party MCP tools, so
+    Algolia is both an MCP server and an MCP client.
+  humanURL: https://www.algolia.com/doc/guides/algolia-ai/agent-studio
+  baseURL: https://{APPLICATION_ID}.algolia.net/agent-studio
+  tags:
+  - Artificial Intelligence
+  - Agents
+  - REST
+  tags_raw:
+  - AI
+  - Agents
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/guides/algolia-ai/agent-studio
+  - type: OpenAPI
+    url: openapi/algolia-agent-studio-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-agent-studio-api-overlay.yaml
+  - type: JSONSchema
+    url: json-schema/algolia-agent-config-update-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-agent-config-create-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-conversation-full-response-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-agent-with-version-response-schema.json
+  - type: JSONSchema
+    url: json-schema/algolia-feedback-response-schema.json
+  aid: algolia:algolia-agent-studio-api
+- name: Algolia Monitoring API
+  description: >-
+    Exposes server status, latency, indexing and reachability metrics for a specific application's Algolia
+    infrastructure. More than a status page: an agent can query the health of its own cluster rather than
+    the global service.
+  humanURL: https://www.algolia.com/doc/rest-api/monitoring/
+  baseURL: https://status.algolia.com
+  tags:
+  - Monitoring
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/rest-api/monitoring/
+  - type: OpenAPI
+    url: openapi/algolia-monitoring-api-openapi.yml
+  - type: Overlay
+    url: overlays/algolia-monitoring-api-overlay.yaml
+  aid: algolia:algolia-monitoring-api
+- name: Algolia Usage API
+  description: >-
+    Returns per-application usage metrics (operations, records, search volume) for cost and quota tracking.
+    The one documented Algolia REST API for which no OpenAPI document is published in the api-clients-automation
+    spec repository.
+  humanURL: https://www.algolia.com/doc/rest-api/usage/
+  baseURL: https://usage.algolia.com
+  tags:
+  - Usage
+  - FinOps
+  - REST
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/rest-api/usage/
+  aid: algolia:algolia-usage-api
+- name: Algolia Productivity MCP Server
+  description: >-
+    Algolia-managed remote MCP server giving an agent user-scoped, read-only access to search, index listing
+    and the full analytics surface, authorized by the signed-in user's own Algolia permissions. OAuth
+    2.1 with PKCE and dynamic client registration, discoverable via RFC 8414 and RFC 9728 metadata.
+  humanURL: https://www.algolia.com/doc/guides/model-context-protocol
+  baseURL: https://mcp.algolia.com
+  tags:
+  - MCP
+  - Artificial Intelligence
+  - Agents
+  - Search
+  tags_raw:
+  - MCP
+  - AI
+  - Agents
+  - Search
+  properties:
+  - type: Documentation
+    url: https://www.algolia.com/doc/guides/model-context-protocol
+  - type: MCPServer
+    url: mcp/algolia-mcp.yml
+  - type: ToolCrosswalk
+    url: mcp/algolia-tool-crosswalk.yml
+  - type: OAuthScopes
+    url: scopes/algolia-scopes.yml
+  aid: algolia:algolia-productivity-mcp-server
+- aid: algolia:algolia-ab-testing-api
+  name: Algolia Ab Testing API
+  description: The Ab Testing API from Algolia — 6 operation(s) for ab testing.
+  humanURL: https://www.algolia.com/doc/rest-api/search/
+  baseURL: https://{appid}-dsn.algolia.net
+  tags:
+  - Ab Testing
+  properties:
+  - type: OpenAPI
+    url: openapi/algolia-ab-testing-api-openapi.yml
 features:
 - name: Hosted Search Infrastructure
   description: Typo-tolerant, faceted, geo-aware search served from globally distributed search nodes (DSN) with sub-50ms latency targets.
@@ -438,6 +621,7 @@ features:
   description: Hosted web crawler plus connector-based ingestion to keep indices in sync with external sources.
 - name: Search Analytics
   description: Top searches, no-result queries, and click/conversion analytics for relevance tuning.
+
 useCases:
 - name: Ecommerce Site Search
   description: Power product search, browse, and filtering for online stores with merchandising rules and personalization.
@@ -447,6 +631,7 @@ useCases:
   description: Add fast, relevant search to SaaS and mobile applications via official client libraries.
 - name: Recommendations and Upsell
   description: Drive related-item and frequently-bought-together widgets from catalog and behavioral data.
+
 integrations:
 - name: Ecommerce Platforms
   description: Connectors and apps for Shopify, commercetools, BigCommerce, and Salesforce Commerce Cloud.
@@ -454,6 +639,7 @@ integrations:
   description: InstantSearch (JavaScript, React, Vue, Angular, iOS, Android) and Autocomplete UI libraries.
 - name: Official API Clients
   description: First-party clients for JavaScript/TypeScript, Python, PHP, Java, Ruby, Go, C#, Kotlin, Swift, Scala, and Dart.
+
 solutions:
 - name: Retail and Ecommerce
   description: Search, browse, merchandising, and recommendations tuned for conversion on product catalogs.
@@ -461,9 +647,7 @@ solutions:
   description: Content discovery and recommendation across large editorial and media libraries.
 - name: B2B and SaaS
   description: Embedded search and discovery inside applications, dashboards, and documentation.
-maintainers:
-- FN: Kin Lane
-  email: kin@apievangelist.com
+
 x-artifact-summary:
   openapi_documents: 15
   operations: 342
@@ -472,8 +656,10 @@ x-artifact-summary:
   agent_skills_provider_published: 18
   llms_txt: 2
   contract_source: https://github.com/algolia/api-clients-automation/tree/main/specs/bundled
+
 x-enrichment:
-  date: '2026-08-27'
+  date: '2026-09-23'
   status: enriched
-  artifacts_added: 88
-  pass: local-v1
+  artifacts_added: 69
+  pass: modular-v1
+  engine: identity=anthropic,contract=anthropic,surfaces=anthropic,docs=anthropic

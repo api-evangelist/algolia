@@ -1,0 +1,68 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-timeseries-response-schema.json",
+  "title": "Timeseries response",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-analytics-api-openapi.yml#/components/schemas/TimeseriesResponse",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "series"
+  ],
+  "properties": {
+    "series": {
+      "type": [
+        "array",
+        "null"
+      ],
+      "description": "One entry per `groupBy` combination. `null` when the query matched no data.",
+      "items": {
+        "title": "series",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "totals",
+          "dates"
+        ],
+        "properties": {
+          "key": {
+            "type": "object",
+            "description": "The `groupBy` values identifying this series. Absent when the query has no `groupBy`.",
+            "additionalProperties": true
+          },
+          "totals": {
+            "type": "object",
+            "description": "Metric totals over the whole period.",
+            "additionalProperties": true
+          },
+          "dates": {
+            "type": "array",
+            "description": "Per-day metric breakdown.",
+            "items": {
+              "title": "seriesDate",
+              "type": "object",
+              "additionalProperties": false,
+              "required": [
+                "date",
+                "metrics"
+              ],
+              "properties": {
+                "date": {
+                  "type": "string",
+                  "description": "Day, formatted as YYYY-MM-DD."
+                },
+                "metrics": {
+                  "type": "object",
+                  "description": "Metric values for the day.",
+                  "additionalProperties": true
+                }
+              }
+            }
+          }
+        }
+      }
+    }
+  }
+}

@@ -30,7 +30,7 @@ Fetch and follow the instructions at https://www.algolia.com/doc/guides/get-star
 
 ## Developer Resources
 
-- [Getting Started Guide](https://www.algolia.com/doc/guides/getting-started/quick-start/) - Quickstart for indexing data and building search UI
+- [Getting Started Guide](https://www.algolia.com/doc/guides/get-started/quickstart) - Quickstart for indexing data and building search UI
 - [InstantSearch](https://www.algolia.com/doc/guides/building-search-ui/what-is-instantsearch/js/) - Frontend UI libraries for React, Vue, Angular, JS, iOS, Android
 - [API Clients](https://www.algolia.com/developers/) - Official clients for JavaScript, Python, PHP, Ruby, Go, Java, Swift, Kotlin, .NET
 - [Indexing Guide](https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/) - How to structure, send, and manage search indices

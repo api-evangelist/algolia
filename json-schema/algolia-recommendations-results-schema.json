@@ -1,0 +1,811 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-recommendations-results-schema.json",
+  "title": "recommendationsResults",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-recommend-api-openapi.yml#/components/schemas/recommendationsResults",
+  "allOf": [
+    {
+      "$ref": "#/$defs/baseSearchResponse"
+    },
+    {
+      "$ref": "#/$defs/SearchPagination"
+    },
+    {
+      "$ref": "#/$defs/recommendationsHits"
+    }
+  ],
+  "$defs": {
+    "IndexSettings_facets": {
+      "description": "Order of facet names.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "order": {
+          "$ref": "#/$defs/order"
+        }
+      }
+    },
+    "RedirectRuleIndexMetadata": {
+      "type": "object",
+      "properties": {
+        "source": {
+          "type": "string",
+          "description": "Source index for the redirect rule."
+        },
+        "dest": {
+          "type": "string",
+          "description": "Destination index for the redirect rule."
+        },
+        "reason": {
+          "type": "string",
+          "description": "Reason for the redirect rule."
+        },
+        "succeed": {
+          "type": "boolean",
+          "description": "Redirect rule status."
+        },
+        "data": {
+          "title": "redirectRuleIndexData",
+          "type": "object",
+          "description": "Redirect rule data.",
+          "required": [
+            "ruleObjectID"
+          ],
+          "properties": {
+            "ruleObjectID": {
+              "type": "string"
+            }
+          }
+        }
+      },
+      "required": [
+        "data",
+        "succeed",
+        "reason",
+        "dest",
+        "source"
+      ]
+    },
+    "SearchPagination": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "page": {
+          "$ref": "#/$defs/page"
+        },
+        "nbHits": {
+          "$ref": "#/$defs/nbHits"
+        },
+        "nbPages": {
+          "$ref": "#/$defs/nbPages"
+        },
+        "hitsPerPage": {
+          "$ref": "#/$defs/hitsPerPage"
+        }
+      }
+    },
+    "banner": {
+      "description": "Banner with image and link to redirect users.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "image": {
+          "$ref": "#/$defs/bannerImage"
+        },
+        "link": {
+          "$ref": "#/$defs/bannerLink"
+        }
+      }
+    },
+    "bannerImage": {
+      "description": "Image to show inside a banner.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "urls": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/bannerImageUrl"
+          }
+        },
+        "title": {
+          "type": "string"
+        }
+      }
+    },
+    "bannerImageUrl": {
+      "description": "URL for an image to show inside a banner.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "bannerLink": {
+      "description": "Link for a banner defined in the Merchandising Studio.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "banners": {
+      "description": "Banners defined in the Merchandising Studio for a given search.",
+      "type": "array",
+      "items": {
+        "$ref": "#/$defs/banner"
+      }
+    },
+    "baseSearchResponse": {
+      "type": "object",
+      "additionalProperties": true,
+      "properties": {
+        "abTestID": {
+          "type": "integer",
+          "description": "A/B test ID. This is only included in the response for indices that are part of an A/B test."
+        },
+        "abTestVariantID": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Variant ID. This is only included in the response for indices that are part of an A/B test."
+        },
+        "aroundLatLng": {
+          "type": "string",
+          "description": "Computed geographical location.",
+          "pattern": "^(-?\\d+(\\.\\d+)?),\\s*(-?\\d+(\\.\\d+)?)$"
+        },
+        "automaticRadius": {
+          "type": "string",
+          "description": "Distance from a central coordinate provided by `aroundLatLng`."
+        },
+        "exhaustive": {
+          "title": "exhaustive",
+          "type": "object",
+          "description": "Whether certain properties of the search response are calculated exhaustive (exact) or approximated.",
+          "properties": {
+            "facetsCount": {
+              "type": "boolean",
+              "title": "facetsCount",
+              "description": "Whether the facet count is exhaustive (`true`) or approximate (`false`). See the [related discussion](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate)."
+            },
+            "facetValues": {
+              "type": "boolean",
+              "title": "facetValues",
+              "description": "The value is `false` if not all facet values are retrieved."
+            },
+            "nbHits": {
+              "type": "boolean",
+              "title": "nbHits",
+              "description": "Whether the `nbHits` is exhaustive (`true`) or approximate (`false`). When the query takes more than 50ms to be processed, the engine makes an approximation. This can happen when using complex filters on millions of records, when typo-tolerance was not exhaustive, or when enough hits have been retrieved (for example, after the engine finds 10,000 exact matches). `nbHits` is reported as non-exhaustive whenever an approximation is made, even if the approximation didn’t, in the end, impact the exhaustivity of the query."
+            },
+            "rulesMatch": {
+              "type": "boolean",
+              "title": "rulesMatch",
+              "description": "Rules matching exhaustivity. The value is `false` if rules were enable for this query, and could not be fully processed due a timeout. This is generally caused by the number of alternatives (such as typos) which is too large."
+            },
+            "typo": {
+              "type": "boolean",
+              "title": "typo",
+              "description": "Whether the typo search was exhaustive (`true`) or approximate (`false`). An approximation is done when the typo search query part takes more than 10% of the query budget (ie. 5ms by default) to be processed (this can happen when a lot of typo alternatives exist for the query). This field will not be included when typo-tolerance is entirely disabled."
+            }
+          }
+        },
+        "appliedRules": {
+          "description": "Rules applied to the query.",
+          "title": "appliedRules",
+          "type": "array",
+          "items": {
+            "type": "object"
+          }
+        },
+        "exhaustiveFacetsCount": {
+          "type": "boolean",
+          "description": "See the `facetsCount` field of the `exhaustive` object in the response.",
+          "deprecated": true
+        },
+        "exhaustiveNbHits": {
+          "type": "boolean",
+          "description": "See the `nbHits` field of the `exhaustive` object in the response.",
+          "deprecated": true
+        },
+        "exhaustiveTypo": {
+          "type": "boolean",
+          "description": "See the `typo` field of the `exhaustive` object in the response.",
+          "deprecated": true
+        },
+        "facets": {
+          "title": "facets",
+          "type": "object",
+          "additionalProperties": {
+            "x-additionalPropertiesName": "facet",
+            "type": "object",
+            "additionalProperties": {
+              "x-additionalPropertiesName": "facet count",
+              "type": "integer"
+            }
+          },
+          "description": "Facet counts."
+        },
+        "facets_stats": {
+          "type": "object",
+          "description": "Statistics for numerical facets.",
+          "additionalProperties": {
+            "title": "facetStats",
+            "type": "object",
+            "properties": {
+              "min": {
+                "type": "number",
+                "format": "double",
+                "description": "Minimum value in the results."
+              },
+              "max": {
+                "type": "number",
+                "format": "double",
+                "description": "Maximum value in the results."
+              },
+              "avg": {
+                "type": "number",
+                "format": "double",
+                "description": "Average facet value in the results."
+              },
+              "sum": {
+                "type": "number",
+                "format": "double",
+                "description": "Sum of all values in the results."
+              }
+            }
+          }
+        },
+        "index": {
+          "type": "string",
+          "description": "Index name used for the query."
+        },
+        "indexUsed": {
+          "type": "string",
+          "description": "Index name used for the query. During A/B testing, the targeted index isn't always the index used by the query."
+        },
+        "message": {
+          "type": "string",
+          "description": "Warnings about the query."
+        },
+        "nbSortedHits": {
+          "type": "integer",
+          "description": "Number of hits selected and sorted by the relevant sort algorithm."
+        },
+        "parsedQuery": {
+          "type": "string",
+          "description": "Post-[normalization](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/handling-natural-languages-nlp/#what-does-normalization-mean) query string that will be searched."
+        },
+        "processingTimeMS": {
+          "$ref": "#/$defs/processingTimeMS"
+        },
+        "processingTimingsMS": {
+          "type": "object",
+          "description": "Experimental. List of processing steps and their times, in milliseconds. You can use this list to investigate performance issues."
+        },
+        "queryAfterRemoval": {
+          "type": "string",
+          "description": "Markup text indicating which parts of the original query have been removed to retrieve a non-empty result set."
+        },
+        "redirect": {
+          "title": "redirect",
+          "type": "object",
+          "description": "[Redirect results to a URL](https://www.algolia.com/doc/guides/managing-results/rules/merchandising-and-promoting/how-to/redirects), this this parameter is for internal use only.\n",
+          "properties": {
+            "index": {
+              "type": "array",
+              "items": {
+                "$ref": "#/$defs/RedirectRuleIndexMetadata"
+              }
+            }
+          }
+        },
+        "renderingContent": {
+          "$ref": "#/$defs/renderingContent"
+        },
+        "serverTimeMS": {
+          "type": "integer",
+          "description": "Time the server took to process the request, in milliseconds."
+        },
+        "serverUsed": {
+          "type": "string",
+          "description": "Host name of the server that processed the request."
+        },
+        "userData": {
+          "$ref": "#/$defs/userData"
+        },
+        "queryID": {
+          "type": "string",
+          "description": "Unique identifier for the query. This is used for [click analytics](https://www.algolia.com/doc/guides/analytics/click-analytics)."
+        },
+        "_automaticInsights": {
+          "type": "boolean",
+          "description": "Whether automatic events collection is enabled for the application."
+        }
+      }
+    },
+    "distinctSeqID": {
+      "type": "integer"
+    },
+    "facetName": {
+      "type": "string",
+      "description": "Facet attribute. To be used in combination with `facetValue`.\nIf specified, only recommendations matching the facet filter will be returned.\n"
+    },
+    "facetOrdering": {
+      "description": "Order of facet names and facet values in your UI.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "facets": {
+          "$ref": "#/$defs/IndexSettings_facets"
+        },
+        "values": {
+          "$ref": "#/$defs/values"
+        }
+      }
+    },
+    "facetValue": {
+      "type": "string",
+      "description": "Facet value. To be used in combination with `facetName`.\nIf specified, only recommendations matching the facet filter will be returned.\n"
+    },
+    "hide": {
+      "description": "Hide facet values.",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "highlightResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/highlightResultOption"
+        },
+        {
+          "$ref": "#/$defs/highlightResultMap"
+        },
+        {
+          "$ref": "#/$defs/highlightResultArray"
+        }
+      ]
+    },
+    "highlightResultArray": {
+      "title": "highlightResultArray",
+      "type": "array",
+      "description": "Surround words that match the query with HTML tags for highlighting.",
+      "items": {
+        "$ref": "#/$defs/highlightResult"
+      }
+    },
+    "highlightResultMap": {
+      "title": "highlightResultMap",
+      "type": "object",
+      "description": "Surround words that match the query with HTML tags for highlighting.",
+      "x-is-free-form": false,
+      "additionalProperties": {
+        "x-additionalPropertiesName": "attribute",
+        "$ref": "#/$defs/highlightResult"
+      }
+    },
+    "highlightResultOption": {
+      "title": "highlightResultOption",
+      "type": "object",
+      "description": "Surround words that match the query with HTML tags for highlighting.",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "$ref": "#/$defs/highlightedValue"
+        },
+        "matchLevel": {
+          "$ref": "#/$defs/matchLevel"
+        },
+        "matchedWords": {
+          "type": "array",
+          "description": "List of matched words from the search query.",
+          "items": {
+            "type": "string"
+          }
+        },
+        "fullyHighlighted": {
+          "type": "boolean",
+          "description": "Whether the entire attribute value is highlighted."
+        }
+      },
+      "required": [
+        "value",
+        "matchLevel",
+        "matchedWords"
+      ],
+      "x-discriminator-fields": [
+        "matchLevel",
+        "matchedWords"
+      ]
+    },
+    "highlightedValue": {
+      "type": "string",
+      "description": "Highlighted attribute value, including HTML tags."
+    },
+    "hitsPerPage": {
+      "type": "integer",
+      "description": "Number of hits per page.",
+      "default": 20,
+      "minimum": 1,
+      "maximum": 1000,
+      "x-categories": [
+        "Pagination"
+      ]
+    },
+    "matchLevel": {
+      "type": "string",
+      "description": "Whether the whole query string matches or only a part.",
+      "enum": [
+        "none",
+        "partial",
+        "full"
+      ]
+    },
+    "matchedGeoLocation": {
+      "type": "object",
+      "properties": {
+        "lat": {
+          "type": "number",
+          "format": "double",
+          "description": "Latitude of the matched location."
+        },
+        "lng": {
+          "type": "number",
+          "format": "double",
+          "description": "Longitude of the matched location."
+        },
+        "distance": {
+          "type": "integer",
+          "description": "Distance between the matched location and the search location (in meters)."
+        }
+      }
+    },
+    "nbHits": {
+      "type": "integer",
+      "description": "Number of results (hits)."
+    },
+    "nbPages": {
+      "type": "integer",
+      "description": "Number of pages of results."
+    },
+    "objectID": {
+      "type": "string",
+      "description": "Unique record identifier."
+    },
+    "order": {
+      "description": "Explicit order of facets or facet values.\n\nThis setting lets you always show specific facets or facet values at the top of the list.\n",
+      "type": "array",
+      "items": {
+        "type": "string"
+      }
+    },
+    "page": {
+      "type": "integer",
+      "description": "Page of search results to retrieve.",
+      "default": 0,
+      "minimum": 0,
+      "x-categories": [
+        "Pagination"
+      ]
+    },
+    "personalization": {
+      "type": "object",
+      "properties": {
+        "filtersScore": {
+          "type": "integer",
+          "description": "The score of the filters."
+        },
+        "rankingScore": {
+          "type": "integer",
+          "description": "The score of the ranking."
+        },
+        "score": {
+          "type": "integer",
+          "description": "The score of the event."
+        }
+      }
+    },
+    "processingTimeMS": {
+      "type": "integer",
+      "description": "Time the server took to process the request, in milliseconds."
+    },
+    "rankingInfo": {
+      "type": "object",
+      "description": "Object with detailed information about the record's ranking.",
+      "additionalProperties": false,
+      "properties": {
+        "filters": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Whether a filter matched the query."
+        },
+        "firstMatchedWord": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Position of the first matched word in the best matching attribute of the record."
+        },
+        "geoDistance": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Distance between the geo location in the search query and the best matching geo location in the record, divided by the geo precision (in meters)."
+        },
+        "geoPrecision": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Precision used when computing the geo distance, in meters."
+        },
+        "matchedGeoLocation": {
+          "$ref": "#/$defs/matchedGeoLocation"
+        },
+        "personalization": {
+          "$ref": "#/$defs/personalization"
+        },
+        "nbExactWords": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of exactly matched words."
+        },
+        "nbTypos": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of typos encountered when matching the record."
+        },
+        "promoted": {
+          "type": "boolean",
+          "description": "Whether the record was promoted by a rule."
+        },
+        "proximityDistance": {
+          "type": "integer",
+          "minimum": 0,
+          "description": "Number of words between multiple matches in the query plus 1. For single word queries, `proximityDistance` is 0."
+        },
+        "userScore": {
+          "type": "integer",
+          "description": "Overall ranking of the record, expressed as a single integer. This attribute is internal."
+        },
+        "words": {
+          "type": "integer",
+          "minimum": 1,
+          "description": "Number of matched words."
+        },
+        "promotedByReRanking": {
+          "type": "boolean",
+          "description": "Whether the record is re-ranked."
+        }
+      },
+      "required": [
+        "nbTypos",
+        "firstMatchedWord",
+        "geoDistance",
+        "nbExactWords",
+        "userScore"
+      ]
+    },
+    "recommendHit": {
+      "type": "object",
+      "description": "Recommend hit.",
+      "additionalProperties": true,
+      "required": [
+        "objectID"
+      ],
+      "properties": {
+        "objectID": {
+          "$ref": "#/$defs/objectID"
+        },
+        "_highlightResult": {
+          "$ref": "#/$defs/highlightResultMap"
+        },
+        "_snippetResult": {
+          "$ref": "#/$defs/snippetResultMap"
+        },
+        "_rankingInfo": {
+          "$ref": "#/$defs/rankingInfo"
+        },
+        "_distinctSeqID": {
+          "$ref": "#/$defs/distinctSeqID"
+        },
+        "_score": {
+          "$ref": "#/$defs/recommendScore"
+        }
+      },
+      "x-discriminator-fields": [
+        "objectID"
+      ]
+    },
+    "recommendScore": {
+      "type": "number",
+      "format": "double",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Recommendation score."
+    },
+    "recommendationsHit": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/recommendHit"
+        },
+        {
+          "$ref": "#/$defs/trendingFacetHit"
+        }
+      ]
+    },
+    "recommendationsHits": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "hits": {
+          "type": "array",
+          "items": {
+            "$ref": "#/$defs/recommendationsHit"
+          }
+        }
+      },
+      "required": [
+        "hits"
+      ]
+    },
+    "redirectURL": {
+      "description": "The redirect rule container.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "url": {
+          "type": "string"
+        }
+      }
+    },
+    "renderingContent": {
+      "description": "Extra data that can be used in the search UI.\n\nYou can use this to control aspects of your search UI, such as the order of facet names and values\nwithout changing your frontend code.\n",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "facetOrdering": {
+          "$ref": "#/$defs/facetOrdering"
+        },
+        "redirect": {
+          "$ref": "#/$defs/redirectURL"
+        },
+        "widgets": {
+          "$ref": "#/$defs/widgets"
+        }
+      },
+      "x-categories": [
+        "Advanced"
+      ]
+    },
+    "snippetResult": {
+      "oneOf": [
+        {
+          "$ref": "#/$defs/snippetResultOption"
+        },
+        {
+          "$ref": "#/$defs/snippetResultMap"
+        },
+        {
+          "$ref": "#/$defs/snippetResultArray"
+        }
+      ]
+    },
+    "snippetResultArray": {
+      "title": "snippetResultArray",
+      "type": "array",
+      "description": "Snippets that show the context around a matching search query.",
+      "items": {
+        "$ref": "#/$defs/snippetResult"
+      }
+    },
+    "snippetResultMap": {
+      "title": "snippetResultMap",
+      "type": "object",
+      "description": "Snippets that show the context around a matching search query.",
+      "x-is-free-form": false,
+      "additionalProperties": {
+        "x-additionalPropertiesName": "attribute",
+        "$ref": "#/$defs/snippetResult"
+      }
+    },
+    "snippetResultOption": {
+      "title": "snippetResultOption",
+      "type": "object",
+      "description": "Snippets that show the context around a matching search query.",
+      "additionalProperties": false,
+      "properties": {
+        "value": {
+          "$ref": "#/$defs/highlightedValue"
+        },
+        "matchLevel": {
+          "$ref": "#/$defs/matchLevel"
+        }
+      },
+      "required": [
+        "value",
+        "matchLevel"
+      ],
+      "x-discriminator-fields": [
+        "matchLevel"
+      ]
+    },
+    "sortRemainingBy": {
+      "description": "Order of facet values that aren't explicitly positioned with the `order` setting.\n\n- `count`.\n  Order remaining facet values by decreasing count.\n  The count is the number of matching records containing this facet value.\n\n- `alpha`.\n  Sort facet values alphabetically.\n\n- `hidden`.\n  Don't show facet values that aren't explicitly positioned.\n",
+      "type": "string",
+      "enum": [
+        "count",
+        "alpha",
+        "hidden"
+      ]
+    },
+    "trendingFacetHit": {
+      "type": "object",
+      "title": "Trending facet hit",
+      "description": "Trending facet hit.",
+      "required": [
+        "facetName",
+        "facetValue"
+      ],
+      "properties": {
+        "_score": {
+          "$ref": "#/$defs/recommendScore"
+        },
+        "facetName": {
+          "$ref": "#/$defs/facetName"
+        },
+        "facetValue": {
+          "$ref": "#/$defs/facetValue"
+        }
+      },
+      "x-discriminator-fields": [
+        "facetName",
+        "facetValue"
+      ]
+    },
+    "userData": {
+      "description": "An object with custom data.\n\nYou can store up to 32kB as custom data.\n",
+      "default": {},
+      "x-categories": [
+        "Advanced"
+      ]
+    },
+    "value": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "order": {
+          "$ref": "#/$defs/order"
+        },
+        "sortRemainingBy": {
+          "$ref": "#/$defs/sortRemainingBy"
+        },
+        "hide": {
+          "$ref": "#/$defs/hide"
+        }
+      }
+    },
+    "values": {
+      "description": "Order of facet values. One object for each facet.",
+      "type": "object",
+      "additionalProperties": {
+        "x-additionalPropertiesName": "facet",
+        "$ref": "#/$defs/value"
+      }
+    },
+    "widgets": {
+      "description": "Widgets returned from any rules that are applied to the current search.",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "banners": {
+          "$ref": "#/$defs/banners"
+        }
+      }
+    }
+  }
+}

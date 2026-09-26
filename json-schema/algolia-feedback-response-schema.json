@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-feedback-response-schema.json",
+  "title": "feedbackResponse",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-agent-studio-api-openapi.yml#/components/schemas/FeedbackResponse",
+  "properties": {
+    "id": {
+      "type": "string",
+      "title": "id"
+    },
+    "agentId": {
+      "type": "string",
+      "title": "agentid"
+    },
+    "messageId": {
+      "type": "string",
+      "title": "messageid"
+    },
+    "vote": {
+      "type": "integer",
+      "title": "vote"
+    },
+    "tags": {
+      "items": {
+        "type": "string"
+      },
+      "type": "array",
+      "title": "tags"
+    },
+    "notes": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "notes"
+    },
+    "model": {
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "null"
+        }
+      ],
+      "title": "model"
+    },
+    "createdAt": {
+      "type": "string",
+      "title": "createdat"
+    },
+    "updatedAt": {
+      "type": "string",
+      "title": "updatedat"
+    }
+  },
+  "type": "object",
+  "required": [
+    "id",
+    "agentId",
+    "messageId",
+    "vote",
+    "tags",
+    "createdAt",
+    "updatedAt"
+  ]
+}

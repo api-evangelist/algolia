@@ -1,0 +1,835 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-events-items-schema.json",
+  "title": "EventsItems",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-insights-api-openapi.yml#/components/schemas/EventsItems",
+  "oneOf": [
+    {
+      "$ref": "#/$defs/ClickedObjectIDsAfterSearch"
+    },
+    {
+      "$ref": "#/$defs/AddedToCartObjectIDsAfterSearch"
+    },
+    {
+      "$ref": "#/$defs/PurchasedObjectIDsAfterSearch"
+    },
+    {
+      "$ref": "#/$defs/ConvertedObjectIDsAfterSearch"
+    },
+    {
+      "$ref": "#/$defs/ClickedObjectIDs"
+    },
+    {
+      "$ref": "#/$defs/PurchasedObjectIDs"
+    },
+    {
+      "$ref": "#/$defs/AddedToCartObjectIDs"
+    },
+    {
+      "$ref": "#/$defs/ConvertedObjectIDs"
+    },
+    {
+      "$ref": "#/$defs/ClickedFilters"
+    },
+    {
+      "$ref": "#/$defs/ConvertedFilters"
+    },
+    {
+      "$ref": "#/$defs/ViewedObjectIDs"
+    },
+    {
+      "$ref": "#/$defs/ViewedFilters"
+    },
+    {
+      "$ref": "#/$defs/Instantsearch"
+    }
+  ],
+  "$defs": {
+    "AddToCartEvent": {
+      "type": "string",
+      "enum": [
+        "addToCart"
+      ]
+    },
+    "AddedToCartObjectIDs": {
+      "type": "object",
+      "title": "Added to cart object IDs",
+      "description": "Use this event to track when users add items to their shopping cart unrelated to a previous Algolia request. For example, if you don't use Algolia to build your category pages, use this event.\n\nTo track add-to-cart events related to Algolia requests, use the \"Added to cart object IDs after search\" event.\n",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ConversionEvent"
+        },
+        "eventSubtype": {
+          "$ref": "#/$defs/AddToCartEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "objectIDs": {
+          "$ref": "#/$defs/objectIDs"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "objectData": {
+          "$ref": "#/$defs/objectDataList"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "value": {
+          "$ref": "#/$defs/value"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "eventSubtype",
+        "index",
+        "objectIDs",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "eventType",
+        "eventSubtype",
+        "objectIDs"
+      ]
+    },
+    "AddedToCartObjectIDsAfterSearch": {
+      "type": "object",
+      "title": "Added to cart object IDs after search",
+      "description": "Use this event to track when users add items to their shopping cart after a previous Algolia request.\nIf you're building your category pages with Algolia, you'll also use this event.\n",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ConversionEvent"
+        },
+        "eventSubtype": {
+          "$ref": "#/$defs/AddToCartEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "queryID": {
+          "$ref": "#/$defs/queryID"
+        },
+        "objectIDs": {
+          "$ref": "#/$defs/objectIDs"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "objectData": {
+          "$ref": "#/$defs/objectDataAfterSearchList"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "value": {
+          "$ref": "#/$defs/value"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "eventSubtype",
+        "queryID",
+        "index",
+        "objectIDs",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "eventType",
+        "eventSubtype",
+        "queryID",
+        "objectIDs"
+      ]
+    },
+    "ClickEvent": {
+      "type": "string",
+      "enum": [
+        "click"
+      ]
+    },
+    "ClickedFilters": {
+      "type": "object",
+      "title": "Clicked filters",
+      "description": "Use this event to track when users click facet filters in your user interface.",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ClickEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "filters": {
+          "$ref": "#/$defs/filters"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "index",
+        "filters",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "eventType",
+        "filters"
+      ]
+    },
+    "ClickedObjectIDs": {
+      "type": "object",
+      "title": "Clicked object IDs",
+      "description": "Use this event to track when users click items unrelated to a previous Algolia request.\nFor example, if you don't use Algolia to build your category pages, use this event.\n\nTo track click events related to Algolia requests, use the \"Clicked object IDs after search\" event.\n",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ClickEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "objectIDs": {
+          "$ref": "#/$defs/objectIDs"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "index",
+        "objectIDs",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "eventType",
+        "objectIDs"
+      ]
+    },
+    "ClickedObjectIDsAfterSearch": {
+      "type": "object",
+      "title": "Clicked object IDs after search",
+      "description": "Click event after an Algolia request.\nUse this event to track when users click items in the search results.\nIf you're building your category pages with Algolia,\nyou'll also use this event.\n",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ClickEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "objectIDs": {
+          "$ref": "#/$defs/objectIDs"
+        },
+        "positions": {
+          "$ref": "#/$defs/positions"
+        },
+        "queryID": {
+          "$ref": "#/$defs/queryID"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "index",
+        "objectIDs",
+        "positions",
+        "queryID",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "positions",
+        "queryID",
+        "eventType"
+      ]
+    },
+    "ConversionEvent": {
+      "type": "string",
+      "enum": [
+        "conversion"
+      ]
+    },
+    "ConvertedFilters": {
+      "type": "object",
+      "title": "Converted filters",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ConversionEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "filters": {
+          "$ref": "#/$defs/filters"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "index",
+        "filters",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "eventType",
+        "filters"
+      ]
+    },
+    "ConvertedObjectIDs": {
+      "type": "object",
+      "title": "Converted object IDs",
+      "description": "Use this event to track when users convert on items unrelated to a previous Algolia request.\nFor example, if you don't use Algolia to build your category pages, use this event.\n\nTo track conversion events related to Algolia requests, use the \"Converted object IDs after search\" event.\n",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ConversionEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "objectIDs": {
+          "$ref": "#/$defs/objectIDs"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "index",
+        "objectIDs",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "eventType",
+        "objectIDs"
+      ]
+    },
+    "ConvertedObjectIDsAfterSearch": {
+      "type": "object",
+      "title": "Converted object IDs after search",
+      "description": "Use this event to track when users convert after a previous Algolia request.\nFor example, a user clicks on an item in the search results to view the product detail page.\nThen, the user adds the item to their shopping cart.\n\nIf you're building your category pages with Algolia,\nyou'll also use this event.\n",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ConversionEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "objectIDs": {
+          "$ref": "#/$defs/objectIDs"
+        },
+        "queryID": {
+          "$ref": "#/$defs/queryID"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "index",
+        "objectIDs",
+        "queryID",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "queryID",
+        "eventType"
+      ]
+    },
+    "Instantsearch": {
+      "type": "object",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/InstantsearchEvent"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "agentID": {
+          "$ref": "#/$defs/agentID"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "eventType"
+      ]
+    },
+    "InstantsearchEvent": {
+      "type": "string",
+      "enum": [
+        "instantsearch"
+      ]
+    },
+    "PurchaseEvent": {
+      "type": "string",
+      "enum": [
+        "purchase"
+      ]
+    },
+    "PurchasedObjectIDs": {
+      "type": "object",
+      "title": "Purchased object IDs",
+      "description": "Use this event to track when users make a purchase unrelated to a previous Algolia request. For example, if you don't use Algolia to build your category pages, use this event.\n\nTo track purchase events related to Algolia requests, use the \"Purchased object IDs after search\" event.\n",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ConversionEvent"
+        },
+        "eventSubtype": {
+          "$ref": "#/$defs/PurchaseEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "objectIDs": {
+          "$ref": "#/$defs/objectIDs"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "objectData": {
+          "$ref": "#/$defs/objectDataList"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "value": {
+          "$ref": "#/$defs/value"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "eventSubtype",
+        "index",
+        "objectIDs",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "eventType",
+        "eventSubtype",
+        "objectIDs"
+      ]
+    },
+    "PurchasedObjectIDsAfterSearch": {
+      "type": "object",
+      "title": "Purchased object IDs after search",
+      "description": "Use this event to track when users make a purchase after a previous Algolia request.\nIf you're building your category pages with Algolia, you'll also use this event.\n",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ConversionEvent"
+        },
+        "eventSubtype": {
+          "$ref": "#/$defs/PurchaseEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "objectIDs": {
+          "$ref": "#/$defs/objectIDs"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "currency": {
+          "$ref": "#/$defs/currency"
+        },
+        "objectData": {
+          "$ref": "#/$defs/objectDataAfterSearchList"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        },
+        "value": {
+          "$ref": "#/$defs/value"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "eventSubtype",
+        "index",
+        "objectIDs",
+        "userToken",
+        "objectData"
+      ],
+      "x-discriminator-fields": [
+        "eventType",
+        "eventSubtype",
+        "objectIDs",
+        "objectData"
+      ]
+    },
+    "ViewEvent": {
+      "type": "string",
+      "enum": [
+        "view"
+      ]
+    },
+    "ViewedFilters": {
+      "type": "object",
+      "title": "Viewed filters",
+      "description": "Use this method to capture active filters.\nFor example, when browsing a category page,\nusers see content filtered on that specific category.\n",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ViewEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "filters": {
+          "$ref": "#/$defs/filters"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "index",
+        "filters",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "eventType",
+        "filters"
+      ]
+    },
+    "ViewedObjectIDs": {
+      "type": "object",
+      "title": "Viewed object IDs",
+      "description": "Use this event to track when users viewed items in the search results.",
+      "properties": {
+        "eventName": {
+          "$ref": "#/$defs/eventName"
+        },
+        "eventType": {
+          "$ref": "#/$defs/ViewEvent"
+        },
+        "index": {
+          "$ref": "#/$defs/index"
+        },
+        "objectIDs": {
+          "$ref": "#/$defs/objectIDs"
+        },
+        "userToken": {
+          "$ref": "#/$defs/userToken"
+        },
+        "authenticatedUserToken": {
+          "$ref": "#/$defs/authenticatedUserToken"
+        },
+        "timestamp": {
+          "$ref": "#/$defs/timestamp"
+        }
+      },
+      "required": [
+        "eventName",
+        "eventType",
+        "index",
+        "objectIDs",
+        "userToken"
+      ],
+      "x-discriminator-fields": [
+        "eventType",
+        "objectIDs"
+      ]
+    },
+    "agentID": {
+      "type": "string",
+      "minLength": 1,
+      "description": "Unique identifier for an agent session. Used to correlate instantsearch events with a specific agent interaction.\n"
+    },
+    "authenticatedUserToken": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 129,
+      "pattern": "[a-zA-Z0-9_=/+-]{1,129}",
+      "description": "Identifier for authenticated users.\n\nWhen the user signs in, you can get an identifier from your system and send it as `authenticatedUserToken`.\nThis lets you keep using the `userToken` from before the user signed in, while providing a reliable way to identify users across sessions.\nDon't use personally identifiable information in user tokens.\nFor more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).\n"
+    },
+    "currency": {
+      "type": "string",
+      "minLength": 3,
+      "maxLength": 3,
+      "pattern": "^[A-Za-z]{3}$",
+      "description": "Three-letter [currency code](https://www.iso.org/iso-4217-currency-codes.html)."
+    },
+    "discount": {
+      "description": "Absolute value of the discount for this product, in units of `currency`.",
+      "oneOf": [
+        {
+          "type": "number",
+          "format": "double"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "eventName": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 64,
+      "pattern": "[\\x20-\\x7E]{1,64}",
+      "description": "Event name, up to 64 ASCII characters.\n\nConsider naming events consistently—for example, by adopting Segment's\n[object-action](https://segment.com/academy/collecting-data/naming-conventions-for-clean-data/#the-object-action-framework)\nframework.\n"
+    },
+    "filters": {
+      "type": "array",
+      "description": "Applied facet filters.\n\nFacet filters are `facet:value` pairs.\nFacet values must be URL-encoded, such as, `discount:10%25`.\n",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "index": {
+      "type": "string",
+      "description": "Index name (case-sensitive) to which the event's items belong."
+    },
+    "objectData": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "price": {
+          "$ref": "#/$defs/price"
+        },
+        "quantity": {
+          "$ref": "#/$defs/quantity"
+        },
+        "discount": {
+          "$ref": "#/$defs/discount"
+        }
+      }
+    },
+    "objectDataAfterSearch": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "queryID": {
+          "type": "string",
+          "pattern": "[0-9a-f]{32}",
+          "minLength": 32,
+          "maxLength": 32,
+          "description": "Unique identifier for a search query, used to track purchase events with multiple records that originate from different searches."
+        },
+        "price": {
+          "$ref": "#/$defs/price"
+        },
+        "quantity": {
+          "$ref": "#/$defs/quantity"
+        },
+        "discount": {
+          "$ref": "#/$defs/discount"
+        }
+      }
+    },
+    "objectDataAfterSearchList": {
+      "type": "array",
+      "description": "Extra information about the records involved in a purchase or add-to-cart events.\n\nIf provided, it must be the same length as `objectIDs`.\n",
+      "items": {
+        "$ref": "#/$defs/objectDataAfterSearch"
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "objectDataList": {
+      "type": "array",
+      "description": "Extra information about the records involved in a purchase or add-to-cart event.\n\nIf specified, it must have the same length as `objectIDs`.\n",
+      "items": {
+        "$ref": "#/$defs/objectData"
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "objectIDs": {
+      "type": "array",
+      "description": "Object IDs of the records that are part of the event.",
+      "items": {
+        "type": "string"
+      },
+      "minItems": 1,
+      "maxItems": 20
+    },
+    "positions": {
+      "type": "array",
+      "items": {
+        "type": "integer",
+        "minimum": 1
+      },
+      "minItems": 1,
+      "maxItems": 20,
+      "description": "Position of the clicked item the search results.\n\nYou must provide 1 `position` for each `objectID`.\n"
+    },
+    "price": {
+      "description": "Final price of a single product, including any discounts, in units of `currency`.",
+      "oneOf": [
+        {
+          "type": "number",
+          "format": "double"
+        },
+        {
+          "type": "string"
+        }
+      ]
+    },
+    "quantity": {
+      "type": "integer",
+      "format": "int32",
+      "description": "Quantity of a product that has been purchased or added to the cart.\nThe total purchase value is the sum of `quantity` multiplied with the `price` for each purchased item.\n"
+    },
+    "queryID": {
+      "type": "string",
+      "pattern": "^([0-9a-f]{32}|message_[!-~]+)$",
+      "maxLength": 128,
+      "description": "Unique identifier for a search query.\n\nThe query ID is required for events related to search or browse requests.\nIf you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.\nFor agentic analytics events, the query ID may be prefixed with `message_` followed by any printable string.\n"
+    },
+    "timestamp": {
+      "type": "integer",
+      "format": "int64",
+      "description": "Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days.\nIf not provided, we use the time at which the request was received.\n"
+    },
+    "userToken": {
+      "type": "string",
+      "minLength": 1,
+      "maxLength": 129,
+      "pattern": "[a-zA-Z0-9_=/+-]{1,129}",
+      "description": "Anonymous or pseudonymous user identifier.\n\nDon't use personally identifiable information in user tokens.\nFor more information, see [User token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).\n"
+    },
+    "value": {
+      "description": "Total monetary value of this event in units of `currency`.\nThis should be equal to the sum of `price` times `quantity`.\n",
+      "oneOf": [
+        {
+          "type": "number",
+          "format": "double"
+        },
+        {
+          "type": "string",
+          "maxLength": 16
+        }
+      ]
+    }
+  }
+}

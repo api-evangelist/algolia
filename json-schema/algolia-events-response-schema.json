@@ -1,0 +1,22 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-events-response-schema.json",
+  "title": "EventsResponse",
+  "description": "The response of the Insights API.",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-insights-api-openapi.yml#/components/schemas/EventsResponse",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "message": {
+      "type": "string",
+      "description": "Details about the response, such as error messages."
+    },
+    "status": {
+      "type": "integer",
+      "description": "The HTTP status code of the response."
+    }
+  }
+}

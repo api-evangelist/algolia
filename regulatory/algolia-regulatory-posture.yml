@@ -1,0 +1,177 @@
+specification: API Commons Regulatory Posture
+specificationVersion: '0.1'
+provider: Algolia
+providerId: algolia
+generated: '2026-09-23'
+method: searched
+probe: true
+source: https://www.algolia.com/policies/privacy
+sources:
+  - https://www.algolia.com/policies/privacy
+  - https://www.algolia.com/policies/infrastructure-and-sub-processors
+  - https://privacy.algolia.com/
+  - https://trust.algolia.com/
+  - https://www.algolia.com/distributed-secure/global-infrastructure
+  - https://www.algolia.com/doc/guides/security/security-best-practices/in-depth/shared-responsibility.md
+description: >-
+  Horizontal regulatory-posture harvest for Algolia. Records only what Algolia publishes on public
+  surfaces; does NOT infer which regimes apply. The picture is compact: Algolia publishes a
+  Vanta-hosted Trust Center, a dated subprocessor list, a data-subject-request portal, and a global
+  infrastructure page that names the number of regions. Everything else common to this harvest
+  (SBOM, VPAT/accessibility conformance, AI transparency, notice-and-action, transparency report,
+  incident-notification SLA) is absent from public surfaces at the time of this scan.
+
+signals:
+  subprocessors:
+    url: https://www.algolia.com/policies/infrastructure-and-sub-processors
+    updated: '2026-01-12'
+    quote: 'Updated January 12, 2026'
+    evidence:
+      - source: https://www.algolia.com/policies/infrastructure-and-sub-processors
+        keywords: [sub-processor, Amazon Web Services, Google LLC, LeaseWeb, OVH, HorizonIQ, Equinix, Microsoft, Vultr, Latitude.sh]
+    note: >-
+      Dated policy page enumerating infrastructure sub-processors by entity name, entity type
+      (Cloud Service Provider / Server Provider / Data Center) and corporate location. The named
+      sub-processors verbatim on the page include Amazon Web Services, Google LLC, LeaseWeb Global
+      B.V., OVH SAS, HorizonIQ, Latitude.sh, Equinix, Microsoft, and The Constant Company (Vultr).
+
+  data_subject_request:
+    url: https://privacy.algolia.com/
+    portal_type: OneTrust-powered self-serve form
+    request_types:
+      - Access Request
+      - Deletion Request
+      - Transfer Request
+      - Update Inaccuracies Request
+    api: null
+    evidence:
+      - source: https://privacy.algolia.com/
+        keywords: [Privacy Request Center, Access Request, Deletion Request, Transfer Request, Update Inaccuracies Request]
+      - source: https://www.algolia.com/policies/privacy
+        keywords: [data subject rights, Privacy Request Center, privacy@algolia.com]
+    note: >-
+      Real DSR portal reachable at first-party privacy.algolia.com subdomain. Four request types
+      (access, deletion, transfer, update) offered self-serve. Privacy Policy also names
+      privacy@algolia.com and a US postal address as fallback routes. Subscribers exercising
+      rights in Algolia's role as processor are directed to email privacy@algolia.com.
+
+  data_residency:
+    url: https://www.algolia.com/distributed-secure/global-infrastructure
+    quote: '70+ data centers across 17 regions'
+    plan_reference:
+      free_tier_regions: [US, UK, EU]
+      source: https://www.algolia.com/pricing/
+      quote: 'US, UK, EU hosting locations'
+    evidence:
+      - source: https://www.algolia.com/policies/infrastructure-and-sub-processors
+        keywords: [70+ data centers, 17 regions, global infrastructure, data centers]
+      - source: https://www.algolia.com/pricing/
+        keywords: [US, UK, EU hosting locations]
+    note: >-
+      Algolia states the estate spans 70+ data centers across 17 regions. Region choice on the
+      Free plan is limited to US, UK and EU per the pricing page; the pricing page does not
+      enumerate the full 17-region set - that lives on the global-infrastructure page.
+
+  age_assurance:
+    url: https://www.algolia.com/policies/privacy
+    stated_position: 'Children under the age of 13 are not permitted to use the Services.'
+    quote: 'children under the age of 13 are permitted to use our Services'
+    evidence:
+      - source: https://www.algolia.com/policies/privacy
+        keywords: [children, age of 13, Services]
+    note: >-
+      COPPA-style position stated inside the Privacy Policy rather than as a standalone
+      age-assurance page. No age-verification API, no age-gating feature documented; the
+      declaration is a legal statement of who the service is for.
+
+  compliance_certifications:
+    url: https://trust.algolia.com/
+    certifications_read_from_trust_center:
+      - SOC 2
+      - SOC 3
+      - ISO 27001:2022
+      - ISO 27017
+      - GDPR
+      - CCPA
+      - BSI Cloud Computing Compliance Criteria Catalogue (C5)
+    evidence:
+      - source: https://trust.algolia.com/
+        method: headless-render
+        keywords: [SOC 2, SOC 3, ISO 27001:2022, ISO 27017, GDPR, CCPA, BSI Cloud Computing Compliance Criteria Catalogue]
+    note: >-
+      Vanta Trust Center renders certifications client-side; the list above was read via a
+      headless browser render because the initial HTML is a 6.4 KB application shell.
+      Cross-referenced with conformance/algolia-conformance.yml. Individual attestation PDFs
+      (Algolia SOC 3 Final Report 2026.05.12.pdf, Algolia SOC 2 Type 2 Final Report 2026.05.12.pdf,
+      Algolia C5 Type 2 Final Report) are named in the Trust Center UI but gated behind an NDA
+      request flow.
+
+absent_signals:
+  note: >-
+    Absence is data. Each of the following was probed on the paths recommended by the Regulatory
+    posture harvest spec and returned 404 on www.algolia.com, and no equivalent surface was found
+    in the docs index at https://www.algolia.com/doc/llms.txt.
+  probed:
+    - signal: sbom
+      probed_urls:
+        - https://www.algolia.com/security/sbom (404)
+      finding: No SBOM published on public surfaces. Never derived from an SDK - a bill of materials asserts what is inside a build we have not seen.
+    - signal: accessibility_conformance
+      probed_urls:
+        - https://www.algolia.com/accessibility (404)
+        - https://www.algolia.com/accessibility/vpat (404)
+      finding: No accessibility conformance statement or VPAT published.
+    - signal: training_data_summary
+      probed_urls:
+        - https://www.algolia.com/ai/training-data (404)
+      finding: >-
+        Algolia offers a NeuralSearch product and an AI Assist feature but does not publish a
+        training-data summary or model card on a public surface.
+    - signal: ai_transparency
+      probed_urls:
+        - https://www.algolia.com/ai/transparency (404)
+        - https://www.algolia.com/ai/agent-studio/transparency (404)
+      finding: No standalone AI transparency page.
+    - signal: global_privacy_control
+      probed_urls:
+        - https://www.algolia.com/policies/privacy (no GPC mention)
+      finding: >-
+        The Privacy Policy does not mention Global Privacy Control or the Sec-GPC signal.
+        `honored` is NOT set - the harvest rule forbids deriving honored status from a live
+        Sec-GPC request/response.
+    - signal: notice_and_action
+      probed_urls:
+        - https://www.algolia.com/legal/report-content (404)
+      finding: >-
+        Algolia hosts customer-supplied indices rather than user-generated content, so a
+        DSA-style notice-and-action mechanism is not the shape of its intake. No such page is
+        published.
+    - signal: transparency_report
+      probed_urls:
+        - https://www.algolia.com/transparency (404)
+      finding: No law-enforcement or government-request transparency report published.
+    - signal: exit_assistance
+      probed_urls: []
+      finding: >-
+        No dedicated exit-assistance page. The Ingestion API's export-import-indices operations
+        provide a technical off-ramp (records, settings, rules, synonyms) documented at
+        https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/export-import-indices,
+        but that is a product doc, not a legal or migration-assistance commitment.
+    - signal: incident_notification
+      probed_urls:
+        - https://www.algolia.com/policies/dpa (404)
+      finding: >-
+        The Data Processing Addendum URL returns 404 on the public site. No incident-notification
+        SLA (e.g. "72 hours") is quotable from a public surface.
+    - signal: support_lifetime
+      probed_urls: []
+      finding: >-
+        Algolia publishes no versioned support-window commitment. Deprecated operations are
+        flagged in the OpenAPI documents but no sunset date accompanies them - see
+        lifecycle/algolia-lifecycle.yml.
+
+cross_links:
+  conformance: conformance/algolia-conformance.yml
+  trust_center: security/algolia-trust-center.yml
+  lifecycle: lifecycle/algolia-lifecycle.yml
+  authentication: authentication/algolia-authentication.yml

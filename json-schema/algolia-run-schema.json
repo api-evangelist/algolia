@@ -1,0 +1,147 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-run-schema.json",
+  "title": "Run",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-ingestion-api-openapi.yml#/components/schemas/Run",
+  "type": "object",
+  "additionalProperties": false,
+  "properties": {
+    "runID": {
+      "$ref": "#/$defs/RunID"
+    },
+    "appID": {
+      "type": "string"
+    },
+    "taskID": {
+      "$ref": "#/$defs/taskID"
+    },
+    "status": {
+      "$ref": "#/$defs/RunStatus"
+    },
+    "progress": {
+      "title": "runProgress",
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "expectedNbOfEvents": {
+          "type": "integer"
+        },
+        "receivedNbOfEvents": {
+          "type": "integer"
+        }
+      },
+      "required": [
+        "expectedNbOfEvents",
+        "receivedNbOfEvents"
+      ]
+    },
+    "outcome": {
+      "$ref": "#/$defs/RunOutcome"
+    },
+    "failureThreshold": {
+      "$ref": "#/$defs/failureThreshold"
+    },
+    "reason": {
+      "type": "string",
+      "description": "More information about the task run's outcome."
+    },
+    "reasonCode": {
+      "$ref": "#/$defs/RunReasonCode"
+    },
+    "type": {
+      "$ref": "#/$defs/RunType"
+    },
+    "createdAt": {
+      "$ref": "#/$defs/CreatedAt"
+    },
+    "startedAt": {
+      "$ref": "#/$defs/startedAt"
+    },
+    "finishedAt": {
+      "$ref": "#/$defs/finishedAt"
+    }
+  },
+  "required": [
+    "runID",
+    "appID",
+    "taskID",
+    "status",
+    "type",
+    "createdAt"
+  ],
+  "$defs": {
+    "CreatedAt": {
+      "type": "string",
+      "description": "Date and time when the resource was created, in RFC 3339 format."
+    },
+    "RunID": {
+      "type": "string",
+      "description": "Universally unique identifier (UUID) of a task run."
+    },
+    "RunOutcome": {
+      "type": "string",
+      "description": "Task run outcome.",
+      "enum": [
+        "success",
+        "failure"
+      ]
+    },
+    "RunReasonCode": {
+      "type": "string",
+      "description": "A code for the task run's outcome. A readable description of the code is included in the `reason` response property.",
+      "enum": [
+        "internal",
+        "cancelled",
+        "critical",
+        "no_events",
+        "too_many_errors",
+        "lacking_events",
+        "ok",
+        "blocking",
+        "idle"
+      ]
+    },
+    "RunStatus": {
+      "type": "string",
+      "description": "Task run status.",
+      "enum": [
+        "created",
+        "started",
+        "finished",
+        "skipped"
+      ]
+    },
+    "RunType": {
+      "type": "string",
+      "description": "Task run type.",
+      "enum": [
+        "reindex",
+        "update",
+        "discover",
+        "validate",
+        "push"
+      ]
+    },
+    "failureThreshold": {
+      "type": "integer",
+      "minimum": 0,
+      "maximum": 100,
+      "description": "Maximum accepted percentage of failures for a task run to finish successfully."
+    },
+    "finishedAt": {
+      "type": "string",
+      "description": "Date and time when the task finished, in RFC 3339 format."
+    },
+    "startedAt": {
+      "type": "string",
+      "description": "Date and time when the task started, in RFC 3339 format."
+    },
+    "taskID": {
+      "type": "string",
+      "description": "Universally unique identifier (UUID) of a task."
+    }
+  }
+}

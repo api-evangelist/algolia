@@ -2,7 +2,7 @@ specification: API Commons Error Catalog
 specificationVersion: '0.1'
 provider: Algolia
 providerId: algolia
-generated: '2026-08-27'
+generated: '2026-09-23'
 method: derived
 source: Derived from the 4xx/5xx responses declared across the 15 first-party Algolia OpenAPI documents in openapi/, harvested
   verbatim from https://github.com/algolia/api-clients-automation/tree/main/specs/bundled and archived at openapi/_original/.
@@ -42,9 +42,8 @@ observed_live:
 - url: https://mcp.algolia.com/mcp
   http_status: 401
   body: '{"status":401,"detail":"Unauthorized: Missing or invalid Authorization header","code":"UNAUTHORIZED","instance":"/mcp"}'
-status_codes:
-- code: 400
-  title: Bad request
+problems:
+- title: Bad request
   occurrences: 273
   media_types:
   - text/html
@@ -52,8 +51,8 @@ status_codes:
   common_description: Bad Request.
   remediation: Validate the request body and query parameters against the operation schema before retrying; the message names
     the offending field.
-- code: 401
-  title: Unauthorized
+  status: 400
+- title: Unauthorized
   occurrences: 36
   media_types:
   - application/json
@@ -62,16 +61,16 @@ status_codes:
   common_description: Unauthorized
   remediation: Send x-algolia-application-id and x-algolia-api-key (or HTTP Basic for the Crawler API). Do not retry without
     new credentials.
-- code: 402
-  title: Payment required
+  status: 401
+- title: Payment required
   occurrences: 176
   media_types:
   - application/json
   schemas: []
   common_description: null
   remediation: null
-- code: 403
-  title: Forbidden - API key lacks the required ACL
+  status: 402
+- title: Forbidden - API key lacks the required ACL
   occurrences: 193
   media_types:
   - application/json
@@ -79,8 +78,8 @@ status_codes:
   common_description: Invalid credentials.
   remediation: The API key lacks the required ACL for this operation. Grant the ACL on the key rather than retrying - see
     https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions.
-- code: 404
-  title: Not found
+  status: 403
+- title: Not found
   occurrences: 181
   media_types:
   - application/json
@@ -89,8 +88,8 @@ status_codes:
   common_description: Not found.
   remediation: The index, object, task or resource does not exist. Indexing is asynchronous, so a resource created moments
     ago may not be readable yet - poll waitTask before reading.
-- code: 405
-  title: Method not allowed
+  status: 404
+- title: Method not allowed
   occurrences: 1
   media_types:
   - application/json
@@ -98,16 +97,16 @@ status_codes:
   - EventsResponse
   common_description: Method Not Allowed.
   remediation: Check the HTTP method against the operation; several Algolia paths accept POST only.
-- code: 409
-  title: Error
+  status: 405
+- title: Error
   occurrences: 1
   media_types:
   - application/json
   schemas: []
   common_description: null
   remediation: null
-- code: 413
-  title: Error
+  status: 409
+- title: Error
   occurrences: 1
   media_types:
   - application/json
@@ -115,16 +114,16 @@ status_codes:
   - EventsResponse
   common_description: Payload Too Large.
   remediation: null
-- code: 421
-  title: Error
+  status: 413
+- title: Error
   occurrences: 2
   media_types:
   - application/json
   schemas: []
   common_description: null
   remediation: null
-- code: 422
-  title: Unprocessable entity
+  status: 421
+- title: Unprocessable entity
   occurrences: 47
   media_types:
   - application/json
@@ -133,8 +132,8 @@ status_codes:
   - HTTPValidationError
   common_description: Validation Error.
   remediation: The request was well-formed but semantically rejected; read message for the specific constraint.
-- code: 429
-  title: Too many requests
+  status: 422
+- title: Too many requests
   occurrences: 1
   media_types:
   - application/json
@@ -144,14 +143,15 @@ status_codes:
     headers of the response.
   remediation: Back off and retry. Algolia throttles at 100 pending requests per application; Ingestion push endpoints throttle
     at 2,000 calls/minute/IP and runTask at 10 calls per 10 minutes per taskID.
-- code: 500
-  title: Internal server error
+  status: 429
+- title: Internal server error
   occurrences: 10
   media_types:
   - application/json
   schemas: []
   common_description: null
   remediation: Retry with exponential backoff against the next host in the retry strategy (algolia.net, then -1/-2/-3.algolianet.com).
+  status: 500
 domain_error_codes:
   published: true
   url: https://www.algolia.com/doc/guides/personalization/advanced-personalization/monitor/in-depth/error-codes

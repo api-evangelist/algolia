@@ -2,7 +2,7 @@ specification: API Commons Lifecycle
 specificationVersion: '0.1'
 provider: Algolia
 providerId: algolia
-generated: '2026-08-27'
+generated: '2026-09-23'
 method: searched
 source: https://www.algolia.com/doc/api-reference/
 sources:
@@ -17,7 +17,7 @@ versioning:
   quote: The current version of the Search API is version 1, indicated by the /1/ in each endpoint's URL.
   note: 'Version lives in the path, not in a header or a media type. Per-product exceptions: A/B Testing runs /2/ (deprecated)
     and /3/ side by side, and Analytics added v3 pattern endpoints in the 2026-08-18 release while keeping the v2 surface.'
-deprecation_policy:
+deprecation:
   published_policy_page: null
   mechanism: in-contract
   note: Algolia does not publish a standalone deprecation-policy page. What it does instead is mark operations deprecated:true
@@ -29,7 +29,7 @@ deprecation_policy:
   rfc8594: false
   rfc8594_note: No Sunset or Deprecation response header is declared in any of the 15 OpenAPI documents, and none was observed
     on a live response.
-deprecated_operations:
+deprecated_operations_summary:
   count: 25
   source: 'deprecated: true flags read from the first-party OpenAPI documents in openapi/'
   clusters:
@@ -54,132 +54,132 @@ deprecated_operations:
     spec: algolia-advanced-personalization-api-openapi.yml
     count: 1
     successor: null
-  operations:
-  - spec: algolia-abtesting-api-openapi.yml
-    operationId: addABTests
-    method: POST
-    path: /2/abtests
-    summary: Create an A/B test
-  - spec: algolia-abtesting-api-openapi.yml
-    operationId: listABTests
-    method: GET
-    path: /2/abtests
-    summary: List all A/B tests
-  - spec: algolia-abtesting-api-openapi.yml
-    operationId: getABTest
-    method: GET
-    path: /2/abtests/{id}
-    summary: Retrieve A/B test details
-  - spec: algolia-abtesting-api-openapi.yml
-    operationId: deleteABTest
-    method: DELETE
-    path: /2/abtests/{id}
-    summary: Delete an A/B test
-  - spec: algolia-abtesting-api-openapi.yml
-    operationId: stopABTest
-    method: POST
-    path: /2/abtests/{id}/stop
-    summary: Stop an A/B test
-  - spec: algolia-abtesting-api-openapi.yml
-    operationId: estimateABTest
-    method: POST
-    path: /2/abtests/estimate
-    summary: Estimate the sample size and duration of an A/B test
-  - spec: algolia-advanced-personalization-api-openapi.yml
-    operationId: computeRealtimeUser
-    method: POST
-    path: /2/realtime/users/{userToken}/compute
-    summary: Compute the real-time user's personalization profile
-  - spec: algolia-ingestion-api-openapi.yml
-    operationId: listTasksV1
-    method: GET
-    path: /1/tasks
-    summary: List tasks V1
-  - spec: algolia-ingestion-api-openapi.yml
-    operationId: createTaskV1
-    method: POST
-    path: /1/tasks
-    summary: Create a task V1
-  - spec: algolia-ingestion-api-openapi.yml
-    operationId: searchTasksV1
-    method: POST
-    path: /1/tasks/search
-    summary: Search for tasks V1
-  - spec: algolia-ingestion-api-openapi.yml
-    operationId: getTaskV1
-    method: GET
-    path: /1/tasks/{taskID}
-    summary: Retrieve a task V1
-  - spec: algolia-ingestion-api-openapi.yml
-    operationId: updateTaskV1
-    method: PATCH
-    path: /1/tasks/{taskID}
-    summary: Update a task V1
-  - spec: algolia-ingestion-api-openapi.yml
-    operationId: deleteTaskV1
-    method: DELETE
-    path: /1/tasks/{taskID}
-    summary: Delete a task
-  - spec: algolia-ingestion-api-openapi.yml
-    operationId: runTaskV1
-    method: POST
-    path: /1/tasks/{taskID}/run
-    summary: Run a task V1
-  - spec: algolia-ingestion-api-openapi.yml
-    operationId: enableTaskV1
-    method: PUT
-    path: /1/tasks/{taskID}/enable
-    summary: Enable a task V1
-  - spec: algolia-ingestion-api-openapi.yml
-    operationId: disableTaskV1
-    method: PUT
-    path: /1/tasks/{taskID}/disable
-    summary: Disable a task V1
-  - spec: algolia-search-api-openapi.yml
-    operationId: assignUserId
-    method: POST
-    path: /1/clusters/mapping
-    summary: Assign or move a user ID
-  - spec: algolia-search-api-openapi.yml
-    operationId: listUserIds
-    method: GET
-    path: /1/clusters/mapping
-    summary: List user IDs
-  - spec: algolia-search-api-openapi.yml
-    operationId: batchAssignUserIds
-    method: POST
-    path: /1/clusters/mapping/batch
-    summary: Assign multiple userIDs
-  - spec: algolia-search-api-openapi.yml
-    operationId: getTopUserIds
-    method: GET
-    path: /1/clusters/mapping/top
-    summary: Get top user IDs
-  - spec: algolia-search-api-openapi.yml
-    operationId: getUserId
-    method: GET
-    path: /1/clusters/mapping/{userID}
-    summary: Retrieve user ID
-  - spec: algolia-search-api-openapi.yml
-    operationId: removeUserId
-    method: DELETE
-    path: /1/clusters/mapping/{userID}
-    summary: Delete user ID
-  - spec: algolia-search-api-openapi.yml
-    operationId: listClusters
-    method: GET
-    path: /1/clusters
-    summary: List clusters
-  - spec: algolia-search-api-openapi.yml
-    operationId: searchUserIds
-    method: POST
-    path: /1/clusters/mapping/search
-    summary: Search for user IDs
-  - spec: algolia-search-api-openapi.yml
-    operationId: hasPendingMappings
-    method: GET
-    path: /1/clusters/mapping/pending
-    summary: Get migration and user mapping status
+deprecated_operations:
+- spec: algolia-abtesting-api-openapi.yml
+  operationId: addABTests
+  method: POST
+  path: /2/abtests
+  summary: Create an A/B test
+- spec: algolia-abtesting-api-openapi.yml
+  operationId: listABTests
+  method: GET
+  path: /2/abtests
+  summary: List all A/B tests
+- spec: algolia-abtesting-api-openapi.yml
+  operationId: getABTest
+  method: GET
+  path: /2/abtests/{id}
+  summary: Retrieve A/B test details
+- spec: algolia-abtesting-api-openapi.yml
+  operationId: deleteABTest
+  method: DELETE
+  path: /2/abtests/{id}
+  summary: Delete an A/B test
+- spec: algolia-abtesting-api-openapi.yml
+  operationId: stopABTest
+  method: POST
+  path: /2/abtests/{id}/stop
+  summary: Stop an A/B test
+- spec: algolia-abtesting-api-openapi.yml
+  operationId: estimateABTest
+  method: POST
+  path: /2/abtests/estimate
+  summary: Estimate the sample size and duration of an A/B test
+- spec: algolia-advanced-personalization-api-openapi.yml
+  operationId: computeRealtimeUser
+  method: POST
+  path: /2/realtime/users/{userToken}/compute
+  summary: Compute the real-time user's personalization profile
+- spec: algolia-ingestion-api-openapi.yml
+  operationId: listTasksV1
+  method: GET
+  path: /1/tasks
+  summary: List tasks V1
+- spec: algolia-ingestion-api-openapi.yml
+  operationId: createTaskV1
+  method: POST
+  path: /1/tasks
+  summary: Create a task V1
+- spec: algolia-ingestion-api-openapi.yml
+  operationId: searchTasksV1
+  method: POST
+  path: /1/tasks/search
+  summary: Search for tasks V1
+- spec: algolia-ingestion-api-openapi.yml
+  operationId: getTaskV1
+  method: GET
+  path: /1/tasks/{taskID}
+  summary: Retrieve a task V1
+- spec: algolia-ingestion-api-openapi.yml
+  operationId: updateTaskV1
+  method: PATCH
+  path: /1/tasks/{taskID}
+  summary: Update a task V1
+- spec: algolia-ingestion-api-openapi.yml
+  operationId: deleteTaskV1
+  method: DELETE
+  path: /1/tasks/{taskID}
+  summary: Delete a task
+- spec: algolia-ingestion-api-openapi.yml
+  operationId: runTaskV1
+  method: POST
+  path: /1/tasks/{taskID}/run
+  summary: Run a task V1
+- spec: algolia-ingestion-api-openapi.yml
+  operationId: enableTaskV1
+  method: PUT
+  path: /1/tasks/{taskID}/enable
+  summary: Enable a task V1
+- spec: algolia-ingestion-api-openapi.yml
+  operationId: disableTaskV1
+  method: PUT
+  path: /1/tasks/{taskID}/disable
+  summary: Disable a task V1
+- spec: algolia-search-api-openapi.yml
+  operationId: assignUserId
+  method: POST
+  path: /1/clusters/mapping
+  summary: Assign or move a user ID
+- spec: algolia-search-api-openapi.yml
+  operationId: listUserIds
+  method: GET
+  path: /1/clusters/mapping
+  summary: List user IDs
+- spec: algolia-search-api-openapi.yml
+  operationId: batchAssignUserIds
+  method: POST
+  path: /1/clusters/mapping/batch
+  summary: Assign multiple userIDs
+- spec: algolia-search-api-openapi.yml
+  operationId: getTopUserIds
+  method: GET
+  path: /1/clusters/mapping/top
+  summary: Get top user IDs
+- spec: algolia-search-api-openapi.yml
+  operationId: getUserId
+  method: GET
+  path: /1/clusters/mapping/{userID}
+  summary: Retrieve user ID
+- spec: algolia-search-api-openapi.yml
+  operationId: removeUserId
+  method: DELETE
+  path: /1/clusters/mapping/{userID}
+  summary: Delete user ID
+- spec: algolia-search-api-openapi.yml
+  operationId: listClusters
+  method: GET
+  path: /1/clusters
+  summary: List clusters
+- spec: algolia-search-api-openapi.yml
+  operationId: searchUserIds
+  method: POST
+  path: /1/clusters/mapping/search
+  summary: Search for user IDs
+- spec: algolia-search-api-openapi.yml
+  operationId: hasPendingMappings
+  method: GET
+  path: /1/clusters/mapping/pending
+  summary: Get migration and user mapping status
 breaking_change_practice:
   note: Algolia flags breaking changes explicitly in its per-language client changelogs, with a note describing the migration.
     Two examples from the recent window.

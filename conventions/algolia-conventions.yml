@@ -2,274 +2,300 @@ specification: API Commons Conventions
 specificationVersion: '0.1'
 provider: Algolia
 providerId: algolia
-generated: '2026-08-27'
+generated: '2026-09-23'
 method: searched
 source: https://www.algolia.com/doc/api-reference/
 sources:
-  - https://www.algolia.com/doc/api-reference/
-  - https://github.com/algolia/api-clients-automation/tree/main/specs/bundled
-  - https://www.algolia.com/doc/guides/security/api-keys
-  - https://www.algolia.com/doc/guides/scaling/algolia-service-limits
-  - https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/in-depth/index-operations-are-asynchronous
-description: >-
-  Cross-cutting runtime semantics for the Algolia REST surface. Most of this is stated in the info.description of the
-  first-party OpenAPI documents (openapi/algolia-search-api-openapi.yml carries the fullest version) and the rest is
+- https://www.algolia.com/doc/api-reference/
+- https://github.com/algolia/api-clients-automation/tree/main/specs/bundled
+- https://www.algolia.com/doc/guides/security/api-keys
+- https://www.algolia.com/doc/guides/scaling/algolia-service-limits
+- https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/in-depth/index-operations-are-asynchronous
+description: Cross-cutting runtime semantics for the Algolia REST surface. Most of this is stated in the info.description
+  of the first-party OpenAPI documents (openapi/algolia-search-api-openapi.yml carries the fullest version) and the rest is
   derived from the specs themselves.
-
 authentication:
   style: api-key-headers
   headers:
-    - name: x-algolia-application-id
-      description: The Algolia application ID.
-    - name: x-algolia-api-key
-      description: An API key carrying the ACL the operation requires. The required ACL is listed per endpoint.
+  - name: x-algolia-application-id
+    description: The Algolia application ID.
+  - name: x-algolia-api-key
+    description: An API key carrying the ACL the operation requires. The required ACL is listed per endpoint.
   exceptions:
-    - api: Crawler API
-      style: http-basic
-      note: The Crawler API uses BasicAuth rather than the two Algolia headers.
-    - api: Productivity MCP
-      style: oauth2
-      note: OAuth authorization code + PKCE against dashboard.algolia.com. See scopes/algolia-scopes.yml.
+  - api: Crawler API
+    style: http-basic
+    note: The Crawler API uses BasicAuth rather than the two Algolia headers.
+  - api: Productivity MCP
+    style: oauth2
+    note: OAuth authorization code + PKCE against dashboard.algolia.com. See scopes/algolia-scopes.yml.
   scoped_keys:
     supported: true
     mechanism: Secured API keys - a search-only key signed with per-user filters, generated client-side.
     docs: https://www.algolia.com/doc/guides/security/api-keys/in-depth/api-key-restrictions
   detail: authentication/algolia-authentication.yml
-
 transport:
   https_required: true
-  quote: 'All requests must use HTTPS.'
+  quote: All requests must use HTTPS.
   retry_strategy:
     documented: true
     primary:
-      - 'https://{APPLICATION_ID}.algolia.net'
-      - 'https://{APPLICATION_ID}-dsn.algolia.net'
+    - https://{APPLICATION_ID}.algolia.net
+    - https://{APPLICATION_ID}-dsn.algolia.net
     fallbacks:
-      - 'https://{APPLICATION_ID}-1.algolianet.com'
-      - 'https://{APPLICATION_ID}-2.algolianet.com'
-      - 'https://{APPLICATION_ID}-3.algolianet.com'
-    note: >-
-      Fallback hosts deliberately use a DIFFERENT DNS provider than the primary hosts. Algolia instructs callers to
-      randomize the fallback list to spread load, and states that all official API clients already implement this.
-      An agent calling the REST API directly must implement it itself - this is the single most important convention
-      on the Algolia surface and it is invisible from servers[] alone.
-    dsn_note: '-dsn routes reads to the server closest to the user, when the subscription includes the Distributed Search Network.'
-
+    - https://{APPLICATION_ID}-1.algolianet.com
+    - https://{APPLICATION_ID}-2.algolianet.com
+    - https://{APPLICATION_ID}-3.algolianet.com
+    note: Fallback hosts deliberately use a DIFFERENT DNS provider than the primary hosts. Algolia instructs callers to randomize
+      the fallback list to spread load, and states that all official API clients already implement this. An agent calling
+      the REST API directly must implement it itself - this is the single most important convention on the Algolia surface
+      and it is invisible from servers[] alone.
+    dsn_note: -dsn routes reads to the server closest to the user, when the subscription includes the Distributed Search Network.
 request_format:
-  parameters: 'Query parameters for GET and DELETE; request body for POST and PUT.'
-  encoding: 'Query parameters must be URL-encoded; non-ASCII must be UTF-8. Plus characters (+) are interpreted as spaces.'
+  parameters: Query parameters for GET and DELETE; request body for POST and PUT.
+  encoding: Query parameters must be URL-encoded; non-ASCII must be UTF-8. Plus characters (+) are interpreted as spaces.
   arrays_in_query:
-    - 'comma-separated string: attributesToRetrieve=title,description'
-    - 'URL-encoded JSON array'
-  body: 'Either a JSON object or an array of JSON objects, depending on the endpoint.'
-
+  - 'comma-separated string: attributesToRetrieve=title,description'
+  - URL-encoded JSON array
+  body: Either a JSON object or an array of JSON objects, depending on the endpoint.
 response_format:
   media_type: application/json
-  ordering_warning: >-
-    Algolia states explicitly: "Since JSON doesn't guarantee any specific ordering, don't rely on the order of
-    attributes in the API response."
+  ordering_warning: 'Algolia states explicitly: "Since JSON doesn''t guarantee any specific ordering, don''t rely on the order
+    of attributes in the API response."'
   success: 2xx
   client_error: 4xx
   server_error: 5xx
   error_field: message
-
 error_envelope:
   format: vendor-json
   rfc9457: false
   shape: '{ "message": "...", "status": 404 }'
   detail: errors/algolia-problem-types.yml
-
 request_id_tracing:
   supported: true
   response_header: Correlation-ID
   request_header: Request-ID
   request_header_format: exactly 11 alphanumeric characters
-  behaviour: >-
-    Clusters that support it embed the caller-supplied Request-ID at the end of the Correlation-ID, so every attempt
+  behaviour: Clusters that support it embed the caller-supplied Request-ID at the end of the Correlation-ID, so every attempt
     of a retried operation can be found by searching for those 11 characters.
-  caveat: >-
-    Algolia warns "Don't use the Correlation-ID as a unique key: retried requests may receive the same identifier."
-    Headers not matching the expected format are silently ignored.
-  added: 'API client 5.57.0 (2026-08-18) added first-class Request-ID / Correlation-ID support.'
-
+  caveat: 'Algolia warns "Don''t use the Correlation-ID as a unique key: retried requests may receive the same identifier."
+    Headers not matching the expected format are silently ignored.'
+  added: API client 5.57.0 (2026-08-18) added first-class Request-ID / Correlation-ID support.
 idempotency:
+  coverage: partial
+  scope:
+  - 'saveObject / saveObjects: caller-supplied objectID makes single-record upserts safe to retry.'
+  - 'addOrUpdateObject: PUT by objectID converges on the same state on replay.'
+  - 'partialUpdateObject: additive field update against a known objectID.'
+  - 'setSettings: full overwrite against the named index.'
+  - 'saveRule / saveSynonym: addressed by rule/synonym objectID.'
+  - 'deleteObject / deleteIndex: naming a known resource, safe to replay against a missing target.'
   key_header: null
   supported: partial
-  note: >-
-    Algolia publishes NO idempotency-key header and none appears in any of the 15 OpenAPI documents. What it has
-    instead is key-addressed upsert semantics: saveObject/saveObjects, partialUpdateObject, setSettings, saveRule and
-    saveSynonym are all addressed by a caller-supplied identifier (objectID, indexName, objectID of the rule/synonym),
-    so replaying the same write converges on the same state. That makes single-object writes safe to retry.
-    It does NOT make batch writes safe to retry - `batch` and `multipleBatch` carry an action list including
-    addObject, which generates a NEW objectID on every call, so a retried batch containing addObject duplicates
-    records. An agent retrying a batch must use addOrUpdateObject/saveObject with an explicit objectID instead.
-  safe_to_retry: [saveObject, saveObjects, addOrUpdateObject, partialUpdateObject, setSettings, saveRule, saveSynonym, deleteObject, deleteIndex]
+  note: 'Algolia publishes NO idempotency-key header and none appears in any of the 15 OpenAPI documents. What it has instead
+    is key-addressed upsert semantics: saveObject/saveObjects, partialUpdateObject, setSettings, saveRule and saveSynonym
+    are all addressed by a caller-supplied identifier (objectID, indexName, objectID of the rule/synonym), so replaying the
+    same write converges on the same state. That makes single-object writes safe to retry. It does NOT make batch writes safe
+    to retry - `batch` and `multipleBatch` carry an action list including addObject, which generates a NEW objectID on every
+    call, so a retried batch containing addObject duplicates records. An agent retrying a batch must use addOrUpdateObject/saveObject
+    with an explicit objectID instead.'
+  safe_to_retry:
+  - saveObject
+  - saveObjects
+  - addOrUpdateObject
+  - partialUpdateObject
+  - setSettings
+  - saveRule
+  - saveSynonym
+  - deleteObject
+  - deleteIndex
   unsafe_to_retry:
-    - operation: batch
-      reason: The addObject action mints a new objectID per call.
-    - operation: multipleBatch
-      reason: Same as batch, across multiple indices.
-
+  - operation: batch
+    reason: The addObject action mints a new objectID per call.
+  - operation: multipleBatch
+    reason: Same as batch, across multiple indices.
 write_semantics:
   asynchronous: true
-  mechanism: >-
-    Every indexing operation returns a taskID and enqueues a job. The METHOD returning 200 does not mean the write is
-    visible. Callers poll waitTask/getTask (or waitForAppTask/getAppTask for application-scoped work) before reading back.
-  operations: [getTask, waitForTask, getAppTask, waitForAppTask, getRecommendStatus, getStatus]
+  mechanism: Every indexing operation returns a taskID and enqueues a job. The METHOD returning 200 does not mean the write
+    is visible. Callers poll waitTask/getTask (or waitForAppTask/getAppTask for application-scoped work) before reading back.
+  operations:
+  - getTask
+  - waitForTask
+  - getAppTask
+  - waitForAppTask
+  - getRecommendStatus
+  - getStatus
   docs: https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/in-depth/index-operations-are-asynchronous
-  agent_note: >-
-    This is the second-most important convention after the retry strategy. An agent that writes then immediately reads
-    will see stale data and conclude the write failed.
-
+  agent_note: This is the second-most important convention after the retry strategy. An agent that writes then immediately
+    reads will see stale data and conclude the write failed.
 pagination:
   styles:
-    - name: page-number
-      params: [page, hitsPerPage]
-      response_fields: [page, nbPages, nbHits, hitsPerPage]
-      used_by: [search, searchSingleIndex, getTopSearches, getTopHits, searchRules, searchSynonyms]
-      limit: 20,000 hits reachable through pagination (documented service limit).
-    - name: offset-length
-      params: [offset, length]
-      used_by: [search (alternative to page/hitsPerPage), getLogs]
-    - name: cursor
-      params: [cursor]
-      response_fields: [cursor]
-      used_by: [browse, browseObjects, searchDictionaryEntries]
-      note: The only style that walks a full index without the 20,000-hit ceiling.
-    - name: page-itemsPerPage
-      params: [page, itemsPerPage]
-      used_by: [ingestion listing operations]
+  - name: page-number
+    params:
+    - page
+    - hitsPerPage
+    response_fields:
+    - page
+    - nbPages
+    - nbHits
+    - hitsPerPage
+    used_by:
+    - search
+    - searchSingleIndex
+    - getTopSearches
+    - getTopHits
+    - searchRules
+    - searchSynonyms
+    limit: 20,000 hits reachable through pagination (documented service limit).
+  - name: offset-length
+    params:
+    - offset
+    - length
+    used_by:
+    - search (alternative to page/hitsPerPage)
+    - getLogs
+  - name: cursor
+    params:
+    - cursor
+    response_fields:
+    - cursor
+    used_by:
+    - browse
+    - browseObjects
+    - searchDictionaryEntries
+    note: The only style that walks a full index without the 20,000-hit ceiling.
+  - name: page-itemsPerPage
+    params:
+    - page
+    - itemsPerPage
+    used_by:
+    - ingestion listing operations
   note: Four distinct pagination styles across the estate; the correct one depends on which product API is being called.
-
 field_selection:
   supported: true
   mechanism: attributesToRetrieve (search/browse) and attributesToHighlight/attributesToSnippet for rendering.
   note: Algolia's own Agent Skill recommends attributesToRetrieve to limit response size for agents.
-
 metadata:
   user_defined_fields: true
-  note: >-
-    Records are free-form JSON, so arbitrary caller metadata is stored and searchable. Record size is capped at
-    10 KB (Free) to 100 KB by plan, and objectID at 200 characters.
-
+  note: Records are free-form JSON, so arbitrary caller metadata is stored and searchable. Record size is capped at 10 KB
+    (Free) to 100 KB by plan, and objectID at 200 characters.
 rate_limit_signaling:
-  headers: [x-ratelimit-limit, x-ratelimit-remaining, x-ratelimit-reset]
+  headers:
+  - x-ratelimit-limit
+  - x-ratelimit-remaining
+  - x-ratelimit-reset
   declared_in:
-    - openapi/algolia-analytics-api-openapi.yml
-    - openapi/algolia-abtesting-api-openapi.yml
-    - openapi/algolia-abtesting-v3-api-openapi.yml
-    - openapi/algolia-insights-api-openapi.yml
-    - openapi/algolia-personalization-api-openapi.yml
-    - openapi/algolia-advanced-personalization-api-openapi.yml
-  not_declared_in: [search, recommend, ingestion, crawler, query-suggestions, monitoring, composition, agent-studio]
+  - openapi/algolia-analytics-api-openapi.yml
+  - openapi/algolia-abtesting-api-openapi.yml
+  - openapi/algolia-abtesting-v3-api-openapi.yml
+  - openapi/algolia-insights-api-openapi.yml
+  - openapi/algolia-personalization-api-openapi.yml
+  - openapi/algolia-advanced-personalization-api-openapi.yml
+  not_declared_in:
+  - search
+  - recommend
+  - ingestion
+  - crawler
+  - query-suggestions
+  - monitoring
+  - composition
+  - agent-studio
   exhaustion_status: 429
-  note: >-
-    An important asymmetry: the ANALYTICS-family APIs return machine-readable rate-limit headers, the SEARCH-family
-    APIs do not. An agent driving indexing has no runtime budget signal and must fall back to the documented
-    throttling limit of 100 pending requests per application.
+  note: 'An important asymmetry: the ANALYTICS-family APIs return machine-readable rate-limit headers, the SEARCH-family APIs
+    do not. An agent driving indexing has no runtime budget signal and must fall back to the documented throttling limit of
+    100 pending requests per application.'
   detail: rate-limits/algolia-rate-limits.yml
-
 versioning:
   scheme: url-path
-  current: '/1/'
-  quote: 'The current version of the Search API is version 1, indicated by the /1/ in each endpoint''s URL.'
+  current: /1/
+  quote: The current version of the Search API is version 1, indicated by the /1/ in each endpoint's URL.
   exceptions:
-    - api: A/B Testing
-      note: >-
-        The only product with two live spec versions in the repository - abtesting (2.0.0, 6 deprecated operations)
-        and abtesting-v3 (3.0.0, none deprecated). Both ship in the same monorepo release train.
-    - api: Analytics
-      note: Analytics v3 pattern endpoints were added in the 5.57.0 release (2026-08-18) alongside the v2 surface.
+  - api: A/B Testing
+    note: The only product with two live spec versions in the repository - abtesting (2.0.0, 6 deprecated operations) and
+      abtesting-v3 (3.0.0, none deprecated). Both ship in the same monorepo release train.
+  - api: Analytics
+    note: Analytics v3 pattern endpoints were added in the 5.57.0 release (2026-08-18) alongside the v2 surface.
   detail: lifecycle/algolia-lifecycle.yml
-
 dry_run_mode:
   supported: partial
-  note: >-
-    Not an estate-wide capability, but Algolia does publish REAL rehearsal operations on the surfaces where a
-    mistake is most expensive - the Ingestion connectors. These let an agent test a transformation or a source
-    connection, INCLUDING the pending version of an already-saved one, before committing it.
+  note: Not an estate-wide capability, but Algolia does publish REAL rehearsal operations on the surfaces where a mistake
+    is most expensive - the Ingestion connectors. These let an agent test a transformation or a source connection, INCLUDING
+    the pending version of an already-saved one, before committing it.
   operations:
-    - operationId: tryTransformation
-      spec: openapi/algolia-ingestion-api-openapi.yml
-      description: Execute a transformation against sample input without saving it.
-    - operationId: tryTransformationBeforeUpdate
-      spec: openapi/algolia-ingestion-api-openapi.yml
-      description: Execute the PROPOSED version of an existing transformation without persisting the change.
-    - operationId: validateSource
-      spec: openapi/algolia-ingestion-api-openapi.yml
-      description: Validate a source configuration without creating it.
-    - operationId: validateSourceBeforeUpdate
-      spec: openapi/algolia-ingestion-api-openapi.yml
-      description: Validate a proposed update to an existing source without persisting it.
-    - operationId: estimateABTest
-      spec: openapi/algolia-abtesting-v3-api-openapi.yml
-      description: Estimate sample size and duration for an A/B test before starting it.
-    - operationId: indexExists
-      spec: openapi/algolia-search-api-openapi.yml
-      description: 'Not a dry run, but the cheapest pre-flight check on the Search API: confirm an index exists before writing to it.'
+  - operationId: tryTransformation
+    spec: openapi/algolia-ingestion-api-openapi.yml
+    description: Execute a transformation against sample input without saving it.
+  - operationId: tryTransformationBeforeUpdate
+    spec: openapi/algolia-ingestion-api-openapi.yml
+    description: Execute the PROPOSED version of an existing transformation without persisting the change.
+  - operationId: validateSource
+    spec: openapi/algolia-ingestion-api-openapi.yml
+    description: Validate a source configuration without creating it.
+  - operationId: validateSourceBeforeUpdate
+    spec: openapi/algolia-ingestion-api-openapi.yml
+    description: Validate a proposed update to an existing source without persisting it.
+  - operationId: estimateABTest
+    spec: openapi/algolia-abtesting-v3-api-openapi.yml
+    description: Estimate sample size and duration for an A/B test before starting it.
+  - operationId: indexExists
+    spec: openapi/algolia-search-api-openapi.yml
+    description: 'Not a dry run, but the cheapest pre-flight check on the Search API: confirm an index exists before writing
+      to it.'
   absent_from:
-    - Search write operations (saveObject, batch, setSettings, deleteIndex) have no preview or validate mode.
-    - Recommend, Query Suggestions, Composition and Agent Studio publish no rehearsal operation.
-  agent_note: >-
-    The asymmetry matters. An agent can rehearse a connector change safely and cannot rehearse an index deletion
+  - Search write operations (saveObject, batch, setSettings, deleteIndex) have no preview or validate mode.
+  - Recommend, Query Suggestions, Composition and Agent Studio publish no rehearsal operation.
+  agent_note: The asymmetry matters. An agent can rehearse a connector change safely and cannot rehearse an index deletion
     at all - and index deletion is the one operation on this API that is genuinely unrecoverable.
   cli: 'The Algolia CLI documents dry runs for scripted and agent workflows: https://www.algolia.com/doc/tools/cli/automation'
-
 reversibility:
   grade: verified
-  summary: >-
-    Algolia has a genuinely mixed reversibility posture, and the difference matters enormously to an agent.
-    API keys have a real, documented, bounded restore path. Index and record deletion does NOT - it is
-    unrecoverable through the API, and Algolia says so in a warning on its own delete-indices page.
+  summary: Algolia has a genuinely mixed reversibility posture, and the difference matters enormously to an agent. API keys
+    have a real, documented, bounded restore path. Index and record deletion does NOT - it is unrecoverable through the API,
+    and Algolia says so in a warning on its own delete-indices page.
   surfaces:
-    - write_operation: deleteApiKey
-      reversal_operation: restoreApiKey
-      reversible: true
-      window: 'The last 1,000 deleted keys per application.'
-      window_type: count-bounded
-      graded: verified
-      side_effect: >-
-        Restoring a deleted key resets its validity limit to 0 (unlimited) - the restored key does NOT come back with
-        its original expiry.
-      docs: https://www.algolia.com/doc/guides/security/api-keys/how-to/how-to-restore-an-api-key
-      quote: 'You can restore either deleted or expired keys, but Algolia only keeps the last 1,000 deleted keys.'
-    - write_operation: deleteIndex
-      reversal_operation: null
-      reversible: false
-      window: null
-      graded: not-reversible
-      mitigation: >-
-        Export the index first (export-import-indices). Algolia's own warning: "If you delete an index by mistake,
-        the Algolia support team might be able to restore it, but recovery isn't guaranteed." That is a support
-        escalation on an Enterprise add-on, not an API affordance, and no window is stated.
-      docs: https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/delete-indices
-      retained_after_delete: Analytics data associated with the index is retained; records, rules, settings and synonyms are not.
-    - write_operation: deleteObject / deleteObjects / deleteBy / clearObjects
-      reversal_operation: null
-      reversible: false
-      window: null
-      graded: not-reversible
-      mitigation: Re-index the records from the source of truth, or restore from an export.
-    - write_operation: setSettings
-      reversal_operation: setSettings
-      reversible: true
-      window: 'No time limit, but the previous settings are not stored - the caller must have captured getSettings first.'
-      window_type: caller-managed
-      graded: documented
-      note: >-
-        Settings are fully overwritten by the caller, so reversal means writing the old body back. Algolia's own
-        index-configuration Agent Skill treats capturing getSettings before a change as the rollback plan.
-    - write_operation: replaceAllObjects / operationIndex (copy/move)
-      reversal_operation: operationIndex (move the backup index back)
-      reversible: true
-      window: 'For as long as the temporary/backup index is retained by the caller.'
-      window_type: caller-managed
-      graded: documented
-      note: >-
-        Atomic reindexing populates a temporary index and moves it over the destination. Keeping the displaced index
-        rather than deleting it is what makes the operation reversible; Algolia does not retain it automatically.
+  - write_operation: deleteApiKey
+    reversal_operation: restoreApiKey
+    reversible: true
+    window: The last 1,000 deleted keys per application.
+    window_type: count-bounded
+    graded: verified
+    side_effect: Restoring a deleted key resets its validity limit to 0 (unlimited) - the restored key does NOT come back
+      with its original expiry.
+    docs: https://www.algolia.com/doc/guides/security/api-keys/how-to/how-to-restore-an-api-key
+    quote: You can restore either deleted or expired keys, but Algolia only keeps the last 1,000 deleted keys.
+  - write_operation: deleteIndex
+    reversal_operation: null
+    reversible: false
+    window: null
+    graded: not-reversible
+    mitigation: 'Export the index first (export-import-indices). Algolia''s own warning: "If you delete an index by mistake,
+      the Algolia support team might be able to restore it, but recovery isn''t guaranteed." That is a support escalation
+      on an Enterprise add-on, not an API affordance, and no window is stated.'
+    docs: https://www.algolia.com/doc/guides/sending-and-managing-data/manage-indices-and-apps/manage-indices/how-to/delete-indices
+    retained_after_delete: Analytics data associated with the index is retained; records, rules, settings and synonyms are
+      not.
+  - write_operation: deleteObject / deleteObjects / deleteBy / clearObjects
+    reversal_operation: null
+    reversible: false
+    window: null
+    graded: not-reversible
+    mitigation: Re-index the records from the source of truth, or restore from an export.
+  - write_operation: setSettings
+    reversal_operation: setSettings
+    reversible: true
+    window: No time limit, but the previous settings are not stored - the caller must have captured getSettings first.
+    window_type: caller-managed
+    graded: documented
+    note: Settings are fully overwritten by the caller, so reversal means writing the old body back. Algolia's own index-configuration
+      Agent Skill treats capturing getSettings before a change as the rollback plan.
+  - write_operation: replaceAllObjects / operationIndex (copy/move)
+    reversal_operation: operationIndex (move the backup index back)
+    reversible: true
+    window: For as long as the temporary/backup index is retained by the caller.
+    window_type: caller-managed
+    graded: documented
+    note: Atomic reindexing populates a temporary index and moves it over the destination. Keeping the displaced index rather
+      than deleting it is what makes the operation reversible; Algolia does not retain it automatically.
   na_reason: null
-
 cross_links:
   errors: errors/algolia-problem-types.yml
   lifecycle: lifecycle/algolia-lifecycle.yml

@@ -1,0 +1,91 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-crawler-config-versions-response-schema.json",
+  "title": "crawlerConfigVersionsResponse",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-crawler-api-openapi.yml#/components/schemas/crawlerConfigVersionsResponse",
+  "allOf": [
+    {
+      "$ref": "#/$defs/Pagination"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "description": "Configuration changes.",
+          "items": {
+            "title": "crawlerConfigVersionsResponse",
+            "type": "object",
+            "properties": {
+              "version": {
+                "$ref": "#/$defs/version"
+              },
+              "createdAt": {
+                "$ref": "#/$defs/createdAt"
+              },
+              "authorId": {
+                "$ref": "#/$defs/authorId"
+              }
+            },
+            "required": [
+              "version",
+              "createdAt",
+              "authorId"
+            ]
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "Pagination": {
+      "type": "object",
+      "description": "Pagination information.",
+      "properties": {
+        "itemsPerPage": {
+          "$ref": "#/$defs/itemsPerPage"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        },
+        "total": {
+          "$ref": "#/$defs/total"
+        }
+      }
+    },
+    "authorId": {
+      "type": "string",
+      "description": "Universally unique identifier (UUID) of the user who created this version of the configuration."
+    },
+    "createdAt": {
+      "type": "string",
+      "description": "Date and time when the object was created, in RFC 3339 format."
+    },
+    "itemsPerPage": {
+      "type": "integer",
+      "description": "Number of items per page of the paginated API response.",
+      "minimum": 1,
+      "maximum": 100,
+      "default": 20
+    },
+    "page": {
+      "type": "integer",
+      "description": "Current page of the paginated API response.",
+      "minimum": 1,
+      "maximum": 100,
+      "default": 1
+    },
+    "total": {
+      "type": "integer",
+      "description": "Total number of retrievable items."
+    },
+    "version": {
+      "type": "integer",
+      "description": "Version of the configuration. Version 1 is the initial configuration you used when creating the crawler.",
+      "minimum": 1
+    }
+  }
+}

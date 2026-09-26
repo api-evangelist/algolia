@@ -1,0 +1,35 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-click-positions-schema.json",
+  "title": "clickPositions",
+  "description": "List of positions in the search results and clicks associated with this search.",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-analytics-api-openapi.yml#/components/schemas/clickPositions",
+  "type": "array",
+  "minItems": 12,
+  "maxItems": 12,
+  "items": {
+    "title": "clickPosition",
+    "type": "object",
+    "description": "Click position.",
+    "properties": {
+      "position": {
+        "type": "array",
+        "description": "Range of positions in the search results, using the pattern `[start,end]`.\n\nFor positions 11 and up, click events are summed over the specified range.\n`-1` indicates the end of the list of search results.\n",
+        "minItems": 2,
+        "maxItems": 2,
+        "items": {
+          "type": "integer"
+        }
+      },
+      "clickCount": {
+        "type": "integer",
+        "description": "Number of times this search has been clicked at that position.",
+        "minimum": 0,
+        "default": 0
+      }
+    }
+  }
+}

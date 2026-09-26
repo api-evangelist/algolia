@@ -515,48 +515,124 @@ paths:
           description: No content.
 components:
   schemas:
-    EstimateABTestResponse:
+    metricDate:
       type: object
       properties:
-        durationDays:
-          type: integer
-          format: int64
-          description: Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
-          example: 21
-        sampleSizes:
-          type: array
-          description: 'Sample size estimates for each variant. The first element is the control variant.
-
-            Each element is the estimated number of searches required to achieve the desired statistical significance.
-
-            '
-          items:
-            type: integer
-            format: int64
-            description: Number of tracked searches needed to be able to detect the configured effect for the control variant.
-            example: 23415
-    customSearchParams:
-      type: object
-      description: 'Search parameters to add to the test variant.
-
-        Only use this parameter if the two variants use the same index.
-
-        '
-      example:
-        typoTolerance: false
-        synonyms: false
-      additionalProperties: false
-      properties:
-        customSearchParameters:
-          type: object
-      required:
-      - customSearchParameters
-      x-discriminator-fields:
-      - customSearchParameters
+        date:
+          type: string
+          description: Date where the metric was updated, in RFC 3339 format.
+          example: '2025-06-15'
+        metrics:
+          $ref: '#/components/schemas/metrics'
     metricDates:
       type: array
       items:
         $ref: '#/components/schemas/metricDate'
+    ABTest:
+      type: object
+      additionalProperties: false
+      properties:
+        abTestID:
+          $ref: '#/components/schemas/abTestID'
+        updatedAt:
+          $ref: '#/components/schemas/updatedAt'
+        createdAt:
+          $ref: '#/components/schemas/createdAt'
+        endAt:
+          $ref: '#/components/schemas/endAt'
+        stoppedAt:
+          $ref: '#/components/schemas/stoppedAt'
+        name:
+          $ref: '#/components/schemas/name'
+        status:
+          $ref: '#/components/schemas/Status'
+        variants:
+          $ref: '#/components/schemas/variants'
+        configuration:
+          $ref: '#/components/schemas/ABTestConfiguration'
+        decision:
+          $ref: '#/components/schemas/Decision'
+      required:
+      - status
+      - name
+      - createdAt
+      - endAt
+      - updatedAt
+      - abTestID
+      - variants
+    updatedAt:
+      type: string
+      description: Date and time when the A/B test was last updated, in RFC 3339 format.
+      example: '2023-06-15T15:06:44.400601Z'
+    EffectMetric:
+      type: string
+      description: Metric for which you want to detect the smallest relative difference.
+      enum:
+      - addToCartRate
+      - clickThroughRate
+      - conversionRate
+      - purchaseRate
+      - noResultsRate
+    Timeseries:
+      type: object
+      additionalProperties: false
+      properties:
+        abTestID:
+          $ref: '#/components/schemas/abTestID'
+        variants:
+          $ref: '#/components/schemas/timeseriesVariants'
+      required:
+      - abTestID
+      - variants
+    taskID:
+      type: integer
+      format: int64
+      example: 1514562690001
+      description: 'Unique identifier of a task.
+
+
+        A successful API response means that a task was added to a queue.
+
+        It might not run immediately.
+
+        You can check the task''s progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task) and this task ID.
+
+        '
+    direction:
+      type: string
+      description: 'Sort order for A/B tests by start date.
+
+        Use ''asc'' for ascending or ''desc'' for descending.
+
+        Active A/B tests are always listed first.
+
+        '
+      enum:
+      - asc
+      - desc
+      example: desc
+    endAt:
+      type: string
+      description: End date and time of the A/B test, in RFC 3339 format.
+      example: '2023-06-17T00:00:00Z'
+    name:
+      type: string
+      description: A/B test name.
+      example: Custom ranking sales rank test
+    ABTestResponse:
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          $ref: '#/components/schemas/index'
+        abTestID:
+          $ref: '#/components/schemas/abTestID'
+        taskID:
+          $ref: '#/components/schemas/taskID'
+      required:
+      - abTestID
+      - index
+      - taskID
     metricMetadata:
       type: object
       description: Metric specific metadata.
@@ -581,6 +657,131 @@ components:
       example:
         winsorizedValue: 888.8
         mean: 53.7
+    description:
+      type: string
+      description: Description for this variant.
+      example: Current production index
+    Decision:
+      type: object
+      additionalProperties: false
+      description: 'Outcome of the A/B test once a winner has been declared.
+
+        Only present when a winning variant has been declared, so its presence indicates the test has been decided.
+
+        '
+      properties:
+        winnerVariantId:
+          type: integer
+          description: Identifier of the declared winning variant. The control variant is 1.
+          example: 2
+        declaredAt:
+          type: string
+          description: Date and time when the winning variant was declared, in RFC 3339 format.
+          example: '2026-06-16T00:00:00Z'
+      required:
+      - winnerVariantId
+      - declaredAt
+    ErrorBase:
+      description: Error.
+      type: object
+      x-keep-model: true
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    MetricName:
+      type: string
+      enum:
+      - search_count
+      - tracked_search_count
+      - user_count
+      - tracked_user_count
+      - no_result_count
+      - add_to_cart_count
+      - purchase_count
+      - clicked_search_count
+      - converted_search_count
+      - click_through_rate
+      - conversion_rate
+      - add_to_cart_rate
+      - purchase_rate
+      - average_click_position
+      - revenue
+    customSearchParams:
+      type: object
+      description: 'Search parameters to add to the test variant.
+
+        Only use this parameter if the two variants use the same index.
+
+        '
+      example:
+        typoTolerance: false
+        synonyms: false
+      additionalProperties: false
+      properties:
+        customSearchParameters:
+          type: object
+      required:
+      - customSearchParameters
+      x-discriminator-fields:
+      - customSearchParameters
+    metrics:
+      type: array
+      description: All ABTest metrics that were defined during test creation.
+      items:
+        $ref: '#/components/schemas/metricResult'
+    MinimumDetectableEffect:
+      type: object
+      description: Configuration for the smallest difference between test variants you want to detect.
+      properties:
+        size:
+          type: number
+          format: double
+          minimum: 0
+          maximum: 1
+          description: 'Smallest difference in an observable metric between variants.
+
+            For example, to detect a 10% difference between variants, set this value to 0.1.
+
+            '
+        metric:
+          $ref: '#/components/schemas/EffectMetric'
+      required:
+      - size
+      - metric
+    abTestsVariant:
+      type: object
+      additionalProperties: false
+      properties:
+        index:
+          $ref: '#/components/schemas/index'
+        trafficPercentage:
+          $ref: '#/components/schemas/trafficPercentage'
+        description:
+          $ref: '#/components/schemas/description'
+      required:
+      - index
+      - trafficPercentage
+    ABTests:
+      oneOf:
+      - type: array
+        description: A/B tests.
+        items:
+          $ref: '#/components/schemas/ABTest'
+      - type: 'null'
+    variants:
+      type: array
+      description: 'A/B test variants.
+
+
+        The first variant is your _control_ index, typically your production index.
+
+        All of the additional variants are indexes with changed settings that you want to test against the control.
+
+        '
+      items:
+        $ref: '#/components/schemas/variant'
     variant:
       type: object
       additionalProperties: false
@@ -619,58 +820,10 @@ components:
       - description
       - trafficPercentage
       - metrics
-    index:
+    createdAt:
       type: string
-      description: Index name of the A/B test variant (case-sensitive).
-      example: delcourt_production
-    ABTestConfiguration:
-      title: configuration
-      type: object
-      description: A/B test configuration.
-      properties:
-        minimumDetectableEffect:
-          $ref: '#/components/schemas/MinimumDetectableEffect'
-        filters:
-          $ref: '#/components/schemas/MetricsFilters'
-        errorCorrection:
-          $ref: '#/components/schemas/ErrorCorrectionType'
-    ABTest:
-      type: object
-      additionalProperties: false
-      properties:
-        abTestID:
-          $ref: '#/components/schemas/abTestID'
-        updatedAt:
-          $ref: '#/components/schemas/updatedAt'
-        createdAt:
-          $ref: '#/components/schemas/createdAt'
-        endAt:
-          $ref: '#/components/schemas/endAt'
-        stoppedAt:
-          $ref: '#/components/schemas/stoppedAt'
-        name:
-          $ref: '#/components/schemas/name'
-        status:
-          $ref: '#/components/schemas/Status'
-        variants:
-          $ref: '#/components/schemas/variants'
-        configuration:
-          $ref: '#/components/schemas/ABTestConfiguration'
-        decision:
-          $ref: '#/components/schemas/Decision'
-      required:
-      - status
-      - name
-      - createdAt
-      - endAt
-      - updatedAt
-      - abTestID
-      - variants
-    metrics:
-      type: array
-      description: All ABTest metrics that were defined during test creation.
-      items:
-        $ref: '#/components/schemas/metricResult'
+      description: Date and time when the A/B test was created, in RFC 3339 format.
+      example: '2023-06-15T15:06:04.249906Z'
     metricResult:
       type: object
       properties:
@@ -758,78 +911,37 @@ components:
         pValue: 0.04
         metadata:
           winsorizedValue: 888.8
-    name:
-      type: string
-      description: A/B test name.
-      example: Custom ranking sales rank test
-    Timeseries:
-      type: object
-      additionalProperties: false
-      properties:
-        abTestID:
-          $ref: '#/components/schemas/abTestID'
-        variants:
-          $ref: '#/components/schemas/timeseriesVariants'
-      required:
-      - abTestID
-      - variants
-    ABTests:
-      oneOf:
-      - type: array
-        description: A/B tests.
-        items:
-          $ref: '#/components/schemas/ABTest'
-      - type: 'null'
-    abTestsVariant:
-      type: object
-      additionalProperties: false
-      properties:
-        index:
-          $ref: '#/components/schemas/index'
-        trafficPercentage:
-          $ref: '#/components/schemas/trafficPercentage'
-        description:
-          $ref: '#/components/schemas/description'
-      required:
-      - index
-      - trafficPercentage
-    variantMetadata:
-      type: object
-      description: Variant specific metadata.
-      properties:
-        filterEffects:
-          $ref: '#/components/schemas/filterEffects'
-    MinimumDetectableEffect:
-      type: object
-      description: Configuration for the smallest difference between test variants you want to detect.
-      properties:
-        size:
-          type: number
-          format: double
-          minimum: 0
-          maximum: 1
-          description: 'Smallest difference in an observable metric between variants.
+    abTestID:
+      type: integer
+      description: Unique A/B test identifier.
+      example: 224
+    abTestsVariantSearchParams:
+      allOf:
+      - $ref: '#/components/schemas/abTestsVariant'
+      - $ref: '#/components/schemas/customSearchParams'
+    MetricsFilters:
+      type: array
+      description: List of metric filters applied to the test population.
+      items:
+        $ref: '#/components/schemas/MetricsFilter'
+    timeseriesVariants:
+      type: array
+      description: 'A/B test timeseries variants.
 
-            For example, to detect a 10% difference between variants, set this value to 0.1.
 
-            '
-        metric:
-          $ref: '#/components/schemas/EffectMetric'
-      required:
-      - size
-      - metric
-    updatedAt:
-      type: string
-      description: Date and time when the A/B test was last updated, in RFC 3339 format.
-      example: '2023-06-15T15:06:44.400601Z'
-    endAt:
-      type: string
-      description: End date and time of the A/B test, in RFC 3339 format.
-      example: '2023-06-17T00:00:00Z'
-    createdAt:
-      type: string
-      description: Date and time when the A/B test was created, in RFC 3339 format.
-      example: '2023-06-15T15:06:04.249906Z'
+        The first variant is your _control_ index, typically your production index.
+
+        All of the additional variants are indexes with changed settings that you want to test against the control.
+
+        '
+      items:
+        $ref: '#/components/schemas/timeseriesVariant'
+    trafficPercentage:
+      type: integer
+      description: Percentage of search requests each variant receives.
+      minimum: 1
+      maximum: 99
+      example: 60
     AddABTestsVariant:
       oneOf:
       - title: Variant
@@ -877,190 +989,17 @@ components:
       properties:
         dates:
           $ref: '#/components/schemas/metricDates'
-    description:
-      type: string
-      description: Description for this variant.
-      example: Current production index
-    variants:
-      type: array
-      description: 'A/B test variants.
-
-
-        The first variant is your _control_ index, typically your production index.
-
-        All of the additional variants are indexes with changed settings that you want to test against the control.
-
-        '
-      items:
-        $ref: '#/components/schemas/variant'
-    timeseriesVariants:
-      type: array
-      description: 'A/B test timeseries variants.
-
-
-        The first variant is your _control_ index, typically your production index.
-
-        All of the additional variants are indexes with changed settings that you want to test against the control.
-
-        '
-      items:
-        $ref: '#/components/schemas/timeseriesVariant'
-    abTestID:
-      type: integer
-      description: Unique A/B test identifier.
-      example: 224
-    direction:
-      type: string
-      description: 'Sort order for A/B tests by start date.
-
-        Use ''asc'' for ascending or ''desc'' for descending.
-
-        Active A/B tests are always listed first.
-
-        '
-      enum:
-      - asc
-      - desc
-      example: desc
-    trafficPercentage:
-      type: integer
-      description: Percentage of search requests each variant receives.
-      minimum: 1
-      maximum: 99
-      example: 60
-    EffectMetric:
-      type: string
-      description: Metric for which you want to detect the smallest relative difference.
-      enum:
-      - addToCartRate
-      - clickThroughRate
-      - conversionRate
-      - purchaseRate
-      - noResultsRate
-    abTestsVariantSearchParams:
-      allOf:
-      - $ref: '#/components/schemas/abTestsVariant'
-      - $ref: '#/components/schemas/customSearchParams'
-    ErrorBase:
-      description: Error.
+    ABTestConfiguration:
+      title: configuration
       type: object
-      x-keep-model: true
-      additionalProperties: true
+      description: A/B test configuration.
       properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    ErrorCorrectionType:
-      type: string
-      description: Multiple-testing correction method applied when evaluating metric significance.
-      enum:
-      - bonferroni
-      - benjamini-hochberg
-    taskID:
-      type: integer
-      format: int64
-      example: 1514562690001
-      description: 'Unique identifier of a task.
-
-
-        A successful API response means that a task was added to a queue.
-
-        It might not run immediately.
-
-        You can check the task''s progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task) and this task ID.
-
-        '
-    createMetric:
-      type: object
-      description: Defines a metric to be retrieved during an A/B test.
-      properties:
-        name:
-          type: string
-          description: Name of the metric.
-        dimension:
-          type: string
-          description: Dimension of the metric, for example, in case of a revenue metric it could be USD, EUR...
-      required:
-      - name
-      example:
-      - name: revenue
-        dimension: USD
-      - name: conversionRate
-      - name: clickThroughRate
-      - name: trackedSearchCount
-    MetricName:
-      type: string
-      enum:
-      - search_count
-      - tracked_search_count
-      - user_count
-      - tracked_user_count
-      - no_result_count
-      - add_to_cart_count
-      - purchase_count
-      - clicked_search_count
-      - converted_search_count
-      - click_through_rate
-      - conversion_rate
-      - add_to_cart_rate
-      - purchase_rate
-      - average_click_position
-      - revenue
-    stoppedAt:
-      type:
-      - string
-      - 'null'
-      description: Date and time when the A/B test was stopped, in RFC 3339 format.
-      example: '2023-06-15T15:06:44.400601Z'
-    metricDate:
-      type: object
-      properties:
-        date:
-          type: string
-          description: Date where the metric was updated, in RFC 3339 format.
-          example: '2025-06-15'
-        metrics:
-          $ref: '#/components/schemas/metrics'
-    Status:
-      type: string
-      description: 'A/B test status.
-
-
-        - `active`. The A/B test is live and search traffic is split between the two variants.
-
-        - `stopped`. You stopped the A/B test. The A/B test data is still available for analysis.
-
-        - `expired`. The A/B test was automatically stopped after reaching its end date.
-
-        - `failed`. Creating the A/B test failed.
-
-        '
-      example: active
-      enum:
-      - active
-      - stopped
-      - expired
-      - failed
-    Decision:
-      type: object
-      additionalProperties: false
-      description: 'Outcome of the A/B test once a winner has been declared.
-
-        Only present when a winning variant has been declared, so its presence indicates the test has been decided.
-
-        '
-      properties:
-        winnerVariantId:
-          type: integer
-          description: Identifier of the declared winning variant. The control variant is 1.
-          example: 2
-        declaredAt:
-          type: string
-          description: Date and time when the winning variant was declared, in RFC 3339 format.
-          example: '2026-06-16T00:00:00Z'
-      required:
-      - winnerVariantId
-      - declaredAt
+        minimumDetectableEffect:
+          $ref: '#/components/schemas/MinimumDetectableEffect'
+        filters:
+          $ref: '#/components/schemas/MetricsFilters'
+        errorCorrection:
+          $ref: '#/components/schemas/ErrorCorrectionType'
     MetricsFilter:
       type: object
       additionalProperties: false
@@ -1087,26 +1026,109 @@ components:
       required:
       - domain
       - name
-    MetricsFilters:
-      type: array
-      description: List of metric filters applied to the test population.
-      items:
-        $ref: '#/components/schemas/MetricsFilter'
-    ABTestResponse:
+    ErrorCorrectionType:
+      type: string
+      description: Multiple-testing correction method applied when evaluating metric significance.
+      enum:
+      - bonferroni
+      - benjamini-hochberg
+    Status:
+      type: string
+      description: 'A/B test status.
+
+
+        - `active`. The A/B test is live and search traffic is split between the two variants.
+
+        - `stopped`. You stopped the A/B test. The A/B test data is still available for analysis.
+
+        - `expired`. The A/B test was automatically stopped after reaching its end date.
+
+        - `failed`. Creating the A/B test failed.
+
+        '
+      example: active
+      enum:
+      - active
+      - stopped
+      - expired
+      - failed
+    EstimateABTestResponse:
       type: object
-      additionalProperties: false
       properties:
-        index:
-          $ref: '#/components/schemas/index'
-        abTestID:
-          $ref: '#/components/schemas/abTestID'
-        taskID:
-          $ref: '#/components/schemas/taskID'
+        durationDays:
+          type: integer
+          format: int64
+          description: Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
+          example: 21
+        sampleSizes:
+          type: array
+          description: 'Sample size estimates for each variant. The first element is the control variant.
+
+            Each element is the estimated number of searches required to achieve the desired statistical significance.
+
+            '
+          items:
+            type: integer
+            format: int64
+            description: Number of tracked searches needed to be able to detect the configured effect for the control variant.
+            example: 23415
+    index:
+      type: string
+      description: Index name of the A/B test variant (case-sensitive).
+      example: delcourt_production
+    createMetric:
+      type: object
+      description: Defines a metric to be retrieved during an A/B test.
+      properties:
+        name:
+          type: string
+          description: Name of the metric.
+        dimension:
+          type: string
+          description: Dimension of the metric, for example, in case of a revenue metric it could be USD, EUR...
       required:
-      - abTestID
-      - index
-      - taskID
+      - name
+      example:
+      - name: revenue
+        dimension: USD
+      - name: conversionRate
+      - name: clickThroughRate
+      - name: trackedSearchCount
+    stoppedAt:
+      type:
+      - string
+      - 'null'
+      description: Date and time when the A/B test was stopped, in RFC 3339 format.
+      example: '2023-06-15T15:06:44.400601Z'
+    variantMetadata:
+      type: object
+      description: Variant specific metadata.
+      properties:
+        filterEffects:
+          $ref: '#/components/schemas/filterEffects'
+  headers:
+    x-ratelimit-reset:
+      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
+      example: 1710682486
+      schema:
+        type: integer
+    x-ratelimit-limit:
+      description: Number of allowed requests per one minute.
+      example: 100
+      schema:
+        type: integer
+    x-ratelimit-remaining:
+      description: Number of remaining requests in the current period.
+      example: 99
+      schema:
+        type: integer
   responses:
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
     IndexNotFound:
       description: Index not found.
       content:
@@ -1125,49 +1147,13 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
     BadRequest:
       description: Bad request or request arguments.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
-  headers:
-    x-ratelimit-limit:
-      description: Number of allowed requests per one minute.
-      example: 100
-      schema:
-        type: integer
-    x-ratelimit-reset:
-      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
-      example: 1710682486
-      schema:
-        type: integer
-    x-ratelimit-remaining:
-      description: Number of remaining requests in the current period.
-      example: 99
-      schema:
-        type: integer
   parameters:
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
-    StartDate:
-      in: query
-      name: startDate
-      description: Start date of the period to analyze, in `YYYY-MM-DD` format.
-      schema:
-        type: string
-        example: '2022-09-19'
     ID:
       in: path
       name: id
@@ -1175,6 +1161,20 @@ components:
       required: true
       schema:
         $ref: '#/components/schemas/abTestID'
+    StartDate:
+      in: query
+      name: startDate
+      description: Start date of the period to analyze, in `YYYY-MM-DD` format.
+      schema:
+        type: string
+        example: '2022-09-19'
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
     EndDate:
       in: query
       name: endDate

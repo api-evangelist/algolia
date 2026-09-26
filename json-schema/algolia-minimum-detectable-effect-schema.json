@@ -1,0 +1,40 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-minimum-detectable-effect-schema.json",
+  "title": "MinimumDetectableEffect",
+  "description": "Configuration for the smallest difference between test variants you want to detect.",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/MinimumDetectableEffect",
+  "type": "object",
+  "properties": {
+    "size": {
+      "type": "number",
+      "format": "double",
+      "minimum": 0,
+      "maximum": 1,
+      "description": "Smallest difference in an observable metric between variants.\nFor example, to detect a 10% difference between variants, set this value to 0.1.\n"
+    },
+    "metric": {
+      "$ref": "#/$defs/EffectMetric"
+    }
+  },
+  "required": [
+    "size",
+    "metric"
+  ],
+  "$defs": {
+    "EffectMetric": {
+      "type": "string",
+      "description": "Metric for which you want to detect the smallest relative difference.",
+      "enum": [
+        "addToCartRate",
+        "clickThroughRate",
+        "conversionRate",
+        "purchaseRate",
+        "noResultsRate"
+      ]
+    }
+  }
+}

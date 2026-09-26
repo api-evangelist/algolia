@@ -1,0 +1,430 @@
+generated: '2026-09-23'
+method: derived
+generator: derive-vocabulary.py
+source:
+- openapi/algolia-ab-testing-api-openapi.yml
+- openapi/algolia-abtesting-v3-api-openapi.yml
+- openapi/algolia-advanced-personalization-api-openapi.yml
+- openapi/algolia-agent-studio-api-openapi.yml
+- openapi/algolia-algoliasearch-api-openapi.yml
+vocabulary:
+  name: Algolia Domain Vocabulary
+  description: 'Terms declared by Algolia''s own API contract: its resource groups, objects and enumerations, with the contract''s definitions.
+    Derived, not authored.'
+  version: '2026-09-23'
+  terms:
+  - term: EstimateABTestResponse
+    definition: 'Object declared by the contract with fields: durationDays, sampleSizes.'
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/EstimateABTestResponse
+  - term: customSearchParams
+    definition: Search parameters to add to the test variant. Only use this parameter if the two variants use the same index.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/customSearchParams
+  - term: variant
+    definition: 'Object declared by the contract with fields: addToCartCount, addToCartRate, averageClickPosition, clickCount, clickThroughRate,
+      conversionCount, conversionRate, currencies, description, estimatedSampleSize, filterEffects, index. (8 more)'
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/variant
+  - term: index
+    definition: Index name of the A/B test variant (case-sensitive).
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/index
+  - term: FeatureFilters
+    definition: Configuration of feature-based filters applied to the A/B test population.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/FeatureFilters
+  - term: configuration
+    definition: A/B test configuration.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/ABTestConfiguration
+  - term: ABTest
+    definition: 'Object declared by the contract with fields: abTestID, clickSignificance, conversionSignificance, addToCartSignificance, purchaseSignificance,
+      revenueSignificance, updatedAt, createdAt, endAt, stoppedAt, name, status. (2 more)'
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/ABTest
+  - term: name
+    definition: A/B test name.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/name
+  - term: abTestsVariant
+    definition: 'Object declared by the contract with fields: index, trafficPercentage, description.'
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/abTestsVariant
+  - term: MinimumDetectableEffect
+    definition: Configuration for the smallest difference between test variants you want to detect.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/MinimumDetectableEffect
+  - term: updatedAt
+    definition: Date and time when the A/B test was last updated, in RFC 3339 format.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/updatedAt
+  - term: endAt
+    definition: End date and time of the A/B test, in RFC 3339 format.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/endAt
+  - term: createdAt
+    definition: Date and time when the A/B test was created, in RFC 3339 format.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/createdAt
+  - term: EmptySearch
+    definition: Configuration for handling empty searches.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/EmptySearch
+  - term: filterEffects
+    definition: A/B test filter effects resulting from configuration settings.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/filterEffects
+  - term: description
+    definition: Description for this variant.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/description
+  - term: variants
+    definition: A/B test variants. The first variant is your _control_ index, typically your production index. The second variant is an index
+      with changed settings that you want to test against the control.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/variants
+  - term: currencies
+    definition: A/B test currencies.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/currencies
+  - term: abTestID
+    definition: Unique A/B test identifier.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/abTestID
+  - term: trafficPercentage
+    definition: Percentage of search requests each variant receives.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/trafficPercentage
+  - term: EffectMetric
+    definition: Metric for which you want to detect the smallest relative difference.
+    tags:
+    - Enumeration
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/EffectMetric
+  - term: ErrorBase
+    definition: Error.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/ErrorBase
+  - term: currency
+    definition: 'Object declared by the contract with fields: currency, revenue, mean, standardDeviation, winsorizedAmount.'
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/currency
+  - term: taskID
+    definition: Unique identifier of a task. A successful API response means that a task was added to a queue. It might not run immediately. You
+      can check the task's progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task) and this task ID.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/taskID
+  - term: stoppedAt
+    definition: Date and time when the A/B test was stopped, in RFC 3339 format.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/stoppedAt
+  - term: Status
+    definition: A/B test status. - `active`. The A/B test is live and search traffic is split between the two variants. - `stopped`. You stopped
+      the A/B test. The A/B test data is still available for analysis. - `expired`. The A/B test was automatically stopped after reaching its
+      end date. - `failed`. Creating the A/B test failed.
+    tags:
+    - Enumeration
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/Status
+  - term: trackedSearchCount
+    definition: Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/trackedSearchCount
+  - term: Outliers
+    definition: Configuration for handling outliers.
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/Outliers
+  - term: ABTestResponse
+    definition: 'Object declared by the contract with fields: index, abTestID, taskID.'
+    tags:
+    - Object
+    source: openapi/algolia-ab-testing-api-openapi.yml#/components/schemas/ABTestResponse
+  - term: metricMetadata
+    definition: Metric specific metadata.
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/metricMetadata
+  - term: metrics
+    definition: All ABTest metrics that were defined during test creation.
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/metrics
+  - term: metricResult
+    definition: 'Object declared by the contract with fields: name, updatedAt, value, valueCIHigh, valueCILow, pValue, dimension, metadata, criticalValue,
+      significant.'
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/metricResult
+  - term: Timeseries
+    definition: 'Object declared by the contract with fields: abTestID, variants.'
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/Timeseries
+  - term: variantMetadata
+    definition: Variant specific metadata.
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/variantMetadata
+  - term: timeseriesVariant
+    definition: 'Object declared by the contract with fields: dates.'
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/timeseriesVariant
+  - term: timeseriesVariants
+    definition: A/B test timeseries variants. The first variant is your _control_ index, typically your production index. All of the additional
+      variants are indexes with changed settings that you want to test against the control.
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/timeseriesVariants
+  - term: direction
+    definition: Sort order for A/B tests by start date. Use 'asc' for ascending or 'desc' for descending. Active A/B tests are always listed first.
+    tags:
+    - Enumeration
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/direction
+  - term: ErrorCorrectionType
+    definition: Multiple-testing correction method applied when evaluating metric significance.
+    tags:
+    - Enumeration
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/ErrorCorrectionType
+  - term: createMetric
+    definition: Defines a metric to be retrieved during an A/B test.
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/createMetric
+  - term: MetricName
+    definition: 'Enumeration declared by the contract with values: search_count, tracked_search_count, user_count, tracked_user_count, no_result_count,
+      add_to_cart_count, purchase_count, clicked_search_count, converted_search_count, click_through_rate, conversion_rate, add_to_cart_rate.
+      (3 more)'
+    tags:
+    - Enumeration
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/MetricName
+  - term: metricDate
+    definition: 'Object declared by the contract with fields: date, metrics.'
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/metricDate
+  - term: Decision
+    definition: Outcome of the A/B test once a winner has been declared. Only present when a winning variant has been declared, so its presence
+      indicates the test has been decided.
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/Decision
+  - term: MetricsFilter
+    definition: Boolean filter applied to the A/B test population. Each filter targets a boolean metric and decides whether to include (true)
+      or exclude (false) matching records.
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/MetricsFilter
+  - term: MetricsFilters
+    definition: List of metric filters applied to the test population.
+    tags:
+    - Object
+    source: openapi/algolia-abtesting-v3-api-openapi.yml#/components/schemas/MetricsFilters
+  - term: ErrorResponses_badUserID
+    definition: 'Object declared by the contract with fields: status, message.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/ErrorResponses_badUserID
+  - term: ErrorResponses_internalServerError
+    definition: 'Object declared by the contract with fields: status, message.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/ErrorResponses_internalServerError
+  - term: type
+    definition: 'Enumeration declared by the contract with values: insights.'
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/sourceType
+  - term: ErrorResponses_unauthorized
+    definition: 'Object declared by the contract with fields: status, message.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/ErrorResponses_unauthorized
+  - term: issue
+    definition: An issue is either an 'error' or a 'warning' that is generated by the validator.
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/issue
+  - term: notFound
+    definition: HTTP status code for a not found error.
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/notFound
+  - term: strategy
+    definition: 'Enumeration declared by the contract with values: session, historical, hybrid.'
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/strategy
+  - term: eventType
+    definition: 'Enumeration declared by the contract with values: view, click, conversion.'
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/eventType
+  - term: paymentRequired
+    definition: HTTP status code for a payment required error.
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/paymentRequired
+  - term: ErrorMessages_unauthorized
+    definition: Details about the response, such as error messages.
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/ErrorMessages_unauthorized
+  - term: ErrorResponses_genericNotFound
+    definition: 'Object declared by the contract with fields: status, message.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/ErrorResponses_genericNotFound
+  - term: event
+    definition: 'Object declared by the contract with fields: type, subtype, name.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/event
+  - term: personalizationReRanking
+    definition: The impact that personalization has on the re-ranking of search results.
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/personalizationReRanking
+  - term: invalidUserID
+    definition: Details about the response, such as error messages.
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/invalidUserID
+  - term: profileType
+    definition: The type of user profiles to generate. Basic profiles are based on past behaviors, ensuring search results align with previous
+      interests.
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/profileType
+  - term: user
+    definition: 'Object declared by the contract with fields: userID, type, affinities, lastUpdatedAt.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/user
+  - term: ErrorResponses_featureNotEnabled
+    definition: 'Object declared by the contract with fields: status, message.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/ErrorResponses_featureNotEnabled
+  - term: badRequest
+    definition: HTTP status code for a bad request error.
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/badRequest
+  - term: features
+    definition: 'Object declared by the contract with fields: realtime.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/features
+  - term: RealtimeUser
+    definition: 'Object declared by the contract with fields: version, userID, lastUpdatedAt, search.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/RealtimeUser
+  - term: ErrorResponses_badRequest
+    definition: 'Object declared by the contract with fields: status, message.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/ErrorResponses_badRequest
+  - term: searchFilter
+    definition: 'Object declared by the contract with fields: session.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/searchFilter
+  - term: userToken
+    definition: Unique pseudonymous or anonymous user identifier. This helps with analytics and click and conversion events. For more information,
+      see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/userToken
+  - term: ErrorResponses_genericUnprocessableEntity
+    definition: 'Object declared by the contract with fields: status, message.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/ErrorResponses_genericUnprocessableEntity
+  - term: errorCodes
+    definition: 'Enumeration declared by the contract with values: blocked, deleted, no_perso_access, all_attr_value_filtered, missing_index,
+      no_events_last_30_days, pending_pipelines, invalid_config, all_facets_invalid.'
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/errorCodes
+  - term: Configuration_status
+    definition: 'Object declared by the contract with fields: type, errors, lastUpdatedAt.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/Configuration_status
+  - term: genericNotFound
+    definition: Details about the response, such as error messages.
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/genericNotFound
+  - term: status
+    definition: 'Enumeration declared by the contract with values: pending, active, paused.'
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/status
+  - term: userType
+    definition: 'Enumeration declared by the contract with values: basic, predictive, realtime.'
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/userType
+  - term: ErrorMessages_badRequest
+    definition: Details about the response, such as error messages.
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/ErrorMessages_badRequest
+  - term: events
+    definition: 'Object declared by the contract with fields: viewDetails, viewListing, addToCart, purchase.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/events
+  - term: searchFilters
+    definition: 'Object declared by the contract with fields: indices, strategy, filters.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/searchFilters
+  - term: featureNotEnabled
+    definition: Details about the response, such as error messages.
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/featureNotEnabled
+  - term: unprocessableEntity
+    definition: HTTP status code for an unprocessable entity error.
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/unprocessableEntity
+  - term: realtime
+    definition: 'Object declared by the contract with fields: enabled.'
+    tags:
+    - Object
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/realtime
+  - term: subtype
+    definition: 'Enumeration declared by the contract with values: addToCart, purchase.'
+    tags:
+    - Enumeration
+    source: openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/subtype

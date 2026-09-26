@@ -102,37 +102,51 @@ servers:
   pricing: Usage counts toward the existing Algolia plan; Algolia states there is no separate MCP fee.
 read_only: true
 read_only_source: https://www.algolia.com/doc/guides/model-context-protocol
-tools:
+tools_source:
   method: searched
   source: https://raw.githubusercontent.com/algolia/skills/main/skills/algolia-mcp/SKILL.md
   note: Tool names are quoted verbatim from Algolia's own published Agent Skill (saved to skills/_provider/algolia-mcp.md).
     Input schemas were NOT read - the live tools/list is OAuth-gated. See mcp/algolia-tool-crosswalk.yml
     for the binding of each tool to its backing OpenAPI operation.
-  search:
-  - algolia_search_index
-  - algolia_search_list_indices
-  - algolia_search_for_facet_values
-  analytics:
-  - algolia_analytics_top_searches
-  - algolia_analytics_searches_no_results
-  - algolia_analytics_no_results_rate
-  - algolia_analytics_click_positions
-  - algolia_analytics_no_click_rate
-  - algolia_analytics_top_searches_without_clicks
-  - algolia_analytics_number_of_searches
-  - algolia_analytics_top_search_results
-  - algolia_analytics_number_of_users
-  - algolia_analytics_top_filters
-  - algolia_analytics_top_filters_no_results
-  - algolia_analytics_top_countries
-  recommendations:
-  - tool: algolia_recommendations
-    models:
-    - bought-together
-    - related-products
-    - trending-items
-    - trending-facets
-    - looking-similar
+tools:
+- name: algolia_search_index
+  category: search
+- name: algolia_search_list_indices
+  category: search
+- name: algolia_search_for_facet_values
+  category: search
+- name: algolia_analytics_top_searches
+  category: analytics
+- name: algolia_analytics_searches_no_results
+  category: analytics
+- name: algolia_analytics_no_results_rate
+  category: analytics
+- name: algolia_analytics_click_positions
+  category: analytics
+- name: algolia_analytics_no_click_rate
+  category: analytics
+- name: algolia_analytics_top_searches_without_clicks
+  category: analytics
+- name: algolia_analytics_number_of_searches
+  category: analytics
+- name: algolia_analytics_top_search_results
+  category: analytics
+- name: algolia_analytics_number_of_users
+  category: analytics
+- name: algolia_analytics_top_filters
+  category: analytics
+- name: algolia_analytics_top_filters_no_results
+  category: analytics
+- name: algolia_analytics_top_countries
+  category: analytics
+- name: algolia_recommendations
+  category: recommendations
+  models:
+  - bought-together
+  - related-products
+  - trending-items
+  - trending-facets
+  - looking-similar
 related_agent_surfaces:
 - name: Agent Studio
   type: Algolia-hosted agent runtime (not MCP)

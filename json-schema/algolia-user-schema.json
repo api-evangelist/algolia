@@ -1,0 +1,75 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-user-schema.json",
+  "title": "user",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-advanced-personalization-api-openapi.yml#/components/schemas/user",
+  "type": "object",
+  "properties": {
+    "userID": {
+      "type": "string"
+    },
+    "type": {
+      "$ref": "#/$defs/userType"
+    },
+    "affinities": {
+      "type": "array",
+      "items": {
+        "title": "affinity",
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string"
+          },
+          "indices": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "minimum": 1
+            }
+          },
+          "value": {
+            "type": "string"
+          },
+          "score": {
+            "type": "number",
+            "minimum": 1,
+            "maximum": 20
+          },
+          "lastUpdatedAt": {
+            "type": "string"
+          }
+        },
+        "required": [
+          "name",
+          "indices",
+          "value",
+          "score",
+          "lastUpdatedAt"
+        ]
+      }
+    },
+    "lastUpdatedAt": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "userID",
+    "type",
+    "affinities",
+    "lastUpdatedAt"
+  ],
+  "$defs": {
+    "userType": {
+      "title": "userType",
+      "type": "string",
+      "enum": [
+        "basic",
+        "predictive",
+        "realtime"
+      ]
+    }
+  }
+}

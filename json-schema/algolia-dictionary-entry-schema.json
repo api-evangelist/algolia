@@ -1,0 +1,141 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-dictionary-entry-schema.json",
+  "title": "dictionaryEntry",
+  "description": "Dictionary entry.",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-search-api-openapi.yml#/components/schemas/dictionaryEntry",
+  "type": "object",
+  "additionalProperties": true,
+  "required": [
+    "objectID"
+  ],
+  "properties": {
+    "objectID": {
+      "type": "string",
+      "description": "Unique identifier for the dictionary entry."
+    },
+    "language": {
+      "$ref": "#/$defs/supportedLanguage"
+    },
+    "word": {
+      "type": "string",
+      "description": "Matching dictionary word for `stopwords` and `compounds` dictionaries."
+    },
+    "words": {
+      "type": "array",
+      "description": "Matching words in the `plurals` dictionary including declensions.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "decomposition": {
+      "type": "array",
+      "description": "Invividual components of a compound word in the `compounds` dictionary.",
+      "items": {
+        "type": "string"
+      }
+    },
+    "state": {
+      "$ref": "#/$defs/dictionaryEntryState"
+    },
+    "type": {
+      "$ref": "#/$defs/dictionaryEntryType"
+    }
+  },
+  "$defs": {
+    "dictionaryEntryState": {
+      "type": "string",
+      "enum": [
+        "enabled",
+        "disabled"
+      ],
+      "default": "enabled",
+      "description": "Whether a dictionary entry is active."
+    },
+    "dictionaryEntryType": {
+      "type": "string",
+      "enum": [
+        "custom",
+        "standard"
+      ],
+      "description": "Whether a dictionary entry is provided by Algolia (standard), or has been added by you (custom)."
+    },
+    "supportedLanguage": {
+      "type": "string",
+      "description": "ISO code for a supported language.",
+      "enum": [
+        "af",
+        "ar",
+        "az",
+        "bg",
+        "bn",
+        "ca",
+        "cs",
+        "cy",
+        "da",
+        "de",
+        "el",
+        "en",
+        "eo",
+        "es",
+        "et",
+        "eu",
+        "fa",
+        "fi",
+        "fo",
+        "fr",
+        "ga",
+        "gl",
+        "he",
+        "hi",
+        "hu",
+        "hy",
+        "id",
+        "is",
+        "it",
+        "ja",
+        "ka",
+        "kk",
+        "ko",
+        "ku",
+        "ky",
+        "lt",
+        "lv",
+        "mi",
+        "mn",
+        "mr",
+        "ms",
+        "mt",
+        "nb",
+        "nl",
+        "no",
+        "ns",
+        "pl",
+        "ps",
+        "pt",
+        "pt-br",
+        "qu",
+        "ro",
+        "ru",
+        "sk",
+        "sq",
+        "sv",
+        "sw",
+        "ta",
+        "te",
+        "th",
+        "tl",
+        "tn",
+        "tr",
+        "tt",
+        "uk",
+        "ur",
+        "uz",
+        "zh"
+      ]
+    }
+  }
+}

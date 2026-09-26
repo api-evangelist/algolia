@@ -335,7 +335,50 @@ paths:
         '204':
           description: No content.
 components:
+  parameters:
+    UserToken:
+      name: userToken
+      in: path
+      required: true
+      description: Unique identifier representing a user for which to fetch the personalization profile.
+      schema:
+        $ref: '#/components/schemas/userToken'
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, for example `1/newFeature`.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
   schemas:
+    facetsScoring:
+      type: object
+      additionalProperties: false
+      required:
+      - score
+      - facetName
+      properties:
+        score:
+          $ref: '#/components/schemas/score'
+        facetName:
+          type: string
+          description: Facet attribute name.
+    EventType:
+      title: eventType
+      type: string
+      description: Event type.
+      enum:
+      - click
+      - conversion
+      - view
     userToken:
       type: string
       description: 'Unique pseudonymous or anonymous user identifier.
@@ -349,9 +392,6 @@ components:
       example: test-user-123
       x-categories:
       - Personalization
-    score:
-      type: integer
-      description: Event score.
     ErrorBase:
       description: Error.
       type: object
@@ -361,14 +401,6 @@ components:
         message:
           type: string
           example: Invalid Application-Id or API-Key
-    EventType:
-      title: eventType
-      type: string
-      description: Event type.
-      enum:
-      - click
-      - conversion
-      - view
     personalizationStrategyParams:
       type: object
       additionalProperties: false
@@ -407,18 +439,9 @@ components:
             If set to 0, personalization has no impact on the search results.
 
             '
-    facetsScoring:
-      type: object
-      additionalProperties: false
-      required:
-      - score
-      - facetName
-      properties:
-        score:
-          $ref: '#/components/schemas/score'
-        facetName:
-          type: string
-          description: Facet attribute name.
+    score:
+      type: integer
+      description: Event score.
     eventsScoring:
       type: object
       additionalProperties: false
@@ -435,14 +458,14 @@ components:
         eventType:
           $ref: '#/components/schemas/EventType'
   headers:
-    x-ratelimit-reset:
-      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
-      example: 1710682486
-      schema:
-        type: integer
     x-ratelimit-remaining:
       description: Number of remaining requests in the current period.
       example: 99
+      schema:
+        type: integer
+    x-ratelimit-reset:
+      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
+      example: 1710682486
       schema:
         type: integer
     x-ratelimit-limit:
@@ -451,12 +474,6 @@ components:
       schema:
         type: integer
   responses:
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
     MethodNotAllowed:
       description: Method not allowed with this API key.
       content:
@@ -469,35 +486,18 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
     BadRequest:
       description: Bad request or request arguments.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
-  parameters:
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, for example `1/newFeature`.
-      required: true
-      schema:
-        type: string
-        example: /keys
-    UserToken:
-      name: userToken
-      in: path
-      required: true
-      description: Unique identifier representing a user for which to fetch the personalization profile.
-      schema:
-        $ref: '#/components/schemas/userToken'
   securitySchemes:
     appId:
       type: apiKey

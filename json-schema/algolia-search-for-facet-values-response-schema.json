@@ -1,0 +1,64 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-search-for-facet-values-response-schema.json",
+  "title": "searchForFacetValuesResponse",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-search-api-openapi.yml#/components/schemas/searchForFacetValuesResponse",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "facetHits",
+    "exhaustiveFacetsCount"
+  ],
+  "x-discriminator-fields": [
+    "facetHits"
+  ],
+  "properties": {
+    "facetHits": {
+      "type": "array",
+      "description": "Matching facet values.",
+      "items": {
+        "title": "facetHits",
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "value",
+          "highlighted",
+          "count"
+        ],
+        "properties": {
+          "value": {
+            "description": "Facet value.",
+            "type": "string"
+          },
+          "highlighted": {
+            "$ref": "#/$defs/highlightedValue"
+          },
+          "count": {
+            "description": "Number of records with this facet value. [The count may be approximated](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).",
+            "type": "integer"
+          }
+        }
+      }
+    },
+    "exhaustiveFacetsCount": {
+      "type": "boolean",
+      "description": "Whether the facet count is exhaustive (true) or approximate (false).\nFor more information, see [Why are my facet and hit counts not accurate](https://support.algolia.com/hc/articles/4406975248145-Why-are-my-facet-and-hit-counts-not-accurate).\n"
+    },
+    "processingTimeMS": {
+      "$ref": "#/$defs/processingTimeMS"
+    }
+  },
+  "$defs": {
+    "highlightedValue": {
+      "type": "string",
+      "description": "Highlighted attribute value, including HTML tags."
+    },
+    "processingTimeMS": {
+      "type": "integer",
+      "description": "Time the server took to process the request, in milliseconds."
+    }
+  }
+}

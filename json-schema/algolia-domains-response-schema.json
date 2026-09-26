@@ -1,0 +1,78 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-domains-response-schema.json",
+  "title": "domainsResponse",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-crawler-api-openapi.yml#/components/schemas/domainsResponse",
+  "allOf": [
+    {
+      "$ref": "#/$defs/Pagination"
+    },
+    {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "array",
+          "items": {
+            "title": "domainResponse",
+            "type": "object",
+            "properties": {
+              "appId": {
+                "$ref": "#/$defs/applicationID"
+              },
+              "domain": {
+                "type": "string",
+                "description": "Domain name which crawlers can access."
+              },
+              "validated": {
+                "type": "boolean",
+                "description": "Whether the domain is validated."
+              }
+            }
+          }
+        }
+      }
+    }
+  ],
+  "$defs": {
+    "Pagination": {
+      "type": "object",
+      "description": "Pagination information.",
+      "properties": {
+        "itemsPerPage": {
+          "$ref": "#/$defs/itemsPerPage"
+        },
+        "page": {
+          "$ref": "#/$defs/page"
+        },
+        "total": {
+          "$ref": "#/$defs/total"
+        }
+      }
+    },
+    "applicationID": {
+      "type": "string",
+      "description": "Algolia application ID where the crawler creates and updates indices.\n"
+    },
+    "itemsPerPage": {
+      "type": "integer",
+      "description": "Number of items per page of the paginated API response.",
+      "minimum": 1,
+      "maximum": 100,
+      "default": 20
+    },
+    "page": {
+      "type": "integer",
+      "description": "Current page of the paginated API response.",
+      "minimum": 1,
+      "maximum": 100,
+      "default": 1
+    },
+    "total": {
+      "type": "integer",
+      "description": "Total number of retrievable items."
+    }
+  }
+}

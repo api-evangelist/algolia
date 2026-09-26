@@ -1,0 +1,176 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/api-evangelist/algolia/main/json-schema/algolia-distribution-payload-schema.json",
+  "title": "Distribution query",
+  "x-generated": "2026-09-23",
+  "x-method": "derived",
+  "x-generator": "derive-json-schema.py",
+  "x-source": "openapi/algolia-analytics-api-openapi.yml#/components/schemas/DistributionPayload",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "distributions",
+    "parameters"
+  ],
+  "properties": {
+    "domain": {
+      "type": "string",
+      "description": "Default domain propagated to entries that omit their own."
+    },
+    "distributions": {
+      "type": "array",
+      "description": "Histogram specifications.",
+      "items": {
+        "$ref": "#/$defs/DistributionDefinition"
+      }
+    },
+    "filters": {
+      "type": "array",
+      "description": "Filter conditions.",
+      "items": {
+        "$ref": "#/$defs/FilterDefinition"
+      }
+    },
+    "parameters": {
+      "type": "array",
+      "description": "Literal values referenced by the query.",
+      "items": {
+        "$ref": "#/$defs/ParameterDefinition"
+      }
+    }
+  },
+  "$defs": {
+    "DistributionDefinition": {
+      "type": "object",
+      "title": "Distribution definition",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "bins"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain the field belongs to."
+        },
+        "kind": {
+          "type": "string",
+          "description": "Numeric field to bucket into a histogram."
+        },
+        "continuous": {
+          "type": "boolean",
+          "default": false,
+          "description": "Set to true for continuous kinds; use float bins."
+        },
+        "bins": {
+          "type": "array",
+          "description": "Bin edges.",
+          "items": {
+            "$ref": "#/$defs/binEdge"
+          }
+        }
+      }
+    },
+    "FilterDefinition": {
+      "type": "object",
+      "title": "Filter definition",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain the field belongs to."
+        },
+        "kind": {
+          "type": "string",
+          "description": "Field to filter on. With no `operator`, the field must be boolean."
+        },
+        "operator": {
+          "$ref": "#/$defs/filterOperator"
+        },
+        "parameter": {
+          "$ref": "#/$defs/ParameterReference"
+        }
+      }
+    },
+    "ParameterDefinition": {
+      "type": "object",
+      "title": "Parameter definition",
+      "additionalProperties": false,
+      "required": [
+        "kind",
+        "value"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain the parameter belongs to."
+        },
+        "kind": {
+          "type": "string",
+          "description": "Parameter identifier, for example `indices`, `startDate`, `endDate`, `tags`, or `country`."
+        },
+        "value": {
+          "$ref": "#/$defs/parameterValue"
+        }
+      }
+    },
+    "ParameterReference": {
+      "type": "object",
+      "title": "Parameter reference",
+      "additionalProperties": false,
+      "required": [
+        "kind"
+      ],
+      "properties": {
+        "domain": {
+          "type": "string",
+          "description": "Domain the parameter belongs to."
+        },
+        "kind": {
+          "type": "string",
+          "description": "Parameter identifier that resolves to a value supplied in `parameters`."
+        }
+      }
+    },
+    "binEdge": {
+      "description": "A histogram bin edge. Use integers for discrete distributions and floating-point values for continuous ones.",
+      "oneOf": [
+        {
+          "type": "integer"
+        },
+        {
+          "type": "number",
+          "format": "double"
+        }
+      ]
+    },
+    "filterOperator": {
+      "type": "string",
+      "description": "Comparison operator applied to a filter field, one of: `=`, `!=`, `>`, `<`, `>=`, `<=`, `IN`, `TAG_TREE`, `CONTAINS`, `STARTS_WITH`, `CONTAINS_PREFIX`. Requires a `parameter` to carry the operand."
+    },
+    "parameterValue": {
+      "description": "Literal value. Its JSON type depends on `kind` (array of strings for `indices`, string for dates, tags, and country, number for numeric operands, and so on).",
+      "oneOf": [
+        {
+          "type": "string"
+        },
+        {
+          "type": "number",
+          "format": "double"
+        },
+        {
+          "type": "boolean"
+        },
+        {
+          "type": "array",
+          "items": {
+            "type": "string"
+          }
+        }
+      ]
+    }
+  }
+}

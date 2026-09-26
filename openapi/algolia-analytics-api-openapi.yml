@@ -1719,355 +1719,51 @@ paths:
           description: No content.
 components:
   schemas:
-    topSearchesResponse:
+    CatalogEntry:
       type: object
-      title: Top searches
+      title: Catalog entry
       additionalProperties: false
       required:
-      - searches
+      - kind
+      - description
+      - roots
+      - requires
       properties:
-        searches:
+        kind:
+          type: string
+          description: Field identifier.
+        description:
+          type: string
+          description: Human-readable description of the field.
+        roots:
           type: array
-          description: Most popular searches and their number of search results (hits).
+          description: Root stages the field depends on. Two fields are combinable in one query only when their roots intersect.
           items:
-            title: topSearch
-            type: object
-            additionalProperties: false
-            required:
-            - search
-            - count
-            - nbHits
-            properties:
-              search:
-                $ref: '#/components/schemas/search'
-              count:
-                $ref: '#/components/schemas/count'
-              nbHits:
-                $ref: '#/components/schemas/nbHits'
-    DomainCatalog:
-      type: object
-      title: Domain catalog
-      additionalProperties: false
-      required:
-      - metrics
-      - filters
-      - groups
-      - distributions
-      properties:
-        metrics:
+            type: string
+        requires:
           type: array
-          description: Fields usable as metrics.
+          description: Public ACL identifiers required to read the field, for example `clickAnalyticsEnabled`.
           items:
-            $ref: '#/components/schemas/CatalogEntry'
-        filters:
-          type: array
-          description: Fields usable as filters.
-          items:
-            $ref: '#/components/schemas/CatalogEntry'
-        groups:
-          type: array
-          description: Fields usable in `groupBy`.
-          items:
-            $ref: '#/components/schemas/CatalogEntry'
-        distributions:
-          type: array
-          description: Fields usable in distributions.
-          items:
-            $ref: '#/components/schemas/CatalogEntry'
-    topSearchesResponseWithAnalytics:
-      type: object
-      title: Top searches with click analytics
-      additionalProperties: false
-      required:
-      - searches
-      properties:
-        searches:
-          type: array
-          description: Most popular searches and their associated click and conversion metrics.
-          items:
-            title: topSearchWithAnalytics
-            type: object
-            additionalProperties: false
-            required:
-            - search
-            - count
-            - nbHits
-            - clickThroughRate
-            - averageClickPosition
-            - clickPositions
-            - conversionRate
-            - trackedSearchCount
-            - clickCount
-            - conversionCount
-            properties:
-              search:
-                $ref: '#/components/schemas/search'
-              count:
-                $ref: '#/components/schemas/count'
-              clickThroughRate:
-                $ref: '#/components/schemas/clickThroughRate'
-              averageClickPosition:
-                $ref: '#/components/schemas/averageClickPosition'
-              clickPositions:
-                $ref: '#/components/schemas/clickPositions'
-              conversionRate:
-                $ref: '#/components/schemas/conversionRate'
-              trackedSearchCount:
-                $ref: '#/components/schemas/trackedSearchCount'
-              clickCount:
-                $ref: '#/components/schemas/clickCount'
-              conversionCount:
-                $ref: '#/components/schemas/conversionCount'
-              nbHits:
-                $ref: '#/components/schemas/nbHits'
-    attribute:
-      description: Attribute name.
+            type: string
+    date:
       type: string
-      example: url
-    getTopFilterAttributesResponse:
-      type: object
-      additionalProperties: false
-      required:
-      - attributes
-      properties:
-        attributes:
-          type: array
-          description: Most frequent filters.
-          items:
-            $ref: '#/components/schemas/getTopFilterAttribute'
-    binEdge:
-      description: A histogram bin edge. Use integers for discrete distributions and floating-point values for continuous ones.
-      oneOf:
-      - type: integer
-      - type: number
-        format: double
-    addToCartCount:
-      type: integer
-      description: Number of add-to-cart events from this search.
-      minimum: 0
-      default: 0
-      example: 10
-    withFilterCount:
-      type: integer
-      description: Number of searches for this term with applied filters.
-      example: 5
-      minimum: 0
-      default: 0
-    topHitsResponseWithAnalytics:
-      type: object
-      title: Top search results with click analytics
-      additionalProperties: false
-      required:
-      - hits
-      properties:
-        hits:
-          type: array
-          description: Most frequent search results with click and conversion metrics.
-          items:
-            title: topHitWithAnalytics
-            type: object
-            additionalProperties: false
-            required:
-            - hit
-            - count
-            - clickThroughRate
-            - conversionRate
-            - trackedHitCount
-            - clickCount
-            - conversionCount
-            properties:
-              hit:
-                $ref: '#/components/schemas/hit'
-              count:
-                $ref: '#/components/schemas/parameters_count'
-              clickThroughRate:
-                $ref: '#/components/schemas/clickThroughRate'
-              conversionRate:
-                $ref: '#/components/schemas/conversionRate'
-              trackedHitCount:
-                $ref: '#/components/schemas/trackedSearchCount'
-              clickCount:
-                $ref: '#/components/schemas/clickCount'
-              conversionCount:
-                $ref: '#/components/schemas/conversionCount'
-    value:
-      description: Attribute value.
+      description: Date in the format YYYY-MM-DD.
+      example: '2023-06-14'
+    direction:
       type: string
-      example: integration
-    purchaseRate:
-      oneOf:
-      - type: number
-        format: double
-        description: 'Purchase rate: calculated as the number of tracked searches with at least one purchase event divided by the number of tracked searches.
-
-          If null, Algolia didn''t receive any search requests with `clickAnalytics` set to true.
-
-          '
-        minimum: 0
-        maximum: 1
-        default: null
-        example: 0.05
-      - type: 'null'
-    noResultsRate:
+      enum:
+      - asc
+      - desc
+      default: asc
+    noClickRate:
       type: number
       format: double
-      description: 'No results rate: calculated as the number of searches with zero results divided by the total number of searches.
+      description: 'No click rate: calculated as the number of tracked searches without clicks divided by the number of tracked searches.
 
         '
       minimum: 0
       maximum: 1
-      example: 0.49
-    ErrorBase:
-      description: Error.
-      type: object
-      x-keep-model: true
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    parameterValue:
-      description: Literal value. Its JSON type depends on `kind` (array of strings for `indices`, string for dates, tags, and country, number for numeric operands, and so on).
-      oneOf:
-      - type: string
-      - type: number
-        format: double
-      - type: boolean
-      - type: array
-        items:
-          type: string
-    noResultCount:
-      description: Number of searches without any results.
-      type: integer
-      example: 54
-    OrderDefinition:
-      type: object
-      title: Order definition
-      additionalProperties: false
-      required:
-      - kind
-      - direction
-      properties:
-        domain:
-          type: string
-          description: Domain the field belongs to.
-        kind:
-          type: string
-          description: Field to sort by. Must appear in `metrics` or `groupBy`.
-          example: searchesCount
-        direction:
-          $ref: '#/components/schemas/orderDirection'
-    ParameterReference:
-      type: object
-      title: Parameter reference
-      additionalProperties: false
-      required:
-      - kind
-      properties:
-        domain:
-          type: string
-          description: Domain the parameter belongs to.
-          example: core
-        kind:
-          type: string
-          description: Parameter identifier that resolves to a value supplied in `parameters`.
-          example: country
-    getTopSearchesResponse:
-      oneOf:
-      - $ref: '#/components/schemas/topSearchesResponse'
-      - $ref: '#/components/schemas/topSearchesResponseWithAnalytics'
-      - $ref: '#/components/schemas/topSearchesResponseWithRevenueAnalytics'
-    getTopFiltersNoResultsValues:
-      type: object
-      additionalProperties: false
-      required:
-      - values
-      - count
-      properties:
-        count:
-          $ref: '#/components/schemas/parameters_count'
-        values:
-          type: array
-          description: Filters with no results.
-          items:
-            $ref: '#/components/schemas/getTopFiltersNoResultsValue'
-    clickThroughRate:
-      oneOf:
-      - type: number
-        format: double
-        description: 'Click-through rate: calculated as the number of tracked searches with at least one click event divided by the number of tracked searches.
-
-          If null, Algolia didn''t receive any search requests with `clickAnalytics` set to true.
-
-          '
-        minimum: 0
-        maximum: 1
-        default: null
-        example: 0.49
-      - type: 'null'
-    getTopFilterForAttribute:
-      type: object
-      additionalProperties: false
-      required:
-      - operator
-      - attribute
-      - value
-      - count
-      properties:
-        attribute:
-          $ref: '#/components/schemas/attribute'
-        operator:
-          $ref: '#/components/schemas/operator'
-        value:
-          $ref: '#/components/schemas/value'
-        count:
-          $ref: '#/components/schemas/parameters_count'
-    TimeseriesResponse:
-      type: object
-      title: Timeseries response
-      additionalProperties: false
-      required:
-      - series
-      properties:
-        series:
-          type:
-          - array
-          - 'null'
-          description: One entry per `groupBy` combination. `null` when the query matched no data.
-          items:
-            title: series
-            type: object
-            additionalProperties: false
-            required:
-            - totals
-            - dates
-            properties:
-              key:
-                type: object
-                description: The `groupBy` values identifying this series. Absent when the query has no `groupBy`.
-                additionalProperties: true
-              totals:
-                type: object
-                description: Metric totals over the whole period.
-                additionalProperties: true
-              dates:
-                type: array
-                description: Per-day metric breakdown.
-                items:
-                  title: seriesDate
-                  type: object
-                  additionalProperties: false
-                  required:
-                  - date
-                  - metrics
-                  properties:
-                    date:
-                      type: string
-                      description: Day, formatted as YYYY-MM-DD.
-                    metrics:
-                      type: object
-                      description: Metric values for the day.
-                      additionalProperties: true
+      example: 0.15
     getTopFilterForAttributeResponse:
       type: object
       additionalProperties: false
@@ -2079,61 +1775,29 @@ components:
           description: Filter values for an attribute.
           items:
             $ref: '#/components/schemas/getTopFilterForAttribute'
-    date:
-      type: string
-      description: Date in the format YYYY-MM-DD.
-      example: '2023-06-14'
-    parameters_count:
-      description: Number of occurrences.
-      example: 2
-      type: integer
-    hit:
-      description: Object ID of a record returned as a search result.
-      type: string
-      example: method-export-rules-php
-    currencies:
+    ParameterDefinition:
       type: object
-      description: 'Revenue associated with this search: broken down by currency.
-
-        '
-      default: {}
-      additionalProperties:
-        title: currencyCode
-        x-additionalPropertiesName: currency
-        type: object
-        description: Currency code.
-        properties:
-          currency:
-            type: string
-            description: Currency code.
-            example: USD
-          revenue:
-            type: number
-            format: float
-            description: Revenue associated with this search in this currency.
-            example: 999.98
-    topHitsResponse:
-      type: object
-      title: Top search results
+      title: Parameter definition
       additionalProperties: false
       required:
-      - hits
+      - kind
+      - value
       properties:
-        hits:
-          type: array
-          description: Most frequent search results.
-          items:
-            title: topHit
-            type: object
-            additionalProperties: false
-            required:
-            - hit
-            - count
-            properties:
-              hit:
-                $ref: '#/components/schemas/hit'
-              count:
-                $ref: '#/components/schemas/parameters_count'
+        domain:
+          type: string
+          description: Domain the parameter belongs to.
+        kind:
+          type: string
+          description: Parameter identifier, for example `indices`, `startDate`, `endDate`, `tags`, or `country`.
+          example: indices
+        value:
+          $ref: '#/components/schemas/parameterValue'
+    orderDirection:
+      type: string
+      description: Sort direction.
+      enum:
+      - asc
+      - desc
     getTopFiltersNoResultsResponse:
       type: object
       additionalProperties: false
@@ -2153,12 +1817,11 @@ components:
             items:
               $ref: '#/components/schemas/getTopFiltersNoResultsValues'
           - type: 'null'
-    orderDirection:
-      type: string
-      description: Sort direction.
-      enum:
-      - asc
-      - desc
+    ScalarResponse:
+      type: object
+      title: Scalar response
+      description: Object keyed by metric kind, each mapping to its aggregate value.
+      additionalProperties: true
     TableResponse:
       type: object
       title: Table response
@@ -2172,256 +1835,12 @@ components:
           items:
             type: object
             additionalProperties: true
-    FilterDefinition:
-      type: object
-      title: Filter definition
-      additionalProperties: false
-      required:
-      - kind
-      properties:
-        domain:
-          type: string
-          description: Domain the field belongs to.
-        kind:
-          type: string
-          description: Field to filter on. With no `operator`, the field must be boolean.
-          example: country
-        operator:
-          $ref: '#/components/schemas/filterOperator'
-        parameter:
-          $ref: '#/components/schemas/ParameterReference'
-    conversionCount:
-      type: integer
-      description: Number of conversions from this search.
-      example: 10
-      minimum: 0
-      default: 0
-    purchaseCount:
-      type: integer
-      description: Number of purchase events from this search.
-      default: 0
-      example: 10
-    search:
-      description: Search query.
-      example: separator
-      type: string
-    topHitsResponseWithRevenueAnalytics:
-      type: object
-      title: Top search results with revenue analytics
-      additionalProperties: false
-      required:
-      - hits
-      properties:
-        hits:
-          type: array
-          description: Most frequent search results with click, conversion, and revenue metrics.
-          items:
-            title: topHitWithRevenueAnalytics
-            type: object
-            additionalProperties: false
-            required:
-            - hit
-            - count
-            - clickThroughRate
-            - conversionRate
-            - trackedHitCount
-            - clickCount
-            - conversionCount
-            - purchaseCount
-            - addToCartCount
-            - purchaseRate
-            - addToCartRate
-            - currencies
-            properties:
-              hit:
-                $ref: '#/components/schemas/hit'
-              count:
-                $ref: '#/components/schemas/parameters_count'
-              clickThroughRate:
-                $ref: '#/components/schemas/clickThroughRate'
-              conversionRate:
-                $ref: '#/components/schemas/conversionRate'
-              trackedHitCount:
-                $ref: '#/components/schemas/trackedSearchCount'
-              clickCount:
-                $ref: '#/components/schemas/clickCount'
-              conversionCount:
-                $ref: '#/components/schemas/conversionCount'
-              addToCartRate:
-                $ref: '#/components/schemas/addToCartRate'
-              addToCartCount:
-                $ref: '#/components/schemas/addToCartCount'
-              purchaseRate:
-                $ref: '#/components/schemas/purchaseRate'
-              purchaseCount:
-                $ref: '#/components/schemas/purchaseCount'
-              currencies:
-                $ref: '#/components/schemas/currencies'
-    ScalarPayload:
-      type: object
-      title: Scalar query
-      additionalProperties: false
-      required:
-      - metrics
-      - parameters
-      properties:
-        domain:
-          type: string
-          description: Default domain propagated to entries that omit their own.
-          example: core
-        metrics:
-          type: array
-          description: Fields to aggregate.
-          items:
-            $ref: '#/components/schemas/FieldReference'
-        filters:
-          type: array
-          description: Filter conditions.
-          items:
-            $ref: '#/components/schemas/FilterDefinition'
-        parameters:
-          type: array
-          description: Literal values referenced by the query.
-          items:
-            $ref: '#/components/schemas/ParameterDefinition'
-    noClickRate:
-      type: number
-      format: double
-      description: 'No click rate: calculated as the number of tracked searches without clicks divided by the number of tracked searches.
-
-        '
-      minimum: 0
-      maximum: 1
-      example: 0.15
-    clickCount:
-      type: integer
-      description: Number of clicks associated with this search.
-      example: 162
-      minimum: 0
-      default: 0
-    TimeseriesPayload:
-      type: object
-      title: Timeseries query
-      additionalProperties: false
-      required:
-      - metrics
-      - parameters
-      properties:
-        domain:
-          type: string
-          description: Default domain propagated to entries that omit their own.
-          example: core
-        metrics:
-          type: array
-          description: Fields to aggregate.
-          items:
-            $ref: '#/components/schemas/FieldReference'
-        groupBy:
-          type: array
-          description: Fields to split the series by.
-          items:
-            $ref: '#/components/schemas/FieldReference'
-        filters:
-          type: array
-          description: Filter conditions.
-          items:
-            $ref: '#/components/schemas/FilterDefinition'
-        parameters:
-          type: array
-          description: Literal values referenced by the query.
-          items:
-            $ref: '#/components/schemas/ParameterDefinition'
-        limit:
-          type: integer
-          default: 100
-          minimum: 1
-          maximum: 100
-          description: Maximum number of series (groupBy values) to return.
-        offset:
-          type: integer
-          default: 0
-          minimum: 0
-          description: Number of series to skip.
-    getTopFiltersNoResultsValue:
-      type: object
-      additionalProperties: false
-      required:
-      - attribute
-      - operator
-      - value
-      properties:
-        attribute:
-          $ref: '#/components/schemas/attribute'
-        operator:
-          $ref: '#/components/schemas/operator'
-        value:
-          $ref: '#/components/schemas/value'
-    DistributionResponse:
-      type: object
-      title: Distribution response
-      description: Object keyed by `histogram<Field>`, each mapping a bin label to a count.
-      additionalProperties: true
-    noClickCount:
-      type: integer
-      description: Number of times this search was returned as a result without any click.
-      example: 15
-      minimum: 1
-    DistributionDefinition:
-      type: object
-      title: Distribution definition
-      additionalProperties: false
-      required:
-      - kind
-      - bins
-      properties:
-        domain:
-          type: string
-          description: Domain the field belongs to.
-        kind:
-          type: string
-          description: Numeric field to bucket into a histogram.
-          example: clickPosition
-        continuous:
-          type: boolean
-          default: false
-          description: Set to true for continuous kinds; use float bins.
-        bins:
-          type: array
-          description: Bin edges.
-          items:
-            $ref: '#/components/schemas/binEdge'
-          example:
-          - 1
-          - 2
-          - 3
-          - 4
-          - 5
-          - 6
-          - 7
-          - 8
-          - 9
-          - 10
-          - 11
-          - 21
-          - -1
-    direction:
-      type: string
-      enum:
-      - asc
-      - desc
-      default: asc
-    averageClickPosition:
+    updatedAtNullable:
       oneOf:
-      - type: number
-        format: double
-        description: 'Average position of a clicked search result in the list of search results.
-
-          If null, Algolia didn''t receive any search requests with `clickAnalytics` set to true.
-
-          '
-        minimum: 1
-        example: 2.035
+      - type: string
         default: null
+        description: Date and time when the object was updated, in RFC 3339 format.
+        example: '2023-07-04T12:49:15Z'
       - type: 'null'
     conversionRate:
       oneOf:
@@ -2437,34 +1856,59 @@ components:
         default: null
         example: 0.05
       - type: 'null'
-    ScalarResponse:
-      type: object
-      title: Scalar response
-      description: Object keyed by metric kind, each mapping to its aggregate value.
-      additionalProperties: true
-    getTopFilterAttribute:
+    getTopFilterForAttribute:
       type: object
       additionalProperties: false
       required:
+      - operator
       - attribute
+      - value
       - count
       properties:
         attribute:
           $ref: '#/components/schemas/attribute'
+        operator:
+          $ref: '#/components/schemas/operator'
+        value:
+          $ref: '#/components/schemas/value'
         count:
           $ref: '#/components/schemas/parameters_count'
-    updatedAtNullable:
+    parameterValue:
+      description: Literal value. Its JSON type depends on `kind` (array of strings for `indices`, string for dates, tags, and country, number for numeric operands, and so on).
       oneOf:
       - type: string
-        default: null
-        description: Date and time when the object was updated, in RFC 3339 format.
-        example: '2023-07-04T12:49:15Z'
-      - type: 'null'
-    getTopHitsResponse:
-      oneOf:
-      - $ref: '#/components/schemas/topHitsResponse'
-      - $ref: '#/components/schemas/topHitsResponseWithAnalytics'
-      - $ref: '#/components/schemas/topHitsResponseWithRevenueAnalytics'
+      - type: number
+        format: double
+      - type: boolean
+      - type: array
+        items:
+          type: string
+    filterOperator:
+      type: string
+      description: 'Comparison operator applied to a filter field, one of: `=`, `!=`, `>`, `<`, `>=`, `<=`, `IN`, `TAG_TREE`, `CONTAINS`, `STARTS_WITH`, `CONTAINS_PREFIX`. Requires a `parameter` to carry the operand.'
+      example: '='
+    count:
+      description: Number of searches.
+      type: integer
+      example: 504
+    getTopFiltersNoResultsValue:
+      type: object
+      additionalProperties: false
+      required:
+      - attribute
+      - operator
+      - value
+      properties:
+        attribute:
+          $ref: '#/components/schemas/attribute'
+        operator:
+          $ref: '#/components/schemas/operator'
+        value:
+          $ref: '#/components/schemas/value'
+    value:
+      description: Attribute value.
+      type: string
+      example: integration
     topSearchesResponseWithRevenueAnalytics:
       type: object
       title: Top searches with revenue analytics
@@ -2526,89 +1970,47 @@ components:
                 $ref: '#/components/schemas/purchaseRate'
               purchaseCount:
                 $ref: '#/components/schemas/purchaseCount'
-    FieldReference:
-      type: object
-      title: Field reference
-      additionalProperties: false
-      required:
-      - kind
-      properties:
-        domain:
-          type: string
-          description: Domain the field belongs to. Defaults to the payload's top-level `domain` when omitted.
-          example: core
-        kind:
-          type: string
-          description: Field identifier within the domain, as listed by the `/3/patterns/fields` catalog.
-          example: searchesCount
-    clickPositions:
-      type: array
-      description: List of positions in the search results and clicks associated with this search.
-      minItems: 12
-      maxItems: 12
-      items:
-        title: clickPosition
-        type: object
-        description: Click position.
-        properties:
-          position:
-            type: array
-            description: 'Range of positions in the search results, using the pattern `[start,end]`.
-
-
-              For positions 11 and up, click events are summed over the specified range.
-
-              `-1` indicates the end of the list of search results.
-
-              '
-            minItems: 2
-            maxItems: 2
-            example:
-            - 21
-            - -1
-            items:
-              type: integer
-          clickCount:
-            type: integer
-            description: Number of times this search has been clicked at that position.
-            example: 24
-            minimum: 0
-            default: 0
-    count:
-      description: Number of searches.
+    withFilterCount:
       type: integer
-      example: 504
-    addToCartRate:
-      oneOf:
-      - type: number
-        format: double
-        description: 'Add-to-cart rate: calculated as the number of tracked searches with at least one add-to-cart event divided by the number of tracked searches.
-
-          If null, Algolia didn''t receive any search requests with `clickAnalytics` set to true.
-
-          '
-        minimum: 0
-        maximum: 1
-        default: null
-        example: 0.1
-      - type: 'null'
-    DistributionPayload:
+      description: Number of searches for this term with applied filters.
+      example: 5
+      minimum: 0
+      default: 0
+    clickCount:
+      type: integer
+      description: Number of clicks associated with this search.
+      example: 162
+      minimum: 0
+      default: 0
+    Catalog:
       type: object
-      title: Distribution query
+      title: Field catalog
       additionalProperties: false
       required:
-      - distributions
+      - domains
+      properties:
+        domains:
+          type: object
+          description: Catalog entries grouped by domain.
+          additionalProperties:
+            $ref: '#/components/schemas/DomainCatalog'
+    ScalarPayload:
+      type: object
+      title: Scalar query
+      additionalProperties: false
+      required:
+      - metrics
       - parameters
       properties:
         domain:
           type: string
           description: Default domain propagated to entries that omit their own.
           example: core
-        distributions:
+        metrics:
           type: array
-          description: Histogram specifications.
+          description: Fields to aggregate.
           items:
-            $ref: '#/components/schemas/DistributionDefinition'
+            $ref: '#/components/schemas/FieldReference'
         filters:
           type: array
           description: Filter conditions.
@@ -2619,6 +2021,113 @@ components:
           description: Literal values referenced by the query.
           items:
             $ref: '#/components/schemas/ParameterDefinition'
+    currencies:
+      type: object
+      description: 'Revenue associated with this search: broken down by currency.
+
+        '
+      default: {}
+      additionalProperties:
+        title: currencyCode
+        x-additionalPropertiesName: currency
+        type: object
+        description: Currency code.
+        properties:
+          currency:
+            type: string
+            description: Currency code.
+            example: USD
+          revenue:
+            type: number
+            format: float
+            description: Revenue associated with this search in this currency.
+            example: 999.98
+    getTopFilterAttribute:
+      type: object
+      additionalProperties: false
+      required:
+      - attribute
+      - count
+      properties:
+        attribute:
+          $ref: '#/components/schemas/attribute'
+        count:
+          $ref: '#/components/schemas/parameters_count'
+    noClickCount:
+      type: integer
+      description: Number of times this search was returned as a result without any click.
+      example: 15
+      minimum: 1
+    getTopHitsResponse:
+      oneOf:
+      - $ref: '#/components/schemas/topHitsResponse'
+      - $ref: '#/components/schemas/topHitsResponseWithAnalytics'
+      - $ref: '#/components/schemas/topHitsResponseWithRevenueAnalytics'
+    TimeseriesPayload:
+      type: object
+      title: Timeseries query
+      additionalProperties: false
+      required:
+      - metrics
+      - parameters
+      properties:
+        domain:
+          type: string
+          description: Default domain propagated to entries that omit their own.
+          example: core
+        metrics:
+          type: array
+          description: Fields to aggregate.
+          items:
+            $ref: '#/components/schemas/FieldReference'
+        groupBy:
+          type: array
+          description: Fields to split the series by.
+          items:
+            $ref: '#/components/schemas/FieldReference'
+        filters:
+          type: array
+          description: Filter conditions.
+          items:
+            $ref: '#/components/schemas/FilterDefinition'
+        parameters:
+          type: array
+          description: Literal values referenced by the query.
+          items:
+            $ref: '#/components/schemas/ParameterDefinition'
+        limit:
+          type: integer
+          default: 100
+          minimum: 1
+          maximum: 100
+          description: Maximum number of series (groupBy values) to return.
+        offset:
+          type: integer
+          default: 0
+          minimum: 0
+          description: Number of series to skip.
+    FilterDefinition:
+      type: object
+      title: Filter definition
+      additionalProperties: false
+      required:
+      - kind
+      properties:
+        domain:
+          type: string
+          description: Domain the field belongs to.
+        kind:
+          type: string
+          description: Field to filter on. With no `operator`, the field must be boolean.
+          example: country
+        operator:
+          $ref: '#/components/schemas/filterOperator'
+        parameter:
+          $ref: '#/components/schemas/ParameterReference'
+    search:
+      description: Search query.
+      example: separator
+      type: string
     orderBy:
       type: string
       description: 'Attribute by which to order the response items.
@@ -2633,37 +2142,15 @@ components:
       - conversionRate
       - averageClickPosition
       default: searchCount
-    Catalog:
-      type: object
-      title: Field catalog
-      additionalProperties: false
-      required:
-      - domains
-      properties:
-        domains:
-          type: object
-          description: Catalog entries grouped by domain.
-          additionalProperties:
-            $ref: '#/components/schemas/DomainCatalog'
-    operator:
-      description: 'Character that characterizes how the filter is applied.
-
-
-        For example, for a facet filter `facet:value`, `:` is the operator.
-
-        For a numeric filter `count>50`, `>` is the operator.
-
-        '
-      type: string
-      enum:
-      - ':'
-      - <
-      - <=
-      - '='
-      - '!='
-      - '>'
-      - '>='
-      example: ':'
+    getTopSearchesResponse:
+      oneOf:
+      - $ref: '#/components/schemas/topSearchesResponse'
+      - $ref: '#/components/schemas/topSearchesResponseWithAnalytics'
+      - $ref: '#/components/schemas/topSearchesResponseWithRevenueAnalytics'
+    noResultCount:
+      description: Number of searches without any results.
+      type: integer
+      example: 54
     TablePayload:
       type: object
       title: Table query
@@ -2713,66 +2200,579 @@ components:
           default: 0
           minimum: 0
           description: Number of rows to skip.
-    CatalogEntry:
+    purchaseRate:
+      oneOf:
+      - type: number
+        format: double
+        description: 'Purchase rate: calculated as the number of tracked searches with at least one purchase event divided by the number of tracked searches.
+
+          If null, Algolia didn''t receive any search requests with `clickAnalytics` set to true.
+
+          '
+        minimum: 0
+        maximum: 1
+        default: null
+        example: 0.05
+      - type: 'null'
+    operator:
+      description: 'Character that characterizes how the filter is applied.
+
+
+        For example, for a facet filter `facet:value`, `:` is the operator.
+
+        For a numeric filter `count>50`, `>` is the operator.
+
+        '
+      type: string
+      enum:
+      - ':'
+      - <
+      - <=
+      - '='
+      - '!='
+      - '>'
+      - '>='
+      example: ':'
+    TimeseriesResponse:
       type: object
-      title: Catalog entry
+      title: Timeseries response
+      additionalProperties: false
+      required:
+      - series
+      properties:
+        series:
+          type:
+          - array
+          - 'null'
+          description: One entry per `groupBy` combination. `null` when the query matched no data.
+          items:
+            title: series
+            type: object
+            additionalProperties: false
+            required:
+            - totals
+            - dates
+            properties:
+              key:
+                type: object
+                description: The `groupBy` values identifying this series. Absent when the query has no `groupBy`.
+                additionalProperties: true
+              totals:
+                type: object
+                description: Metric totals over the whole period.
+                additionalProperties: true
+              dates:
+                type: array
+                description: Per-day metric breakdown.
+                items:
+                  title: seriesDate
+                  type: object
+                  additionalProperties: false
+                  required:
+                  - date
+                  - metrics
+                  properties:
+                    date:
+                      type: string
+                      description: Day, formatted as YYYY-MM-DD.
+                    metrics:
+                      type: object
+                      description: Metric values for the day.
+                      additionalProperties: true
+    getTopFilterAttributesResponse:
+      type: object
+      additionalProperties: false
+      required:
+      - attributes
+      properties:
+        attributes:
+          type: array
+          description: Most frequent filters.
+          items:
+            $ref: '#/components/schemas/getTopFilterAttribute'
+    OrderDefinition:
+      type: object
+      title: Order definition
       additionalProperties: false
       required:
       - kind
-      - description
-      - roots
-      - requires
+      - direction
       properties:
+        domain:
+          type: string
+          description: Domain the field belongs to.
         kind:
           type: string
-          description: Field identifier.
-        description:
+          description: Field to sort by. Must appear in `metrics` or `groupBy`.
+          example: searchesCount
+        direction:
+          $ref: '#/components/schemas/orderDirection'
+    clickPositions:
+      type: array
+      description: List of positions in the search results and clicks associated with this search.
+      minItems: 12
+      maxItems: 12
+      items:
+        title: clickPosition
+        type: object
+        description: Click position.
+        properties:
+          position:
+            type: array
+            description: 'Range of positions in the search results, using the pattern `[start,end]`.
+
+
+              For positions 11 and up, click events are summed over the specified range.
+
+              `-1` indicates the end of the list of search results.
+
+              '
+            minItems: 2
+            maxItems: 2
+            example:
+            - 21
+            - -1
+            items:
+              type: integer
+          clickCount:
+            type: integer
+            description: Number of times this search has been clicked at that position.
+            example: 24
+            minimum: 0
+            default: 0
+    FieldReference:
+      type: object
+      title: Field reference
+      additionalProperties: false
+      required:
+      - kind
+      properties:
+        domain:
           type: string
-          description: Human-readable description of the field.
-        roots:
+          description: Domain the field belongs to. Defaults to the payload's top-level `domain` when omitted.
+          example: core
+        kind:
+          type: string
+          description: Field identifier within the domain, as listed by the `/3/patterns/fields` catalog.
+          example: searchesCount
+    DistributionDefinition:
+      type: object
+      title: Distribution definition
+      additionalProperties: false
+      required:
+      - kind
+      - bins
+      properties:
+        domain:
+          type: string
+          description: Domain the field belongs to.
+        kind:
+          type: string
+          description: Numeric field to bucket into a histogram.
+          example: clickPosition
+        continuous:
+          type: boolean
+          default: false
+          description: Set to true for continuous kinds; use float bins.
+        bins:
           type: array
-          description: Root stages the field depends on. Two fields are combinable in one query only when their roots intersect.
+          description: Bin edges.
           items:
-            type: string
-        requires:
+            $ref: '#/components/schemas/binEdge'
+          example:
+          - 1
+          - 2
+          - 3
+          - 4
+          - 5
+          - 6
+          - 7
+          - 8
+          - 9
+          - 10
+          - 11
+          - 21
+          - -1
+    topHitsResponse:
+      type: object
+      title: Top search results
+      additionalProperties: false
+      required:
+      - hits
+      properties:
+        hits:
           type: array
-          description: Public ACL identifiers required to read the field, for example `clickAnalyticsEnabled`.
+          description: Most frequent search results.
           items:
-            type: string
+            title: topHit
+            type: object
+            additionalProperties: false
+            required:
+            - hit
+            - count
+            properties:
+              hit:
+                $ref: '#/components/schemas/hit'
+              count:
+                $ref: '#/components/schemas/parameters_count'
+    noResultsRate:
+      type: number
+      format: double
+      description: 'No results rate: calculated as the number of searches with zero results divided by the total number of searches.
+
+        '
+      minimum: 0
+      maximum: 1
+      example: 0.49
+    DistributionResponse:
+      type: object
+      title: Distribution response
+      description: Object keyed by `histogram<Field>`, each mapping a bin label to a count.
+      additionalProperties: true
+    conversionCount:
+      type: integer
+      description: Number of conversions from this search.
+      example: 10
+      minimum: 0
+      default: 0
+    topSearchesResponseWithAnalytics:
+      type: object
+      title: Top searches with click analytics
+      additionalProperties: false
+      required:
+      - searches
+      properties:
+        searches:
+          type: array
+          description: Most popular searches and their associated click and conversion metrics.
+          items:
+            title: topSearchWithAnalytics
+            type: object
+            additionalProperties: false
+            required:
+            - search
+            - count
+            - nbHits
+            - clickThroughRate
+            - averageClickPosition
+            - clickPositions
+            - conversionRate
+            - trackedSearchCount
+            - clickCount
+            - conversionCount
+            properties:
+              search:
+                $ref: '#/components/schemas/search'
+              count:
+                $ref: '#/components/schemas/count'
+              clickThroughRate:
+                $ref: '#/components/schemas/clickThroughRate'
+              averageClickPosition:
+                $ref: '#/components/schemas/averageClickPosition'
+              clickPositions:
+                $ref: '#/components/schemas/clickPositions'
+              conversionRate:
+                $ref: '#/components/schemas/conversionRate'
+              trackedSearchCount:
+                $ref: '#/components/schemas/trackedSearchCount'
+              clickCount:
+                $ref: '#/components/schemas/clickCount'
+              conversionCount:
+                $ref: '#/components/schemas/conversionCount'
+              nbHits:
+                $ref: '#/components/schemas/nbHits'
+    getTopFiltersNoResultsValues:
+      type: object
+      additionalProperties: false
+      required:
+      - values
+      - count
+      properties:
+        count:
+          $ref: '#/components/schemas/parameters_count'
+        values:
+          type: array
+          description: Filters with no results.
+          items:
+            $ref: '#/components/schemas/getTopFiltersNoResultsValue'
     nbHits:
       type: integer
       description: Number of results (hits).
       example: 20
-    ParameterDefinition:
+    averageClickPosition:
+      oneOf:
+      - type: number
+        format: double
+        description: 'Average position of a clicked search result in the list of search results.
+
+          If null, Algolia didn''t receive any search requests with `clickAnalytics` set to true.
+
+          '
+        minimum: 1
+        example: 2.035
+        default: null
+      - type: 'null'
+    topHitsResponseWithRevenueAnalytics:
       type: object
-      title: Parameter definition
+      title: Top search results with revenue analytics
       additionalProperties: false
       required:
-      - kind
-      - value
+      - hits
       properties:
-        domain:
-          type: string
-          description: Domain the parameter belongs to.
-        kind:
-          type: string
-          description: Parameter identifier, for example `indices`, `startDate`, `endDate`, `tags`, or `country`.
-          example: indices
-        value:
-          $ref: '#/components/schemas/parameterValue'
+        hits:
+          type: array
+          description: Most frequent search results with click, conversion, and revenue metrics.
+          items:
+            title: topHitWithRevenueAnalytics
+            type: object
+            additionalProperties: false
+            required:
+            - hit
+            - count
+            - clickThroughRate
+            - conversionRate
+            - trackedHitCount
+            - clickCount
+            - conversionCount
+            - purchaseCount
+            - addToCartCount
+            - purchaseRate
+            - addToCartRate
+            - currencies
+            properties:
+              hit:
+                $ref: '#/components/schemas/hit'
+              count:
+                $ref: '#/components/schemas/parameters_count'
+              clickThroughRate:
+                $ref: '#/components/schemas/clickThroughRate'
+              conversionRate:
+                $ref: '#/components/schemas/conversionRate'
+              trackedHitCount:
+                $ref: '#/components/schemas/trackedSearchCount'
+              clickCount:
+                $ref: '#/components/schemas/clickCount'
+              conversionCount:
+                $ref: '#/components/schemas/conversionCount'
+              addToCartRate:
+                $ref: '#/components/schemas/addToCartRate'
+              addToCartCount:
+                $ref: '#/components/schemas/addToCartCount'
+              purchaseRate:
+                $ref: '#/components/schemas/purchaseRate'
+              purchaseCount:
+                $ref: '#/components/schemas/purchaseCount'
+              currencies:
+                $ref: '#/components/schemas/currencies'
+    addToCartRate:
+      oneOf:
+      - type: number
+        format: double
+        description: 'Add-to-cart rate: calculated as the number of tracked searches with at least one add-to-cart event divided by the number of tracked searches.
+
+          If null, Algolia didn''t receive any search requests with `clickAnalytics` set to true.
+
+          '
+        minimum: 0
+        maximum: 1
+        default: null
+        example: 0.1
+      - type: 'null'
     trackedSearchCount:
       type: integer
       example: 2
       default: 0
       description: Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
-    filterOperator:
+    parameters_count:
+      description: Number of occurrences.
+      example: 2
+      type: integer
+    ParameterReference:
+      type: object
+      title: Parameter reference
+      additionalProperties: false
+      required:
+      - kind
+      properties:
+        domain:
+          type: string
+          description: Domain the parameter belongs to.
+          example: core
+        kind:
+          type: string
+          description: Parameter identifier that resolves to a value supplied in `parameters`.
+          example: country
+    ErrorBase:
+      description: Error.
+      type: object
+      x-keep-model: true
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    binEdge:
+      description: A histogram bin edge. Use integers for discrete distributions and floating-point values for continuous ones.
+      oneOf:
+      - type: integer
+      - type: number
+        format: double
+    topSearchesResponse:
+      type: object
+      title: Top searches
+      additionalProperties: false
+      required:
+      - searches
+      properties:
+        searches:
+          type: array
+          description: Most popular searches and their number of search results (hits).
+          items:
+            title: topSearch
+            type: object
+            additionalProperties: false
+            required:
+            - search
+            - count
+            - nbHits
+            properties:
+              search:
+                $ref: '#/components/schemas/search'
+              count:
+                $ref: '#/components/schemas/count'
+              nbHits:
+                $ref: '#/components/schemas/nbHits'
+    purchaseCount:
+      type: integer
+      description: Number of purchase events from this search.
+      default: 0
+      example: 10
+    addToCartCount:
+      type: integer
+      description: Number of add-to-cart events from this search.
+      minimum: 0
+      default: 0
+      example: 10
+    topHitsResponseWithAnalytics:
+      type: object
+      title: Top search results with click analytics
+      additionalProperties: false
+      required:
+      - hits
+      properties:
+        hits:
+          type: array
+          description: Most frequent search results with click and conversion metrics.
+          items:
+            title: topHitWithAnalytics
+            type: object
+            additionalProperties: false
+            required:
+            - hit
+            - count
+            - clickThroughRate
+            - conversionRate
+            - trackedHitCount
+            - clickCount
+            - conversionCount
+            properties:
+              hit:
+                $ref: '#/components/schemas/hit'
+              count:
+                $ref: '#/components/schemas/parameters_count'
+              clickThroughRate:
+                $ref: '#/components/schemas/clickThroughRate'
+              conversionRate:
+                $ref: '#/components/schemas/conversionRate'
+              trackedHitCount:
+                $ref: '#/components/schemas/trackedSearchCount'
+              clickCount:
+                $ref: '#/components/schemas/clickCount'
+              conversionCount:
+                $ref: '#/components/schemas/conversionCount'
+    DomainCatalog:
+      type: object
+      title: Domain catalog
+      additionalProperties: false
+      required:
+      - metrics
+      - filters
+      - groups
+      - distributions
+      properties:
+        metrics:
+          type: array
+          description: Fields usable as metrics.
+          items:
+            $ref: '#/components/schemas/CatalogEntry'
+        filters:
+          type: array
+          description: Fields usable as filters.
+          items:
+            $ref: '#/components/schemas/CatalogEntry'
+        groups:
+          type: array
+          description: Fields usable in `groupBy`.
+          items:
+            $ref: '#/components/schemas/CatalogEntry'
+        distributions:
+          type: array
+          description: Fields usable in distributions.
+          items:
+            $ref: '#/components/schemas/CatalogEntry'
+    clickThroughRate:
+      oneOf:
+      - type: number
+        format: double
+        description: 'Click-through rate: calculated as the number of tracked searches with at least one click event divided by the number of tracked searches.
+
+          If null, Algolia didn''t receive any search requests with `clickAnalytics` set to true.
+
+          '
+        minimum: 0
+        maximum: 1
+        default: null
+        example: 0.49
+      - type: 'null'
+    hit:
+      description: Object ID of a record returned as a search result.
       type: string
-      description: 'Comparison operator applied to a filter field, one of: `=`, `!=`, `>`, `<`, `>=`, `<=`, `IN`, `TAG_TREE`, `CONTAINS`, `STARTS_WITH`, `CONTAINS_PREFIX`. Requires a `parameter` to carry the operand.'
-      example: '='
+      example: method-export-rules-php
+    DistributionPayload:
+      type: object
+      title: Distribution query
+      additionalProperties: false
+      required:
+      - distributions
+      - parameters
+      properties:
+        domain:
+          type: string
+          description: Default domain propagated to entries that omit their own.
+          example: core
+        distributions:
+          type: array
+          description: Histogram specifications.
+          items:
+            $ref: '#/components/schemas/DistributionDefinition'
+        filters:
+          type: array
+          description: Filter conditions.
+          items:
+            $ref: '#/components/schemas/FilterDefinition'
+        parameters:
+          type: array
+          description: Literal values referenced by the query.
+          items:
+            $ref: '#/components/schemas/ParameterDefinition'
+    attribute:
+      description: Attribute name.
+      type: string
+      example: url
   headers:
-    x-ratelimit-limit:
-      description: Number of allowed requests per one minute.
-      example: 100
+    x-ratelimit-reset:
+      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
+      example: 1710682486
       schema:
         type: integer
     x-ratelimit-remaining:
@@ -2780,53 +2780,28 @@ components:
       example: 99
       schema:
         type: integer
-    x-ratelimit-reset:
-      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
-      example: 1710682486
+    x-ratelimit-limit:
+      description: Number of allowed requests per one minute.
+      example: 100
       schema:
         type: integer
   parameters:
-    StartDate:
+    Search:
       in: query
-      name: startDate
-      description: Start date of the period to analyze, in `YYYY-MM-DD` format.
+      name: search
+      description: Search query.
+      example: enable ab test
       schema:
         type: string
-        example: '2022-09-19'
-    Direction:
+    IndexQuery:
       in: query
-      name: direction
-      description: 'Sorting direction of the results: ascending or descending.
-
-        '
-      schema:
-        $ref: '#/components/schemas/direction'
-    Attribute:
-      in: path
-      name: attribute
-      description: Attribute name.
-      required: true
-      schema:
-        type: string
-        example: brand
-    Offset:
-      in: query
-      name: offset
-      description: 'Position of the first item to return.
-
-        '
+      name: index
       required: false
+      description: 'Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body''s `indices` parameter; optional for unrestricted keys.
+
+        '
       schema:
-        type: integer
-        default: 0
-        minimum: 0
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
+        type: string
     EndDate:
       in: query
       name: endDate
@@ -2834,22 +2809,13 @@ components:
       schema:
         type: string
         example: '2023-01-21'
-    Tags:
-      name: tags
+    Parameters:
+      name: parameters
       in: query
-      description: 'Tags by which to segment the analytics.
-
-
-        You can combine multiple tags with `OR` and `AND`.
-
-        Tags must be URL-encoded.
-
-        For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
-
-        '
-      example: device:mobile%20phone
+      description: Query parameters to apply to the current query.
       schema:
-        type: string
+        type: object
+        additionalProperties: true
     ClickAnalytics:
       in: query
       name: clickAnalytics
@@ -2864,6 +2830,40 @@ components:
       schema:
         type: boolean
         default: false
+    Offset:
+      in: query
+      name: offset
+      description: 'Position of the first item to return.
+
+        '
+      required: false
+      schema:
+        type: integer
+        default: 0
+        minimum: 0
+    StartDate:
+      in: query
+      name: startDate
+      description: Start date of the period to analyze, in `YYYY-MM-DD` format.
+      schema:
+        type: string
+        example: '2022-09-19'
+    Attribute:
+      in: path
+      name: attribute
+      description: Attribute name.
+      required: true
+      schema:
+        type: string
+        example: brand
+    Direction:
+      in: query
+      name: direction
+      description: 'Sorting direction of the results: ascending or descending.
+
+        '
+      schema:
+        $ref: '#/components/schemas/direction'
     OrderBy:
       in: query
       name: orderBy
@@ -2886,13 +2886,6 @@ components:
         type: integer
         default: 10
         maximum: 1000
-    Search:
-      in: query
-      name: search
-      description: Search query.
-      example: enable ab test
-      schema:
-        type: string
     Index:
       in: query
       name: index
@@ -2901,13 +2894,20 @@ components:
       schema:
         type: string
         example: ALGOLIA_INDEX_NAME
-    IndexQuery:
+    Tags:
+      name: tags
       in: query
-      name: index
-      required: false
-      description: 'Comma-separated list of indices the request runs on, used for authorization. Required for index-restricted API keys and must match the indices supplied in the request body''s `indices` parameter; optional for unrestricted keys.
+      description: 'Tags by which to segment the analytics.
+
+
+        You can combine multiple tags with `OR` and `AND`.
+
+        Tags must be URL-encoded.
+
+        For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
 
         '
+      example: device:mobile%20phone
       schema:
         type: string
     PathInPath:
@@ -2919,6 +2919,12 @@ components:
         type: string
         example: /keys
   responses:
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
     BadRequest:
       description: Bad request or request arguments.
       content:
@@ -2933,12 +2939,6 @@ components:
             $ref: '#/components/schemas/ErrorBase'
     IndexNotFound:
       description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
       content:
         application/json:
           schema:
