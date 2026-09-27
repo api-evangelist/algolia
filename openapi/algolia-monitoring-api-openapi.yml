@@ -2,7 +2,8 @@ openapi: 3.2.0
 info:
   title: Algolia Monitoring API
   summary: The Monitoring API lets you check the status of your Algolia infrastructure
-  description: The metrics exposed by this API are based on results from external monitoring probes checking Algolia’s infrastructure.
+  description: The metrics exposed by this API are based on results from external
+    monitoring probes checking Algolia’s infrastructure.
   version: 1.0.0
 servers:
 - url: https://status.algolia.com
@@ -211,7 +212,8 @@ paths:
   /1/latency/{clusters}:
     get:
       summary: Retrieve search latency times
-      description: Retrieves the average latency for search requests for selected clusters.
+      description: Retrieves the average latency for search requests for selected
+        clusters.
       operationId: getLatency
       security: []
       tags:
@@ -229,16 +231,19 @@ paths:
       description: 'Retrieves indexing latency metrics for selected clusters.
 
 
-        This endpoint is intended for infrastructure-level monitoring and availability checks.
+        This endpoint is intended for infrastructure-level monitoring and availability
+        checks.
 
-        The returned value reflects latency measured on Algolia''s internal monitoring index
+        The returned value reflects latency measured on Algolia''s internal monitoring
+        index
 
         and is reported in milliseconds.
 
 
         This metric isn''t intended to represent the indexing performance of an individual
 
-        application or index. To measure when an indexing operation has completed for your
+        application or index. To measure when an indexing operation has completed
+        for your
 
         application, use the `waitTask` method.'
       operationId: getIndexingTime
@@ -270,12 +275,14 @@ paths:
   /1/infrastructure/{metric}/period/{period}:
     get:
       summary: Retrieve metrics
-      description: 'Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time window.
+      description: 'Retrieves metrics related to your Algolia infrastructure, aggregated
+        over a selected time window.
 
 
         Access to this API is available as part of the Premium or Elevate plans.
 
-        You must authenticate requests with the `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).'
+        You must authenticate requests with the `x-algolia-application-id` and `x-algolia-api-key`
+        headers (using the Monitoring API key).'
       operationId: getMetrics
       tags:
       - Monitoring
@@ -311,7 +318,8 @@ components:
   schemas:
     Incidents:
       title: incidents
-      description: Key-value pairs with the cluster names as keys and the list of incidents reported for this cluster as values.
+      description: Key-value pairs with the cluster names as keys and the list of
+        incidents reported for this cluster as values.
       type: array
       items:
         title: incidentEntry
@@ -427,7 +435,8 @@ components:
       additionalProperties:
         x-additionalPropertiesName: probe
         type: boolean
-        description: Key-value pair with the probe name as the key and the reachability status as the value.
+        description: Key-value pair with the probe name as the key and the reachability
+          status as the value.
     Timestamp:
       type: integer
       format: int64
@@ -556,7 +565,8 @@ components:
           examples:
             Unauthorized:
               value:
-                reason: The infrastructure usage API is only available on Enterprise plans. Please contact enterprise@algolia.com for more detail.
+                reason: The infrastructure usage API is only available on Enterprise
+                  plans. Please contact enterprise@algolia.com for more detail.
     IndexingResponse:
       description: OK
       content:
@@ -754,7 +764,9 @@ components:
                       $ref: '#/components/schemas/InfraProbes'
                   ssd_usage:
                     type: object
-                    description: "Solid-state disk (SSD) usage expressed as % of RAM. \n0% means no SSD usage. A value of 50% indicates 32&nbsp;GB SSD usage for a machine with 64&nbsp;RAM.\n"
+                    description: "Solid-state disk (SSD) usage expressed as % of RAM.\
+                      \ \n0% means no SSD usage. A value of 50% indicates 32&nbsp;GB\
+                      \ SSD usage for a machine with 64&nbsp;RAM.\n"
                     additionalProperties:
                       x-additionalPropertiesName: probes
                       $ref: '#/components/schemas/InfraProbes'
@@ -818,7 +830,8 @@ components:
       description: 'Metric to report.
 
 
-        For more information about the individual metrics, see the description of the API response.
+        For more information about the individual metrics, see the description of
+        the API response.
 
         To include all metrics, use `*`.
 

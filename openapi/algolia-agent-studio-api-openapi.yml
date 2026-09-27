@@ -1,7 +1,8 @@
 openapi: 3.2.0
 info:
   title: Agent Studio API
-  description: The Agent Studio API lets you build and operate generative AI agents that use Algolia data, tools, and your chosen LLM provider.
+  description: The Agent Studio API lets you build and operate generative AI agents
+    that use Algolia data, tools, and your chosen LLM provider.
   version: 0.1.0
 servers:
 - url: https://{APPLICATION_ID}.algolia.net/agent-studio
@@ -223,7 +224,8 @@ paths:
       x-acl:
       - editSettings
       summary: Create Allowed Domain
-      description: Add a single allowed domain pattern (e.g. https://app.example.com or *.example.com).
+      description: Add a single allowed domain pattern (e.g. https://app.example.com
+        or *.example.com).
       parameters:
       - name: agentId
         in: path
@@ -395,7 +397,8 @@ paths:
       x-acl:
       - editSettings
       summary: Invalidate Agent Cache
-      description: Invalidate cached completions for this agent. Filter with `before` (exclusive).
+      description: Invalidate cached completions for this agent. Filter with `before`
+        (exclusive).
       parameters:
       - name: agentId
         in: path
@@ -444,7 +447,8 @@ paths:
 
         Tool Approval Flow (for MCP tools with requiresApproval: true):
 
-        - Request 1: User sends message -> Agent requests tool call -> Return approval request
+        - Request 1: User sends message -> Agent requests tool call -> Return approval
+        request
 
         - Request 2: User approves -> Execute tool -> Agent continues with result.'
       parameters:
@@ -494,10 +498,16 @@ paths:
         required: false
         schema:
           type: boolean
-          description: 'Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.'
+          description: 'Set to false to skip analytics for this completion (default:
+            true). Disables Agent Studio BigQuery analytics, Algolia search analytics,
+            click analytics, and query-suggestions training. Useful for offline-eval
+            workflows.'
           default: true
           title: analytics
-        description: 'Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.'
+        description: 'Set to false to skip analytics for this completion (default:
+          true). Disables Agent Studio BigQuery analytics, Algolia search analytics,
+          click analytics, and query-suggestions training. Useful for offline-eval
+          workflows.'
       - name: X-Algolia-Secure-User-Token
         in: header
         required: false
@@ -1337,7 +1347,8 @@ paths:
       x-acl:
       - logs
       summary: Get Data By User Token
-      description: Retrieves all memories, conversations and their messages for the given user token.
+      description: Retrieves all memories, conversations and their messages for the
+        given user token.
       parameters:
       - name: userToken
         in: path
@@ -1366,7 +1377,8 @@ paths:
       x-acl:
       - logs
       summary: Delete Data By User Token
-      description: Permanently deletes all messages for the given user token. Does not delete conversations.
+      description: Permanently deletes all messages for the given user token. Does
+        not delete conversations.
       parameters:
       - name: userToken
         in: path
@@ -1694,7 +1706,11 @@ components:
       - prefixAll
       - prefixNone
       title: queryType
-      description: Determines if and how query words are interpreted as prefixes.  By default, only the last query word is treated as a prefix (`prefixLast`). To turn off prefix search, use `prefixNone`. Avoid `prefixAll`, which treats all query words as prefixes. This might lead to counterintuitive results and makes your search slower.  For more information, see [Prefix searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching).
+      description: Determines if and how query words are interpreted as prefixes.  By
+        default, only the last query word is treated as a prefix (`prefixLast`). To
+        turn off prefix search, use `prefixNone`. Avoid `prefixAll`, which treats
+        all query words as prefixes. This might lead to counterintuitive results and
+        makes your search slower.  For more information, see [Prefix searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching).
     TextPart:
       properties:
         type:
@@ -2166,7 +2182,11 @@ components:
       - 'true'
       - 'false'
       title: typoToleranceEnum
-      description: '- `min`. Return matches with the lowest number of typos.   For example, if you have matches without typos, only include those.   But if there are no matches without typos (with 1 typo), include matches with 1 typo (2 typos). - `strict`. Return matches with the two lowest numbers of typos.   With `strict`, the Typo ranking criterion is applied first in the `ranking` setting.'
+      description: '- `min`. Return matches with the lowest number of typos.   For
+        example, if you have matches without typos, only include those.   But if there
+        are no matches without typos (with 1 typo), include matches with 1 typo (2
+        typos). - `strict`. Return matches with the two lowest numbers of typos.   With
+        `strict`, the Typo ranking criterion is applied first in the `ranking` setting.'
     AllowedDomainCreate:
       properties:
         domain:
@@ -2280,7 +2300,8 @@ components:
       required:
       - exposed
       title: stringArrayParam
-      description: A string array search parameter with exposure control, constraints, and merge behavior.
+      description: A string array search parameter with exposure control, constraints,
+        and merge behavior.
     CompatibilityMode:
       type: string
       enum:
@@ -2628,25 +2649,34 @@ components:
           maxLength: 5000
           minLength: 1
           title: observation
-          description: What user wanted + key context (1-2 sentences). Include prior failed attempts if they informed the approach.
+          description: What user wanted + key context (1-2 sentences). Include prior
+            failed attempts if they informed the approach.
         thoughts:
           type: string
           maxLength: 5000
           minLength: 1
           title: thoughts
-          description: WHY this approach was chosen, which constraints/preferences drove decisions (1-3 sentences). Capture reasoning that applies to similar future scenarios.
+          description: WHY this approach was chosen, which constraints/preferences
+            drove decisions (1-3 sentences). Capture reasoning that applies to similar
+            future scenarios.
         action:
           type: string
           maxLength: 5000
           minLength: 1
           title: action
-          description: 'What was done with PRECISE details (1-3 sentences). WITH tool calls: use arrow notation `tool(param:value) → feedback → tool(refined_param:new_value)`. WITHOUT tool calls: capture communication/workflow pattern.'
+          description: 'What was done with PRECISE details (1-3 sentences). WITH tool
+            calls: use arrow notation `tool(param:value) → feedback → tool(refined_param:new_value)`.
+            WITHOUT tool calls: capture communication/workflow pattern.'
         result:
           type: string
           maxLength: 5000
           minLength: 1
           title: result
-          description: 'Learned pattern + effectiveness (1-3 sentences). What worked and WHY it''s replicable. Note efficiency: multi-turn refinements, which results were relevant, what made final attempt succeed. Use strict `param:value` syntax for learnings. Format: ''For [context], use [param:value] because [reason]''.'
+          description: 'Learned pattern + effectiveness (1-3 sentences). What worked
+            and WHY it''s replicable. Note efficiency: multi-turn refinements, which
+            results were relevant, what made final attempt succeed. Use strict `param:value`
+            syntax for learnings. Format: ''For [context], use [param:value] because
+            [reason]''.'
       type: object
       required:
       - observation
@@ -2755,7 +2785,8 @@ components:
 
         `turn_context` is namespaced so other callers can use `metadata` for unrelated
 
-        purposes without collision. Unknown keys are preserved and ignored by this pipeline.
+        purposes without collision. Unknown keys are preserved and ignored by this
+        pipeline.
 
 
         Note: `turn_context` is deliberately typed `dict[str, Any]` (not `TurnContext`).
@@ -2842,13 +2873,20 @@ components:
           - type: string
           - type: 'null'
           title: instructions
-          description: 'The agent prompt: defines the agent''s role, tone, and goals. Guides how it answers using the provided context. Corresponds to the ''Agent prompt'' field in the dashboard.'
+          description: 'The agent prompt: defines the agent''s role, tone, and goals.
+            Guides how it answers using the provided context. Corresponds to the ''Agent
+            prompt'' field in the dashboard.'
         systemPrompt:
           oneOf:
           - type: string
           - type: 'null'
           title: systemprompt
-          description: 'The system prompt: defines system-level rules and constraints. Guides how the agent uses tools, features, and generates context. Prepended before `instructions` in the final prompt sent to the LLM. Typically injected by an agent template — modify with caution, as changes may affect behavior, tool usage, or response accuracy. Corresponds to the ''System prompt'' field in the dashboard.'
+          description: 'The system prompt: defines system-level rules and constraints.
+            Guides how the agent uses tools, features, and generates context. Prepended
+            before `instructions` in the final prompt sent to the LLM. Typically injected
+            by an agent template — modify with caution, as changes may affect behavior,
+            tool usage, or response accuracy. Corresponds to the ''System prompt''
+            field in the dashboard.'
         config:
           oneOf:
           - additionalProperties: true
@@ -2933,11 +2971,18 @@ components:
         instructions:
           type: string
           title: instructions
-          description: 'The agent prompt: defines the agent''s role, tone, and goals. Guides how it answers using the provided context. Corresponds to the ''Agent prompt'' field in the dashboard.'
+          description: 'The agent prompt: defines the agent''s role, tone, and goals.
+            Guides how it answers using the provided context. Corresponds to the ''Agent
+            prompt'' field in the dashboard.'
         systemPrompt:
           type: string
           title: systemprompt
-          description: 'The system prompt: defines system-level rules and constraints. Guides how the agent uses tools, features, and generates context. Prepended before `instructions` in the final prompt sent to the LLM. Typically injected by an agent template — modify with caution, as changes may affect behavior, tool usage, or response accuracy. Corresponds to the ''System prompt'' field in the dashboard.'
+          description: 'The system prompt: defines system-level rules and constraints.
+            Guides how the agent uses tools, features, and generates context. Prepended
+            before `instructions` in the final prompt sent to the LLM. Typically injected
+            by an agent template — modify with caution, as changes may affect behavior,
+            tool usage, or response accuracy. Corresponds to the ''System prompt''
+            field in the dashboard.'
         templateType:
           type: string
           title: templatetype
@@ -3038,7 +3083,15 @@ components:
       - none
       - word
       title: exactOnSingleWordQuery
-      description: Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the search query has only one word.  - `attribute`.   The Exact ranking criterion is 1 if the query word and attribute value are the same.   For example, a search for "road" will match the value "road", but not "road trip".  - `none`.   The Exact ranking criterion is ignored on single-word searches.  - `word`.   The Exact ranking criterion is 1 if the query word is found in the attribute value.   The query word must have at least 3 characters and must not be a stop word.   Only exact matches will be highlighted,   partial and prefix matches won't.
+      description: Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes)
+        is computed when the search query has only one word.  - `attribute`.   The
+        Exact ranking criterion is 1 if the query word and attribute value are the
+        same.   For example, a search for "road" will match the value "road", but
+        not "road trip".  - `none`.   The Exact ranking criterion is ignored on single-word
+        searches.  - `word`.   The Exact ranking criterion is 1 if the query word
+        is found in the attribute value.   The query word must have at least 3 characters
+        and must not be a stop word.   Only exact matches will be highlighted,   partial
+        and prefix matches won't.
     StepStartPartV5:
       properties:
         type:
@@ -3066,7 +3119,8 @@ components:
       - type
       - name
       title: unknownToolConfig
-      description: Exists only to ensure that when you change branch from toolX to feat/toolY, your config stays valid.
+      description: Exists only to ensure that when you change branch from toolX to
+        feat/toolY, your config stays valid.
     NaturalLanguagesUnion:
       oneOf:
       - items:
@@ -3131,7 +3185,8 @@ components:
       additionalProperties: false
       type: object
       title: searchParametersOverrides
-      description: 'Algolia Search API parameters that can be predefined for the search tool.
+      description: 'Algolia Search API parameters that can be predefined for the search
+        tool.
 
         Reference: https://www.algolia.com/doc/api-reference/search-api-parameters/
 
@@ -3206,7 +3261,14 @@ components:
       - firstWords
       - allOptional
       title: removeWordsIfNoResults
-      description: Strategy for removing words from the query when it doesn't return any results. This helps to avoid returning empty search results.  - `none`.   No words are removed when a query doesn't return results.  - `lastWords`.   Treat the last (then second to last, then third to last) word as optional,   until there are results or at most 5 words have been removed.  - `firstWords`.   Treat the first (then second, then third) word as optional,   until there are results or at most 5 words have been removed.  - `allOptional`.   Treat all words as optional.  For more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
+      description: Strategy for removing words from the query when it doesn't return
+        any results. This helps to avoid returning empty search results.  - `none`.   No
+        words are removed when a query doesn't return results.  - `lastWords`.   Treat
+        the last (then second to last, then third to last) word as optional,   until
+        there are results or at most 5 words have been removed.  - `firstWords`.   Treat
+        the first (then second, then third) word as optional,   until there are results
+        or at most 5 words have been removed.  - `allOptional`.   Treat all words
+        as optional.  For more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
     AgentIdUnion:
       oneOf:
       - type: string
@@ -3409,7 +3471,8 @@ components:
           - type: integer
           - type: 'null'
           title: maxretentiondays
-          description: 'Maximum number of days to retain data. Valid values: [0, 30, 60, 90].'
+          description: 'Maximum number of days to retain data. Valid values: [0, 30,
+            60, 90].'
           default: 90
       type: object
       title: applicationConfigPatch
@@ -3669,7 +3732,8 @@ components:
           type: string
           minLength: 1
           title: defaultmodel
-          description: Default model for this provider. Used for validation and as fallback when no model is specified at agent level.
+          description: Default model for this provider. Used for validation and as
+            fallback when no model is specified at agent level.
       type: object
       required:
       - apiKey
@@ -3992,12 +4056,14 @@ components:
           title: explain
       type: object
       title: searchParameters
-      description: 'Algolia Search API parameters that can be predefined for the search tool.
+      description: 'Algolia Search API parameters that can be predefined for the search
+        tool.
 
         Reference: https://www.algolia.com/doc/api-reference/search-api-parameters/
 
 
-        The parameters that seemed irrelevant for the search tool have been commented out.
+        The parameters that seemed irrelevant for the search tool have been commented
+        out.
 
         Uses types from algoliasearch.search.models for better type safety.'
     MemoryRecord:
@@ -4025,19 +4091,23 @@ components:
             type: string
           type: array
           title: keywords
-          description: '5-20 free-form keywords: entities, context, search terms (any words).'
+          description: '5-20 free-form keywords: entities, context, search terms (any
+            words).'
         topics:
           items:
             type: string
           type: array
           title: topics
-          description: '2-4 topics ONLY from this list: [complaints, entertainment, family, feedback, finance, food, goals, health, history, hobbies, learning, praise, preferences, schedule, shopping, technical, travel, work].'
+          description: '2-4 topics ONLY from this list: [complaints, entertainment,
+            family, feedback, finance, food, goals, health, history, hobbies, learning,
+            praise, preferences, schedule, shopping, technical, travel, work].'
         _tags:
           items:
             type: string
           type: array
           title: tags
-          description: Arbitrary labels/themes for flexible categorization (e.g., 'Q1-goals', 'paris-trip', 'vip-customer').
+          description: Arbitrary labels/themes for flexible categorization (e.g.,
+            'Q1-goals', 'paris-trip', 'vip-customer').
         recallTriggers:
           items:
             type: string
@@ -4049,7 +4119,8 @@ components:
           - type: string
           - type: 'null'
           title: objectid
-          description: ObjectID of existing memory to update. Leave empty for new memory.
+          description: ObjectID of existing memory to update. Leave empty for new
+            memory.
         appId:
           type: string
           title: appid
@@ -4060,7 +4131,8 @@ components:
             type: string
           type: array
           title: agentids
-          description: 'Agent IDs with access: [''agent1''], [''*''] for all, [''*'', ''-agent1''] to exclude.'
+          description: 'Agent IDs with access: [''agent1''], [''*''] for all, [''*'',
+            ''-agent1''] to exclude.'
         userID:
           type: string
           title: userid
@@ -4084,12 +4156,14 @@ components:
       description: 'Universal storage model for all memory types (semantic, episodic).
 
 
-        This is the ONLY model that touches storage (Algolia). Domain models (SemanticMemory, EpisodicMemory)
+        This is the ONLY model that touches storage (Algolia). Domain models (SemanticMemory,
+        EpisodicMemory)
 
         are used for LLM extraction and converted to MemoryRecord before saving.
 
 
-        See https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types for memory type definitions.'
+        See https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types
+        for memory type definitions.'
     TypoToleranceUnion:
       oneOf:
       - type: boolean
@@ -4333,7 +4407,8 @@ components:
       type: apiKey
       in: header
       name: x-algolia-api-key
-      description: 'Your Algolia API key with the necessary permissions to make the request.
+      description: 'Your Algolia API key with the necessary permissions to make the
+        request.
 
         Permissions are controlled through access control lists (ACL) and access restrictions.
 

@@ -1,7 +1,8 @@
 openapi: 3.2.0
 info:
   title: Insights API
-  summary: The Insights API lets you collect events related to your search and discovery experience
+  summary: The Insights API lets you collect events related to your search and discovery
+    experience
   description: Events represent user interactions with your app or website.
   version: 1.0.0
 servers:
@@ -337,7 +338,8 @@ paths:
                     - category:books
               InstantsearchMinimum:
                 summary: Minimum instantsearch event
-                description: 'Minimum valid instantsearch event for agentic analytics telemetry.
+                description: 'Minimum valid instantsearch event for agentic analytics
+                  telemetry.
 
                   '
                 value:
@@ -347,7 +349,8 @@ paths:
                     userToken: anonymous-user-1
               InstantsearchWithAgentID:
                 summary: Instantsearch event with agentID
-                description: 'Instantsearch event with agentID to correlate events within a single agent session.
+                description: 'Instantsearch event with agentID to correlate events
+                  within a single agent session.
 
                   '
                 value:
@@ -366,7 +369,11 @@ paths:
               examples:
                 Success:
                   summary: Events successfully sent to the Insights API
-                  description: Success indicates that the Insights API received the events correctly, and that event properties are formatted correctly. Success doesn't imply that the event can be used by any Algolia feature. For example, the Insights API doesn't check if the index name you provided exists, or if the object IDs exist in your index.
+                  description: Success indicates that the Insights API received the
+                    events correctly, and that event properties are formatted correctly.
+                    Success doesn't imply that the event can be used by any Algolia
+                    feature. For example, the Insights API doesn't check if the index
+                    name you provided exists, or if the object IDs exist in your index.
                   value:
                     status: 200
                     message: OK
@@ -381,7 +388,8 @@ paths:
                 BadRequest:
                   summary: Bad request
                   description: This error doesn't return a JSON object, but HTML.
-                  value: 'Error: Bad Request. Your client has issued a malformed or illegal request.'
+                  value: 'Error: Bad Request. Your client has issued a malformed or
+                    illegal request.'
         '401':
           description: Unauthorized
           content:
@@ -391,7 +399,9 @@ paths:
               examples:
                 Unauthorized:
                   summary: Invalid credentials
-                  description: You need to provide your application ID using the `X-Algolia-Application-ID` header and your (search) API key with the `X-Algolia-API-Key` header.
+                  description: You need to provide your application ID using the `X-Algolia-Application-ID`
+                    header and your (search) API key with the `X-Algolia-API-Key`
+                    header.
                   value:
                     status: 401
                     message: Invalid credentials
@@ -407,7 +417,9 @@ paths:
                   description: Check that you're using the correct URL.
                   value:
                     status: 404
-                    message: Path not supported by Insights REST API. Please have a look at [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights) for the list of valid commands.
+                    message: Path not supported by Insights REST API. Please have
+                      a look at [https://www.algolia.com/doc/rest-api/insights/](https://www.algolia.com/doc/rest-api/insights)
+                      for the list of valid commands.
         '405':
           description: Method Not Allowed.
           content:
@@ -447,16 +459,20 @@ paths:
                     message: Invalid payload
                 NoEvents:
                   summary: No events
-                  description: This can happen if you're sending an empty `events` array, or if you try to send a single event object instead of the `events` array.
+                  description: This can happen if you're sending an empty `events`
+                    array, or if you try to send a single event object instead of
+                    the `events` array.
                   value:
                     status: 422
                     message: No events to process
                 NoEventsField:
                   summary: Missing events attribute
-                  description: This can happen if you try to send an array of events directly instead of using the `events` attribute.
+                  description: This can happen if you try to send an array of events
+                    directly instead of using the `events` attribute.
                   value:
                     status: 422
-                    message: 'Invalid type for field : expected insights.PublicEventsBatch, got array'
+                    message: 'Invalid type for field : expected insights.PublicEventsBatch,
+                      got array'
                 EventNameRequired:
                   summary: Missing eventName attribute
                   value:
@@ -466,7 +482,8 @@ paths:
                   summary: Event name too long or wrong characters
                   value:
                     status: 422
-                    message: EventName must contain only visible ASCII characters, and be between 1 and 64 characters long
+                    message: EventName must contain only visible ASCII characters,
+                      and be between 1 and 64 characters long
                 EventTypeRequired:
                   summary: Missing eventType attribute
                   value:
@@ -476,7 +493,8 @@ paths:
                   summary: Wrong event type
                   value:
                     status: 422
-                    message: EventType must be one of "click", "conversion", "view" or "instantsearch"
+                    message: EventType must be one of "click", "conversion", "view"
+                      or "instantsearch"
                 IndexRequired:
                   summary: Missing index attribute
                   value:
@@ -491,10 +509,13 @@ paths:
                   summary: Malformed user token
                   value:
                     status: 422
-                    message: UserToken must contain only alphanumeric, equal, plus, slash, hyphen, or underscore characters, and be between 1 and 128 characters long
+                    message: UserToken must contain only alphanumeric, equal, plus,
+                      slash, hyphen, or underscore characters, and be between 1 and
+                      128 characters long
                 NoObjectIDsOrFilters:
                   summary: Missing objectIDs or filters attribute
-                  description: Each event must include either the `objectIDs` or `filters` attribute.
+                  description: Each event must include either the `objectIDs` or `filters`
+                    attribute.
                   value:
                     status: 422
                     message: Event should specify either some ObjectIDs or some Filters
@@ -507,36 +528,45 @@ paths:
                   summary: Wrong combination of positions and eventType attributes
                   value:
                     status: 422
-                    message: Only event of type click should specify the positions attribute
+                    message: Only event of type click should specify the positions
+                      attribute
                 PositionsWithoutQueryID:
                   summary: Positions attribute without queryID
-                  description: Click events with the `positions` attribute require the `queryID` attribute.
+                  description: Click events with the `positions` attribute require
+                    the `queryID` attribute.
                   value:
                     status: 422
                     message: Event of type click with positions should specify a queryID
                 WrongPositionsValue:
                   summary: Wrong value in positions array
-                  description: Any value in the `positions` array must be greater than 0.
+                  description: Any value in the `positions` array must be greater
+                    than 0.
                   value:
                     status: 422
                     message: Event of type click may only have strictly positive positions
                 WrongPositionsItems:
                   summary: Wrong number of items in positions array
-                  description: For click events with the `queryID` and `objectIDs` attributes, you must include the `positions` attribute with the same number of items as the `objectIDs` attribute.
+                  description: For click events with the `queryID` and `objectIDs`
+                    attributes, you must include the `positions` attribute with the
+                    same number of items as the `objectIDs` attribute.
                   value:
                     status: 422
-                    message: Event of type click should have the same number of ObjectIDs and Positions
+                    message: Event of type click should have the same number of ObjectIDs
+                      and Positions
                 WrongQueryID:
                   summary: Malformed query ID
                   value:
                     status: 422
-                    message: Query ID must be a search query ID (32 characters hexadecimal string)
+                    message: Query ID must be a search query ID (32 characters hexadecimal
+                      string)
                 InvalidDataType:
                   summary: Wrong data type
-                  description: This can happen if one or more attribute is a number instead of a string.
+                  description: This can happen if one or more attribute is a number
+                    instead of a string.
                   value:
                     status: 422
-                    message: 'Invalid type for field events: expected string, got number'
+                    message: 'Invalid type for field events: expected string, got
+                      number'
                 InvalidTimestamp:
                   summary: Timestamp too old
                   value:
@@ -544,7 +574,8 @@ paths:
                     message: The timestamp is too far in the past
                 TooManyEvents:
                   summary: Too many events
-                  description: You can include up to 1,000 events in a single API request.
+                  description: You can include up to 1,000 events in a single API
+                    request.
                   value:
                     status: 422
                     message: Cannot process more than 1000 events in a batch
@@ -554,11 +585,13 @@ paths:
       - Insights
       operationId: deleteUserToken
       summary: Delete user token events
-      description: 'Deletes all events related to the specified user token from events metrics and analytics.
+      description: 'Deletes all events related to the specified user token from events
+        metrics and analytics.
 
         The deletion is asynchronous, and processed within 48 hours.
 
-        To delete a personalization user profile, see `Delete a user profile` in the Personalization API.'
+        To delete a personalization user profile, see `Delete a user profile` in the
+        Personalization API.'
       x-acl:
       - deleteObject
       parameters:
@@ -585,7 +618,8 @@ paths:
               schema:
                 $ref: '#/components/schemas/EventsResponse'
         '429':
-          description: 'Too Many Requests. This operation is rate-limited. Check the `x-ratelimit-limit` and `x-ratelimit-reset` headers of the response.
+          description: 'Too Many Requests. This operation is rate-limited. Check the
+            `x-ratelimit-limit` and `x-ratelimit-reset` headers of the response.
 
             '
           content:
@@ -631,7 +665,8 @@ components:
     timestamp:
       type: integer
       format: int64
-      description: 'Timestamp of the event, measured in milliseconds since the Unix epoch. Must be no older than 30 days.
+      description: 'Timestamp of the event, measured in milliseconds since the Unix
+        epoch. Must be no older than 30 days.
 
         If not provided, we use the time at which the request was received.
 
@@ -640,9 +675,11 @@ components:
     ConvertedObjectIDsAfterSearch:
       type: object
       title: Converted object IDs after search
-      description: 'Use this event to track when users convert after a previous Algolia request.
+      description: 'Use this event to track when users convert after a previous Algolia
+        request.
 
-        For example, a user clicks on an item in the search results to view the product detail page.
+        For example, a user clicks on an item in the search results to view the product
+        detail page.
 
         Then, the user adds the item to their shopping cart.
 
@@ -682,9 +719,11 @@ components:
     PurchasedObjectIDsAfterSearch:
       type: object
       title: Purchased object IDs after search
-      description: 'Use this event to track when users make a purchase after a previous Algolia request.
+      description: 'Use this event to track when users make a purchase after a previous
+        Algolia request.
 
-        If you''re building your category pages with Algolia, you''ll also use this event.
+        If you''re building your category pages with Algolia, you''ll also use this
+        event.
 
         '
       properties:
@@ -726,9 +765,11 @@ components:
     AddedToCartObjectIDsAfterSearch:
       type: object
       title: Added to cart object IDs after search
-      description: 'Use this event to track when users add items to their shopping cart after a previous Algolia request.
+      description: 'Use this event to track when users add items to their shopping
+        cart after a previous Algolia request.
 
-        If you''re building your category pages with Algolia, you''ll also use this event.
+        If you''re building your category pages with Algolia, you''ll also use this
+        event.
 
         '
       properties:
@@ -805,7 +846,8 @@ components:
         example: '1000.00'
     objectDataList:
       type: array
-      description: 'Extra information about the records involved in a purchase or add-to-cart event.
+      description: 'Extra information about the records involved in a purchase or
+        add-to-cart event.
 
 
         If specified, it must have the same length as `objectIDs`.
@@ -826,12 +868,15 @@ components:
     ClickedObjectIDs:
       type: object
       title: Clicked object IDs
-      description: 'Use this event to track when users click items unrelated to a previous Algolia request.
+      description: 'Use this event to track when users click items unrelated to a
+        previous Algolia request.
 
-        For example, if you don''t use Algolia to build your category pages, use this event.
+        For example, if you don''t use Algolia to build your category pages, use this
+        event.
 
 
-        To track click events related to Algolia requests, use the "Clicked object IDs after search" event.
+        To track click events related to Algolia requests, use the "Clicked object
+        IDs after search" event.
 
         '
       properties:
@@ -861,7 +906,8 @@ components:
     agentID:
       type: string
       minLength: 1
-      description: 'Unique identifier for an agent session. Used to correlate instantsearch events with a specific agent interaction.
+      description: 'Unique identifier for an agent session. Used to correlate instantsearch
+        events with a specific agent interaction.
 
         '
       example: agent-session-123
@@ -906,10 +952,13 @@ components:
     PurchasedObjectIDs:
       type: object
       title: Purchased object IDs
-      description: 'Use this event to track when users make a purchase unrelated to a previous Algolia request. For example, if you don''t use Algolia to build your category pages, use this event.
+      description: 'Use this event to track when users make a purchase unrelated to
+        a previous Algolia request. For example, if you don''t use Algolia to build
+        your category pages, use this event.
 
 
-        To track purchase events related to Algolia requests, use the "Purchased object IDs after search" event.
+        To track purchase events related to Algolia requests, use the "Purchased object
+        IDs after search" event.
 
         '
       properties:
@@ -955,7 +1004,8 @@ components:
           pattern: '[0-9a-f]{32}'
           minLength: 32
           maxLength: 32
-          description: Unique identifier for a search query, used to track purchase events with multiple records that originate from different searches.
+          description: Unique identifier for a search query, used to track purchase
+            events with multiple records that originate from different searches.
           example: 3e48cd0616e466948dd85abf5c3fbbe2
         price:
           $ref: '#/components/schemas/price'
@@ -1050,7 +1100,8 @@ components:
         example: '20'
     objectDataAfterSearchList:
       type: array
-      description: 'Extra information about the records involved in a purchase or add-to-cart events.
+      description: 'Extra information about the records involved in a purchase or
+        add-to-cart events.
 
 
         If provided, it must be the same length as `objectIDs`.
@@ -1090,12 +1141,15 @@ components:
     ConvertedObjectIDs:
       type: object
       title: Converted object IDs
-      description: 'Use this event to track when users convert on items unrelated to a previous Algolia request.
+      description: 'Use this event to track when users convert on items unrelated
+        to a previous Algolia request.
 
-        For example, if you don''t use Algolia to build your category pages, use this event.
+        For example, if you don''t use Algolia to build your category pages, use this
+        event.
 
 
-        To track conversion events related to Algolia requests, use the "Converted object IDs after search" event.
+        To track conversion events related to Algolia requests, use the "Converted
+        object IDs after search" event.
 
         '
       properties:
@@ -1154,9 +1208,11 @@ components:
       type: integer
       format: int32
       example: 2
-      description: 'Quantity of a product that has been purchased or added to the cart.
+      description: 'Quantity of a product that has been purchased or added to the
+        cart.
 
-        The total purchase value is the sum of `quantity` multiplied with the `price` for each purchased item.
+        The total purchase value is the sum of `quantity` multiplied with the `price`
+        for each purchased item.
 
         '
     userToken:
@@ -1221,7 +1277,8 @@ components:
       enum:
       - instantsearch
     price:
-      description: Final price of a single product, including any discounts, in units of `currency`.
+      description: Final price of a single product, including any discounts, in units
+        of `currency`.
       oneOf:
       - type: number
         format: double
@@ -1237,9 +1294,11 @@ components:
 
         The query ID is required for events related to search or browse requests.
 
-        If you add `clickAnalytics: true` as a search request parameter, the query ID is included in the API response.
+        If you add `clickAnalytics: true` as a search request parameter, the query
+        ID is included in the API response.
 
-        For agentic analytics events, the query ID may be prefixed with `message_` followed by any printable string.
+        For agentic analytics events, the query ID may be prefixed with `message_`
+        followed by any printable string.
 
         '
       examples:
@@ -1253,9 +1312,11 @@ components:
       description: 'Identifier for authenticated users.
 
 
-        When the user signs in, you can get an identifier from your system and send it as `authenticatedUserToken`.
+        When the user signs in, you can get an identifier from your system and send
+        it as `authenticatedUserToken`.
 
-        This lets you keep using the `userToken` from before the user signed in, while providing a reliable way to identify users across sessions.
+        This lets you keep using the `userToken` from before the user signed in, while
+        providing a reliable way to identify users across sessions.
 
         Don''t use personally identifiable information in user tokens.
 
@@ -1273,10 +1334,13 @@ components:
     AddedToCartObjectIDs:
       type: object
       title: Added to cart object IDs
-      description: 'Use this event to track when users add items to their shopping cart unrelated to a previous Algolia request. For example, if you don''t use Algolia to build your category pages, use this event.
+      description: 'Use this event to track when users add items to their shopping
+        cart unrelated to a previous Algolia request. For example, if you don''t use
+        Algolia to build your category pages, use this event.
 
 
-        To track add-to-cart events related to Algolia requests, use the "Added to cart object IDs after search" event.
+        To track add-to-cart events related to Algolia requests, use the "Added to
+        cart object IDs after search" event.
 
         '
       properties:
@@ -1341,7 +1405,8 @@ components:
     ClickedFilters:
       type: object
       title: Clicked filters
-      description: Use this event to track when users click facet filters in your user interface.
+      description: Use this event to track when users click facet filters in your
+        user interface.
       properties:
         eventName:
           $ref: '#/components/schemas/eventName'
@@ -1368,7 +1433,8 @@ components:
       - filters
   headers:
     x-ratelimit-reset:
-      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
+      description: Timestamp when the rate limit will reset, measured in seconds since
+        the Unix epoch.
       example: 1710682486
       schema:
         type: integer
@@ -1433,7 +1499,8 @@ components:
       type: apiKey
       in: header
       name: x-algolia-api-key
-      description: 'Your Algolia API key with the necessary permissions to make the request.
+      description: 'Your Algolia API key with the necessary permissions to make the
+        request.
 
         Permissions are controlled through access control lists (ACL) and access restrictions.
 

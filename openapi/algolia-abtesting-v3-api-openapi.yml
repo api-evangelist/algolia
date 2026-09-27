@@ -1,7 +1,8 @@
 openapi: 3.2.0
 info:
   title: A/B Testing Abtesting V3 API
-  summary: The Algolia A/B Testing API lets you manage your Algolia A/B tests to optimize your search experience
+  summary: The Algolia A/B Testing API lets you manage your Algolia A/B tests to optimize
+    your search experience
   description: '## Base URLs
 
 
@@ -12,7 +13,8 @@ info:
 
     - `https://analytics.de.algolia.com`
 
-    - `https://analytics.algolia.com` (routes requests to the closest of the above servers, based on your geographical location)
+    - `https://analytics.algolia.com` (routes requests to the closest of the above
+    servers, based on your geographical location)
 
 
     Use the URL that matches your analytics region.'
@@ -169,7 +171,8 @@ paths:
                     $ref: '#/components/schemas/AddABTestsVariant'
                 metrics:
                   type: array
-                  description: A/B test metrics involved in the test. Only these metrics will be considered when calculating results.
+                  description: A/B test metrics involved in the test. Only these metrics
+                    will be considered when calculating results.
                   items:
                     $ref: '#/components/schemas/createMetric'
                 configuration:
@@ -229,13 +232,15 @@ paths:
           default: 10
       - name: indexPrefix
         in: query
-        description: Index name prefix. Only A/B tests for indices starting with this string are included in the response.
+        description: Index name prefix. Only A/B tests for indices starting with this
+          string are included in the response.
         example: dev_
         schema:
           type: string
       - name: indexSuffix
         in: query
-        description: Index name suffix. Only A/B tests for indices ending with this string are included in the response.
+        description: Index name suffix. Only A/B tests for indices ending with this
+          string are included in the response.
         example: _development
         schema:
           type: string
@@ -243,7 +248,8 @@ paths:
         in: query
         description: 'Sort order for A/B tests by start date.
 
-          Use ''asc'' for ascending or ''desc'' for descending. Active A/B tests are always listed first.
+          Use ''asc'' for ascending or ''desc'' for descending. Active A/B tests are
+          always listed first.
 
           '
         example: desc
@@ -397,7 +403,9 @@ paths:
       x-acl:
       - analytics
       summary: Estimate the sample size and duration of an A/B test
-      description: Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.
+      description: Given the traffic percentage and the expected effect size, this
+        endpoint estimates the sample size and duration of an A/B test based on historical
+        traffic.
       requestBody:
         required: true
         content:
@@ -410,7 +418,8 @@ paths:
                 configuration:
                   title: estimateConfiguration
                   type: object
-                  description: A/B test configuration for estimating the sample size and duration using minimum detectable effect.
+                  description: A/B test configuration for estimating the sample size
+                    and duration using minimum detectable effect.
                   properties:
                     filters:
                       $ref: '#/components/schemas/MetricsFilters'
@@ -464,7 +473,8 @@ paths:
       - $ref: '#/components/parameters/EndDate'
       - in: query
         name: metric
-        description: List of metrics to retrieve. If not specified, all metrics are returned.
+        description: List of metrics to retrieve. If not specified, all metrics are
+          returned.
         schema:
           type: array
           items:
@@ -595,7 +605,8 @@ components:
 
         It might not run immediately.
 
-        You can check the task''s progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task) and this task ID.
+        You can check the task''s progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task)
+        and this task ID.
 
         '
     direction:
@@ -642,7 +653,9 @@ components:
           format: double
           description: 'Only present in case the metric is ''revenue''.
 
-            It is the amount exceeding the 95th percentile of global revenue transactions involved in the AB Test. This amount is not considered when calculating statistical significance.
+            It is the amount exceeding the 95th percentile of global revenue transactions
+            involved in the AB Test. This amount is not considered when calculating
+            statistical significance.
 
             It is tied to a per revenue-currency pair contrary to other
 
@@ -666,17 +679,20 @@ components:
       additionalProperties: false
       description: 'Outcome of the A/B test once a winner has been declared.
 
-        Only present when a winning variant has been declared, so its presence indicates the test has been decided.
+        Only present when a winning variant has been declared, so its presence indicates
+        the test has been decided.
 
         '
       properties:
         winnerVariantId:
           type: integer
-          description: Identifier of the declared winning variant. The control variant is 1.
+          description: Identifier of the declared winning variant. The control variant
+            is 1.
           example: 2
         declaredAt:
           type: string
-          description: Date and time when the winning variant was declared, in RFC 3339 format.
+          description: Date and time when the winning variant was declared, in RFC
+            3339 format.
           example: '2026-06-16T00:00:00Z'
       required:
       - winnerVariantId
@@ -733,7 +749,8 @@ components:
         $ref: '#/components/schemas/metricResult'
     MinimumDetectableEffect:
       type: object
-      description: Configuration for the smallest difference between test variants you want to detect.
+      description: Configuration for the smallest difference between test variants
+        you want to detect.
       properties:
         size:
           type: number
@@ -742,7 +759,8 @@ components:
           maximum: 1
           description: 'Smallest difference in an observable metric between variants.
 
-            For example, to detect a 10% difference between variants, set this value to 0.1.
+            For example, to detect a 10% difference between variants, set this value
+            to 0.1.
 
             '
         metric:
@@ -777,7 +795,8 @@ components:
 
         The first variant is your _control_ index, typically your production index.
 
-        All of the additional variants are indexes with changed settings that you want to test against the control.
+        All of the additional variants are indexes with changed settings that you
+        want to test against the control.
 
         '
       items:
@@ -790,10 +809,12 @@ components:
           $ref: '#/components/schemas/description'
         estimatedSampleSize:
           type: integer
-          description: 'Estimated number of searches required to achieve the desired statistical significance.
+          description: 'Estimated number of searches required to achieve the desired
+            statistical significance.
 
 
-            The A/B test configuration must include a `minimumDetectableEffect` setting for this number to be included in the response.
+            The A/B test configuration must include a `minimumDetectableEffect` setting
+            for this number to be included in the response.
 
             '
           example: 0
@@ -807,7 +828,8 @@ components:
           $ref: '#/components/schemas/variantMetadata'
         customSearchParameters:
           type: object
-          description: 'Search parameters applied to this variant when the same index is used for multiple variants.
+          description: 'Search parameters applied to this variant when the same index
+            is used for multiple variants.
 
             Only present if custom search parameters were provided during test creation.
 
@@ -831,18 +853,22 @@ components:
           type: string
         updatedAt:
           type: string
-          description: Date and time when the metric was last updated, in RFC 3339 format.
+          description: Date and time when the metric was last updated, in RFC 3339
+            format.
         value:
           type: number
           format: double
         valueCIHigh:
           type: number
           format: double
-          description: 'The upper bound of the 95% confidence interval for the metric value. The confidence interval is calculated using
+          description: 'The upper bound of the 95% confidence interval for the metric
+            value. The confidence interval is calculated using
 
-            either the relative ratio or relative difference between the metric values for the control and the variant.
+            either the relative ratio or relative difference between the metric values
+            for the control and the variant.
 
-            Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate),
+            Relative ratio is used for metrics that are ratios (e.g., click-through
+            rate, conversion rate),
 
             while relative difference is used for continuous metrics (e.g., revenue).
 
@@ -850,11 +876,14 @@ components:
         valueCILow:
           type: number
           format: double
-          description: 'The lower bound of the 95% confidence interval for the metric value. The confidence interval is calculated using
+          description: 'The lower bound of the 95% confidence interval for the metric
+            value. The confidence interval is calculated using
 
-            either the relative ratio or relative difference between the metric values for the control and the variant.
+            either the relative ratio or relative difference between the metric values
+            for the control and the variant.
 
-            Relative ratio is used for metrics that are ratios (e.g., click-through rate, conversion rate),
+            Relative ratio is used for metrics that are ratios (e.g., click-through
+            rate, conversion rate),
 
             while relative difference is used for continuous metrics (e.g., revenue).
 
@@ -862,7 +891,9 @@ components:
         pValue:
           type: number
           format: double
-          description: PValue for the first variant (control) will always be 0. For the other variants, pValue is calculated for the current variant based on the control.
+          description: PValue for the first variant (control) will always be 0. For
+            the other variants, pValue is calculated for the current variant based
+            on the control.
         dimension:
           type: string
           description: Dimension defined during test creation.
@@ -871,16 +902,19 @@ components:
         criticalValue:
           type: number
           format: double
-          description: 'The value that was computed during error correction. It is used to determine significance of the metric pValue.
+          description: 'The value that was computed during error correction. It is
+            used to determine significance of the metric pValue.
 
-            The critical value is calculated using Bonferroni or Benjamini-Hochberg corrections, based on the given
+            The critical value is calculated using Bonferroni or Benjamini-Hochberg
+            corrections, based on the given
 
             configuration during the A/B test creation.
 
             '
         significant:
           type: boolean
-          description: 'Whether the pValue is significant or not based on the critical value and the error correction algorithm used.
+          description: 'Whether the pValue is significant or not based on the critical
+            value and the error correction algorithm used.
 
             '
       required:
@@ -931,7 +965,8 @@ components:
 
         The first variant is your _control_ index, typically your production index.
 
-        All of the additional variants are indexes with changed settings that you want to test against the control.
+        All of the additional variants are indexes with changed settings that you
+        want to test against the control.
 
         '
       items:
@@ -955,7 +990,8 @@ components:
         outliers:
           title: outliersFilter
           type: object
-          description: Outliers removed from the A/B test as a result of configuration settings.
+          description: Outliers removed from the A/B test as a result of configuration
+            settings.
           example:
             usersCount: 1
             trackedSearchesCount: 237
@@ -971,7 +1007,8 @@ components:
         emptySearch:
           title: emptySearchFilter
           type: object
-          description: Empty searches removed from the A/B test as a result of configuration settings.
+          description: Empty searches removed from the A/B test as a result of configuration
+            settings.
           example:
             usersCount: 1
             trackedSearchesCount: 237
@@ -1003,7 +1040,8 @@ components:
     MetricsFilter:
       type: object
       additionalProperties: false
-      description: 'Boolean filter applied to the A/B test population. Each filter targets a boolean metric
+      description: 'Boolean filter applied to the A/B test population. Each filter
+        targets a boolean metric
 
         and decides whether to include (true) or exclude (false) matching records.
 
@@ -1022,13 +1060,15 @@ components:
           description: Whether the experiment should record the effects of this filter.
         includes:
           type: boolean
-          description: If true, keep items that match the filter; if false, exclude them.
+          description: If true, keep items that match the filter; if false, exclude
+            them.
       required:
       - domain
       - name
     ErrorCorrectionType:
       type: string
-      description: Multiple-testing correction method applied when evaluating metric significance.
+      description: Multiple-testing correction method applied when evaluating metric
+        significance.
       enum:
       - bonferroni
       - benjamini-hochberg
@@ -1037,11 +1077,14 @@ components:
       description: 'A/B test status.
 
 
-        - `active`. The A/B test is live and search traffic is split between the two variants.
+        - `active`. The A/B test is live and search traffic is split between the two
+        variants.
 
-        - `stopped`. You stopped the A/B test. The A/B test data is still available for analysis.
+        - `stopped`. You stopped the A/B test. The A/B test data is still available
+        for analysis.
 
-        - `expired`. The A/B test was automatically stopped after reaching its end date.
+        - `expired`. The A/B test was automatically stopped after reaching its end
+        date.
 
         - `failed`. Creating the A/B test failed.
 
@@ -1058,19 +1101,24 @@ components:
         durationDays:
           type: integer
           format: int64
-          description: Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
+          description: Estimated number of days needed to reach the sample sizes required
+            for detecting the configured effect. This value is based on historical
+            traffic.
           example: 21
         sampleSizes:
           type: array
-          description: 'Sample size estimates for each variant. The first element is the control variant.
+          description: 'Sample size estimates for each variant. The first element
+            is the control variant.
 
-            Each element is the estimated number of searches required to achieve the desired statistical significance.
+            Each element is the estimated number of searches required to achieve the
+            desired statistical significance.
 
             '
           items:
             type: integer
             format: int64
-            description: Number of tracked searches needed to be able to detect the configured effect for the control variant.
+            description: Number of tracked searches needed to be able to detect the
+              configured effect for the control variant.
             example: 23415
     index:
       type: string
@@ -1085,7 +1133,8 @@ components:
           description: Name of the metric.
         dimension:
           type: string
-          description: Dimension of the metric, for example, in case of a revenue metric it could be USD, EUR...
+          description: Dimension of the metric, for example, in case of a revenue
+            metric it could be USD, EUR...
       required:
       - name
       example:
@@ -1108,7 +1157,8 @@ components:
           $ref: '#/components/schemas/filterEffects'
   headers:
     x-ratelimit-reset:
-      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
+      description: Timestamp when the rate limit will reset, measured in seconds since
+        the Unix epoch.
       example: 1710682486
       schema:
         type: integer
@@ -1200,7 +1250,8 @@ components:
       type: apiKey
       in: header
       name: x-algolia-api-key
-      description: 'Your Algolia API key with the necessary permissions to make the request.
+      description: 'Your Algolia API key with the necessary permissions to make the
+        request.
 
         Permissions are controlled through access control lists (ACL) and access restrictions.
 

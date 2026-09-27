@@ -1,7 +1,8 @@
 openapi: 3.2.0
 info:
   title: Ingestion API
-  summary: The Ingestion API lets you connect third-party services and platforms with Algolia and schedule tasks to ingest your data
+  summary: The Ingestion API lets you connect third-party services and platforms with
+    Algolia and schedule tasks to ingest your data
   description: The Ingestion API powers the no-code data connectors.
   version: 1.0.0
 servers:
@@ -133,11 +134,16 @@ paths:
       tags:
       - Ingestion
       summary: Push records by indexName
-      description: 'Pushes records through the Pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints and/or debugger dashboard to see the status of your task.
+      description: 'Pushes records through the Pipeline, directly to an index. You
+        can make the call synchronous by providing the `watch` parameter, for asynchronous
+        calls, you can use the observability endpoints and/or debugger dashboard to
+        see the status of your task.
 
-        If you want to leverage the pre-indexing data transformation, this is the recommended way of ingesting your records.
+        If you want to leverage the pre-indexing data transformation, this is the
+        recommended way of ingesting your records.
 
-        This method is similar to `pushTask`, but requires an `indexName` instead of a `taskID`. If zero or many tasks are found, an error will be returned.'
+        This method is similar to `pushTask`, but requires an `indexName` instead
+        of a `taskID`. If zero or many tasks are found, an error will be returned.'
       operationId: push
       x-acl:
       - addObject
@@ -152,7 +158,9 @@ paths:
       - $ref: '#/components/parameters/watch'
       - name: referenceIndexName
         in: query
-        description: This is required when targeting an index that does not have a push connector setup (e.g. a tmp index), but you wish to attach another index's transformation to it (e.g. the source index name).
+        description: This is required when targeting an index that does not have a
+          push connector setup (e.g. a tmp index), but you wish to attach another
+          index's transformation to it (e.g. the source index name).
         required: false
         schema:
           type: string
@@ -318,7 +326,8 @@ paths:
       tags:
       - Ingestion
       summary: Delete an authentication resource
-      description: Deletes an authentication resource. You can't delete authentication resources that are used by a source or a destination.
+      description: Deletes an authentication resource. You can't delete authentication
+        resources that are used by a source or a destination.
       operationId: deleteAuthentication
       x-acl:
       - addObject
@@ -484,7 +493,8 @@ paths:
       tags:
       - Ingestion
       summary: Delete a destination
-      description: Deletes a destination by its ID. You can't delete destinations that are referenced in tasks.
+      description: Deletes a destination by its ID. You can't delete destinations
+        that are referenced in tasks.
       operationId: deleteDestination
       x-acl:
       - addObject
@@ -572,7 +582,8 @@ paths:
       tags:
       - Ingestion
       summary: Validate a source payload
-      description: Validates a source payload to ensure it can be created and that the data source can be reached by Algolia.
+      description: Validates a source payload to ensure it can be created and that
+        the data source can be reached by Algolia.
       operationId: validateSource
       x-acl:
       - addObject
@@ -679,7 +690,8 @@ paths:
       tags:
       - Ingestion
       summary: Delete a source
-      description: Deletes a source by its ID. You can't delete sources that are referenced in tasks.
+      description: Deletes a source by its ID. You can't delete sources that are referenced
+        in tasks.
       operationId: deleteSource
       x-acl:
       - addObject
@@ -701,7 +713,8 @@ paths:
       tags:
       - Ingestion
       summary: Validate an update of a source payload
-      description: Validates an update of a source payload to ensure it can be created and that the data source can be reached by Algolia.
+      description: Validates an update of a source payload to ensure it can be created
+        and that the data source can be reached by Algolia.
       operationId: validateSourceBeforeUpdate
       x-acl:
       - addObject
@@ -735,7 +748,8 @@ paths:
       summary: Trigger a stream-listing request
       description: 'Triggers a stream-listing request for a source.
 
-        Triggering stream-listing requests only works with sources with `type: docker` and `imageType: airbyte`.'
+        Triggering stream-listing requests only works with sources with `type: docker`
+        and `imageType: airbyte`.'
       operationId: triggerDockerSourceDiscover
       x-acl:
       - addObject
@@ -761,7 +775,8 @@ paths:
       tags:
       - Ingestion
       summary: Run all tasks linked to a source
-      description: Runs all tasks linked to a source, only available for Shopify, BigCommerce and commercetools sources. Creates one run per task.
+      description: Runs all tasks linked to a source, only available for Shopify,
+        BigCommerce and commercetools sources. Creates one run per task.
       operationId: runSource
       x-acl:
       - addObject
@@ -786,7 +801,8 @@ paths:
                 properties:
                   taskWithRunID:
                     type: object
-                    description: Map of taskID sent for reindex with the corresponding runID.
+                    description: Map of taskID sent for reindex with the corresponding
+                      runID.
                     additionalProperties:
                       type: string
                   createdAt:
@@ -927,7 +943,8 @@ paths:
       - deleteIndex
       - editSettings
       summary: Fully update a task
-      description: Fully updates a task by its ID, use partialUpdateTask if you only want to update a subset of fields.
+      description: Fully updates a task by its ID, use partialUpdateTask if you only
+        want to update a subset of fields.
       operationId: replaceTask
       parameters:
       - $ref: '#/components/parameters/pathTaskID'
@@ -999,7 +1016,8 @@ paths:
       tags:
       - Ingestion
       summary: Run a task
-      description: Runs a task. You can check the status of task runs with the observability endpoints.
+      description: Runs a task. You can check the status of task runs with the observability
+        endpoints.
       operationId: runTask
       x-acl:
       - addObject
@@ -1027,11 +1045,16 @@ paths:
       tags:
       - Ingestion
       summary: Push records by task ID
-      description: 'Pushes records through the pipeline, directly to an index. You can make the call synchronous by providing the `watch` parameter, for asynchronous calls, you can use the observability endpoints or the debugger dashboard to see the status of your task.
+      description: 'Pushes records through the pipeline, directly to an index. You
+        can make the call synchronous by providing the `watch` parameter, for asynchronous
+        calls, you can use the observability endpoints or the debugger dashboard to
+        see the status of your task.
 
-        If you want to transform your data before indexing, this is the recommended way of ingesting your records.
+        If you want to transform your data before indexing, this is the recommended
+        way of ingesting your records.
 
-        This method is similar to `push`, but requires a `taskID` instead of a `indexName`, which is useful when many `destinations` target the same `indexName`.'
+        This method is similar to `push`, but requires a `taskID` instead of a `indexName`,
+        which is useful when many `destinations` target the same `indexName`.'
       operationId: pushTask
       externalDocs:
         url: https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/how-to/transform-your-data
@@ -1111,7 +1134,8 @@ paths:
       tags:
       - Ingestion
       summary: List tasks V1
-      description: Retrieves a list of tasks using the v1 endpoint. Use `getTasks` instead.
+      description: Retrieves a list of tasks using the v1 endpoint. Use `getTasks`
+        instead.
       operationId: listTasksV1
       deprecated: true
       x-acl:
@@ -1213,7 +1237,8 @@ paths:
       tags:
       - Ingestion
       summary: Retrieve a task V1
-      description: Retrieves a task by its ID using the v1 endpoint. Use `getTask` instead.
+      description: Retrieves a task by its ID using the v1 endpoint. Use `getTask`
+        instead.
       operationId: getTaskV1
       deprecated: true
       x-acl:
@@ -1235,7 +1260,8 @@ paths:
       tags:
       - Ingestion
       summary: Update a task V1
-      description: Updates a task by its ID using the v1 endpoint. Use `updateTask` instead.
+      description: Updates a task by its ID using the v1 endpoint. Use `updateTask`
+        instead.
       operationId: updateTaskV1
       x-acl:
       - addObject
@@ -1264,7 +1290,8 @@ paths:
       tags:
       - Ingestion
       summary: Delete a task
-      description: Deletes a task by its ID using the v1 endpoint. Use `deleteTask` instead.
+      description: Deletes a task by its ID using the v1 endpoint. Use `deleteTask`
+        instead.
       operationId: deleteTaskV1
       x-acl:
       - addObject
@@ -1287,7 +1314,8 @@ paths:
       tags:
       - Ingestion
       summary: Run a task V1
-      description: Runs a task using the v1 endpoint. Use `runTask` instead. You can check the status of task runs with the observability endpoints.
+      description: Runs a task using the v1 endpoint. Use `runTask` instead. You can
+        check the status of task runs with the observability endpoints.
       operationId: runTaskV1
       deprecated: true
       x-acl:
@@ -1597,12 +1625,14 @@ paths:
       - $ref: '#/components/parameters/order'
       - name: startDate
         in: query
-        description: Date and time for the earliest run to retrieve, in RFC 3339 format. By default, the current day minus seven days is used.
+        description: Date and time for the earliest run to retrieve, in RFC 3339 format.
+          By default, the current day minus seven days is used.
         schema:
           type: string
       - name: endDate
         in: query
-        description: Date and time for the latest run to retrieve, in RFC 3339 format. By default, the current day is used.
+        description: Date and time for the latest run to retrieve, in RFC 3339 format.
+          By default, the current day is used.
         schema:
           type: string
       responses:
@@ -1657,12 +1687,14 @@ paths:
       - $ref: '#/components/parameters/order'
       - name: startDate
         in: query
-        description: Date and time in RFC 3339 format for the earliest events to retrieve. By default, the current time minus three hours is used.
+        description: Date and time in RFC 3339 format for the earliest events to retrieve.
+          By default, the current time minus three hours is used.
         schema:
           type: string
       - name: endDate
         in: query
-        description: Date and time in RFC 3339 format for the latest events to retrieve. By default, the current time is used.
+        description: Date and time in RFC 3339 format for the latest events to retrieve.
+          By default, the current time is used.
         schema:
           type: string
       responses:
@@ -1753,7 +1785,9 @@ paths:
       - editSettings
       operationId: chunkedPush
       summary: Replace all records in an index
-      description: 'Helper: Chunks the given `objects` list in subset of 1000 elements max in order to make it fit in `push` requests by leveraging the Transformation pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push).'
+      description: 'Helper: Chunks the given `objects` list in subset of 1000 elements
+        max in order to make it fit in `push` requests by leveraging the Transformation
+        pipeline setup in the Push connector (https://www.algolia.com/doc/guides/sending-and-managing-data/send-and-update-your-data/connectors/push).'
       parameters:
       - in: query
         name: indexName
@@ -1771,19 +1805,22 @@ paths:
             type: object
       - in: query
         name: action
-        description: The `batch` `action` to perform on the given array of `objects`, defaults to `addObject`.
+        description: The `batch` `action` to perform on the given array of `objects`,
+          defaults to `addObject`.
         required: false
         schema:
           $ref: '#/components/schemas/action'
       - in: query
         name: waitForTasks
-        description: Whether to wait until every `batch` task has been processed. This may take longer but is more reliable.
+        description: Whether to wait until every `batch` task has been processed.
+          This may take longer but is more reliable.
         required: false
         schema:
           type: boolean
       - in: query
         name: batchSize
-        description: The size of the chunk of `objects`. The number of `batch` calls will be equal to `length(objects) / batchSize`. Defaults to 1,000.
+        description: The size of the chunk of `objects`. The number of `batch` calls
+          will be equal to `length(objects) / batchSize`. Defaults to 1,000.
         required: false
         schema:
           type: integer
@@ -1875,7 +1912,8 @@ components:
       - failure
     AuthGoogleServiceAccountPartial:
       type: object
-      description: Credentials for authenticating with a Google service account, such as BigQuery.
+      description: Credentials for authenticating with a Google service account, such
+        as BigQuery.
       additionalProperties: false
       properties:
         clientEmail:
@@ -1884,12 +1922,17 @@ components:
           example: service-account-name@project-id.iam.gserviceaccount.com
         privateKey:
           type: string
-          description: Private key of the Google service account. This field is `null` in the API response.
+          description: Private key of the Google service account. This field is `null`
+            in the API response.
       x-discriminator-fields:
       - clientEmail
     TriggerType:
       type: string
-      description: "Task trigger, describing when a task should run.\n\n- `onDemand`.\n  Manually trigger the task with the `/run` endpoint.\n\n- `schedule`.\n  Regularly trigger the task on a `cron` schedule.\n\n- `subscription`.\n  Trigger the task after an event is received, such as, a webhook.\n\n- `streaming`.\n  Run the task continuously.\n"
+      description: "Task trigger, describing when a task should run.\n\n- `onDemand`.\n\
+        \  Manually trigger the task with the `/run` endpoint.\n\n- `schedule`.\n\
+        \  Regularly trigger the task on a `cron` schedule.\n\n- `subscription`.\n\
+        \  Trigger the task after an event is received, such as, a webhook.\n\n- `streaming`.\n\
+        \  Run the task continuously.\n"
       enum:
       - onDemand
       - schedule
@@ -1907,7 +1950,8 @@ components:
       required:
       - type
     TransformationInput:
-      description: The input for the transformation, which can be either code or a no-code configuration.
+      description: The input for the transformation, which can be either code or a
+        no-code configuration.
       oneOf:
       - $ref: '#/components/schemas/TransformationCode'
       - $ref: '#/components/schemas/TransformationNoCode'
@@ -2035,7 +2079,8 @@ components:
       title: Shopify input
       type: object
       additionalProperties: false
-      description: Represents the required elements of the task input when using a `shopify` source.
+      description: Represents the required elements of the task input when using a
+        `shopify` source.
       properties:
         metafields:
           type: array
@@ -2064,7 +2109,8 @@ components:
           type: string
           description: 'Authorization code.
 
-            Used during an `authorization_code` grant type flow, to request an access_token when creating/updating the authentication.
+            Used during an `authorization_code` grant type flow, to request an access_token
+            when creating/updating the authentication.
 
             This field is not returned in the API response.
 
@@ -2095,7 +2141,8 @@ components:
           items:
             type: string
             pattern: ^[a-z]{2}(-[A-Z]{2})?$
-            description: Locale specified as combination of a two-letter language code and an optional two-letter country code.
+            description: Locale specified as combination of a two-letter language
+              code and an optional two-letter country code.
             example: fr-FR
         url:
           type: string
@@ -2104,17 +2151,20 @@ components:
         fallbackIsInStockValue:
           type: boolean
           default: true
-          description: 'Whether a fallback value is stored in the Algolia record if there''s no inventory information about the product.
+          description: 'Whether a fallback value is stored in the Algolia record if
+            there''s no inventory information about the product.
 
             '
         productQueryPredicate:
           type: string
-          description: 'Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
+          description: 'Predicate to filter out specific products when indexing. For
+            more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
 
             '
         useImagesObjects:
           type: boolean
-          description: 'When set to true, the connector indexes objects with all images attributes instead of only the URLs.
+          description: 'When set to true, the connector indexes objects with all images
+            attributes instead of only the URLs.
 
             '
         customFields:
@@ -2126,7 +2176,8 @@ components:
       - projectKey
     platformNone:
       type: string
-      description: Authentication resource not tied to any ecommerce platform, used for filtering.
+      description: Authentication resource not tied to any ecommerce platform, used
+        for filtering.
       enum:
       - none
     startedAt:
@@ -2296,7 +2347,8 @@ components:
           type: string
           description: 'Authorization code.
 
-            Used during an `authorization_code` grant type flow, to request an access_token when creating/updating the authentication.
+            Used during an `authorization_code` grant type flow, to request an access_token
+            when creating/updating the authentication.
 
             This field is not returned in the API response.
 
@@ -2469,13 +2521,15 @@ components:
       type: integer
       minimum: 0
       maximum: 100
-      description: Maximum accepted percentage of failures for a task run to finish successfully.
+      description: Maximum accepted percentage of failures for a task run to finish
+        successfully.
     LastRun:
       description: The last time the scheduled task ran in RFC 3339 format.
       type: string
     UniqueIDColumn:
       type: string
-      description: Name of a column that contains a unique ID which will be used as `objectID` in Algolia.
+      description: Name of a column that contains a unique ID which will be used as
+        `objectID` in Algolia.
     AuthInput:
       oneOf:
       - $ref: '#/components/schemas/AuthGoogleServiceAccount'
@@ -2522,7 +2576,8 @@ components:
       type: object
       additionalProperties: false
       deprecated: true
-      description: The V1 task object. Use methods and types that don't contain the V1 suffix.
+      description: The V1 task object. Use methods and types that don't contain the
+        V1 suffix.
       properties:
         taskID:
           $ref: '#/components/schemas/taskID'
@@ -2615,7 +2670,21 @@ components:
       - deleteObject
       - delete
       - clear
-      description: "Which indexing operation to perform:\n\n- `addObject`: adds records to an index.\n   Equivalent to the \"Add a new record (with auto-generated object ID)\" operation.\n- `updateObject`: adds or replaces records in an index.\n   Equivalent to the \"Add or replace a record\" operation.\n- `partialUpdateObject`: adds or updates attributes within records.\n   Equivalent to the \"Add or update attributes\" operation with the `createIfNoExists` parameter set to true.\n   (If a record with the specified `objectID` doesn't exist in the specified index, this action creates adds the record to the index)\n- `partialUpdateObjectNoCreate`: same as `partialUpdateObject`, but with `createIfNoExists` set to false.\n   (A record isn't added to the index if its `objectID` doesn't exist)\n- `deleteObject`: delete records from an index.\n  Equivalent to the \"Delete a record\" operation.\n- `delete`. Delete an index. Equivalent to the \"Delete an index\" operation.\n- `clear`: delete all records from an index. Equivalent to the \"Delete all records from an index operation\".\n"
+      description: "Which indexing operation to perform:\n\n- `addObject`: adds records\
+        \ to an index.\n   Equivalent to the \"Add a new record (with auto-generated\
+        \ object ID)\" operation.\n- `updateObject`: adds or replaces records in an\
+        \ index.\n   Equivalent to the \"Add or replace a record\" operation.\n- `partialUpdateObject`:\
+        \ adds or updates attributes within records.\n   Equivalent to the \"Add or\
+        \ update attributes\" operation with the `createIfNoExists` parameter set\
+        \ to true.\n   (If a record with the specified `objectID` doesn't exist in\
+        \ the specified index, this action creates adds the record to the index)\n\
+        - `partialUpdateObjectNoCreate`: same as `partialUpdateObject`, but with `createIfNoExists`\
+        \ set to false.\n   (A record isn't added to the index if its `objectID` doesn't\
+        \ exist)\n- `deleteObject`: delete records from an index.\n  Equivalent to\
+        \ the \"Delete a record\" operation.\n- `delete`. Delete an index. Equivalent\
+        \ to the \"Delete an index\" operation.\n- `clear`: delete all records from\
+        \ an index. Equivalent to the \"Delete all records from an index operation\"\
+        .\n"
     RunType:
       type: string
       description: Task run type.
@@ -2641,23 +2710,27 @@ components:
           items:
             type: string
             pattern: ^[a-z]{2}(-[A-Z]{2})?$
-            description: Locale specified as combination of a two-letter language code and an optional two-letter country code.
+            description: Locale specified as combination of a two-letter language
+              code and an optional two-letter country code.
             example: fr-FR
         url:
           type: string
         fallbackIsInStockValue:
           type: boolean
-          description: 'Whether a fallback value is stored in the Algolia record if there''s no inventory information about the product.
+          description: 'Whether a fallback value is stored in the Algolia record if
+            there''s no inventory information about the product.
 
             '
         productQueryPredicate:
           type: string
-          description: 'Predicate to filter out specific products when indexing. For more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
+          description: 'Predicate to filter out specific products when indexing. For
+            more information, see [Query Predicate](https://docs.commercetools.com/api/predicates/query).
 
             '
         useImagesObjects:
           type: boolean
-          description: 'When set to true, the connector indexes objects with all images attributes instead of only the URLs.
+          description: 'When set to true, the connector indexes objects with all images
+            attributes instead of only the URLs.
 
             '
         customFields:
@@ -2692,7 +2765,8 @@ components:
       - updatedAt
     AuthenticationType:
       type: string
-      description: Type of authentication. This determines the type of credentials required in the `input` object.
+      description: Type of authentication. This determines the type of credentials
+        required in the `input` object.
       enum:
       - googleServiceAccount
       - basic
@@ -2707,7 +2781,8 @@ components:
       properties:
         payloads:
           type: array
-          description: The array of stringified records returned by the transformation service.
+          description: The array of stringified records returned by the transformation
+            service.
           items:
             type: string
         error:
@@ -2786,7 +2861,8 @@ components:
       type: object
       additionalProperties: false
       deprecated: true
-      description: API request body for creating a task using the V1 shape. Use methods and types that don't contain the V1 suffix.
+      description: API request body for creating a task using the V1 shape. Use methods
+        and types that don't contain the V1 suffix.
       properties:
         sourceID:
           $ref: '#/components/schemas/sourceID'
@@ -2825,7 +2901,8 @@ components:
           additionalProperties: false
           properties:
             enabled:
-              description: Whether to send email notifications, note that this doesn't prevent the task from being blocked.
+              description: Whether to send email notifications, note that this doesn't
+                prevent the task from being blocked.
               type: boolean
       required:
       - email
@@ -2854,7 +2931,8 @@ components:
           description: Name of the Algolia index to read records from.
         filters:
           type: string
-          description: 'SQL-like filter expression applied while browsing the source index.
+          description: 'SQL-like filter expression applied while browsing the source
+            index.
 
             See [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).
 
@@ -2930,7 +3008,8 @@ components:
       type: object
       additionalProperties: false
       deprecated: true
-      description: API request body for updating a task using the V1 shape. Use methods and types that don't contain the V1 suffix.
+      description: API request body for updating a task using the V1 shape. Use methods
+        and types that don't contain the V1 suffix.
       properties:
         destinationID:
           $ref: '#/components/schemas/destinationID'
@@ -2952,7 +3031,8 @@ components:
     Code:
       type: string
       deprecated: true
-      description: It is deprecated. Use the `input` field with proper `type` instead to specify the transformation code.
+      description: It is deprecated. Use the `input` field with proper `type` instead
+        to specify the transformation code.
     TransformationType:
       type: string
       description: The type of transformation, which can be either 'code' or 'noCode'.
@@ -3284,7 +3364,8 @@ components:
           description: Name of the Algolia index to read records from.
         filters:
           type: string
-          description: 'SQL-like filter expression applied while browsing the source index.
+          description: 'SQL-like filter expression applied while browsing the source
+            index.
 
             See [filters](https://www.algolia.com/doc/api-reference/api-parameters/filters/).
 
@@ -3310,14 +3391,17 @@ components:
       - id
     DestinationType:
       type: string
-      description: "Destination type.\n\n- `search`.\n  Data is stored in an Algolia index.\n\n- `insights`.\n  Data is recorded as user events in the Insights API.\n"
+      description: "Destination type.\n\n- `search`.\n  Data is stored in an Algolia\
+        \ index.\n\n- `insights`.\n  Data is recorded as user events in the Insights\
+        \ API.\n"
       enum:
       - search
       - insights
     MappingKitAction:
       type: object
       additionalProperties: false
-      description: Describes how a destination object should be resolved by means of applying a set of directives.
+      description: Describes how a destination object should be resolved by means
+        of applying a set of directives.
       properties:
         id:
           description: ID to uniquely identify this action.
@@ -3326,7 +3410,9 @@ components:
           description: Whether this action has any effect.
           type: boolean
         trigger:
-          description: Condition which must be satisfied to apply the action. If this evaluates to false, the action is not applied, and the process attempts to apply the next action, if any.
+          description: Condition which must be satisfied to apply the action. If this
+            evaluates to false, the action is not applied, and the process attempts
+            to apply the next action, if any.
           type: string
         fieldDirectives:
           type: array
@@ -3376,18 +3462,21 @@ components:
           type: array
           description: 'This field is always null when used with the Push endpoint.
 
-            When used for a source discover or source validate run, it will include the sampled data of the source.
+            When used for a source discover or source validate run, it will include
+            the sampled data of the source.
 
             '
           items:
             type: object
         events:
-          description: in case of error, observability events will be added to the response.
+          description: in case of error, observability events will be added to the
+            response.
           type: array
           items:
             $ref: '#/components/schemas/Event'
         message:
-          description: a message describing the outcome of the operation that has been ran (push, discover or validate) run.
+          description: a message describing the outcome of the operation that has
+            been ran (push, discover or validate) run.
           type: string
         createdAt:
           $ref: '#/components/schemas/CreatedAt'
@@ -3449,12 +3538,22 @@ components:
       - streams
     AttributesToExclude:
       type: array
-      description: "Attributes from your source to exclude from Algolia records.\n\nNot all your data attributes will be useful for searching.\nKeeping your Algolia records small increases indexing and search performance.\n\n- Exclude nested attributes with `.` notation. For example, `foo.bar` indexes the `foo` attribute and all its children **except** the `bar` attribute.\n- Exclude attributes from arrays with `[i]`, where `i` is the index of the array element.\n  For example, `foo.[0].bar` only excludes the `bar` attribute from the first element of the `foo` array, but indexes the complete `foo` attribute for all other elements.\n  Use `*` as wildcard: `foo.[*].bar` excludes `bar` from all elements of the `foo` array.\n"
+      description: "Attributes from your source to exclude from Algolia records.\n\
+        \nNot all your data attributes will be useful for searching.\nKeeping your\
+        \ Algolia records small increases indexing and search performance.\n\n- Exclude\
+        \ nested attributes with `.` notation. For example, `foo.bar` indexes the\
+        \ `foo` attribute and all its children **except** the `bar` attribute.\n-\
+        \ Exclude attributes from arrays with `[i]`, where `i` is the index of the\
+        \ array element.\n  For example, `foo.[0].bar` only excludes the `bar` attribute\
+        \ from the first element of the `foo` array, but indexes the complete `foo`\
+        \ attribute for all other elements.\n  Use `*` as wildcard: `foo.[*].bar`\
+        \ excludes `bar` from all elements of the `foo` array.\n"
       items:
         type: string
     Authentication:
       type: object
-      description: Resource representing the information required to authenticate with a source or a destination.
+      description: Resource representing the information required to authenticate
+        with a source or a destination.
       additionalProperties: false
       properties:
         authenticationID:
@@ -3554,7 +3653,8 @@ components:
           minLength: 1
           maxLength: 1
           default: ','
-          description: The character used to split the value on each line, default to a comma (\r, \n, 0xFFFD, and space are forbidden).
+          description: The character used to split the value on each line, default
+            to a comma (\r, \n, 0xFFFD, and space are forbidden).
       required:
       - url
     DestinationUpdate:
@@ -3657,7 +3757,8 @@ components:
           description: Algolia application ID.
         apiKey:
           type: string
-          description: 'Algolia API key with the ACL: `addObject`, `deleteObject`, `settings`, `editSettings`, `listIndexes`, `deleteIndex`.
+          description: 'Algolia API key with the ACL: `addObject`, `deleteObject`,
+            `settings`, `editSettings`, `listIndexes`, `deleteIndex`.
 
             This field is `null` in the API response.
 
@@ -3672,10 +3773,12 @@ components:
       properties:
         startDate:
           type: string
-          description: Date and time representing the oldest data in the time window, in RFC 3339 format.
+          description: Date and time representing the oldest data in the time window,
+            in RFC 3339 format.
         endDate:
           type: string
-          description: Date and time representing the newest data in the time window, in RFC 3339 format.
+          description: Date and time representing the newest data in the time window,
+            in RFC 3339 format.
       required:
       - startDate
       - endDate
@@ -3693,7 +3796,8 @@ components:
           description: Algolia application ID.
         apiKey:
           type: string
-          description: 'Algolia API key with the ACL: `addObject`, `deleteObject`, `settings`, `editSettings`, `listIndexes`, `deleteIndex`.
+          description: 'Algolia API key with the ACL: `addObject`, `deleteObject`,
+            `settings`, `editSettings`, `listIndexes`, `deleteIndex`.
 
             This field is `null` in the API response.
 
@@ -3723,7 +3827,8 @@ components:
     AuthGoogleServiceAccount:
       title: Google
       type: object
-      description: Credentials for authenticating with a Google service account, such as BigQuery.
+      description: Credentials for authenticating with a Google service account, such
+        as BigQuery.
       additionalProperties: false
       properties:
         clientEmail:
@@ -3732,7 +3837,8 @@ components:
           example: service-account-name@project-id.iam.gserviceaccount.com
         privateKey:
           type: string
-          description: Private key of the Google service account. This field is `null` in the API response.
+          description: Private key of the Google service account. This field is `null`
+            in the API response.
       required:
       - clientEmail
       - privateKey
@@ -3870,7 +3976,8 @@ components:
       title: Streaming input
       type: object
       additionalProperties: false
-      description: Input for a `streaming` task whose source is of type `ga4BigqueryExport` and for which extracted data is continuously streamed.
+      description: Input for a `streaming` task whose source is of type `ga4BigqueryExport`
+        and for which extracted data is continuously streamed.
       properties:
         mapping:
           $ref: '#/components/schemas/MappingInput'
@@ -3884,7 +3991,8 @@ components:
       example: 6c02aeb1-775e-418e-870b-1faccd4b2c0f
     RunReasonCode:
       type: string
-      description: A code for the task run's outcome. A readable description of the code is included in the `reason` response property.
+      description: A code for the task run's outcome. A readable description of the
+        code is included in the `reason` response property.
       enum:
       - internal
       - cancelled
@@ -3997,7 +4105,8 @@ components:
       description: Set of rules for a task.
       properties:
         criticalThreshold:
-          description: The number of critical failures in a row before blocking the task and sending a notification.
+          description: The number of critical failures in a row before blocking the
+            task and sending a notification.
           type: integer
           minimum: 1
           maximum: 10
@@ -4027,7 +4136,8 @@ components:
       title: Code
       type: object
       additionalProperties: false
-      description: Input for a transformation that contains the source code of the transformation.
+      description: Input for a transformation that contains the source code of the
+        transformation.
       properties:
         code:
           type: string
@@ -4214,7 +4324,8 @@ components:
     watch:
       name: watch
       in: query
-      description: When provided, the push operation will be synchronous and the API will wait for the ingestion to be finished before responding.
+      description: When provided, the push operation will be synchronous and the API
+        will wait for the ingestion to be finished before responding.
       required: false
       schema:
         type: boolean
@@ -4239,7 +4350,8 @@ components:
     withEmailNotifications:
       name: withEmailNotifications
       in: query
-      description: If specified, the response only includes tasks with notifications.email.enabled set to this value.
+      description: If specified, the response only includes tasks with notifications.email.enabled
+        set to this value.
       required: false
       schema:
         type: boolean
@@ -4424,7 +4536,8 @@ components:
       type: apiKey
       in: header
       name: x-algolia-api-key
-      description: 'Your Algolia API key with the necessary permissions to make the request.
+      description: 'Your Algolia API key with the necessary permissions to make the
+        request.
 
         Permissions are controlled through access control lists (ACL) and access restrictions.
 

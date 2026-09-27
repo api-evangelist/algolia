@@ -1,7 +1,8 @@
 openapi: 3.2.0
 info:
   title: A/B Testing Abtesting API
-  summary: The Algolia A/B Testing API lets you manage your Algolia A/B tests to optimize your search experience
+  summary: The Algolia A/B Testing API lets you manage your Algolia A/B tests to optimize
+    your search experience
   description: '## Base URLs
 
 
@@ -238,13 +239,15 @@ paths:
           default: 10
       - name: indexPrefix
         in: query
-        description: Index name prefix. Only A/B tests for indices starting with this string are included in the response.
+        description: Index name prefix. Only A/B tests for indices starting with this
+          string are included in the response.
         example: dev_
         schema:
           type: string
       - name: indexSuffix
         in: query
-        description: Index name suffix. Only A/B tests for indices ending with this string are included in the response.
+        description: Index name suffix. Only A/B tests for indices ending with this
+          string are included in the response.
         example: _development
         schema:
           type: string
@@ -424,7 +427,8 @@ paths:
         Replaced by `POST /3/abtests/estimate`.
 
 
-        Given the traffic percentage and the expected effect size, this endpoint estimates the sample size and duration of an A/B test based on historical traffic.'
+        Given the traffic percentage and the expected effect size, this endpoint estimates
+        the sample size and duration of an A/B test based on historical traffic.'
       requestBody:
         required: true
         content:
@@ -437,7 +441,8 @@ paths:
                 configuration:
                   title: estimateConfiguration
                   type: object
-                  description: A/B test configuration for estimating the sample size and duration using minimum detectable effect.
+                  description: A/B test configuration for estimating the sample size
+                    and duration using minimum detectable effect.
                   properties:
                     featureFilters:
                       $ref: '#/components/schemas/FeatureFilters'
@@ -515,7 +520,8 @@ components:
 
             Values of 0.95 or higher can be considered significant,
 
-            that is, the difference between A and B variants is _not_ due to random variations.
+            that is, the difference between A and B variants is _not_ due to random
+            variations.
 
             Lower values have a.
 
@@ -531,7 +537,8 @@ components:
 
             Values of 0.95 or higher can be considered significant,
 
-            that is, the difference between A and B variants is _not_ due to random variations.
+            that is, the difference between A and B variants is _not_ due to random
+            variations.
 
             '
           oneOf:
@@ -545,7 +552,8 @@ components:
 
             Values of 0.95 or higher can be considered significant,
 
-            that is, the difference between A and B variants is _not_ due to random variations.
+            that is, the difference between A and B variants is _not_ due to random
+            variations.
 
             '
           oneOf:
@@ -559,7 +567,8 @@ components:
 
             Values of 0.95 or higher can be considered significant,
 
-            that is, the difference between A and B variants is _not_ due to random variations.
+            that is, the difference between A and B variants is _not_ due to random
+            variations.
 
             '
           oneOf:
@@ -573,7 +582,8 @@ components:
 
             Values of 0.95 or higher can be considered significant,
 
-            that is, the difference between A and B variants is _not_ due to random variations.
+            that is, the difference between A and B variants is _not_ due to random
+            variations.
 
             '
           oneOf:
@@ -626,7 +636,8 @@ components:
       type: integer
       example: 2
       default: 0
-      description: Number of tracked searches. Tracked searches are search requests where the `clickAnalytics` parameter is true.
+      description: Number of tracked searches. Tracked searches are search requests
+        where the `clickAnalytics` parameter is true.
     taskID:
       type: integer
       format: int64
@@ -638,7 +649,8 @@ components:
 
         It might not run immediately.
 
-        You can check the task''s progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task) and this task ID.
+        You can check the task''s progress with the [`task` operation](https://www.algolia.com/doc/rest-api/search/get-task)
+        and this task ID.
 
         '
     endAt:
@@ -655,7 +667,8 @@ components:
       properties:
         exclude:
           type: boolean
-          description: Whether to exclude empty searches when calculating A/B test results.
+          description: Whether to exclude empty searches when calculating A/B test
+            results.
     ABTestResponse:
       type: object
       additionalProperties: false
@@ -704,7 +717,8 @@ components:
           example: Invalid Application-Id or API-Key
     FeatureFilters:
       type: object
-      description: Configuration of feature-based filters applied to the A/B test population.
+      description: Configuration of feature-based filters applied to the A/B test
+        population.
       properties:
         dynamicReRanking:
           type: boolean
@@ -735,7 +749,8 @@ components:
       - customSearchParameters
     MinimumDetectableEffect:
       type: object
-      description: Configuration for the smallest difference between test variants you want to detect.
+      description: Configuration for the smallest difference between test variants
+        you want to detect.
       properties:
         size:
           type: number
@@ -744,7 +759,8 @@ components:
           maximum: 1
           description: 'Smallest difference in an observable metric between variants.
 
-            For example, to detect a 10% difference between variants, set this value to 0.1.
+            For example, to detect a 10% difference between variants, set this value
+            to 0.1.
 
             '
         metric:
@@ -768,7 +784,8 @@ components:
     ABTests:
       oneOf:
       - type: array
-        description: The list of A/B tests, null if no A/B tests are configured for this application.
+        description: The list of A/B tests, null if no A/B tests are configured for
+          this application.
         items:
           $ref: '#/components/schemas/ABTest'
       - type: 'null'
@@ -784,7 +801,8 @@ components:
           oneOf:
           - type: number
             format: double
-            description: '[Add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate) for this variant.
+            description: '[Add-to-cart rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#add-to-cart-rate)
+              for this variant.
 
               '
             example: 0
@@ -793,7 +811,8 @@ components:
           oneOf:
           - type: number
             format: double
-            description: '[Average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position) for this variant.
+            description: '[Average click position](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-position)
+              for this variant.
 
               '
             example: 29.12342
@@ -806,7 +825,8 @@ components:
           oneOf:
           - type: number
             format: double
-            description: '[Click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate) for this variant.
+            description: '[Click-through rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#click-through-rate)
+              for this variant.
 
               '
             example: 0.22219857724813036
@@ -819,7 +839,8 @@ components:
           oneOf:
           - type: number
             format: double
-            description: '[Conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate) for this variant.
+            description: '[Conversion rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#conversion-rate)
+              for this variant.
 
               '
             example: 0.14546725846658964
@@ -830,10 +851,12 @@ components:
           $ref: '#/components/schemas/description'
         estimatedSampleSize:
           type: integer
-          description: 'Estimated number of searches required to achieve the desired statistical significance.
+          description: 'Estimated number of searches required to achieve the desired
+            statistical significance.
 
 
-            The A/B test configuration must include a `mininmumDetectableEffect` setting for this number to be included in the response.
+            The A/B test configuration must include a `mininmumDetectableEffect` setting
+            for this number to be included in the response.
 
             '
           example: 0
@@ -844,7 +867,8 @@ components:
         noResultCount:
           oneOf:
           - type: integer
-            description: Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results) for this variant.
+            description: Number of [searches without results](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#searches-without-results)
+              for this variant.
             example: 0
           - type: 'null'
         purchaseCount:
@@ -855,7 +879,8 @@ components:
           oneOf:
           - type: number
             format: double
-            description: '[Purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate) for this variant.
+            description: '[Purchase rate](https://www.algolia.com/doc/guides/search-analytics/concepts/metrics/#purchase-rate)
+              for this variant.
 
               '
             example: 0
@@ -900,7 +925,8 @@ components:
 
         The first variant is your _control_ index, typically your production index.
 
-        The second variant is an index with changed settings that you want to test against the control.
+        The second variant is an index with changed settings that you want to test
+        against the control.
 
         '
       items:
@@ -936,7 +962,8 @@ components:
         outliers:
           title: outliersFilter
           type: object
-          description: Outliers removed from the A/B test as a result of configuration settings.
+          description: Outliers removed from the A/B test as a result of configuration
+            settings.
           example:
             usersCount: 1
             trackedSearchesCount: 237
@@ -952,7 +979,8 @@ components:
         emptySearch:
           title: emptySearchFilter
           type: object
-          description: Empty searches removed from the A/B test as a result of configuration settings.
+          description: Empty searches removed from the A/B test as a result of configuration
+            settings.
           example:
             usersCount: 1
             trackedSearchesCount: 237
@@ -1003,7 +1031,8 @@ components:
         winsorizedAmount:
           type: number
           format: double
-          description: The amount of revenue for this currency that was removed after capping purchase amounts to the 95th percentile.
+          description: The amount of revenue for this currency that was removed after
+            capping purchase amounts to the 95th percentile.
           example: 23
     Outliers:
       type: object
@@ -1018,11 +1047,14 @@ components:
       description: 'A/B test status.
 
 
-        - `active`. The A/B test is live and search traffic is split between the two variants.
+        - `active`. The A/B test is live and search traffic is split between the two
+        variants.
 
-        - `stopped`. You stopped the A/B test. The A/B test data is still available for analysis.
+        - `stopped`. You stopped the A/B test. The A/B test data is still available
+        for analysis.
 
-        - `expired`. The A/B test was automatically stopped after reaching its end date.
+        - `expired`. The A/B test was automatically stopped after reaching its end
+        date.
 
         - `failed`. Creating the A/B test failed.
 
@@ -1039,19 +1071,24 @@ components:
         durationDays:
           type: integer
           format: int64
-          description: Estimated number of days needed to reach the sample sizes required for detecting the configured effect. This value is based on historical traffic.
+          description: Estimated number of days needed to reach the sample sizes required
+            for detecting the configured effect. This value is based on historical
+            traffic.
           example: 21
         sampleSizes:
           type: array
-          description: 'Sample size estimates for each variant. The first element is the control variant.
+          description: 'Sample size estimates for each variant. The first element
+            is the control variant.
 
-            Each element is the estimated number of searches required to achieve the desired statistical significance.
+            Each element is the estimated number of searches required to achieve the
+            desired statistical significance.
 
             '
           items:
             type: integer
             format: int64
-            description: Number of tracked searches needed to be able to detect the configured effect for the control variant.
+            description: Number of tracked searches needed to be able to detect the
+              configured effect for the control variant.
             example: 23415
     index:
       type: string
@@ -1065,7 +1102,8 @@ components:
       example: '2023-06-15T15:06:44.400601Z'
   headers:
     x-ratelimit-reset:
-      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
+      description: Timestamp when the rate limit will reset, measured in seconds since
+        the Unix epoch.
       example: 1710682486
       schema:
         type: integer
@@ -1137,7 +1175,8 @@ components:
       type: apiKey
       in: header
       name: x-algolia-api-key
-      description: 'Your Algolia API key with the necessary permissions to make the request.
+      description: 'Your Algolia API key with the necessary permissions to make the
+        request.
 
         Permissions are controlled through access control lists (ACL) and access restrictions.
 

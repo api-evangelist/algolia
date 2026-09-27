@@ -1,7 +1,8 @@
 openapi: 3.2.0
 info:
   title: Personalization API
-  summary: The Personalization API lets you access user profiles built from the personalization strategy
+  summary: The Personalization API lets you access user profiles built from the personalization
+    strategy
   description: '## Base URLs
 
 
@@ -175,13 +176,15 @@ paths:
                     $ref: '#/components/schemas/userToken'
                   lastEventAt:
                     type: string
-                    description: Date and time of the last event from this user, in RFC 3339 format.
+                    description: Date and time of the last event from this user, in
+                      RFC 3339 format.
                   scores:
                     type: object
                     description: 'Scores for different facet values.
 
 
-                      Scores represent the user affinity for a user profile towards specific facet values,
+                      Scores represent the user affinity for a user profile towards
+                      specific facet values,
 
                       given the personalization strategy and past events.
 
@@ -205,7 +208,8 @@ paths:
       description: 'Deletes a user profile.
 
 
-        The response includes a date and time when the user profile can safely be considered deleted.'
+        The response includes a date and time when the user profile can safely be
+        considered deleted.'
       parameters:
       - $ref: '#/components/parameters/UserToken'
       responses:
@@ -232,9 +236,11 @@ paths:
                     $ref: '#/components/schemas/userToken'
                   deletedUntil:
                     type: string
-                    description: 'Date and time when the user profile can be safely considered to be deleted.
+                    description: 'Date and time when the user profile can be safely
+                      considered to be deleted.
 
-                      Any events received after the `deletedUntil` date start a new user profile.
+                      Any events received after the `deletedUntil` date start a new
+                      user profile.
 
                       '
         '400':
@@ -340,7 +346,8 @@ components:
       name: userToken
       in: path
       required: true
-      description: Unique identifier representing a user for which to fetch the personalization profile.
+      description: Unique identifier representing a user for which to fetch the personalization
+        profile.
       schema:
         $ref: '#/components/schemas/userToken'
     PathInPath:
@@ -414,7 +421,8 @@ components:
           description: 'Scores associated with each event.
 
 
-            The higher the scores, the higher the impact of those events on the personalization of search results.
+            The higher the scores, the higher the impact of those events on the personalization
+            of search results.
 
             '
           items:
@@ -424,7 +432,8 @@ components:
           description: 'Scores associated with each facet.
 
 
-            The higher the scores, the higher the impact of those events on the personalization of search results.
+            The higher the scores, the higher the impact of those events on the personalization
+            of search results.
 
             '
           items:
@@ -464,7 +473,8 @@ components:
       schema:
         type: integer
     x-ratelimit-reset:
-      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
+      description: Timestamp when the rate limit will reset, measured in seconds since
+        the Unix epoch.
       example: 1710682486
       schema:
         type: integer
@@ -508,7 +518,8 @@ components:
       type: apiKey
       in: header
       name: x-algolia-api-key
-      description: 'Your Algolia API key with the necessary permissions to make the request.
+      description: 'Your Algolia API key with the necessary permissions to make the
+        request.
 
         Permissions are controlled through access control lists (ACL) and access restrictions.
 
