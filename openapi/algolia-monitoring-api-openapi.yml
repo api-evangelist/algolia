@@ -2,8 +2,7 @@ openapi: 3.2.0
 info:
   title: Algolia Monitoring API
   summary: The Monitoring API lets you check the status of your Algolia infrastructure
-  description: The metrics exposed by this API are based on results from external
-    monitoring probes checking Algolia’s infrastructure.
+  description: The metrics exposed by this API are based on results from external monitoring probes checking Algolia’s infrastructure.
   version: 1.0.0
 servers:
 - url: https://status.algolia.com
@@ -212,8 +211,7 @@ paths:
   /1/latency/{clusters}:
     get:
       summary: Retrieve search latency times
-      description: Retrieves the average latency for search requests for selected
-        clusters.
+      description: Retrieves the average latency for search requests for selected clusters.
       operationId: getLatency
       security: []
       tags:
@@ -231,19 +229,16 @@ paths:
       description: 'Retrieves indexing latency metrics for selected clusters.
 
 
-        This endpoint is intended for infrastructure-level monitoring and availability
-        checks.
+        This endpoint is intended for infrastructure-level monitoring and availability checks.
 
-        The returned value reflects latency measured on Algolia''s internal monitoring
-        index
+        The returned value reflects latency measured on Algolia''s internal monitoring index
 
         and is reported in milliseconds.
 
 
         This metric isn''t intended to represent the indexing performance of an individual
 
-        application or index. To measure when an indexing operation has completed
-        for your
+        application or index. To measure when an indexing operation has completed for your
 
         application, use the `waitTask` method.'
       operationId: getIndexingTime
@@ -275,14 +270,12 @@ paths:
   /1/infrastructure/{metric}/period/{period}:
     get:
       summary: Retrieve metrics
-      description: 'Retrieves metrics related to your Algolia infrastructure, aggregated
-        over a selected time window.
+      description: 'Retrieves metrics related to your Algolia infrastructure, aggregated over a selected time window.
 
 
         Access to this API is available as part of the Premium or Elevate plans.
 
-        You must authenticate requests with the `x-algolia-application-id` and `x-algolia-api-key`
-        headers (using the Monitoring API key).'
+        You must authenticate requests with the `x-algolia-application-id` and `x-algolia-api-key` headers (using the Monitoring API key).'
       operationId: getMetrics
       tags:
       - Monitoring
@@ -316,29 +309,20 @@ paths:
           description: No content.
 components:
   schemas:
-    Incidents:
-      title: incidents
-      description: Key-value pairs with the cluster names as keys and the list of
-        incidents reported for this cluster as values.
+    Time:
+      title: times
+      description: Time measured by a probe.
       type: array
       items:
-        title: incidentEntry
+        title: timeEntry
         type: object
+        additionalProperties: false
         properties:
           t:
             $ref: '#/components/schemas/Timestamp'
           v:
-            $ref: '#/components/schemas/Incident'
-    Incident:
-      title: incident
-      description: Incident details.
-      type: object
-      properties:
-        title:
-          type: string
-          description: Description of the incident.
-        status:
-          $ref: '#/components/schemas/Status'
+            type: integer
+            description: Time in ms.
     Region:
       title: region
       type: string
@@ -360,11 +344,15 @@ components:
       - usw
       - za
       example: de
-    Type:
-      title: type
-      type: string
-      enum:
-      - cluster
+    ErrorBase:
+      description: Error.
+      type: object
+      x-keep-model: true
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
     ProbesMetric:
       title: metric
       type: object
@@ -375,6 +363,16 @@ components:
         v:
           type: integer
           description: Value of the metric.
+    ServerStatus:
+      title: status
+      type: string
+      enum:
+      - PRODUCTION
+    Type:
+      title: type
+      type: string
+      enum:
+      - cluster
     Metric:
       type: string
       enum:
@@ -385,6 +383,10 @@ components:
       - cpu_usage
       - '*'
       example: '*'
+    Timestamp:
+      type: integer
+      format: int64
+      description: Timestamp, measured in milliseconds since the Unix epoch.
     Server:
       title: server
       type: object
@@ -419,61 +421,23 @@ components:
           $ref: '#/components/schemas/ServerStatus'
         type:
           $ref: '#/components/schemas/Type'
-    ErrorBase:
-      description: Error.
-      type: object
-      x-keep-model: true
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    Probes:
-      title: probes
-      description: Probes and their response.
-      type: object
-      additionalProperties:
-        x-additionalPropertiesName: probe
-        type: boolean
-        description: Key-value pair with the probe name as the key and the reachability
-          status as the value.
-    Timestamp:
-      type: integer
-      format: int64
-      description: Timestamp, measured in milliseconds since the Unix epoch.
-    Time:
-      title: times
-      description: Time measured by a probe.
-      type: array
-      items:
-        title: timeEntry
-        type: object
-        additionalProperties: false
-        properties:
-          t:
-            $ref: '#/components/schemas/Timestamp'
-          v:
-            type: integer
-            description: Time in ms.
     InfraProbes:
       title: probes
       type: array
       items:
         $ref: '#/components/schemas/ProbesMetric'
-    ServerStatus:
-      title: status
-      type: string
-      enum:
-      - PRODUCTION
-    Period:
-      type: string
-      enum:
-      - minute
-      - hour
-      - day
-      - week
-      - month
-      example: week
+    Incidents:
+      title: incidents
+      description: Key-value pairs with the cluster names as keys and the list of incidents reported for this cluster as values.
+      type: array
+      items:
+        title: incidentEntry
+        type: object
+        properties:
+          t:
+            $ref: '#/components/schemas/Timestamp'
+          v:
+            $ref: '#/components/schemas/Incident'
     Status:
       title: status
       type: string
@@ -483,42 +447,34 @@ components:
       - degraded_performance
       - partial_outage
       - major_outage
+    Period:
+      type: string
+      enum:
+      - minute
+      - hour
+      - day
+      - week
+      - month
+      example: week
+    Probes:
+      title: probes
+      description: Probes and their response.
+      type: object
+      additionalProperties:
+        x-additionalPropertiesName: probe
+        type: boolean
+        description: Key-value pair with the probe name as the key and the reachability status as the value.
+    Incident:
+      title: incident
+      description: Incident details.
+      type: object
+      properties:
+        title:
+          type: string
+          description: Description of the incident.
+        status:
+          $ref: '#/components/schemas/Status'
   responses:
-    NotFoundResponse:
-      description: Not Found.
-      content:
-        text/plain:
-          schema:
-            type: string
-          examples:
-            NotFound:
-              value: Unknown cluster "test"
-    UnauthorizedResponse:
-      description: Unauthorized
-      content:
-        text/plain:
-          schema:
-            type: string
-          examples:
-            Unauthorized:
-              summary: Invalid credentials
-              description: Use the Monitoring API key.
-              value: Invalid credentials
-    BadRequestResponse:
-      description: Bad Request.
-      content:
-        application/json:
-          schema:
-            title: badRequest
-            type: object
-            additionalProperties: false
-            properties:
-              reason:
-                type: string
-          examples:
-            BadRequest:
-              value:
-                reason: Unknown servers
     ForbiddenResponse:
       description: Forbidden
       content:
@@ -534,202 +490,32 @@ components:
             Forbidden:
               value:
                 reason: invalid credentials
-    ReachabilityResponse:
-      description: OK
+    BadRequestResponse:
+      description: Bad Request.
       content:
         application/json:
           schema:
-            title: reachabilityResponse
-            type: object
-            additionalProperties:
-              x-additionalPropertiesName: cluster
-              $ref: '#/components/schemas/Probes'
-          examples:
-            Success:
-              value:
-                c16-de:
-                  sdn-probe-frankfurt: false
-                  monitoring-2: false
-                  sdn-probe-awswest1: false
-    InfrastructureAPIUnauthorized:
-      description: Unauthorized
-      content:
-        application/json:
-          schema:
-            title: unauthorized
+            title: badRequest
             type: object
             additionalProperties: false
             properties:
               reason:
                 type: string
           examples:
+            BadRequest:
+              value:
+                reason: Unknown servers
+    UnauthorizedResponse:
+      description: Unauthorized
+      content:
+        text/plain:
+          schema:
+            type: string
+          examples:
             Unauthorized:
-              value:
-                reason: The infrastructure usage API is only available on Enterprise
-                  plans. Please contact enterprise@algolia.com for more detail.
-    IndexingResponse:
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: indexingTimeResponse
-            type: object
-            properties:
-              metrics:
-                title: indexingMetric
-                type: object
-                additionalProperties: false
-                properties:
-                  indexing:
-                    additionalProperties:
-                      x-additionalPropertiesName: cluster
-                      $ref: '#/components/schemas/Time'
-          examples:
-            Success:
-              value:
-                metrics:
-                  indexing:
-                    c16-de:
-                    - t: 1688056200000
-                      v: 1562
-                    - t: 1688056800000
-                      v: 1637
-                    - t: 1688057400000
-                      v: 1754
-    InventoryResponse:
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: inventoryResponse
-            type: object
-            properties:
-              inventory:
-                type: array
-                items:
-                  $ref: '#/components/schemas/Server'
-          examples:
-            Success:
-              value:
-                inventory:
-                - name: c16-de-3
-                  region: de
-                  is_slave: false
-                  is_replica: false
-                  cluster: c16-de
-                  status: PRODUCTION
-                  type: cluster
-                - name: c16-de-2
-                  region: de
-                  is_slave: false
-                  is_replica: false
-                  cluster: c16-de
-                  status: PRODUCTION
-                  type: cluster
-                - name: c16-de-1
-                  region: de
-                  is_slave: false
-                  is_replica: false
-                  cluster: c16-de
-                  status: PRODUCTION
-                  type: cluster
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    StatusResponse:
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: statusResponse
-            type: object
-            properties:
-              status:
-                type: object
-                additionalProperties:
-                  x-additionalPropertiesName: cluster
-                  $ref: '#/components/schemas/Status'
-          examples:
-            Success:
-              value:
-                status:
-                  c16-de: operational
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    IncidentsResponse:
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: incidentsResponse
-            type: object
-            properties:
-              incidents:
-                type: object
-                additionalProperties:
-                  x-additionalPropertiesName: cluster
-                  $ref: '#/components/schemas/Incidents'
-          examples:
-            success:
-              value:
-                incidents:
-                  m134-de:
-                  - t: 1687441685000
-                    v:
-                      title: 'Incident on cluster m134-de: Everything operating normally.
-
-                        '
-                      status: operational
-                  - t: 1687441579000
-                    v:
-                      title: 'Incident on cluster m134-de: We are encountering a major
-
-                        issue that impact all API calls.
-
-                        '
-                      status: major_outage
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    LatencyResponse:
-      description: OK
-      content:
-        application/json:
-          schema:
-            title: latencyResponse
-            type: object
-            properties:
-              metrics:
-                title: latencyMetric
-                type: object
-                additionalProperties: false
-                properties:
-                  latency:
-                    additionalProperties:
-                      x-additionalPropertiesName: latencies
-                      $ref: '#/components/schemas/Time'
-          examples:
-            Success:
-              value:
-                metrics:
-                  latency:
-                    c16-de:
-                    - t: 1688056200000
-                      v: 64
-                    - t: 1688056800000
-                      v: 59
-                    - t: 1688057400000
-                      v: 55
+              summary: Invalid credentials
+              description: Use the Monitoring API key.
+              value: Invalid credentials
     InfrastructureResponse:
       description: OK
       content:
@@ -764,9 +550,7 @@ components:
                       $ref: '#/components/schemas/InfraProbes'
                   ssd_usage:
                     type: object
-                    description: "Solid-state disk (SSD) usage expressed as % of RAM.\
-                      \ \n0% means no SSD usage. A value of 50% indicates 32&nbsp;GB\
-                      \ SSD usage for a machine with 64&nbsp;RAM.\n"
+                    description: "Solid-state disk (SSD) usage expressed as % of RAM. \n0% means no SSD usage. A value of 50% indicates 32&nbsp;GB SSD usage for a machine with 64&nbsp;RAM.\n"
                     additionalProperties:
                       x-additionalPropertiesName: probes
                       $ref: '#/components/schemas/InfraProbes'
@@ -808,36 +592,232 @@ components:
                       v: 56
                     - t: 1455101320
                       v: 51
+    IncidentsResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: incidentsResponse
+            type: object
+            properties:
+              incidents:
+                type: object
+                additionalProperties:
+                  x-additionalPropertiesName: cluster
+                  $ref: '#/components/schemas/Incidents'
+          examples:
+            success:
+              value:
+                incidents:
+                  m134-de:
+                  - t: 1687441685000
+                    v:
+                      title: 'Incident on cluster m134-de: Everything operating normally.
+
+                        '
+                      status: operational
+                  - t: 1687441579000
+                    v:
+                      title: 'Incident on cluster m134-de: We are encountering a major
+
+                        issue that impact all API calls.
+
+                        '
+                      status: major_outage
     BadRequest:
       description: Bad request or request arguments.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+    ReachabilityResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: reachabilityResponse
+            type: object
+            additionalProperties:
+              x-additionalPropertiesName: cluster
+              $ref: '#/components/schemas/Probes'
+          examples:
+            Success:
+              value:
+                c16-de:
+                  sdn-probe-frankfurt: false
+                  monitoring-2: false
+                  sdn-probe-awswest1: false
+    InventoryResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: inventoryResponse
+            type: object
+            properties:
+              inventory:
+                type: array
+                items:
+                  $ref: '#/components/schemas/Server'
+          examples:
+            Success:
+              value:
+                inventory:
+                - name: c16-de-3
+                  region: de
+                  is_slave: false
+                  is_replica: false
+                  cluster: c16-de
+                  status: PRODUCTION
+                  type: cluster
+                - name: c16-de-2
+                  region: de
+                  is_slave: false
+                  is_replica: false
+                  cluster: c16-de
+                  status: PRODUCTION
+                  type: cluster
+                - name: c16-de-1
+                  region: de
+                  is_slave: false
+                  is_replica: false
+                  cluster: c16-de
+                  status: PRODUCTION
+                  type: cluster
+    InfrastructureAPIUnauthorized:
+      description: Unauthorized
+      content:
+        application/json:
+          schema:
+            title: unauthorized
+            type: object
+            additionalProperties: false
+            properties:
+              reason:
+                type: string
+          examples:
+            Unauthorized:
+              value:
+                reason: The infrastructure usage API is only available on Enterprise plans. Please contact enterprise@algolia.com for more detail.
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexingResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: indexingTimeResponse
+            type: object
+            properties:
+              metrics:
+                title: indexingMetric
+                type: object
+                additionalProperties: false
+                properties:
+                  indexing:
+                    additionalProperties:
+                      x-additionalPropertiesName: cluster
+                      $ref: '#/components/schemas/Time'
+          examples:
+            Success:
+              value:
+                metrics:
+                  indexing:
+                    c16-de:
+                    - t: 1688056200000
+                      v: 1562
+                    - t: 1688056800000
+                      v: 1637
+                    - t: 1688057400000
+                      v: 1754
+    LatencyResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: latencyResponse
+            type: object
+            properties:
+              metrics:
+                title: latencyMetric
+                type: object
+                additionalProperties: false
+                properties:
+                  latency:
+                    additionalProperties:
+                      x-additionalPropertiesName: latencies
+                      $ref: '#/components/schemas/Time'
+          examples:
+            Success:
+              value:
+                metrics:
+                  latency:
+                    c16-de:
+                    - t: 1688056200000
+                      v: 64
+                    - t: 1688056800000
+                      v: 59
+                    - t: 1688057400000
+                      v: 55
+    StatusResponse:
+      description: OK
+      content:
+        application/json:
+          schema:
+            title: statusResponse
+            type: object
+            properties:
+              status:
+                type: object
+                additionalProperties:
+                  x-additionalPropertiesName: cluster
+                  $ref: '#/components/schemas/Status'
+          examples:
+            Success:
+              value:
+                status:
+                  c16-de: operational
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    NotFoundResponse:
+      description: Not Found.
+      content:
+        text/plain:
+          schema:
+            type: string
+          examples:
+            NotFound:
+              value: Unknown cluster "test"
   parameters:
-    Clusters:
-      name: clusters
+    PathInPath:
+      name: path
       in: path
+      description: Path of the endpoint, for example `1/newFeature`.
       required: true
-      description: Subset of clusters, separated by commas.
       schema:
         type: string
-        example: c1-de,c2-de,c3-de
-    MetricInPath:
-      name: metric
-      in: path
-      required: true
-      description: 'Metric to report.
-
-
-        For more information about the individual metrics, see the description of
-        the API response.
-
-        To include all metrics, use `*`.
-
-        '
+        example: /keys
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
       schema:
-        $ref: '#/components/schemas/Metric'
+        type: object
+        additionalProperties: true
     PeriodInPath:
       name: period
       in: path
@@ -858,21 +838,28 @@ components:
         '
       schema:
         $ref: '#/components/schemas/Period'
-    PathInPath:
-      name: path
+    MetricInPath:
+      name: metric
       in: path
-      description: Path of the endpoint, for example `1/newFeature`.
       required: true
+      description: 'Metric to report.
+
+
+        For more information about the individual metrics, see the description of the API response.
+
+        To include all metrics, use `*`.
+
+        '
+      schema:
+        $ref: '#/components/schemas/Metric'
+    Clusters:
+      name: clusters
+      in: path
+      required: true
+      description: Subset of clusters, separated by commas.
       schema:
         type: string
-        example: /keys
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
+        example: c1-de,c2-de,c3-de
   securitySchemes:
     appId:
       type: apiKey

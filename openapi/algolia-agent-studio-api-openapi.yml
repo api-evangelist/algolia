@@ -1,8 +1,7 @@
 openapi: 3.2.0
 info:
   title: Agent Studio API
-  description: The Agent Studio API lets you build and operate generative AI agents
-    that use Algolia data, tools, and your chosen LLM provider.
+  description: The Agent Studio API lets you build and operate generative AI agents that use Algolia data, tools, and your chosen LLM provider.
   version: 0.1.0
 servers:
 - url: https://{APPLICATION_ID}.algolia.net/agent-studio
@@ -224,8 +223,7 @@ paths:
       x-acl:
       - editSettings
       summary: Create Allowed Domain
-      description: Add a single allowed domain pattern (e.g. https://app.example.com
-        or *.example.com).
+      description: Add a single allowed domain pattern (e.g. https://app.example.com or *.example.com).
       parameters:
       - name: agentId
         in: path
@@ -397,8 +395,7 @@ paths:
       x-acl:
       - editSettings
       summary: Invalidate Agent Cache
-      description: Invalidate cached completions for this agent. Filter with `before`
-        (exclusive).
+      description: Invalidate cached completions for this agent. Filter with `before` (exclusive).
       parameters:
       - name: agentId
         in: path
@@ -447,8 +444,7 @@ paths:
 
         Tool Approval Flow (for MCP tools with requiresApproval: true):
 
-        - Request 1: User sends message -> Agent requests tool call -> Return approval
-        request
+        - Request 1: User sends message -> Agent requests tool call -> Return approval request
 
         - Request 2: User approves -> Execute tool -> Agent continues with result.'
       parameters:
@@ -498,16 +494,10 @@ paths:
         required: false
         schema:
           type: boolean
-          description: 'Set to false to skip analytics for this completion (default:
-            true). Disables Agent Studio BigQuery analytics, Algolia search analytics,
-            click analytics, and query-suggestions training. Useful for offline-eval
-            workflows.'
+          description: 'Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.'
           default: true
           title: analytics
-        description: 'Set to false to skip analytics for this completion (default:
-          true). Disables Agent Studio BigQuery analytics, Algolia search analytics,
-          click analytics, and query-suggestions training. Useful for offline-eval
-          workflows.'
+        description: 'Set to false to skip analytics for this completion (default: true). Disables Agent Studio BigQuery analytics, Algolia search analytics, click analytics, and query-suggestions training. Useful for offline-eval workflows.'
       - name: X-Algolia-Secure-User-Token
         in: header
         required: false
@@ -1347,8 +1337,7 @@ paths:
       x-acl:
       - logs
       summary: Get Data By User Token
-      description: Retrieves all memories, conversations and their messages for the
-        given user token.
+      description: Retrieves all memories, conversations and their messages for the given user token.
       parameters:
       - name: userToken
         in: path
@@ -1377,8 +1366,7 @@ paths:
       x-acl:
       - logs
       summary: Delete Data By User Token
-      description: Permanently deletes all messages for the given user token. Does
-        not delete conversations.
+      description: Permanently deletes all messages for the given user token. Does not delete conversations.
       parameters:
       - name: userToken
         in: path
@@ -1527,84 +1515,242 @@ paths:
           description: No content.
 components:
   schemas:
-    AdvancedSyntaxFeatures:
+    SearchParametersOverrides:
+      properties:
+        filters:
+          type: string
+          title: filters
+        attributesToRetrieve:
+          items:
+            type: string
+          type: array
+          title: attributestoretrieve
+        restrictSearchableAttributes:
+          items:
+            type: string
+          type: array
+          title: restrictsearchableattributes
+        distinct:
+          $ref: '#/components/schemas/DistinctUnion'
+        userToken:
+          type: string
+          title: usertoken
+        enablePersonalization:
+          type: boolean
+          title: enablepersonalization
+        personalizationImpact:
+          type: integer
+          title: personalizationimpact
+        optionalFilters:
+          $ref: '#/components/schemas/OptionalFiltersUnion'
+      additionalProperties: false
+      type: object
+      title: searchParametersOverrides
+      description: 'Algolia Search API parameters that can be predefined for the search tool.
+
+        Reference: https://www.algolia.com/doc/api-reference/search-api-parameters/
+
+
+        A subset of SearchParameters of specific params we allow for runtime override.'
+    PaginatedSecretKeysResponse:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/SecretKeyResponse'
+          type: array
+          title: data
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      type: object
+      required:
+      - data
+      - pagination
+      title: paginatedSecretKeysResponse
+    ToolConfig:
+      oneOf:
+      - $ref: '#/components/schemas/McpToolConfig'
+      - type: boolean
+    OpenAIProviderInput:
+      properties:
+        apiKey:
+          type: string
+          title: apikey
+        baseUrl:
+          oneOf:
+          - type: string
+            maxLength: 2083
+            minLength: 1
+          - type: 'null'
+          title: baseurl
+      type: object
+      required:
+      - apiKey
+      title: openAIProviderInput
+      description: OpenAI-specific provider input.
+    UserMessageV4:
+      properties:
+        id:
+          type: string
+          title: id
+        role:
+          type: string
+          const: user
+          title: role
+          default: user
+        content:
+          type: string
+          title: content
+        parts:
+          items:
+            $ref: '#/components/schemas/TextPartV4'
+          type: array
+          title: parts
+        annotations:
+          items:
+            additionalProperties: true
+            type: object
+          type: array
+          title: annotations
+      type: object
+      required:
+      - role
+      - content
+      title: userMessageV4
+    VoteEnum:
+      type: integer
+      enum:
+      - 0
+      - 1
+      x-enum-varnames:
+      - downvote
+      - upvote
+    MemoryType:
       type: string
       enum:
-      - exactPhrase
-      - excludeWords
-      title: advancedSyntaxFeatures
-      description: AdvancedSyntaxFeatures.
-    MessageV4:
+      - semantic
+      - episodic
+      title: memoryType
+      description: 'Memory types implemented so far.
+
+        Follows LangMem''s ontology: https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types.'
+    ToolResultOutput:
+      properties:
+        type:
+          $ref: '#/components/schemas/ToolResultOutputType'
+        value:
+          title: value
+      type: object
+      required:
+      - type
+      - value
+      title: toolResultOutput
+    SearchParametersOverridesMapNullable:
       oneOf:
-      - $ref: '#/components/schemas/UserMessageV4'
-      - $ref: '#/components/schemas/AssistantMessageV4'
-      discriminator:
-        propertyName: role
-        mapping:
-          assistant: '#/components/schemas/AssistantMessageV4'
-          user: '#/components/schemas/UserMessageV4'
-    QueryLanguagesUnion:
+      - additionalProperties:
+          $ref: '#/components/schemas/SearchParametersOverrides'
+        type: object
+      - type: 'null'
+    FacetsParam:
+      properties:
+        exposed:
+          type: boolean
+          const: false
+          title: exposed
+          default: false
+        default:
+          oneOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: default
+      type: object
+      title: facetsParam
+      description: A facets parameter that is always hidden from the LLM.
+    AssistantPartV5:
+      oneOf:
+      - $ref: '#/components/schemas/StepStartPartV5'
+      - $ref: '#/components/schemas/TextPartV5'
+      - $ref: '#/components/schemas/ReasoningPartV5'
+      - $ref: '#/components/schemas/ToolPartV5'
+    TypoToleranceUnion:
+      oneOf:
+      - type: boolean
+      - $ref: '#/components/schemas/TypoToleranceEnum'
+      - type: 'null'
+    ToolState:
+      type: string
+      enum:
+      - input-streaming
+      - input-available
+      - output-available
+      - output-error
+    AdvancedSyntaxFeaturesUnion:
       oneOf:
       - items:
-          $ref: '#/components/schemas/SupportedLanguage'
+          $ref: '#/components/schemas/AdvancedSyntaxFeatures'
         type: array
       - type: 'null'
-    ReRankingApplyFilterUnion:
+    ProviderAuthenticationPatch:
+      properties:
+        name:
+          oneOf:
+          - type: string
+            maxLength: 128
+            minLength: 1
+          - type: 'null'
+          title: name
+        input:
+          $ref: '#/components/schemas/ProviderInputNullable'
+      additionalProperties: false
+      type: object
+      title: providerPatch
+    AroundRadiusUnion:
       oneOf:
+      - type: integer
       - type: string
-      - items:
-          type: object
-          additionalProperties: true
-        type: array
       - type: 'null'
-    ReasoningPart:
+    Episode:
       properties:
-        type:
+        observation:
           type: string
-          const: reasoning
-          title: type
-          default: reasoning
-        text:
+          maxLength: 5000
+          minLength: 1
+          title: observation
+          description: What user wanted + key context (1-2 sentences). Include prior failed attempts if they informed the approach.
+        thoughts:
           type: string
-          title: text
+          maxLength: 5000
+          minLength: 1
+          title: thoughts
+          description: WHY this approach was chosen, which constraints/preferences drove decisions (1-3 sentences). Capture reasoning that applies to similar future scenarios.
+        action:
+          type: string
+          maxLength: 5000
+          minLength: 1
+          title: action
+          description: 'What was done with PRECISE details (1-3 sentences). WITH tool calls: use arrow notation `tool(param:value) → feedback → tool(refined_param:new_value)`. WITHOUT tool calls: capture communication/workflow pattern.'
+        result:
+          type: string
+          maxLength: 5000
+          minLength: 1
+          title: result
+          description: 'Learned pattern + effectiveness (1-3 sentences). What worked and WHY it''s replicable. Note efficiency: multi-turn refinements, which results were relevant, what made final attempt succeed. Use strict `param:value` syntax for learnings. Format: ''For [context], use [param:value] because [reason]''.'
       type: object
       required:
-      - type
-      - text
-      title: reasoningPart
-    ToolCallPart:
-      properties:
-        type:
-          type: string
-          const: tool-call
-          title: type
-          default: tool-call
-        toolCallId:
-          type: string
-          title: toolcallid
-        toolName:
-          type: string
-          title: toolname
-        args:
-          title: args
-        requiresApproval:
-          oneOf:
-          - type: boolean
-          - type: 'null'
-          title: requiresapproval
-        providerOptions:
-          oneOf:
-          - type: object
-            additionalProperties: true
-          - type: 'null'
-          title: provideroptions
-      type: object
-      required:
-      - type
-      - toolCallId
-      - toolName
-      - args
-      title: toolCallPart
+      - observation
+      - thoughts
+      - action
+      - result
+      title: episode
+      description: 'Episodic memory schema following LangMem''s OTAR pattern:
+
+        Observation → Thoughts → Action → Result
+
+
+        Captures complete interaction experiences for agent learning.
+
+        See https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#episodic-memory-past-experiences.'
     NumberParam:
       properties:
         exposed:
@@ -1624,120 +1770,82 @@ components:
       - exposed
       title: numberParam
       description: A number search parameter with exposure control and optional constraints.
-    DistinctUnion:
-      oneOf:
-      - type: boolean
-      - type: integer
-      - type: 'null'
-    TagFiltersUnion:
-      oneOf:
-      - type: string
-      - type: array
-        items:
-          $ref: '#/components/schemas/TagFiltersUnion'
-      - type: 'null'
-    FeedbackUnion:
-      oneOf:
-      - items:
-          $ref: '#/components/schemas/FeedbackResponse'
-        type: array
-      - type: 'null'
-    AlgoliaSearchToolIndexConfig:
+    AlgoliaRecommendToolConfig-Input:
       properties:
-        index:
+        name:
           type: string
-          maxLength: 100
-          minLength: 1
-          title: index
-        description:
-          type: string
-          maxLength: 3000
-          minLength: 1
-          title: description
-        enhancedDescription:
-          type: string
-          title: enhanceddescription
-          default: ''
-        searchParameters:
-          oneOf:
-          - $ref: '#/components/schemas/SearchParameters'
-          - type: 'null'
-        searchControls:
-          oneOf:
-          - $ref: '#/components/schemas/IndexSearchParameters'
-          - type: 'null'
-      type: object
-      required:
-      - index
-      - description
-      title: algoliaSearchToolIndexConfig
-    ToolResultPart:
-      properties:
+          maxLength: 32
+          minLength: 3
+          title: name
         type:
           type: string
-          const: tool-result
+          const: algolia_recommend
           title: type
-          default: tool-result
+          default: algolia_recommend
+        allowedConfigs:
+          items:
+            $ref: '#/components/schemas/AlgoliaRecommendToolIndexConfig'
+          type: array
+          title: allowedconfigs
+          default: []
+        predefinedRecommendParameters:
+          additionalProperties: true
+          type: object
+          title: predefinedrecommendparameters
+      type: object
+      required:
+      - type
+      - name
+      title: algoliaRecommendToolConfig
+      description: 'Configuration for the Algolia Recommend tool.
+
+        Allows specifying recommend models and related parameters.'
+    ToolInvocationV4:
+      properties:
         toolCallId:
           type: string
           title: toolcallid
         toolName:
           type: string
           title: toolname
-        output:
-          $ref: '#/components/schemas/ToolResultOutput'
+        args:
+          additionalProperties: true
+          type: object
+          title: args
+        result:
+          type: object
+          additionalProperties: true
+          title: result
+        step:
+          type: integer
+          title: step
+        state:
+          type: string
+          title: state
         providerOptions:
-          oneOf:
-          - type: object
-            additionalProperties: true
-          - type: 'null'
+          additionalProperties: true
+          type: object
           title: provideroptions
+        requiresApproval:
+          type: boolean
+          title: requiresapproval
+        description:
+          type: string
+          title: description
+        argsHash:
+          type: string
+          title: argshash
       type: object
       required:
-      - type
       - toolCallId
       - toolName
-      - output
-      title: toolResultPart
-    QueryType:
-      type: string
-      enum:
-      - prefixLast
-      - prefixAll
-      - prefixNone
-      title: queryType
-      description: Determines if and how query words are interpreted as prefixes.  By
-        default, only the last query word is treated as a prefix (`prefixLast`). To
-        turn off prefix search, use `prefixNone`. Avoid `prefixAll`, which treats
-        all query words as prefixes. This might lead to counterintuitive results and
-        makes your search slower.  For more information, see [Prefix searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching).
-    TextPart:
-      properties:
-        type:
-          type: string
-          const: text
-          title: type
-          default: text
-        text:
-          type: string
-          title: text
-      type: object
-      required:
-      - type
-      - text
-      title: textPart
-    ToolState:
-      type: string
-      enum:
-      - input-streaming
-      - input-available
-      - output-available
-      - output-error
-    PaginatedSecretKeysResponse:
+      title: toolInvocationV4
+      description: Model for tool invocation in a Message.
+    PaginatedAgentsResponse:
       properties:
         data:
           items:
-            $ref: '#/components/schemas/SecretKeyResponse'
+            $ref: '#/components/schemas/AgentWithVersionResponse'
           type: array
           title: data
         pagination:
@@ -1746,27 +1854,195 @@ components:
       required:
       - data
       - pagination
-      title: paginatedSecretKeysResponse
-    ToolResultOutput:
+      title: paginatedAgentsResponse
+    ConversationFullResponse:
       properties:
-        type:
-          $ref: '#/components/schemas/ToolResultOutputType'
-        value:
-          title: value
+        id:
+          type: string
+          title: id
+        agentId:
+          type: string
+          title: agentid
+        title:
+          oneOf:
+          - type: string
+          - type: 'null'
+          title: title
+        createdAt:
+          type: string
+          title: createdat
+        updatedAt:
+          type: string
+          title: updatedat
+        lastActivityAt:
+          oneOf:
+          - type: string
+          - type: 'null'
+          title: lastactivityat
+        userToken:
+          oneOf:
+          - type: string
+          - type: 'null'
+          title: usertoken
+        isFromDashboard:
+          type: boolean
+          title: isfromdashboard
+          default: false
+        messageCount:
+          type: integer
+          title: messagecount
+          default: 0
+        totalInputTokens:
+          type: integer
+          title: totalinputtokens
+          default: 0
+        totalOutputTokens:
+          type: integer
+          title: totaloutputtokens
+          default: 0
+        totalTokens:
+          type: integer
+          title: totaltokens
+          default: 0
+        conversationMetadata:
+          oneOf:
+          - $ref: '#/components/schemas/ConversationMetadata'
+          - type: 'null'
+        feedback:
+          $ref: '#/components/schemas/FeedbackUnion'
+        messages:
+          items:
+            $ref: '#/components/schemas/MessageResponse'
+          type: array
+          title: messages
       type: object
       required:
-      - type
-      - value
-      title: toolResultOutput
-    AlternativesAsExact:
+      - id
+      - agentId
+      - createdAt
+      - updatedAt
+      - messages
+      title: conversationFullResponse
+      description: Response model for a conversation with all its messages.
+    LocationItemUnion:
+      oneOf:
+      - type: string
+      - type: integer
+    FacetFiltersUnion:
+      oneOf:
+      - items:
+          $ref: '#/components/schemas/FacetFiltersUnion'
+        type: array
+      - type: string
+    AzureOpenAIProviderInput:
+      properties:
+        apiKey:
+          type: string
+          title: apikey
+        azureEndpoint:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          title: azureendpoint
+        azureDeployment:
+          type: string
+          minLength: 1
+          title: azuredeployment
+          description: Azure model deployment name is required.
+        apiVersion:
+          oneOf:
+          - type: string
+          - type: 'null'
+          title: apiversion
+          default: 2024-12-01-preview
+      type: object
+      required:
+      - apiKey
+      - azureEndpoint
+      - azureDeployment
+      title: azureOpenAIProviderInput
+      description: Azure OpenAI-specific provider input.
+    NumberParamConstraint:
+      properties:
+        min:
+          oneOf:
+          - type: integer
+          - type: 'null'
+          title: min
+        max:
+          oneOf:
+          - type: integer
+          - type: 'null'
+          title: max
+      type: object
+      title: numberParamConstraint
+      description: Constraints for a number parameter.
+    OptionalWordsUnion:
+      oneOf:
+      - type: string
+      - items:
+          type: string
+        type: array
+      - type: 'null'
+    RemoveWordsIfNoResults:
       type: string
       enum:
-      - ignorePlurals
-      - singleWordSynonym
-      - multiWordsSynonym
-      - ignoreConjugations
-      title: alternativesAsExact
-      description: AlternativesAsExact.
+      - none
+      - lastWords
+      - firstWords
+      - allOptional
+      title: removeWordsIfNoResults
+      description: Strategy for removing words from the query when it doesn't return any results. This helps to avoid returning empty search results.  - `none`.   No words are removed when a query doesn't return results.  - `lastWords`.   Treat the last (then second to last, then third to last) word as optional,   until there are results or at most 5 words have been removed.  - `firstWords`.   Treat the first (then second, then third) word as optional,   until there are results or at most 5 words have been removed.  - `allOptional`.   Treat all words as optional.  For more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
+    MessageV5:
+      oneOf:
+      - $ref: '#/components/schemas/UserMessageV5'
+      - $ref: '#/components/schemas/AssistantMessageV5'
+      discriminator:
+        propertyName: role
+        mapping:
+          assistant: '#/components/schemas/AssistantMessageV5'
+          user: '#/components/schemas/UserMessageV5'
+    InsidePolygonUnion:
+      oneOf:
+      - type: string
+      - items:
+          items:
+            type: number
+          type: array
+        type: array
+      - type: 'null'
+    ApplicationConfigResponse:
+      properties:
+        maxRetentionDays:
+          type: integer
+          title: maxretentiondays
+      type: object
+      required:
+      - maxRetentionDays
+      title: applicationConfigResponse
+    AlternativesAsExactUnion:
+      oneOf:
+      - items:
+          $ref: '#/components/schemas/AlternativesAsExact'
+        type: array
+      - type: 'null'
+    UserDataResponse:
+      properties:
+        conversations:
+          items:
+            $ref: '#/components/schemas/ConversationFullResponse'
+          type: array
+          title: conversations
+        memories:
+          items:
+            $ref: '#/components/schemas/MemoryRecord'
+          type: array
+          title: memories
+      type: object
+      required:
+      - conversations
+      - memories
+      title: userDataResponse
     HTTPValidationError:
       properties:
         detail:
@@ -1776,93 +2052,212 @@ components:
           title: detail
       type: object
       title: hTTPValidationError
-    FeedbackResponse:
+    SecretKeyResponse:
       properties:
         id:
           type: string
           title: id
-        agentId:
+        name:
           type: string
-          title: agentid
-        messageId:
+          title: name
+        value:
           type: string
-          title: messageid
-        vote:
-          type: integer
-          title: vote
-        tags:
-          items:
-            type: string
-          type: array
-          title: tags
-        notes:
-          oneOf:
-          - type: string
-          - type: 'null'
-          title: notes
-        model:
-          oneOf:
-          - type: string
-          - type: 'null'
-          title: model
+          title: value
         createdAt:
           type: string
           title: createdat
         updatedAt:
           type: string
           title: updatedat
+        lastUsedAt:
+          oneOf:
+          - type: string
+          - type: 'null'
+          title: lastusedat
+        isDefault:
+          type: boolean
+          title: isdefault
+          default: false
+        agentIds:
+          items:
+            type: string
+          type: array
+          title: agentids
       type: object
       required:
       - id
-      - agentId
-      - messageId
-      - vote
-      - tags
+      - name
+      - value
       - createdAt
       - updatedAt
-      title: feedbackResponse
-    VoteEnum:
-      type: integer
-      enum:
-      - 0
-      - 1
-      x-enum-varnames:
-      - downvote
-      - upvote
+      - lastUsedAt
+      - agentIds
+      title: secretKeyResponse
+    UserMessageMetadataV5:
+      properties:
+        turnContext:
+          additionalProperties: true
+          type: object
+          title: turncontext
+      additionalProperties: true
+      type: object
+      title: userMessageMetadataV5
+      description: 'Client-supplied metadata on a v5 user message.
+
+
+        `turn_context` is namespaced so other callers can use `metadata` for unrelated
+
+        purposes without collision. Unknown keys are preserved and ignored by this pipeline.
+
+
+        Note: `turn_context` is deliberately typed `dict[str, Any]` (not `TurnContext`).
+
+        The metadata is parsed eagerly with the request body, but cap/charset validation
+
+        must be deferred to `extract_turn_context_v5` so the kill-switch
+
+        (`TURN_CONTEXT_ENABLED=false`) can silently drop payloads instead of 422-ing.
+
+        See `test_invalid_metadata_does_not_raise_at_model_construction`.'
+    FeedbackCreationRequest:
+      properties:
+        messageId:
+          type: string
+          title: messageid
+        agentId:
+          type: string
+          title: agentid
+        vote:
+          $ref: '#/components/schemas/VoteEnum'
+        tags:
+          items:
+            type: string
+            maxLength: 50
+          type: array
+          maxItems: 10
+          title: tags
+        notes:
+          type: string
+          maxLength: 1000
+          title: notes
+      type: object
+      required:
+      - messageId
+      - agentId
+      - vote
+      title: feedbackCreationRequest
+      description: Request model for creating a feedback entry.
+    ReasoningPart:
+      properties:
+        type:
+          type: string
+          const: reasoning
+          title: type
+          default: reasoning
+        text:
+          type: string
+          title: text
+      type: object
+      required:
+      - type
+      - text
+      title: reasoningPart
+    StartPart:
+      properties:
+        type:
+          type: string
+          const: start
+          title: type
+          default: start
+      type: object
+      title: startPart
+      required:
+      - type
+    StringArrayParamConstraint:
+      properties:
+        values:
+          oneOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: values
+      type: object
+      title: stringArrayParamConstraint
+      description: Constraints for a string array parameter.
+    FacetsUnion:
+      oneOf:
+      - items:
+          type: string
+        type: array
+      - $ref: '#/components/schemas/Facets'
+      - type: 'null'
+    PaginatedConversationsResponse:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ConversationBaseResponse'
+          type: array
+          title: data
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      type: object
+      required:
+      - data
+      - pagination
+      title: paginatedConversationsResponse
+    Facets:
+      properties:
+        order:
+          oneOf:
+          - items:
+              type: string
+            type: array
+          - type: 'null'
+          title: order
+      additionalProperties: true
+      type: object
+      title: facets
+      description: Order of facet names.
     AllowedToolsUnion:
       oneOf:
       - additionalProperties:
           $ref: '#/components/schemas/ToolConfig'
         type: object
       - type: 'null'
-    ClientToolsArgsSchema:
+    IgnorePluralsUnion:
+      oneOf:
+      - type: boolean
+      - items:
+          $ref: '#/components/schemas/SupportedLanguage'
+        type: array
+      - type: 'null'
+    ClientSideToolConfig:
       properties:
+        name:
+          type: string
+          maxLength: 32
+          minLength: 3
+          title: name
         type:
           type: string
-          const: object
+          const: client_side
           title: type
-          default: object
-        properties:
-          additionalProperties: true
-          type: object
-          title: properties
-        required:
-          items:
-            type: string
-          type: array
-          title: required
+          default: client_side
+        description:
+          type: string
+          maxLength: 200
+          minLength: 1
+          title: description
+        inputSchema:
+          $ref: '#/components/schemas/ClientToolsArgsSchema'
       type: object
-      title: clientToolsArgsSchema
-    ConversationMetadata:
-      properties:
-        cachedAt:
-          oneOf:
-          - type: string
-          - type: 'null'
-          title: cachedat
-      type: object
-      title: conversationMetadata
-      description: Public metadata exposed on conversation responses.
+      required:
+      - type
+      - name
+      - description
+      - inputSchema
+      title: clientSideToolConfig
     ConversationBaseResponse:
       properties:
         id:
@@ -1926,196 +2321,6 @@ components:
       - updatedAt
       title: conversationBaseResponse
       description: Lightweight response model without its messages.
-    TextPartV4:
-      properties:
-        type:
-          type: string
-          const: text
-          title: type
-          default: text
-        text:
-          type: string
-          title: text
-      type: object
-      required:
-      - text
-      title: textPartV4
-    StartStepPart:
-      properties:
-        type:
-          type: string
-          const: start-step
-          title: type
-          default: start-step
-      type: object
-      title: startStepPart
-      required:
-      - type
-    SupportedLanguage:
-      type: string
-      enum:
-      - af
-      - ar
-      - az
-      - bg
-      - bn
-      - ca
-      - cs
-      - cy
-      - da
-      - de
-      - el
-      - en
-      - eo
-      - es
-      - et
-      - eu
-      - fa
-      - fi
-      - fo
-      - fr
-      - ga
-      - gl
-      - he
-      - hi
-      - hu
-      - hy
-      - id
-      - is
-      - it
-      - ja
-      - ka
-      - kk
-      - ko
-      - ku
-      - ky
-      - lt
-      - lv
-      - mi
-      - mn
-      - mr
-      - ms
-      - mt
-      - nb
-      - nl
-      - 'no'
-      - ns
-      - pl
-      - ps
-      - pt
-      - pt-br
-      - qu
-      - ro
-      - ru
-      - sk
-      - sq
-      - sv
-      - sw
-      - ta
-      - te
-      - th
-      - tl
-      - tn
-      - tr
-      - tt
-      - uk
-      - ur
-      - uz
-      - zh
-      title: supportedLanguage
-      description: ISO code for a supported language.
-    StepStartPartV4:
-      properties:
-        type:
-          type: string
-          const: step-start
-          title: type
-          default: step-start
-      type: object
-      title: stepStartPartV4
-    AllowedDomainResponse:
-      properties:
-        id:
-          type: string
-          title: id
-        appId:
-          type: string
-          title: appid
-        agentId:
-          type: string
-          title: agentid
-        domain:
-          type: string
-          title: domain
-        createdAt:
-          type: string
-          title: createdat
-        updatedAt:
-          type: string
-          title: updatedat
-      type: object
-      required:
-      - id
-      - appId
-      - agentId
-      - domain
-      - createdAt
-      - updatedAt
-      title: allowedDomainResponse
-      description: Single allowed domain in API responses.
-    AlgoliaSearchToolConfig:
-      properties:
-        name:
-          type: string
-          maxLength: 32
-          minLength: 3
-          title: name
-        type:
-          type: string
-          const: algolia_search_index
-          title: type
-          default: algolia_search_index
-        indices:
-          items:
-            $ref: '#/components/schemas/AlgoliaSearchToolIndexConfig'
-          type: array
-          title: indices
-      type: object
-      required:
-      - type
-      - name
-      - indices
-      title: algoliaSearchToolConfig
-    UserDataResponse:
-      properties:
-        conversations:
-          items:
-            $ref: '#/components/schemas/ConversationFullResponse'
-          type: array
-          title: conversations
-        memories:
-          items:
-            $ref: '#/components/schemas/MemoryRecord'
-          type: array
-          title: memories
-      type: object
-      required:
-      - conversations
-      - memories
-      title: userDataResponse
-    AdvancedSyntaxFeaturesUnion:
-      oneOf:
-      - items:
-          $ref: '#/components/schemas/AdvancedSyntaxFeatures'
-        type: array
-      - type: 'null'
-    NumericFiltersUnion:
-      oneOf:
-      - type: string
-      - type: array
-        items:
-          $ref: '#/components/schemas/NumericFiltersUnion'
-      - type: 'null'
     AssistantMessageV5:
       properties:
         id:
@@ -2135,89 +2340,6 @@ components:
       title: assistantMessageV5
       required:
       - role
-    PaginatedAgentsResponse:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/AgentWithVersionResponse'
-          type: array
-          title: data
-        pagination:
-          $ref: '#/components/schemas/PaginationMetadata'
-      type: object
-      required:
-      - data
-      - pagination
-      title: paginatedAgentsResponse
-    AssistantMessageV4:
-      properties:
-        id:
-          type: string
-          title: id
-        role:
-          type: string
-          const: assistant
-          title: role
-          default: assistant
-        content:
-          type: string
-          title: content
-        parts:
-          items:
-            $ref: '#/components/schemas/AssistantPartV4'
-          type: array
-          title: parts
-        toolInvocations:
-          $ref: '#/components/schemas/ToolInvocationsUnion'
-      type: object
-      required:
-      - role
-      - content
-      title: assistantMessageV4
-    TypoToleranceEnum:
-      type: string
-      enum:
-      - min
-      - strict
-      - 'true'
-      - 'false'
-      title: typoToleranceEnum
-      description: '- `min`. Return matches with the lowest number of typos.   For
-        example, if you have matches without typos, only include those.   But if there
-        are no matches without typos (with 1 typo), include matches with 1 typo (2
-        typos). - `strict`. Return matches with the two lowest numbers of typos.   With
-        `strict`, the Typo ranking criterion is applied first in the `ranking` setting.'
-    AllowedDomainCreate:
-      properties:
-        domain:
-          type: string
-          title: domain
-          description: Domain or pattern, e.g. https://app.example.com or *.example.com.
-      type: object
-      required:
-      - domain
-      title: allowedDomainCreate
-      description: Request body to add a single allowed domain.
-    ReasoningPartV5:
-      properties:
-        type:
-          type: string
-          const: reasoning
-          title: type
-          default: reasoning
-        text:
-          type: string
-          title: text
-      type: object
-      required:
-      - text
-      title: reasoningPartV5
-    SearchParametersOverridesMapNullable:
-      oneOf:
-      - additionalProperties:
-          $ref: '#/components/schemas/SearchParametersOverrides'
-        type: object
-      - type: 'null'
     ToolConfigInput:
       oneOf:
       - $ref: '#/components/schemas/ClientSideToolConfig'
@@ -2235,256 +2357,6 @@ components:
           client_side: '#/components/schemas/ClientSideToolConfig'
           mcp_tools: '#/components/schemas/McpServerToolConfig'
           unknown: '#/components/schemas/UnknownToolConfig'
-    SecretKeyCreate:
-      properties:
-        name:
-          type: string
-          maxLength: 128
-          minLength: 1
-          title: name
-          description: The name of the secret key.
-        agentIds:
-          items:
-            type: string
-          type: array
-          title: agentids
-          description: List of agent IDs this secret key is associated with.
-      type: object
-      required:
-      - name
-      title: secretKeyCreate
-      description: Secret key creation payload.
-    ProviderName:
-      type: string
-      enum:
-      - openai
-      - azure_openai
-      - google_genai
-      - deepseek
-      - openai_compatible
-      - anthropic
-      title: providerName
-    LocationItemUnion:
-      oneOf:
-      - type: string
-      - type: integer
-    MessageRole:
-      type: string
-      enum:
-      - user
-      - assistant
-      title: messageRole
-      description: Role of a message in the conversation.
-    StringArrayParam:
-      properties:
-        exposed:
-          type: boolean
-          title: exposed
-        default:
-          oneOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: default
-        constraint:
-          oneOf:
-          - $ref: '#/components/schemas/StringArrayParamConstraint'
-          - type: 'null'
-        merge:
-          oneOf:
-          - type: boolean
-          - type: 'null'
-          title: merge
-      type: object
-      required:
-      - exposed
-      title: stringArrayParam
-      description: A string array search parameter with exposure control, constraints,
-        and merge behavior.
-    CompatibilityMode:
-      type: string
-      enum:
-      - ai-sdk-4
-      - ai-sdk-5
-      title: compatibilityMode
-      description: Support Compatibility modes for the completion API.
-    ToolInvocationPartV4:
-      properties:
-        type:
-          type: string
-          const: tool-invocation
-          title: type
-          default: tool-invocation
-        toolInvocation:
-          $ref: '#/components/schemas/ToolInvocationV4'
-      type: object
-      required:
-      - toolInvocation
-      title: toolInvocationPartV4
-    StringArrayParamConstraint:
-      properties:
-        values:
-          oneOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: values
-      type: object
-      title: stringArrayParamConstraint
-      description: Constraints for a string array parameter.
-    UserMessageV4:
-      properties:
-        id:
-          type: string
-          title: id
-        role:
-          type: string
-          const: user
-          title: role
-          default: user
-        content:
-          type: string
-          title: content
-        parts:
-          items:
-            $ref: '#/components/schemas/TextPartV4'
-          type: array
-          title: parts
-        annotations:
-          items:
-            additionalProperties: true
-            type: object
-          type: array
-          title: annotations
-      type: object
-      required:
-      - role
-      - content
-      title: userMessageV4
-    ToolPartV5:
-      properties:
-        type:
-          type: string
-          title: type
-        toolCallId:
-          type: string
-          title: toolcallid
-        state:
-          $ref: '#/components/schemas/ToolState'
-        input:
-          additionalProperties: true
-          type: object
-          title: input
-        output:
-          type: object
-          additionalProperties: true
-          title: output
-        errorText:
-          type: string
-          title: errortext
-        providerOptions:
-          additionalProperties: true
-          type: object
-          title: provideroptions
-        requiresApproval:
-          type: boolean
-          title: requiresapproval
-        description:
-          type: string
-          title: description
-        argsHash:
-          type: string
-          title: argshash
-      type: object
-      required:
-      - type
-      - toolCallId
-      title: toolPartV5
-      description: Model for tool invocation in a Message.
-    PaginatedProviderAuthenticationsResponse:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ProviderAuthenticationResponse'
-          type: array
-          title: data
-        pagination:
-          $ref: '#/components/schemas/PaginationMetadata'
-      type: object
-      required:
-      - data
-      - pagination
-      title: paginatedProviders
-    AgentTestConfiguration:
-      properties:
-        id:
-          type: string
-          title: id
-        providerId:
-          type: string
-          title: providerid
-        model:
-          type: string
-          title: model
-        instructions:
-          type: string
-          title: instructions
-        systemPrompt:
-          type: string
-          title: systemprompt
-        config:
-          additionalProperties: true
-          type: object
-          title: config
-        tools:
-          items:
-            $ref: '#/components/schemas/ToolConfigInput'
-          type: array
-          title: tools
-      type: object
-      required:
-      - instructions
-      - config
-      - tools
-      title: agentTestConfiguration
-      description: Dynamic configuration for testing agents.
-    AgentStatus:
-      type: string
-      enum:
-      - draft
-      - published
-    FacetFiltersUnion:
-      oneOf:
-      - items:
-          $ref: '#/components/schemas/FacetFiltersUnion'
-        type: array
-      - type: string
-    ProviderAuthenticationCreate:
-      properties:
-        name:
-          type: string
-          maxLength: 128
-          minLength: 1
-          title: name
-        providerName:
-          $ref: '#/components/schemas/ProviderName'
-        input:
-          $ref: '#/components/schemas/ProviderInput'
-      additionalProperties: false
-      type: object
-      required:
-      - name
-      - providerName
-      - input
-      title: providerAuthenticationCreate
-    ToolInvocationsUnion:
-      oneOf:
-      - items:
-          $ref: '#/components/schemas/ToolInvocationV4'
-        type: array
-      - type: 'null'
     AgentWithVersionResponse:
       properties:
         id:
@@ -2558,276 +2430,16 @@ components:
       - updatedAt
       - lastUsedAt
       title: agentWithVersionResponse
-    AlgoliaRecommendToolConfig-Input:
+    BaseProviderInput:
       properties:
-        name:
+        apiKey:
           type: string
-          maxLength: 32
-          minLength: 3
-          title: name
-        type:
-          type: string
-          const: algolia_recommend
-          title: type
-          default: algolia_recommend
-        allowedConfigs:
-          items:
-            $ref: '#/components/schemas/AlgoliaRecommendToolIndexConfig'
-          type: array
-          title: allowedconfigs
-          default: []
-        predefinedRecommendParameters:
-          additionalProperties: true
-          type: object
-          title: predefinedrecommendparameters
+          title: apikey
       type: object
       required:
-      - type
-      - name
-      title: algoliaRecommendToolConfig
-      description: 'Configuration for the Algolia Recommend tool.
-
-        Allows specifying recommend models and related parameters.'
-    AllowedDomainListResponse:
-      properties:
-        domains:
-          items:
-            $ref: '#/components/schemas/AllowedDomainResponse'
-          type: array
-          title: domains
-      type: object
-      required:
-      - domains
-      title: allowedDomainListResponse
-      description: List of allowed domains for an application.
-    McpServerToolConfig:
-      properties:
-        url:
-          type: string
-          maxLength: 512
-          minLength: 1
-          title: url
-        transport:
-          type: string
-          const: streamable_http
-          title: transport
-          default: streamable_http
-        headers:
-          additionalProperties:
-            type: string
-          type: object
-          title: headers
-        name:
-          type: string
-          maxLength: 32
-          minLength: 3
-          title: name
-        type:
-          type: string
-          const: mcp_tools
-          title: type
-          default: mcp_tools
-        id:
-          oneOf:
-          - type: string
-          - type: 'null'
-          title: id
-          description: Stable unique identifier for this MCP tool.
-        allowedTools:
-          $ref: '#/components/schemas/AllowedToolsUnion'
-      type: object
-      required:
-      - type
-      - url
-      - headers
-      - name
-      title: mcpServerToolConfig
-    Episode:
-      properties:
-        observation:
-          type: string
-          maxLength: 5000
-          minLength: 1
-          title: observation
-          description: What user wanted + key context (1-2 sentences). Include prior
-            failed attempts if they informed the approach.
-        thoughts:
-          type: string
-          maxLength: 5000
-          minLength: 1
-          title: thoughts
-          description: WHY this approach was chosen, which constraints/preferences
-            drove decisions (1-3 sentences). Capture reasoning that applies to similar
-            future scenarios.
-        action:
-          type: string
-          maxLength: 5000
-          minLength: 1
-          title: action
-          description: 'What was done with PRECISE details (1-3 sentences). WITH tool
-            calls: use arrow notation `tool(param:value) → feedback → tool(refined_param:new_value)`.
-            WITHOUT tool calls: capture communication/workflow pattern.'
-        result:
-          type: string
-          maxLength: 5000
-          minLength: 1
-          title: result
-          description: 'Learned pattern + effectiveness (1-3 sentences). What worked
-            and WHY it''s replicable. Note efficiency: multi-turn refinements, which
-            results were relevant, what made final attempt succeed. Use strict `param:value`
-            syntax for learnings. Format: ''For [context], use [param:value] because
-            [reason]''.'
-      type: object
-      required:
-      - observation
-      - thoughts
-      - action
-      - result
-      title: episode
-      description: 'Episodic memory schema following LangMem''s OTAR pattern:
-
-        Observation → Thoughts → Action → Result
-
-
-        Captures complete interaction experiences for agent learning.
-
-        See https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#episodic-memory-past-experiences.'
-    OptionalWordsUnion:
-      oneOf:
-      - type: string
-      - items:
-          type: string
-        type: array
-      - type: 'null'
-    AgentCompletionAlgoliaParams:
-      properties:
-        mcpServers:
-          additionalProperties:
-            additionalProperties:
-              additionalProperties:
-                type: string
-              type: object
-            type: object
-          type: object
-          title: mcpservers
-        searchParameters:
-          $ref: '#/components/schemas/SearchParametersOverridesMapNullable'
-      type: object
-      title: agentCompletionAlgoliaParams
-    AlgoliaRecommendToolIndexConfig:
-      properties:
-        index:
-          type: string
-          maxLength: 100
-          minLength: 1
-          title: index
-        modelName:
-          type: string
-          maxLength: 100
-          minLength: 1
-          title: modelname
-        description:
-          type: string
-          title: description
-          default: ''
-      type: object
-      required:
-      - index
-      - modelName
-      title: algoliaRecommendToolIndexConfig
-    ReasoningPartV4:
-      properties:
-        type:
-          type: string
-          const: reasoning
-          title: type
-          default: reasoning
-        reasoning:
-          type: string
-          title: reasoning
-      type: object
-      required:
-      - reasoning
-      title: reasoningPartV4
-    MessagesUnion:
-      oneOf:
-      - items:
-          $ref: '#/components/schemas/MessageV4'
-        type: array
-      - items:
-          $ref: '#/components/schemas/MessageV5'
-        type: array
-      - type: 'null'
-    AllowedDomainBulkDelete:
-      properties:
-        domainIds:
-          items:
-            type: string
-          type: array
-          title: domainids
-          description: IDs of allowed domain records to delete.
-      type: object
-      required:
-      - domainIds
-      title: allowedDomainBulkDelete
-      description: Request body for bulk delete by IDs.
-    UserMessageMetadataV5:
-      properties:
-        turnContext:
-          additionalProperties: true
-          type: object
-          title: turncontext
-      additionalProperties: true
-      type: object
-      title: userMessageMetadataV5
-      description: 'Client-supplied metadata on a v5 user message.
-
-
-        `turn_context` is namespaced so other callers can use `metadata` for unrelated
-
-        purposes without collision. Unknown keys are preserved and ignored by this
-        pipeline.
-
-
-        Note: `turn_context` is deliberately typed `dict[str, Any]` (not `TurnContext`).
-
-        The metadata is parsed eagerly with the request body, but cap/charset validation
-
-        must be deferred to `extract_turn_context_v5` so the kill-switch
-
-        (`TURN_CONTEXT_ENABLED=false`) can silently drop payloads instead of 422-ing.
-
-        See `test_invalid_metadata_does_not_raise_at_model_construction`.'
-    MessageV5:
-      oneOf:
-      - $ref: '#/components/schemas/UserMessageV5'
-      - $ref: '#/components/schemas/AssistantMessageV5'
-      discriminator:
-        propertyName: role
-        mapping:
-          assistant: '#/components/schemas/AssistantMessageV5'
-          user: '#/components/schemas/UserMessageV5'
-    SecretKeyPatch:
-      properties:
-        name:
-          oneOf:
-          - type: string
-            maxLength: 128
-            minLength: 1
-          - type: 'null'
-          title: name
-          description: The new name of the secret key.
-        agentIds:
-          oneOf:
-          - items:
-              type: string
-            type: array
-          - type: 'null'
-          title: agentids
-          description: Updated list of agent IDs this secret key is associated with.
-      type: object
-      title: secretKeyPatch
-      description: Secret key patch payload.
+      - apiKey
+      title: baseProviderInput
+      description: Base input that all providers must have.
     TextPartV5:
       properties:
         type:
@@ -2842,10 +2454,25 @@ components:
       required:
       - text
       title: textPartV5
-    ToolConfig:
-      oneOf:
-      - $ref: '#/components/schemas/McpToolConfig'
-      - type: boolean
+    AllowedDomainListResponse:
+      properties:
+        domains:
+          items:
+            $ref: '#/components/schemas/AllowedDomainResponse'
+          type: array
+          title: domains
+      type: object
+      required:
+      - domains
+      title: allowedDomainListResponse
+      description: List of allowed domains for an application.
+    CompatibilityMode:
+      type: string
+      enum:
+      - ai-sdk-4
+      - ai-sdk-5
+      title: compatibilityMode
+      description: Support Compatibility modes for the completion API.
     AgentConfigUpdate:
       properties:
         name:
@@ -2873,20 +2500,13 @@ components:
           - type: string
           - type: 'null'
           title: instructions
-          description: 'The agent prompt: defines the agent''s role, tone, and goals.
-            Guides how it answers using the provided context. Corresponds to the ''Agent
-            prompt'' field in the dashboard.'
+          description: 'The agent prompt: defines the agent''s role, tone, and goals. Guides how it answers using the provided context. Corresponds to the ''Agent prompt'' field in the dashboard.'
         systemPrompt:
           oneOf:
           - type: string
           - type: 'null'
           title: systemprompt
-          description: 'The system prompt: defines system-level rules and constraints.
-            Guides how the agent uses tools, features, and generates context. Prepended
-            before `instructions` in the final prompt sent to the LLM. Typically injected
-            by an agent template — modify with caution, as changes may affect behavior,
-            tool usage, or response accuracy. Corresponds to the ''System prompt''
-            field in the dashboard.'
+          description: 'The system prompt: defines system-level rules and constraints. Guides how the agent uses tools, features, and generates context. Prepended before `instructions` in the final prompt sent to the LLM. Typically injected by an agent template — modify with caution, as changes may affect behavior, tool usage, or response accuracy. Corresponds to the ''System prompt'' field in the dashboard.'
         config:
           oneOf:
           - additionalProperties: true
@@ -2907,19 +2527,169 @@ components:
           title: templatetype
       type: object
       title: agentConfigUpdate
-    AllowedDomainBulkInsert:
+    QueryLanguagesUnion:
+      oneOf:
+      - items:
+          $ref: '#/components/schemas/SupportedLanguage'
+        type: array
+      - type: 'null'
+    MemoryRecord:
       properties:
-        domains:
+        memoryType:
+          $ref: '#/components/schemas/MemoryType'
+        episode:
+          oneOf:
+          - $ref: '#/components/schemas/Episode'
+          - type: 'null'
+        text:
+          type: string
+          maxLength: 2000
+          minLength: 1
+          title: text
+          description: Self-contained, first-person memory for long-term recall.
+        rawExtract:
+          type: string
+          maxLength: 5000
+          minLength: 1
+          title: rawextract
+          description: Verbatim conversation extract, not paraphrased.
+        keywords:
           items:
             type: string
           type: array
-          title: domains
-          description: List of domain patterns to add.
+          title: keywords
+          description: '5-20 free-form keywords: entities, context, search terms (any words).'
+        topics:
+          items:
+            type: string
+          type: array
+          title: topics
+          description: '2-4 topics ONLY from this list: [complaints, entertainment, family, feedback, finance, food, goals, health, history, hobbies, learning, praise, preferences, schedule, shopping, technical, travel, work].'
+        _tags:
+          items:
+            type: string
+          type: array
+          title: tags
+          description: Arbitrary labels/themes for flexible categorization (e.g., 'Q1-goals', 'paris-trip', 'vip-customer').
+        recallTriggers:
+          items:
+            type: string
+          type: array
+          title: recalltriggers
+          description: 3-5 natural phrases that should trigger this memory.
+        objectID:
+          oneOf:
+          - type: string
+          - type: 'null'
+          title: objectid
+          description: ObjectID of existing memory to update. Leave empty for new memory.
+        appId:
+          type: string
+          title: appid
+          description: Application ID.
+          default: ''
+        agentIDs:
+          items:
+            type: string
+          type: array
+          title: agentids
+          description: 'Agent IDs with access: [''agent1''], [''*''] for all, [''*'', ''-agent1''] to exclude.'
+        userID:
+          type: string
+          title: userid
+          description: User ID.
+          default: ''
+        createdAt:
+          type: integer
+          title: createdat
+          description: Epoch seconds.
+          default: 0
+        updatedAt:
+          type: integer
+          title: updatedat
+          description: Epoch seconds.
+          default: 0
       type: object
       required:
-      - domains
-      title: allowedDomainBulkInsert
-      description: Request body for bulk insert.
+      - text
+      - rawExtract
+      title: memoryRecord
+      description: 'Universal storage model for all memory types (semantic, episodic).
+
+
+        This is the ONLY model that touches storage (Algolia). Domain models (SemanticMemory, EpisodicMemory)
+
+        are used for LLM extraction and converted to MemoryRecord before saving.
+
+
+        See https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types for memory type definitions.'
+    StepStartPartV5:
+      properties:
+        type:
+          type: string
+          const: step-start
+          title: type
+          default: step-start
+      type: object
+      title: stepStartPartV5
+    AlgoliaDisplayResultsToolConfig:
+      properties:
+        name:
+          type: string
+          const: algolia_display_results
+          title: name
+          default: algolia_display_results
+        type:
+          type: string
+          const: algolia_display_results
+          title: type
+          default: algolia_display_results
+        minGroups:
+          type: integer
+          minimum: 1
+          title: mingroups
+          default: 1
+        maxGroups:
+          type: integer
+          minimum: 1
+          title: maxgroups
+          default: 3
+        minResultsPerGroup:
+          type: integer
+          minimum: 1
+          title: minresultspergroup
+          default: 3
+        maxResultsPerGroup:
+          type: integer
+          minimum: 1
+          title: maxresultspergroup
+          default: 6
+      type: object
+      title: algoliaDisplayResultsToolConfig
+      description: Configuration for the algolia_display_results tool.
+      required:
+      - type
+    ToolInvocationPartV4:
+      properties:
+        type:
+          type: string
+          const: tool-invocation
+          title: type
+          default: tool-invocation
+        toolInvocation:
+          $ref: '#/components/schemas/ToolInvocationV4'
+      type: object
+      required:
+      - toolInvocation
+      title: toolInvocationPartV4
+    ProviderInputNullable:
+      oneOf:
+      - $ref: '#/components/schemas/OpenAIProviderInput'
+      - $ref: '#/components/schemas/AzureOpenAIProviderInput'
+      - $ref: '#/components/schemas/OpenAICompatibleProviderInput'
+      - $ref: '#/components/schemas/BaseProviderInput'
+      - $ref: '#/components/schemas/AnthropicProviderInput'
+      - type: 'null'
     ValidationError:
       properties:
         loc:
@@ -2944,164 +2714,26 @@ components:
       - msg
       - type
       title: validationError
-    BaseProviderInput:
-      properties:
-        apiKey:
-          type: string
-          title: apikey
-      type: object
-      required:
-      - apiKey
-      title: baseProviderInput
-      description: Base input that all providers must have.
-    AgentConfigCreate:
+    SecretKeyCreate:
       properties:
         name:
           type: string
+          maxLength: 128
+          minLength: 1
           title: name
-        description:
-          type: string
-          title: description
-        providerId:
-          type: string
-          title: providerid
-        model:
-          type: string
-          title: model
-        instructions:
-          type: string
-          title: instructions
-          description: 'The agent prompt: defines the agent''s role, tone, and goals.
-            Guides how it answers using the provided context. Corresponds to the ''Agent
-            prompt'' field in the dashboard.'
-        systemPrompt:
-          type: string
-          title: systemprompt
-          description: 'The system prompt: defines system-level rules and constraints.
-            Guides how the agent uses tools, features, and generates context. Prepended
-            before `instructions` in the final prompt sent to the LLM. Typically injected
-            by an agent template — modify with caution, as changes may affect behavior,
-            tool usage, or response accuracy. Corresponds to the ''System prompt''
-            field in the dashboard.'
-        templateType:
-          type: string
-          title: templatetype
-        config:
-          additionalProperties: true
-          type: object
-          title: config
-          default: {}
-          example:
-            sendUsage: true
-            sendReasoning: true
-            temperature: 0.7
-            max_tokens: 1500
-            reasoning: '{summary: auto}'
-            features: '[memory]'
-        tools:
+          description: The name of the secret key.
+        agentIds:
           items:
-            $ref: '#/components/schemas/ToolConfigInput'
+            type: string
           type: array
-          title: tools
+          title: agentids
+          description: List of agent IDs this secret key is associated with.
       type: object
       required:
       - name
-      - instructions
-      title: agentConfigCreate
-    McpToolConfig:
-      properties:
-        requiresApproval:
-          oneOf:
-          - type: boolean
-          - type: 'null'
-          title: requiresapproval
-          default: false
-        alias:
-          oneOf:
-          - type: string
-            maxLength: 32
-            minLength: 3
-          - type: 'null'
-          title: alias
-      type: object
-      title: mcpToolConfig
-    OptionalFiltersUnion:
-      oneOf:
-      - type: string
-      - type: array
-        items:
-          $ref: '#/components/schemas/OptionalFiltersUnion'
-      - type: 'null'
-    StartPart:
-      properties:
-        type:
-          type: string
-          const: start
-          title: type
-          default: start
-      type: object
-      title: startPart
-      required:
-      - type
-    ApplicationConfigResponse:
-      properties:
-        maxRetentionDays:
-          type: integer
-          title: maxretentiondays
-      type: object
-      required:
-      - maxRetentionDays
-      title: applicationConfigResponse
-    ProviderInput:
-      oneOf:
-      - $ref: '#/components/schemas/OpenAIProviderInput'
-      - $ref: '#/components/schemas/AzureOpenAIProviderInput'
-      - $ref: '#/components/schemas/OpenAICompatibleProviderInput'
-      - $ref: '#/components/schemas/BaseProviderInput'
-      - $ref: '#/components/schemas/AnthropicProviderInput'
-    AnthropicProviderInput:
-      properties:
-        apiKey:
-          type: string
-          title: apikey
-        baseUrl:
-          oneOf:
-          - type: string
-            maxLength: 2083
-            minLength: 1
-          - type: 'null'
-          title: baseurl
-      type: object
-      required:
-      - apiKey
-      title: anthropicProviderInput
-      description: Anthropic-specific provider input.
-    ExactOnSingleWordQuery:
-      type: string
-      enum:
-      - attribute
-      - none
-      - word
-      title: exactOnSingleWordQuery
-      description: Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes)
-        is computed when the search query has only one word.  - `attribute`.   The
-        Exact ranking criterion is 1 if the query word and attribute value are the
-        same.   For example, a search for "road" will match the value "road", but
-        not "road trip".  - `none`.   The Exact ranking criterion is ignored on single-word
-        searches.  - `word`.   The Exact ranking criterion is 1 if the query word
-        is found in the attribute value.   The query word must have at least 3 characters
-        and must not be a stop word.   Only exact matches will be highlighted,   partial
-        and prefix matches won't.
-    StepStartPartV5:
-      properties:
-        type:
-          type: string
-          const: step-start
-          title: type
-          default: step-start
-      type: object
-      title: stepStartPartV5
-    UnknownToolConfig:
+      title: secretKeyCreate
+      description: Secret key creation payload.
+    AlgoliaSearchToolConfig:
       properties:
         name:
           type: string
@@ -3110,441 +2742,34 @@ components:
           title: name
         type:
           type: string
-          const: unknown
+          const: algolia_search_index
           title: type
-          default: unknown
-      additionalProperties: true
+          default: algolia_search_index
+        indices:
+          items:
+            $ref: '#/components/schemas/AlgoliaSearchToolIndexConfig'
+          type: array
+          title: indices
       type: object
       required:
       - type
       - name
-      title: unknownToolConfig
-      description: Exists only to ensure that when you change branch from toolX to
-        feat/toolY, your config stays valid.
-    NaturalLanguagesUnion:
-      oneOf:
-      - items:
-          $ref: '#/components/schemas/SupportedLanguage'
-        type: array
-      - type: 'null'
-    PaginationMetadata:
+      - indices
+      title: algoliaSearchToolConfig
+    ReasoningPartV4:
       properties:
-        page:
-          type: integer
-          title: page
-        limit:
-          type: integer
-          title: limit
-        totalCount:
-          type: integer
-          title: totalcount
-        totalPages:
-          type: integer
-          title: totalpages
+        type:
+          type: string
+          const: reasoning
+          title: type
+          default: reasoning
+        reasoning:
+          type: string
+          title: reasoning
       type: object
       required:
-      - page
-      - limit
-      - totalCount
-      - totalPages
-      title: paginationMetadata
-    AssistantPartV4:
-      oneOf:
-      - $ref: '#/components/schemas/StepStartPartV4'
-      - $ref: '#/components/schemas/ReasoningPartV4'
-      - $ref: '#/components/schemas/TextPartV4'
-      - $ref: '#/components/schemas/ToolInvocationPartV4'
-    SearchParametersOverrides:
-      properties:
-        filters:
-          type: string
-          title: filters
-        attributesToRetrieve:
-          items:
-            type: string
-          type: array
-          title: attributestoretrieve
-        restrictSearchableAttributes:
-          items:
-            type: string
-          type: array
-          title: restrictsearchableattributes
-        distinct:
-          $ref: '#/components/schemas/DistinctUnion'
-        userToken:
-          type: string
-          title: usertoken
-        enablePersonalization:
-          type: boolean
-          title: enablepersonalization
-        personalizationImpact:
-          type: integer
-          title: personalizationimpact
-        optionalFilters:
-          $ref: '#/components/schemas/OptionalFiltersUnion'
-      additionalProperties: false
-      type: object
-      title: searchParametersOverrides
-      description: 'Algolia Search API parameters that can be predefined for the search
-        tool.
-
-        Reference: https://www.algolia.com/doc/api-reference/search-api-parameters/
-
-
-        A subset of SearchParameters of specific params we allow for runtime override.'
-    PaginatedConversationsResponse:
-      properties:
-        data:
-          items:
-            $ref: '#/components/schemas/ConversationBaseResponse'
-          type: array
-          title: data
-        pagination:
-          $ref: '#/components/schemas/PaginationMetadata'
-      type: object
-      required:
-      - data
-      - pagination
-      title: paginatedConversationsResponse
-    AroundRadiusUnion:
-      oneOf:
-      - type: integer
-      - type: string
-      - type: 'null'
-    InsidePolygonUnion:
-      oneOf:
-      - type: string
-      - items:
-          items:
-            type: number
-          type: array
-        type: array
-      - type: 'null'
-    ProviderAuthenticationResponse:
-      properties:
-        id:
-          type: string
-          title: id
-        name:
-          type: string
-          title: name
-        providerName:
-          type: string
-          title: providername
-        input:
-          $ref: '#/components/schemas/ProviderInput'
-        createdAt:
-          type: string
-          title: createdat
-        updatedAt:
-          type: string
-          title: updatedat
-        lastUsedAt:
-          oneOf:
-          - type: string
-          - type: 'null'
-          title: lastusedat
-      type: object
-      required:
-      - id
-      - name
-      - providerName
-      - input
-      - createdAt
-      - updatedAt
-      title: provider
-    RemoveWordsIfNoResults:
-      type: string
-      enum:
-      - none
-      - lastWords
-      - firstWords
-      - allOptional
-      title: removeWordsIfNoResults
-      description: Strategy for removing words from the query when it doesn't return
-        any results. This helps to avoid returning empty search results.  - `none`.   No
-        words are removed when a query doesn't return results.  - `lastWords`.   Treat
-        the last (then second to last, then third to last) word as optional,   until
-        there are results or at most 5 words have been removed.  - `firstWords`.   Treat
-        the first (then second, then third) word as optional,   until there are results
-        or at most 5 words have been removed.  - `allOptional`.   Treat all words
-        as optional.  For more information, see [Remove words to improve results](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/empty-or-insufficient-results/in-depth/why-use-remove-words-if-no-results).
-    AgentIdUnion:
-      oneOf:
-      - type: string
-      - const: test
-        type: string
-    AssistantPartV5:
-      oneOf:
-      - $ref: '#/components/schemas/StepStartPartV5'
-      - $ref: '#/components/schemas/TextPartV5'
-      - $ref: '#/components/schemas/ReasoningPartV5'
-      - $ref: '#/components/schemas/ToolPartV5'
-    FacetsUnion:
-      oneOf:
-      - items:
-          type: string
-        type: array
-      - $ref: '#/components/schemas/Facets'
-      - type: 'null'
-    NumberParamConstraint:
-      properties:
-        min:
-          oneOf:
-          - type: integer
-          - type: 'null'
-          title: min
-        max:
-          oneOf:
-          - type: integer
-          - type: 'null'
-          title: max
-      type: object
-      title: numberParamConstraint
-      description: Constraints for a number parameter.
-    AgentCompletionRequest:
-      properties:
-        configuration:
-          $ref: '#/components/schemas/AgentTestConfiguration'
-        messages:
-          $ref: '#/components/schemas/MessagesUnion'
-        id:
-          type: string
-          maxLength: 128
-          title: id
-          description: Optional conversation id.
-        algolia:
-          $ref: '#/components/schemas/AgentCompletionAlgoliaParams'
-        toolApprovals:
-          type: object
-          title: toolApprovals
-          description: Approval decisions for pending tool calls keyed by toolCallId.
-      type: object
-      title: agentCompletionRequest
-      description: Request model for creating a completion for an assistant.
-    IgnorePluralsUnion:
-      oneOf:
-      - type: boolean
-      - items:
-          $ref: '#/components/schemas/SupportedLanguage'
-        type: array
-      - type: 'null'
-    ProviderAuthenticationPatch:
-      properties:
-        name:
-          oneOf:
-          - type: string
-            maxLength: 128
-            minLength: 1
-          - type: 'null'
-          title: name
-        input:
-          $ref: '#/components/schemas/ProviderInputNullable'
-      additionalProperties: false
-      type: object
-      title: providerPatch
-    SecretKeyResponse:
-      properties:
-        id:
-          type: string
-          title: id
-        name:
-          type: string
-          title: name
-        value:
-          type: string
-          title: value
-        createdAt:
-          type: string
-          title: createdat
-        updatedAt:
-          type: string
-          title: updatedat
-        lastUsedAt:
-          oneOf:
-          - type: string
-          - type: 'null'
-          title: lastusedat
-        isDefault:
-          type: boolean
-          title: isdefault
-          default: false
-        agentIds:
-          items:
-            type: string
-          type: array
-          title: agentids
-      type: object
-      required:
-      - id
-      - name
-      - value
-      - createdAt
-      - updatedAt
-      - lastUsedAt
-      - agentIds
-      title: secretKeyResponse
-    FeedbackCreationRequest:
-      properties:
-        messageId:
-          type: string
-          title: messageid
-        agentId:
-          type: string
-          title: agentid
-        vote:
-          $ref: '#/components/schemas/VoteEnum'
-        tags:
-          items:
-            type: string
-            maxLength: 50
-          type: array
-          maxItems: 10
-          title: tags
-        notes:
-          type: string
-          maxLength: 1000
-          title: notes
-      type: object
-      required:
-      - messageId
-      - agentId
-      - vote
-      title: feedbackCreationRequest
-      description: Request model for creating a feedback entry.
-    UserMessageV5:
-      properties:
-        id:
-          type: string
-          title: id
-        role:
-          type: string
-          const: user
-          title: role
-          default: user
-        parts:
-          items:
-            $ref: '#/components/schemas/TextPartV5'
-          type: array
-          title: parts
-        metadata:
-          $ref: '#/components/schemas/UserMessageMetadataV5'
-      type: object
-      title: userMessageV5
-      required:
-      - role
-    RemoveStopWordsUnion:
-      oneOf:
-      - type: boolean
-      - items:
-          $ref: '#/components/schemas/SupportedLanguage'
-        type: array
-      - type: 'null'
-    AroundPrecisionUnion:
-      oneOf:
-      - type: integer
-      - items:
-          additionalProperties:
-            type: integer
-          type: object
-        type: array
-      - type: 'null'
-    TextParam:
-      properties:
-        exposed:
-          type: boolean
-          title: exposed
-        default:
-          oneOf:
-          - type: string
-          - type: 'null'
-          title: default
-      type: object
-      required:
-      - exposed
-      title: textParam
-      description: A text search parameter with exposure control.
-    ApplicationConfigPatch:
-      properties:
-        maxRetentionDays:
-          oneOf:
-          - type: integer
-          - type: 'null'
-          title: maxretentiondays
-          description: 'Maximum number of days to retain data. Valid values: [0, 30,
-            60, 90].'
-          default: 90
-      type: object
-      title: applicationConfigPatch
-    ConversationFullResponse:
-      properties:
-        id:
-          type: string
-          title: id
-        agentId:
-          type: string
-          title: agentid
-        title:
-          oneOf:
-          - type: string
-          - type: 'null'
-          title: title
-        createdAt:
-          type: string
-          title: createdat
-        updatedAt:
-          type: string
-          title: updatedat
-        lastActivityAt:
-          oneOf:
-          - type: string
-          - type: 'null'
-          title: lastactivityat
-        userToken:
-          oneOf:
-          - type: string
-          - type: 'null'
-          title: usertoken
-        isFromDashboard:
-          type: boolean
-          title: isfromdashboard
-          default: false
-        messageCount:
-          type: integer
-          title: messagecount
-          default: 0
-        totalInputTokens:
-          type: integer
-          title: totalinputtokens
-          default: 0
-        totalOutputTokens:
-          type: integer
-          title: totaloutputtokens
-          default: 0
-        totalTokens:
-          type: integer
-          title: totaltokens
-          default: 0
-        conversationMetadata:
-          oneOf:
-          - $ref: '#/components/schemas/ConversationMetadata'
-          - type: 'null'
-        feedback:
-          $ref: '#/components/schemas/FeedbackUnion'
-        messages:
-          items:
-            $ref: '#/components/schemas/MessageResponse'
-          type: array
-          title: messages
-      type: object
-      required:
-      - id
-      - agentId
-      - createdAt
-      - updatedAt
-      - messages
-      title: conversationFullResponse
-      description: Response model for a conversation with all its messages.
+      - reasoning
+      title: reasoningPartV4
     MessageResponse:
       properties:
         id:
@@ -3598,172 +2823,346 @@ components:
       - updatedAt
       title: messageResponse
       description: Response model for a message.
-    Facets:
+    ProviderAuthenticationResponse:
       properties:
-        order:
+        id:
+          type: string
+          title: id
+        name:
+          type: string
+          title: name
+        providerName:
+          type: string
+          title: providername
+        input:
+          $ref: '#/components/schemas/ProviderInput'
+        createdAt:
+          type: string
+          title: createdat
+        updatedAt:
+          type: string
+          title: updatedat
+        lastUsedAt:
           oneOf:
-          - items:
-              type: string
-            type: array
+          - type: string
           - type: 'null'
-          title: order
-      additionalProperties: true
+          title: lastusedat
       type: object
-      title: facets
-      description: Order of facet names.
-    IndexSearchParameters:
+      required:
+      - id
+      - name
+      - providerName
+      - input
+      - createdAt
+      - updatedAt
+      title: provider
+    AllowedDomainResponse:
       properties:
-        query:
-          oneOf:
-          - $ref: '#/components/schemas/TextParam'
-          - type: 'null'
-        hitsPerPage:
-          $ref: '#/components/schemas/NumberParam'
-        page:
-          $ref: '#/components/schemas/NumberParam'
-        attributesToRetrieve:
-          $ref: '#/components/schemas/StringArrayParam'
-        responseFields:
-          $ref: '#/components/schemas/StringArrayParam'
-        facets:
-          oneOf:
-          - $ref: '#/components/schemas/FacetsParam'
-          - type: 'null'
-        custom:
-          oneOf:
-          - additionalProperties: true
-            type: object
-          - type: 'null'
-          title: custom
+        id:
+          type: string
+          title: id
+        appId:
+          type: string
+          title: appid
+        agentId:
+          type: string
+          title: agentid
+        domain:
+          type: string
+          title: domain
+        createdAt:
+          type: string
+          title: createdat
+        updatedAt:
+          type: string
+          title: updatedat
       type: object
-      title: indexSearchParameters
-      description: 'Structured search parameters configuration for an Algolia index.
-
-
-        Each parameter controls whether it is exposed to the LLM, its default value,
-
-        optional constraints, and merge behavior.'
-    ToolResultOutputType:
-      type: string
-      enum:
-      - text
-      - json
-      - error-text
-      - error-json
-      - content
-      title: toolResultOutputType
-      description: The valid 'type' of tool results.
-    MessagePart:
+      required:
+      - id
+      - appId
+      - agentId
+      - domain
+      - createdAt
+      - updatedAt
+      title: allowedDomainResponse
+      description: Single allowed domain in API responses.
+    StepStartPartV4:
+      properties:
+        type:
+          type: string
+          const: step-start
+          title: type
+          default: step-start
+      type: object
+      title: stepStartPartV4
+    ToolInvocationsUnion:
       oneOf:
-      - $ref: '#/components/schemas/TextPart'
-      - $ref: '#/components/schemas/ToolCallPart'
-      - $ref: '#/components/schemas/ToolResultPart'
-      - $ref: '#/components/schemas/StartPart'
-      - $ref: '#/components/schemas/StartStepPart'
-      - $ref: '#/components/schemas/ReasoningPart'
-      - $ref: '#/components/schemas/ToolApprovalRequestPart'
-      discriminator:
-        propertyName: type
-        mapping:
-          reasoning: '#/components/schemas/ReasoningPart'
-          start: '#/components/schemas/StartPart'
-          start-step: '#/components/schemas/StartStepPart'
-          text: '#/components/schemas/TextPart'
-          tool-approval-request: '#/components/schemas/ToolApprovalRequestPart'
-          tool-call: '#/components/schemas/ToolCallPart'
-          tool-result: '#/components/schemas/ToolResultPart'
-    AlgoliaDisplayResultsToolConfig:
+      - items:
+          $ref: '#/components/schemas/ToolInvocationV4'
+        type: array
+      - type: 'null'
+    UnknownToolConfig:
       properties:
         name:
           type: string
-          const: algolia_display_results
+          maxLength: 32
+          minLength: 3
           title: name
-          default: algolia_display_results
         type:
           type: string
-          const: algolia_display_results
+          const: unknown
           title: type
-          default: algolia_display_results
-        minGroups:
-          type: integer
-          minimum: 1
-          title: mingroups
-          default: 1
-        maxGroups:
-          type: integer
-          minimum: 1
-          title: maxgroups
-          default: 3
-        minResultsPerGroup:
-          type: integer
-          minimum: 1
-          title: minresultspergroup
-          default: 3
-        maxResultsPerGroup:
-          type: integer
-          minimum: 1
-          title: maxresultspergroup
-          default: 6
+          default: unknown
+      additionalProperties: true
       type: object
-      title: algoliaDisplayResultsToolConfig
-      description: Configuration for the algolia_display_results tool.
       required:
       - type
-    ErrorBase:
-      description: Error.
-      type: object
-      x-keep-model: true
-      additionalProperties: true
+      - name
+      title: unknownToolConfig
+      description: Exists only to ensure that when you change branch from toolX to feat/toolY, your config stays valid.
+    ProviderInput:
+      oneOf:
+      - $ref: '#/components/schemas/OpenAIProviderInput'
+      - $ref: '#/components/schemas/AzureOpenAIProviderInput'
+      - $ref: '#/components/schemas/OpenAICompatibleProviderInput'
+      - $ref: '#/components/schemas/BaseProviderInput'
+      - $ref: '#/components/schemas/AnthropicProviderInput'
+    QueryType:
+      type: string
+      enum:
+      - prefixLast
+      - prefixAll
+      - prefixNone
+      title: queryType
+      description: Determines if and how query words are interpreted as prefixes.  By default, only the last query word is treated as a prefix (`prefixLast`). To turn off prefix search, use `prefixNone`. Avoid `prefixAll`, which treats all query words as prefixes. This might lead to counterintuitive results and makes your search slower.  For more information, see [Prefix searching](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/prefix-searching).
+    FeedbackUnion:
+      oneOf:
+      - items:
+          $ref: '#/components/schemas/FeedbackResponse'
+        type: array
+      - type: 'null'
+    AdvancedSyntaxFeatures:
+      type: string
+      enum:
+      - exactPhrase
+      - excludeWords
+      title: advancedSyntaxFeatures
+      description: AdvancedSyntaxFeatures.
+    AllowedDomainBulkDelete:
       properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    OpenAICompatibleProviderInput:
-      properties:
-        apiKey:
-          type: string
-          title: apikey
-        baseUrl:
-          type: string
-          maxLength: 2083
-          minLength: 1
-          title: baseurl
-        defaultModel:
-          type: string
-          minLength: 1
-          title: defaultmodel
-          description: Default model for this provider. Used for validation and as
-            fallback when no model is specified at agent level.
+        domainIds:
+          items:
+            type: string
+          type: array
+          title: domainids
+          description: IDs of allowed domain records to delete.
       type: object
       required:
-      - apiKey
-      - baseUrl
-      - defaultModel
-      title: openAICompatibleProviderInput
-      description: 'OpenAI-compatible provider input.
-
-        Contrary to the OpenAIProviderInput, the base_url is required.
-
-        A model is required to verify connectivity and get saved as the default model.
-
-        This can later be changed at the Agent level.'
-    FacetsParam:
+      - domainIds
+      title: allowedDomainBulkDelete
+      description: Request body for bulk delete by IDs.
+    AlternativesAsExact:
+      type: string
+      enum:
+      - ignorePlurals
+      - singleWordSynonym
+      - multiWordsSynonym
+      - ignoreConjugations
+      title: alternativesAsExact
+      description: AlternativesAsExact.
+    SecretKeyPatch:
       properties:
-        exposed:
-          type: boolean
-          const: false
-          title: exposed
-          default: false
-        default:
+        name:
+          oneOf:
+          - type: string
+            maxLength: 128
+            minLength: 1
+          - type: 'null'
+          title: name
+          description: The new name of the secret key.
+        agentIds:
           oneOf:
           - items:
               type: string
             type: array
           - type: 'null'
-          title: default
+          title: agentids
+          description: Updated list of agent IDs this secret key is associated with.
       type: object
-      title: facetsParam
-      description: A facets parameter that is always hidden from the LLM.
+      title: secretKeyPatch
+      description: Secret key patch payload.
+    McpServerToolConfig:
+      properties:
+        url:
+          type: string
+          maxLength: 512
+          minLength: 1
+          title: url
+        transport:
+          type: string
+          const: streamable_http
+          title: transport
+          default: streamable_http
+        headers:
+          additionalProperties:
+            type: string
+          type: object
+          title: headers
+        name:
+          type: string
+          maxLength: 32
+          minLength: 3
+          title: name
+        type:
+          type: string
+          const: mcp_tools
+          title: type
+          default: mcp_tools
+        id:
+          oneOf:
+          - type: string
+          - type: 'null'
+          title: id
+          description: Stable unique identifier for this MCP tool.
+        allowedTools:
+          $ref: '#/components/schemas/AllowedToolsUnion'
+      type: object
+      required:
+      - type
+      - url
+      - headers
+      - name
+      title: mcpServerToolConfig
+    McpToolConfig:
+      properties:
+        requiresApproval:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+          title: requiresapproval
+          default: false
+        alias:
+          oneOf:
+          - type: string
+            maxLength: 32
+            minLength: 3
+          - type: 'null'
+          title: alias
+      type: object
+      title: mcpToolConfig
+    ConversationMetadata:
+      properties:
+        cachedAt:
+          oneOf:
+          - type: string
+          - type: 'null'
+          title: cachedat
+      type: object
+      title: conversationMetadata
+      description: Public metadata exposed on conversation responses.
+    TagFiltersUnion:
+      oneOf:
+      - type: string
+      - type: array
+        items:
+          $ref: '#/components/schemas/TagFiltersUnion'
+      - type: 'null'
+    SupportedLanguage:
+      type: string
+      enum:
+      - af
+      - ar
+      - az
+      - bg
+      - bn
+      - ca
+      - cs
+      - cy
+      - da
+      - de
+      - el
+      - en
+      - eo
+      - es
+      - et
+      - eu
+      - fa
+      - fi
+      - fo
+      - fr
+      - ga
+      - gl
+      - he
+      - hi
+      - hu
+      - hy
+      - id
+      - is
+      - it
+      - ja
+      - ka
+      - kk
+      - ko
+      - ku
+      - ky
+      - lt
+      - lv
+      - mi
+      - mn
+      - mr
+      - ms
+      - mt
+      - nb
+      - nl
+      - 'no'
+      - ns
+      - pl
+      - ps
+      - pt
+      - pt-br
+      - qu
+      - ro
+      - ru
+      - sk
+      - sq
+      - sv
+      - sw
+      - ta
+      - te
+      - th
+      - tl
+      - tn
+      - tr
+      - tt
+      - uk
+      - ur
+      - uz
+      - zh
+      title: supportedLanguage
+      description: ISO code for a supported language.
+    AssistantPartV4:
+      oneOf:
+      - $ref: '#/components/schemas/StepStartPartV4'
+      - $ref: '#/components/schemas/ReasoningPartV4'
+      - $ref: '#/components/schemas/TextPartV4'
+      - $ref: '#/components/schemas/ToolInvocationPartV4'
+    ReRankingApplyFilterUnion:
+      oneOf:
+      - type: string
+      - items:
+          type: object
+          additionalProperties: true
+        type: array
+      - type: 'null'
+    MessagesUnion:
+      oneOf:
+      - items:
+          $ref: '#/components/schemas/MessageV4'
+        type: array
+      - items:
+          $ref: '#/components/schemas/MessageV5'
+        type: array
+      - type: 'null'
     SearchParameters:
       properties:
         queryType:
@@ -4056,119 +3455,199 @@ components:
           title: explain
       type: object
       title: searchParameters
-      description: 'Algolia Search API parameters that can be predefined for the search
-        tool.
+      description: 'Algolia Search API parameters that can be predefined for the search tool.
 
         Reference: https://www.algolia.com/doc/api-reference/search-api-parameters/
 
 
-        The parameters that seemed irrelevant for the search tool have been commented
-        out.
+        The parameters that seemed irrelevant for the search tool have been commented out.
 
         Uses types from algoliasearch.search.models for better type safety.'
-    MemoryRecord:
+    AlgoliaSearchToolIndexConfig:
       properties:
-        memoryType:
-          $ref: '#/components/schemas/MemoryType'
-        episode:
-          oneOf:
-          - $ref: '#/components/schemas/Episode'
-          - type: 'null'
-        text:
+        index:
           type: string
-          maxLength: 2000
+          maxLength: 100
           minLength: 1
-          title: text
-          description: Self-contained, first-person memory for long-term recall.
-        rawExtract:
+          title: index
+        description:
           type: string
-          maxLength: 5000
+          maxLength: 3000
           minLength: 1
-          title: rawextract
-          description: Verbatim conversation extract, not paraphrased.
-        keywords:
-          items:
-            type: string
-          type: array
-          title: keywords
-          description: '5-20 free-form keywords: entities, context, search terms (any
-            words).'
-        topics:
-          items:
-            type: string
-          type: array
-          title: topics
-          description: '2-4 topics ONLY from this list: [complaints, entertainment,
-            family, feedback, finance, food, goals, health, history, hobbies, learning,
-            praise, preferences, schedule, shopping, technical, travel, work].'
-        _tags:
-          items:
-            type: string
-          type: array
-          title: tags
-          description: Arbitrary labels/themes for flexible categorization (e.g.,
-            'Q1-goals', 'paris-trip', 'vip-customer').
-        recallTriggers:
-          items:
-            type: string
-          type: array
-          title: recalltriggers
-          description: 3-5 natural phrases that should trigger this memory.
-        objectID:
+          title: description
+        enhancedDescription:
+          type: string
+          title: enhanceddescription
+          default: ''
+        searchParameters:
           oneOf:
-          - type: string
+          - $ref: '#/components/schemas/SearchParameters'
           - type: 'null'
-          title: objectid
-          description: ObjectID of existing memory to update. Leave empty for new
-            memory.
-        appId:
-          type: string
-          title: appid
-          description: Application ID.
-          default: ''
-        agentIDs:
-          items:
-            type: string
-          type: array
-          title: agentids
-          description: 'Agent IDs with access: [''agent1''], [''*''] for all, [''*'',
-            ''-agent1''] to exclude.'
-        userID:
-          type: string
-          title: userid
-          description: User ID.
-          default: ''
-        createdAt:
-          type: integer
-          title: createdat
-          description: Epoch seconds.
-          default: 0
-        updatedAt:
-          type: integer
-          title: updatedat
-          description: Epoch seconds.
-          default: 0
+        searchControls:
+          oneOf:
+          - $ref: '#/components/schemas/IndexSearchParameters'
+          - type: 'null'
       type: object
       required:
-      - text
-      - rawExtract
-      title: memoryRecord
-      description: 'Universal storage model for all memory types (semantic, episodic).
-
-
-        This is the ONLY model that touches storage (Algolia). Domain models (SemanticMemory,
-        EpisodicMemory)
-
-        are used for LLM extraction and converted to MemoryRecord before saving.
-
-
-        See https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types
-        for memory type definitions.'
-    TypoToleranceUnion:
+      - index
+      - description
+      title: algoliaSearchToolIndexConfig
+    AgentCompletionRequest:
+      properties:
+        configuration:
+          $ref: '#/components/schemas/AgentTestConfiguration'
+        messages:
+          $ref: '#/components/schemas/MessagesUnion'
+        id:
+          type: string
+          maxLength: 128
+          title: id
+          description: Optional conversation id.
+        algolia:
+          $ref: '#/components/schemas/AgentCompletionAlgoliaParams'
+        toolApprovals:
+          type: object
+          title: toolApprovals
+          description: Approval decisions for pending tool calls keyed by toolCallId.
+      type: object
+      title: agentCompletionRequest
+      description: Request model for creating a completion for an assistant.
+    AllowedDomainCreate:
+      properties:
+        domain:
+          type: string
+          title: domain
+          description: Domain or pattern, e.g. https://app.example.com or *.example.com.
+      type: object
+      required:
+      - domain
+      title: allowedDomainCreate
+      description: Request body to add a single allowed domain.
+    ToolResultPart:
+      properties:
+        type:
+          type: string
+          const: tool-result
+          title: type
+          default: tool-result
+        toolCallId:
+          type: string
+          title: toolcallid
+        toolName:
+          type: string
+          title: toolname
+        output:
+          $ref: '#/components/schemas/ToolResultOutput'
+        providerOptions:
+          oneOf:
+          - type: object
+            additionalProperties: true
+          - type: 'null'
+          title: provideroptions
+      type: object
+      required:
+      - type
+      - toolCallId
+      - toolName
+      - output
+      title: toolResultPart
+    MessagePart:
+      oneOf:
+      - $ref: '#/components/schemas/TextPart'
+      - $ref: '#/components/schemas/ToolCallPart'
+      - $ref: '#/components/schemas/ToolResultPart'
+      - $ref: '#/components/schemas/StartPart'
+      - $ref: '#/components/schemas/StartStepPart'
+      - $ref: '#/components/schemas/ReasoningPart'
+      - $ref: '#/components/schemas/ToolApprovalRequestPart'
+      discriminator:
+        propertyName: type
+        mapping:
+          reasoning: '#/components/schemas/ReasoningPart'
+          start: '#/components/schemas/StartPart'
+          start-step: '#/components/schemas/StartStepPart'
+          text: '#/components/schemas/TextPart'
+          tool-approval-request: '#/components/schemas/ToolApprovalRequestPart'
+          tool-call: '#/components/schemas/ToolCallPart'
+          tool-result: '#/components/schemas/ToolResultPart'
+    RemoveStopWordsUnion:
       oneOf:
       - type: boolean
-      - $ref: '#/components/schemas/TypoToleranceEnum'
+      - items:
+          $ref: '#/components/schemas/SupportedLanguage'
+        type: array
       - type: 'null'
+    InsideBoundingBoxUnion:
+      oneOf:
+      - type: string
+      - items:
+          items:
+            type: number
+          type: array
+        type: array
+      - type: 'null'
+    IndexSearchParameters:
+      properties:
+        query:
+          oneOf:
+          - $ref: '#/components/schemas/TextParam'
+          - type: 'null'
+        hitsPerPage:
+          $ref: '#/components/schemas/NumberParam'
+        page:
+          $ref: '#/components/schemas/NumberParam'
+        attributesToRetrieve:
+          $ref: '#/components/schemas/StringArrayParam'
+        responseFields:
+          $ref: '#/components/schemas/StringArrayParam'
+        facets:
+          oneOf:
+          - $ref: '#/components/schemas/FacetsParam'
+          - type: 'null'
+        custom:
+          oneOf:
+          - additionalProperties: true
+            type: object
+          - type: 'null'
+          title: custom
+      type: object
+      title: indexSearchParameters
+      description: 'Structured search parameters configuration for an Algolia index.
+
+
+        Each parameter controls whether it is exposed to the LLM, its default value,
+
+        optional constraints, and merge behavior.'
+    PaginationMetadata:
+      properties:
+        page:
+          type: integer
+          title: page
+        limit:
+          type: integer
+          title: limit
+        totalCount:
+          type: integer
+          title: totalcount
+        totalPages:
+          type: integer
+          title: totalpages
+      type: object
+      required:
+      - page
+      - limit
+      - totalCount
+      - totalPages
+      title: paginationMetadata
+    TypoToleranceEnum:
+      type: string
+      enum:
+      - min
+      - strict
+      - 'true'
+      - 'false'
+      title: typoToleranceEnum
+      description: '- `min`. Return matches with the lowest number of typos.   For example, if you have matches without typos, only include those.   But if there are no matches without typos (with 1 typo), include matches with 1 typo (2 typos). - `strict`. Return matches with the two lowest numbers of typos.   With `strict`, the Typo ranking criterion is applied first in the `ranking` setting.'
     ToolApprovalRequestPart:
       properties:
         type:
@@ -4212,51 +3691,192 @@ components:
       - toolName
       - args
       title: toolApprovalRequestPart
-    InsideBoundingBoxUnion:
-      oneOf:
-      - type: string
-      - items:
-          items:
-            type: number
-          type: array
-        type: array
-      - type: 'null'
-    MemoryType:
-      type: string
-      enum:
-      - semantic
-      - episodic
-      title: memoryType
-      description: 'Memory types implemented so far.
-
-        Follows LangMem''s ontology: https://langchain-ai.github.io/langmem/concepts/conceptual_guide/#memory-types.'
-    OpenAIProviderInput:
+    StringArrayParam:
       properties:
-        apiKey:
-          type: string
-          title: apikey
-        baseUrl:
+        exposed:
+          type: boolean
+          title: exposed
+        default:
           oneOf:
-          - type: string
-            maxLength: 2083
-            minLength: 1
+          - items:
+              type: string
+            type: array
           - type: 'null'
-          title: baseurl
+          title: default
+        constraint:
+          oneOf:
+          - $ref: '#/components/schemas/StringArrayParamConstraint'
+          - type: 'null'
+        merge:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+          title: merge
       type: object
       required:
-      - apiKey
-      title: openAIProviderInput
-      description: OpenAI-specific provider input.
-    ProviderInputNullable:
-      oneOf:
-      - $ref: '#/components/schemas/OpenAIProviderInput'
-      - $ref: '#/components/schemas/AzureOpenAIProviderInput'
-      - $ref: '#/components/schemas/OpenAICompatibleProviderInput'
-      - $ref: '#/components/schemas/BaseProviderInput'
-      - $ref: '#/components/schemas/AnthropicProviderInput'
-      - type: 'null'
-    ToolInvocationV4:
+      - exposed
+      title: stringArrayParam
+      description: A string array search parameter with exposure control, constraints, and merge behavior.
+    AgentStatus:
+      type: string
+      enum:
+      - draft
+      - published
+    TextPart:
       properties:
+        type:
+          type: string
+          const: text
+          title: type
+          default: text
+        text:
+          type: string
+          title: text
+      type: object
+      required:
+      - type
+      - text
+      title: textPart
+    ExactOnSingleWordQuery:
+      type: string
+      enum:
+      - attribute
+      - none
+      - word
+      title: exactOnSingleWordQuery
+      description: Determines how the [Exact ranking criterion](https://www.algolia.com/doc/guides/managing-results/optimize-search-results/override-search-engine-defaults/in-depth/adjust-exact-settings/#turn-off-exact-for-some-attributes) is computed when the search query has only one word.  - `attribute`.   The Exact ranking criterion is 1 if the query word and attribute value are the same.   For example, a search for "road" will match the value "road", but not "road trip".  - `none`.   The Exact ranking criterion is ignored on single-word searches.  - `word`.   The Exact ranking criterion is 1 if the query word is found in the attribute value.   The query word must have at least 3 characters and must not be a stop word.   Only exact matches will be highlighted,   partial and prefix matches won't.
+    NumericFiltersUnion:
+      oneOf:
+      - type: string
+      - type: array
+        items:
+          $ref: '#/components/schemas/NumericFiltersUnion'
+      - type: 'null'
+    ApplicationConfigPatch:
+      properties:
+        maxRetentionDays:
+          oneOf:
+          - type: integer
+          - type: 'null'
+          title: maxretentiondays
+          description: 'Maximum number of days to retain data. Valid values: [0, 30, 60, 90].'
+          default: 90
+      type: object
+      title: applicationConfigPatch
+    AgentTestConfiguration:
+      properties:
+        id:
+          type: string
+          title: id
+        providerId:
+          type: string
+          title: providerid
+        model:
+          type: string
+          title: model
+        instructions:
+          type: string
+          title: instructions
+        systemPrompt:
+          type: string
+          title: systemprompt
+        config:
+          additionalProperties: true
+          type: object
+          title: config
+        tools:
+          items:
+            $ref: '#/components/schemas/ToolConfigInput'
+          type: array
+          title: tools
+      type: object
+      required:
+      - instructions
+      - config
+      - tools
+      title: agentTestConfiguration
+      description: Dynamic configuration for testing agents.
+    ProviderAuthenticationCreate:
+      properties:
+        name:
+          type: string
+          maxLength: 128
+          minLength: 1
+          title: name
+        providerName:
+          $ref: '#/components/schemas/ProviderName'
+        input:
+          $ref: '#/components/schemas/ProviderInput'
+      additionalProperties: false
+      type: object
+      required:
+      - name
+      - providerName
+      - input
+      title: providerAuthenticationCreate
+    ErrorBase:
+      description: Error.
+      type: object
+      x-keep-model: true
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
+    PaginatedProviderAuthenticationsResponse:
+      properties:
+        data:
+          items:
+            $ref: '#/components/schemas/ProviderAuthenticationResponse'
+          type: array
+          title: data
+        pagination:
+          $ref: '#/components/schemas/PaginationMetadata'
+      type: object
+      required:
+      - data
+      - pagination
+      title: paginatedProviders
+    MessageV4:
+      oneOf:
+      - $ref: '#/components/schemas/UserMessageV4'
+      - $ref: '#/components/schemas/AssistantMessageV4'
+      discriminator:
+        propertyName: role
+        mapping:
+          assistant: '#/components/schemas/AssistantMessageV4'
+          user: '#/components/schemas/UserMessageV4'
+    ToolResultOutputType:
+      type: string
+      enum:
+      - text
+      - json
+      - error-text
+      - error-json
+      - content
+      title: toolResultOutputType
+      description: The valid 'type' of tool results.
+    ReasoningPartV5:
+      properties:
+        type:
+          type: string
+          const: reasoning
+          title: type
+          default: reasoning
+        text:
+          type: string
+          title: text
+      type: object
+      required:
+      - text
+      title: reasoningPartV5
+    ToolCallPart:
+      properties:
+        type:
+          type: string
+          const: tool-call
+          title: type
+          default: tool-call
         toolCallId:
           type: string
           title: toolcallid
@@ -4264,19 +3884,310 @@ components:
           type: string
           title: toolname
         args:
-          additionalProperties: true
-          type: object
           title: args
-        result:
+        requiresApproval:
+          oneOf:
+          - type: boolean
+          - type: 'null'
+          title: requiresapproval
+        providerOptions:
+          oneOf:
+          - type: object
+            additionalProperties: true
+          - type: 'null'
+          title: provideroptions
+      type: object
+      required:
+      - type
+      - toolCallId
+      - toolName
+      - args
+      title: toolCallPart
+    NaturalLanguagesUnion:
+      oneOf:
+      - items:
+          $ref: '#/components/schemas/SupportedLanguage'
+        type: array
+      - type: 'null'
+    AlgoliaRecommendToolIndexConfig:
+      properties:
+        index:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: index
+        modelName:
+          type: string
+          maxLength: 100
+          minLength: 1
+          title: modelname
+        description:
+          type: string
+          title: description
+          default: ''
+      type: object
+      required:
+      - index
+      - modelName
+      title: algoliaRecommendToolIndexConfig
+    OptionalFiltersUnion:
+      oneOf:
+      - type: string
+      - type: array
+        items:
+          $ref: '#/components/schemas/OptionalFiltersUnion'
+      - type: 'null'
+    FeedbackResponse:
+      properties:
+        id:
+          type: string
+          title: id
+        agentId:
+          type: string
+          title: agentid
+        messageId:
+          type: string
+          title: messageid
+        vote:
+          type: integer
+          title: vote
+        tags:
+          items:
+            type: string
+          type: array
+          title: tags
+        notes:
+          oneOf:
+          - type: string
+          - type: 'null'
+          title: notes
+        model:
+          oneOf:
+          - type: string
+          - type: 'null'
+          title: model
+        createdAt:
+          type: string
+          title: createdat
+        updatedAt:
+          type: string
+          title: updatedat
+      type: object
+      required:
+      - id
+      - agentId
+      - messageId
+      - vote
+      - tags
+      - createdAt
+      - updatedAt
+      title: feedbackResponse
+    AroundPrecisionUnion:
+      oneOf:
+      - type: integer
+      - items:
+          additionalProperties:
+            type: integer
+          type: object
+        type: array
+      - type: 'null'
+    AgentIdUnion:
+      oneOf:
+      - type: string
+      - const: test
+        type: string
+    ClientToolsArgsSchema:
+      properties:
+        type:
+          type: string
+          const: object
+          title: type
+          default: object
+        properties:
+          additionalProperties: true
+          type: object
+          title: properties
+        required:
+          items:
+            type: string
+          type: array
+          title: required
+      type: object
+      title: clientToolsArgsSchema
+    AgentConfigCreate:
+      properties:
+        name:
+          type: string
+          title: name
+        description:
+          type: string
+          title: description
+        providerId:
+          type: string
+          title: providerid
+        model:
+          type: string
+          title: model
+        instructions:
+          type: string
+          title: instructions
+          description: 'The agent prompt: defines the agent''s role, tone, and goals. Guides how it answers using the provided context. Corresponds to the ''Agent prompt'' field in the dashboard.'
+        systemPrompt:
+          type: string
+          title: systemprompt
+          description: 'The system prompt: defines system-level rules and constraints. Guides how the agent uses tools, features, and generates context. Prepended before `instructions` in the final prompt sent to the LLM. Typically injected by an agent template — modify with caution, as changes may affect behavior, tool usage, or response accuracy. Corresponds to the ''System prompt'' field in the dashboard.'
+        templateType:
+          type: string
+          title: templatetype
+        config:
+          additionalProperties: true
+          type: object
+          title: config
+          default: {}
+          example:
+            sendUsage: true
+            sendReasoning: true
+            temperature: 0.7
+            max_tokens: 1500
+            reasoning: '{summary: auto}'
+            features: '[memory]'
+        tools:
+          items:
+            $ref: '#/components/schemas/ToolConfigInput'
+          type: array
+          title: tools
+      type: object
+      required:
+      - name
+      - instructions
+      title: agentConfigCreate
+    UserMessageV5:
+      properties:
+        id:
+          type: string
+          title: id
+        role:
+          type: string
+          const: user
+          title: role
+          default: user
+        parts:
+          items:
+            $ref: '#/components/schemas/TextPartV5'
+          type: array
+          title: parts
+        metadata:
+          $ref: '#/components/schemas/UserMessageMetadataV5'
+      type: object
+      title: userMessageV5
+      required:
+      - role
+    OpenAICompatibleProviderInput:
+      properties:
+        apiKey:
+          type: string
+          title: apikey
+        baseUrl:
+          type: string
+          maxLength: 2083
+          minLength: 1
+          title: baseurl
+        defaultModel:
+          type: string
+          minLength: 1
+          title: defaultmodel
+          description: Default model for this provider. Used for validation and as fallback when no model is specified at agent level.
+      type: object
+      required:
+      - apiKey
+      - baseUrl
+      - defaultModel
+      title: openAICompatibleProviderInput
+      description: 'OpenAI-compatible provider input.
+
+        Contrary to the OpenAIProviderInput, the base_url is required.
+
+        A model is required to verify connectivity and get saved as the default model.
+
+        This can later be changed at the Agent level.'
+    StartStepPart:
+      properties:
+        type:
+          type: string
+          const: start-step
+          title: type
+          default: start-step
+      type: object
+      title: startStepPart
+      required:
+      - type
+    TextPartV4:
+      properties:
+        type:
+          type: string
+          const: text
+          title: type
+          default: text
+        text:
+          type: string
+          title: text
+      type: object
+      required:
+      - text
+      title: textPartV4
+    AssistantMessageV4:
+      properties:
+        id:
+          type: string
+          title: id
+        role:
+          type: string
+          const: assistant
+          title: role
+          default: assistant
+        content:
+          type: string
+          title: content
+        parts:
+          items:
+            $ref: '#/components/schemas/AssistantPartV4'
+          type: array
+          title: parts
+        toolInvocations:
+          $ref: '#/components/schemas/ToolInvocationsUnion'
+      type: object
+      required:
+      - role
+      - content
+      title: assistantMessageV4
+    MessageRole:
+      type: string
+      enum:
+      - user
+      - assistant
+      title: messageRole
+      description: Role of a message in the conversation.
+    ToolPartV5:
+      properties:
+        type:
+          type: string
+          title: type
+        toolCallId:
+          type: string
+          title: toolcallid
+        state:
+          $ref: '#/components/schemas/ToolState'
+        input:
+          additionalProperties: true
+          type: object
+          title: input
+        output:
           type: object
           additionalProperties: true
-          title: result
-        step:
-          type: integer
-          title: step
-        state:
+          title: output
+        errorText:
           type: string
-          title: state
+          title: errortext
         providerOptions:
           additionalProperties: true
           type: object
@@ -4292,70 +4203,110 @@ components:
           title: argshash
       type: object
       required:
+      - type
       - toolCallId
-      - toolName
-      title: toolInvocationV4
+      title: toolPartV5
       description: Model for tool invocation in a Message.
-    AlternativesAsExactUnion:
-      oneOf:
-      - items:
-          $ref: '#/components/schemas/AlternativesAsExact'
-        type: array
-      - type: 'null'
-    ClientSideToolConfig:
+    AgentCompletionAlgoliaParams:
       properties:
-        name:
-          type: string
-          maxLength: 32
-          minLength: 3
-          title: name
-        type:
-          type: string
-          const: client_side
-          title: type
-          default: client_side
-        description:
-          type: string
-          maxLength: 200
-          minLength: 1
-          title: description
-        inputSchema:
-          $ref: '#/components/schemas/ClientToolsArgsSchema'
+        mcpServers:
+          additionalProperties:
+            additionalProperties:
+              additionalProperties:
+                type: string
+              type: object
+            type: object
+          type: object
+          title: mcpservers
+        searchParameters:
+          $ref: '#/components/schemas/SearchParametersOverridesMapNullable'
+      type: object
+      title: agentCompletionAlgoliaParams
+    AllowedDomainBulkInsert:
+      properties:
+        domains:
+          items:
+            type: string
+          type: array
+          title: domains
+          description: List of domain patterns to add.
       type: object
       required:
-      - type
-      - name
-      - description
-      - inputSchema
-      title: clientSideToolConfig
-    AzureOpenAIProviderInput:
+      - domains
+      title: allowedDomainBulkInsert
+      description: Request body for bulk insert.
+    TextParam:
+      properties:
+        exposed:
+          type: boolean
+          title: exposed
+        default:
+          oneOf:
+          - type: string
+          - type: 'null'
+          title: default
+      type: object
+      required:
+      - exposed
+      title: textParam
+      description: A text search parameter with exposure control.
+    DistinctUnion:
+      oneOf:
+      - type: boolean
+      - type: integer
+      - type: 'null'
+    ProviderName:
+      type: string
+      enum:
+      - openai
+      - azure_openai
+      - google_genai
+      - deepseek
+      - openai_compatible
+      - anthropic
+      title: providerName
+    AnthropicProviderInput:
       properties:
         apiKey:
           type: string
           title: apikey
-        azureEndpoint:
-          type: string
-          maxLength: 2083
-          minLength: 1
-          title: azureendpoint
-        azureDeployment:
-          type: string
-          minLength: 1
-          title: azuredeployment
-          description: Azure model deployment name is required.
-        apiVersion:
+        baseUrl:
           oneOf:
           - type: string
+            maxLength: 2083
+            minLength: 1
           - type: 'null'
-          title: apiversion
-          default: 2024-12-01-preview
+          title: baseurl
       type: object
       required:
       - apiKey
-      - azureEndpoint
-      - azureDeployment
-      title: azureOpenAIProviderInput
-      description: Azure OpenAI-specific provider input.
+      title: anthropicProviderInput
+      description: Anthropic-specific provider input.
+  responses:
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    IndexNotFound:
+      description: Index not found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
   parameters:
     Parameters:
       name: parameters
@@ -4372,31 +4323,6 @@ components:
       schema:
         type: string
         example: /keys
-  responses:
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    BadRequest:
-      description: Bad request or request arguments.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
   securitySchemes:
     appId:
       type: apiKey
@@ -4407,8 +4333,7 @@ components:
       type: apiKey
       in: header
       name: x-algolia-api-key
-      description: 'Your Algolia API key with the necessary permissions to make the
-        request.
+      description: 'Your Algolia API key with the necessary permissions to make the request.
 
         Permissions are controlled through access control lists (ACL) and access restrictions.
 
