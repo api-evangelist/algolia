@@ -156,3 +156,16 @@ related_agent_surfaces:
   note: 'Distinct from the MCP servers: Agent Studio is Algolia''s own agent platform, and it can itself
     CONSUME third-party MCP tools (https://www.algolia.com/doc/guides/algolia-ai/agent-studio/how-to/tools/mcp-tools).
     Algolia is therefore both an MCP server and an MCP client.'
+rfc9728:
+  endpoint: https://mcp.algolia.com/mcp
+  metadata_url: https://mcp.algolia.com/.well-known/oauth-protected-resource
+  discovered_via: WWW-Authenticate resource_metadata on an anonymous POST initialize
+  fetched: '2026-09-25'
+  http_status: 200
+  content_type: application/json
+  document:
+    resource: https://mcp.algolia.com/mcp
+    authorization_servers:
+    - https://dashboard.algolia.com
+    scopes_supported:
+    - public
