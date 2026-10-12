@@ -1,0 +1,77 @@
+arazzo: 1.0.1
+info:
+  title: Algolia BigCommerce product index sync
+  summary: Index a BigCommerce catalog product as an Algolia record
+  description: Index a BigCommerce catalog product as an Algolia record Reads the product from bigcommerce and upserts it as a record in an Algolia index keyed by the product id (partialUpdateObject with
+    createIfNotExists). Recreated from the integration Algolia documents on its own docs host, linked in x-integration.
+  version: 1.0.0
+sourceDescriptions:
+- name: bigcommerceProducts
+  url: https://raw.githubusercontent.com/api-evangelist/bigcommerce/refs/heads/main/openapi/bigcommerce-products-api-openapi.yml
+  type: openapi
+- name: algoliaSearch
+  url: https://raw.githubusercontent.com/api-evangelist/algolia/refs/heads/main/openapi/algolia-search-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: bigcommerce-product-index-sync
+  summary: Index a BigCommerce catalog product as an Algolia record
+  description: Index a BigCommerce catalog product as an Algolia record.
+  inputs:
+    type: object
+    properties:
+      productId:
+        type: integer
+      indexName:
+        type: string
+        description: Algolia index that holds the product records
+  steps:
+  - stepId: get-product
+    description: Read the product from bigcommerce.
+    operationId: $sourceDescriptions.bigcommerceProducts.getProduct
+    parameters:
+    - name: product_id
+      in: path
+      value: $inputs.productId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      productId: $response.body#/data/id
+      name: $response.body#/data/name
+      sku: $response.body#/data/sku
+      price: $response.body#/data/price
+  - stepId: upsert-record
+    description: Upsert the product as an Algolia record, creating it when absent.
+    operationId: $sourceDescriptions.algoliaSearch.partialUpdateObject
+    parameters:
+    - name: indexName
+      in: path
+      value: $inputs.indexName
+    - name: objectID
+      in: path
+      value: $steps.get-product.outputs.productId
+    - name: createIfNotExists
+      in: query
+      value: true
+    requestBody:
+      contentType: application/json
+      payload:
+        name: $steps.get-product.outputs.name
+        sku: $steps.get-product.outputs.sku
+        price: $steps.get-product.outputs.price
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      taskID: $response.body#/taskID
+  outputs:
+    taskID: $steps.upsert-record.outputs.taskID
+x-integration:
+  partner: bigcommerce
+  edge_evidence: https://www.algolia.com/doc/integration/bigcommerce/get-started/
+  edge_type: claimed
+  method: generated
+  generated: '2026-10-12'
+  generator: claude-opus-5-5 enrichment local-v5
+  guessed_steps:
+  - step: upsert-record
+    cause: provider-contract
+    why: the record body is free-form in partialUpdateObject; the attribute set is a minimal choice, not one the contract settles.

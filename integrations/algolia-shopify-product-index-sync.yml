@@ -1,0 +1,77 @@
+arazzo: 1.0.1
+info:
+  title: Algolia Shopify product index sync
+  summary: Index a Shopify product as an Algolia record
+  description: Index a Shopify product as an Algolia record Reads the product from shopify and upserts it as a record in an Algolia index keyed by the product id (partialUpdateObject with createIfNotExists).
+    Recreated from the integration Algolia documents on its own docs host, linked in x-integration.
+  version: 1.0.0
+sourceDescriptions:
+- name: shopifyProducts
+  url: https://raw.githubusercontent.com/api-evangelist/shopify/refs/heads/main/openapi/shopify-products-api-openapi.yml
+  type: openapi
+- name: algoliaSearch
+  url: https://raw.githubusercontent.com/api-evangelist/algolia/refs/heads/main/openapi/algolia-search-api-openapi.yml
+  type: openapi
+workflows:
+- workflowId: shopify-product-index-sync
+  summary: Index a Shopify product as an Algolia record
+  description: Index a Shopify product as an Algolia record.
+  inputs:
+    type: object
+    properties:
+      productId:
+        type: string
+      indexName:
+        type: string
+        description: Algolia index that holds the product records
+  steps:
+  - stepId: get-product
+    description: Read the product from shopify.
+    operationId: $sourceDescriptions.shopifyProducts.getProduct
+    parameters:
+    - name: product_id
+      in: path
+      value: $inputs.productId
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      productId: $response.body#/product/id
+      title: $response.body#/product/title
+      vendor: $response.body#/product/vendor
+      productType: $response.body#/product/product_type
+  - stepId: upsert-record
+    description: Upsert the product as an Algolia record, creating it when absent.
+    operationId: $sourceDescriptions.algoliaSearch.partialUpdateObject
+    parameters:
+    - name: indexName
+      in: path
+      value: $inputs.indexName
+    - name: objectID
+      in: path
+      value: $steps.get-product.outputs.productId
+    - name: createIfNotExists
+      in: query
+      value: true
+    requestBody:
+      contentType: application/json
+      payload:
+        title: $steps.get-product.outputs.title
+        vendor: $steps.get-product.outputs.vendor
+        product_type: $steps.get-product.outputs.productType
+    successCriteria:
+    - condition: $statusCode == 200
+    outputs:
+      taskID: $response.body#/taskID
+  outputs:
+    taskID: $steps.upsert-record.outputs.taskID
+x-integration:
+  partner: shopify
+  edge_evidence: https://www.algolia.com/doc/integration/shopify/getting-started/quick-start/
+  edge_type: claimed
+  method: generated
+  generated: '2026-10-12'
+  generator: claude-opus-5-5 enrichment local-v5
+  guessed_steps:
+  - step: upsert-record
+    cause: provider-contract
+    why: partialUpdateObject accepts a free-form record body (additionalProperties); the attribute set Algolia's own Shopify app indexes is not in the contract, so the record fields here are a minimal choice.

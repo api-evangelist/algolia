@@ -1,0 +1,421 @@
+generated: '2026-10-12'
+method: searched
+source:
+- https://zapier.com/apps/algolia/integrations
+- https://n8n.io/integrations/algolia/
+- https://composio.dev/toolkits/algolia
+checked:
+- https://apps.shopify.com/algolia (404)
+- https://composio.dev/toolkits/algolia
+- https://monid.ai/tools/algolia
+- https://n8n.io/integrations/algolia/
+- https://www.algolia.com/developers/integrations
+- https://www.algolia.com/doc/integration/bigcommerce/get-started/
+- https://www.algolia.com/doc/integration/commercetools/get-started/
+- https://www.algolia.com/doc/integration/magento-2/getting-started/quick-start/
+- https://www.algolia.com/doc/integration/salesforce-commerce-cloud-b2c/getting-started/introduction/
+- https://www.algolia.com/doc/integration/shopify/getting-started/quick-start/
+- https://www.algolia.com/integrations (403 to curl)
+- https://zapier.com/apps/algolia/integrations
+summary: null
+marketplace_apps:
+- marketplace: zapier
+  channel: ipaas-listing
+  app: algolia
+  url: https://zapier.com/apps/algolia/integrations
+  external_url: https://www.algolia.com/
+  partner_tier: BRONZE
+  triggers:
+  - key: browse_records
+    label: Browse Records
+  - key: get_recommend_rule
+    label: Get Recommend Rule
+  actions:
+  - key: add_or_replace_record
+    label: Add or Replace Record
+  - key: batch_indexing
+    label: Batch Indexing
+  - key: batch_save_query_rules
+    label: Batch Save Query Rules
+  - key: batch_save_synonyms
+    label: Batch Save Synonyms
+  - key: check_task_status
+    label: Check Task Status
+  - key: clear_index
+    label: Clear Index (Delete All Records)
+  - key: clear_synonyms
+    label: Clear All Synonyms
+  - key: copy_or_move_index
+    label: Copy or Move Index
+  - key: delete_by_filter
+    label: Delete Records by Query
+  - key: delete_index
+    label: Delete Index
+  - key: delete_query_rule
+    label: Delete Query Rule
+  - key: delete_record
+    label: Delete Record
+  - key: delete_synonym
+    label: Delete Synonym
+  - key: multiple_batch_indexing
+    label: Batch Multiple Indices
+  - key: partial_update_record
+    label: Partial Update Record
+  - key: save_record
+    label: Save Record (Auto Object ID)
+  - key: save_synonym
+    label: Save Synonym
+  - key: update_index_settings
+    label: Update Index Settings
+  searches:
+  - key: find_query_rule
+    label: Find Query Rule
+  - key: find_record
+    label: Find Record
+  - key: find_synonym
+    label: Find Synonym
+  - key: get_index_settings
+    label: Get Index Settings
+  - key: get_objects_batch
+    label: Get Records (Batch)
+  - key: get_recommendations
+    label: Get Recommendations
+  - key: list_indices
+    label: List Indices
+  - key: search_facet_values
+    label: Search for Facet Values
+  - key: search_index
+    label: Search Index
+  - key: search_multiple_indices
+    label: Search Multiple Indices
+  - key: search_query_rules
+    label: Search Query Rules
+  - key: search_recommend_rules
+    label: Search Recommend Rules
+  - key: search_synonyms
+    label: Search Synonyms
+- marketplace: n8n
+  channel: open-source-node
+  app: algolia
+  url: https://n8n.io/integrations/algolia/
+  identity: title
+  pair_pages: 0
+  pairs: []
+- marketplace: composio
+  channel: agent-gateway
+  app: algolia
+  url: https://composio.dev/toolkits/algolia
+  identity: action-prefix
+  actions:
+  - key: ALGOLIA_ADD_AB_TEST
+  - key: ALGOLIA_ADD_OR_REPLACE_RECORD
+  - key: ALGOLIA_ADD_RECORD
+  - key: ALGOLIA_BROWSE_INDEX
+  - key: ALGOLIA_CLEAR_OBJECTS
+  - key: ALGOLIA_CLEAR_RULES
+  - key: ALGOLIA_CLEAR_SYNONYMS
+  - key: ALGOLIA_CLICKED_OBJECT_IDS
+  - key: ALGOLIA_CLICKED_OBJECT_IDS_AFTER_SEARCH
+  - key: ALGOLIA_CONVERTED_OBJECT_IDS
+  - key: ALGOLIA_COPY_INDEX
+  - key: ALGOLIA_CREATE_API_KEY
+  - key: ALGOLIA_CREATE_AUTHENTICATION
+  - key: ALGOLIA_CREATE_DESTINATION
+  - key: ALGOLIA_CREATE_INGESTION_TASK
+  - key: ALGOLIA_CREATE_OR_UPDATE_RECOMMEND_RULES
+  - key: ALGOLIA_CREATE_QS_CONFIG
+  - key: ALGOLIA_CREATE_SOURCE
+  - key: ALGOLIA_CREATE_TRANSFORMATION
+  - key: ALGOLIA_DELETE_AB_TEST
+  - key: ALGOLIA_DELETE_API_KEY
+  - key: ALGOLIA_DELETE_AUTHENTICATION
+  - key: ALGOLIA_DELETE_CONFIG
+  - key: ALGOLIA_DELETE_DESTINATION
+  - key: ALGOLIA_DELETE_INDEX
+  - key: ALGOLIA_DELETE_OBJECTS
+  - key: ALGOLIA_DELETE_RECOMMEND_RULE
+  - key: ALGOLIA_DELETE_RECORDS_BY_FILTER
+  - key: ALGOLIA_DELETE_RULE
+  - key: ALGOLIA_DELETE_SOURCE
+  - key: ALGOLIA_DELETE_SYNONYM
+  - key: ALGOLIA_DELETE_TRANSFORMATION
+  - key: ALGOLIA_DELETE_USER_PROFILE
+  - key: ALGOLIA_DELETE_USER_TOKEN
+  - key: ALGOLIA_EXECUTE_BATCH_ON_MULTIPLE_INDICES
+  - key: ALGOLIA_EXPORT_RULES
+  - key: ALGOLIA_FIND_OBJECT
+  - key: ALGOLIA_GET_AB_TEST
+  - key: ALGOLIA_GET_ADD_TO_CART_RATE
+  - key: ALGOLIA_GET_API_KEY
+  - key: ALGOLIA_GET_APP_TASK
+  - key: ALGOLIA_GET_AUTHENTICATION
+  - key: ALGOLIA_GET_AVERAGE_CLICK_POSITION
+  - key: ALGOLIA_GET_CLICK_POSITIONS
+  - key: ALGOLIA_GET_CLICK_THROUGH_RATE
+  - key: ALGOLIA_GET_CONFIG
+  - key: ALGOLIA_GET_CONFIG2
+  - key: ALGOLIA_GET_CONVERSION_RATE
+  - key: ALGOLIA_GET_DESTINATION
+  - key: ALGOLIA_GET_DICTIONARY_LANGUAGES
+  - key: ALGOLIA_GET_DICTIONARY_SETTINGS
+  - key: ALGOLIA_GET_LOGS
+  - key: ALGOLIA_GET_NO_CLICK_RATE
+  - key: ALGOLIA_GET_NO_RESULTS_RATE
+  - key: ALGOLIA_GET_NO_RESULTS_SEARCHES
+  - key: ALGOLIA_GET_OBJECTS
+  - key: ALGOLIA_GET_OBJECT_POSITION
+  - key: ALGOLIA_GET_PURCHASE_RATE
+  - key: ALGOLIA_GET_RECOMMEND_RULE
+  - key: ALGOLIA_GET_RECOMMEND_TASK_STATUS
+  - key: ALGOLIA_GET_RECORD
+  - key: ALGOLIA_GET_REVENUE
+  - key: ALGOLIA_GET_RULE
+  - key: ALGOLIA_GET_SEARCHES_COUNT
+  - key: ALGOLIA_GET_SEARCHES_NO_CLICKS
+  - key: ALGOLIA_GET_SETTINGS
+  - key: ALGOLIA_GET_SOURCE
+  - key: ALGOLIA_GET_SYNONYM
+  - key: ALGOLIA_GET_TASK_STATUS
+  - key: ALGOLIA_GET_TOP_COUNTRIES
+  - key: ALGOLIA_GET_TOP_FILTERS_NO_RESULTS
+  - key: ALGOLIA_GET_TOP_FILTER_ATTRIBUTES
+  - key: ALGOLIA_GET_TOP_FILTER_FOR_ATTRIBUTE
+  - key: ALGOLIA_GET_TOP_HITS
+  - key: ALGOLIA_GET_TOP_SEARCHES
+  - key: ALGOLIA_GET_TRANSFORMATION
+  - key: ALGOLIA_GET_USAGE
+  - key: ALGOLIA_GET_USAGE_FOR_INDEX
+  - key: ALGOLIA_GET_USERS
+  - key: ALGOLIA_GET_USERS_COUNT
+  - key: ALGOLIA_INDEX_EXISTS
+  - key: ALGOLIA_INIT_INSIGHTS
+  - key: ALGOLIA_LIST_AB_TESTS
+  - key: ALGOLIA_LIST_API_KEYS
+  - key: ALGOLIA_LIST_AUTHENTICATIONS
+  - key: ALGOLIA_LIST_DESTINATIONS
+  - key: ALGOLIA_LIST_INDICES
+  - key: ALGOLIA_LIST_INGESTION_TASKS
+  - key: ALGOLIA_LIST_QS_CONFIGS
+  - key: ALGOLIA_LIST_RUNS
+  - key: ALGOLIA_LIST_SOURCES
+  - key: ALGOLIA_LIST_TRANSFORMATIONS
+  - key: ALGOLIA_PARTIAL_UPDATE_OBJECTS
+  - key: ALGOLIA_PUSH_TASK
+  - key: ALGOLIA_REPLACE_ALL_RULES
+  - key: ALGOLIA_REPLACE_TASK
+  - key: ALGOLIA_RESTORE_API_KEY
+  - key: ALGOLIA_SAVE_RULE
+  - key: ALGOLIA_SAVE_SYNONYM
+  - key: ALGOLIA_SAVE_SYNONYMS
+  - key: ALGOLIA_SEARCH_AUTHENTICATIONS
+  - key: ALGOLIA_SEARCH_DESTINATIONS
+  - key: ALGOLIA_SEARCH_DICTIONARY_ENTRIES
+  - key: ALGOLIA_SEARCH_FACET_VALUES
+  - key: ALGOLIA_SEARCH_INDEX
+  - key: ALGOLIA_SEARCH_MULTIPLE_INDICES
+  - key: ALGOLIA_SEARCH_RECOMMEND_RULES
+  - key: ALGOLIA_SEARCH_SOURCES
+  - key: ALGOLIA_SEARCH_SYNONYMS
+  - key: ALGOLIA_SEARCH_TRANSFORMATIONS
+  - key: ALGOLIA_SET_DICTIONARY_SETTINGS
+  - key: ALGOLIA_SET_PERSONALIZATION_STRATEGY
+  - key: ALGOLIA_SET_SETTINGS
+  - key: ALGOLIA_STOP_AB_TEST
+  - key: ALGOLIA_TRY_TRANSFORMATION
+  - key: ALGOLIA_TRY_TRANSFORMATION_BEFORE_UPDATE
+  - key: ALGOLIA_UPDATE_API_KEY
+  - key: ALGOLIA_UPDATE_AUTHENTICATION
+  - key: ALGOLIA_UPDATE_CONFIG
+  - key: ALGOLIA_UPDATE_DESTINATION
+  - key: ALGOLIA_UPDATE_DICTIONARY_ENTRIES
+  - key: ALGOLIA_UPDATE_RECORD_PARTIALLY
+  - key: ALGOLIA_UPDATE_SOURCE
+  - key: ALGOLIA_UPDATE_TASK
+  - key: ALGOLIA_UPDATE_TRANSFORMATION
+  - key: ALGOLIA_VALIDATE_SOURCE
+  - key: ALGOLIA_VALIDATE_SOURCE_BEFORE_UPDATE
+edges:
+- partner_name: Shopify
+  partner: shopify
+  partner_match: name-exact
+  partner_candidate: null
+  type: claimed
+  channel: provider-docs
+  evidence: https://www.algolia.com/doc/integration/shopify/getting-started/quick-start/
+  direction: unknown
+  category: eCommerce
+  note: Algolia documents an installation/integration guide for this platform on its own docs host (HTTP 200, 2026-10-12).
+- partner_name: Salesforce B2C Commerce
+  partner: salesforce-commerce-cloud
+  partner_match: null
+  partner_candidate: null
+  type: claimed
+  channel: provider-docs
+  evidence: https://www.algolia.com/doc/integration/salesforce-commerce-cloud-b2c/getting-started/introduction/
+  direction: unknown
+  category: eCommerce
+  note: Algolia documents an installation/integration guide for this platform on its own docs host (HTTP 200, 2026-10-12).
+- partner_name: Adobe Commerce / Magento Open Source
+  partner: adobe-commerce
+  partner_match: null
+  partner_candidate: null
+  type: claimed
+  channel: provider-docs
+  evidence: https://www.algolia.com/doc/integration/magento-2/getting-started/quick-start/
+  direction: unknown
+  category: eCommerce
+  note: Algolia documents an installation/integration guide for this platform on its own docs host (HTTP 200, 2026-10-12).
+- partner_name: BigCommerce
+  partner: bigcommerce
+  partner_match: name-exact
+  partner_candidate: null
+  type: claimed
+  channel: provider-docs
+  evidence: https://www.algolia.com/doc/integration/bigcommerce/get-started/
+  direction: unknown
+  category: eCommerce
+  note: Algolia documents an installation/integration guide for this platform on its own docs host (HTTP 200, 2026-10-12).
+- partner_name: commercetools
+  partner: commercetools
+  partner_match: name-exact
+  partner_candidate: null
+  type: claimed
+  channel: provider-docs
+  evidence: https://www.algolia.com/doc/integration/commercetools/get-started/
+  direction: unknown
+  category: eCommerce
+  note: Algolia documents an installation/integration guide for this platform on its own docs host (HTTP 200, 2026-10-12).
+- partner_name: Gmail
+  partner: gmail
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/gmail
+  direction: third-party
+  category: Email
+  partner_url: https://mail.google.com/
+- partner_name: EZICHEQ
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/ezicheq
+  direction: third-party
+  category: Productivity
+  partner_url: https://ezicheq.com/
+- partner_name: Slack
+  partner: slack
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/slack
+  direction: third-party
+  category: Team Chat
+  partner_url: https://slack.com/
+- partner_name: Asana
+  partner: asana
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/asana
+  direction: third-party
+  category: Project Management
+  partner_url: http://asana.com/
+- partner_name: Google Ads
+  partner: google-ads
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/google-ads
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://ads.google.com/
+- partner_name: Twilio
+  partner: twilio
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/twilio
+  direction: third-party
+  category: Phone & SMS
+  partner_url: https://www.twilio.com/
+- partner_name: Veeqo
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/veeqo
+  direction: third-party
+  category: eCommerce
+  partner_url: http://veeqo.com/
+- partner_name: Figma
+  partner: figma
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/figma
+  direction: third-party
+  category: Images & Design
+  partner_url: https://www.figma.com/
+- partner_name: Split CSV
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/split-csv
+  direction: third-party
+  category: Productivity
+  partner_url: https://www.splitcsv.com/
+templates: []
+skips:
+- label: Slack
+  cause: catalog
+  why: Zapier listing names only the pairing, no template; Algolia's side is index/record writes and the partner
+    trigger is a Zapier polling trigger with no single catalog operation to bind, so no grounded workflow was authored
+    this run.
+- label: Asana
+  cause: catalog
+  why: Zapier listing names only the pairing, no template; Algolia's side is index/record writes and the partner
+    trigger is a Zapier polling trigger with no single catalog operation to bind, so no grounded workflow was authored
+    this run.
+- label: Google Ads
+  cause: catalog
+  why: Zapier listing names only the pairing, no template; Algolia's side is index/record writes and the partner
+    trigger is a Zapier polling trigger with no single catalog operation to bind, so no grounded workflow was authored
+    this run.
+- label: Twilio
+  cause: catalog
+  why: Zapier listing names only the pairing, no template; Algolia's side is index/record writes and the partner
+    trigger is a Zapier polling trigger with no single catalog operation to bind, so no grounded workflow was authored
+    this run.
+- label: Figma
+  cause: catalog
+  why: Zapier listing names only the pairing, no template; Algolia's side is index/record writes and the partner
+    trigger is a Zapier polling trigger with no single catalog operation to bind, so no grounded workflow was authored
+    this run.
+- label: Salesforce B2C Commerce
+  cause: catalog
+  why: the integration is an SFCC cartridge (job-based export); the catalog salesforce-commerce-cloud spec was not
+    checked for a product-read operation this run.
+- label: Adobe Commerce / Magento Open Source
+  cause: catalog
+  why: the integration is a Magento extension; no product-read operation was bound from the catalog adobe-commerce
+    spec this run.
