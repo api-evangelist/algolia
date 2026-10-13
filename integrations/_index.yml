@@ -172,7 +172,7 @@
   channel: distribution
   evidence: https://aws.amazon.com/marketplace/seller-profile?id=8ad2c429-a002-4795-8a82-f4de093e49d0
   source: edge
-  relationship: platform-app
+  relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
 - slug: algolia-microsoft-azure-marketplace
@@ -184,6 +184,6 @@
   channel: distribution
   evidence: https://azuremarketplace.microsoft.com/en-us/marketplace/apps?search=Algolia
   source: edge
-  relationship: platform-app
+  relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
