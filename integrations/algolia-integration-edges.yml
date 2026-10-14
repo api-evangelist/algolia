@@ -14,6 +14,7 @@ checked:
 - https://hightouch.com/docs/destinations/algolia
 - https://monid.ai/tools/algolia
 - https://n8n.io/integrations/algolia/
+- https://registry.modelcontextprotocol.io/v0/servers
 - https://www.algolia.com/developers/integrations
 - https://www.algolia.com/doc/integration/bigcommerce/get-started/
 - https://www.algolia.com/doc/integration/commercetools/get-started/
@@ -509,6 +510,37 @@ edges:
       - update
       - upsert
   detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
+- partner_name: MCP Registry
+  partner: mcp
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://registry.modelcontextprotocol.io/v0/servers?search=io.github.algolia
+  contract_reference:
+    register: registry.modelcontextprotocol.io
+    spec_file: null
+    role: mcp-server-listing
+    registered_name: io.github.algolia/algolia-productivity
+    register_id: io.github.algolia/algolia-productivity
+    detected_by: sweep-agent-tools.py
+    detected: '2026-10-14'
+  mcp_registry:
+    servers:
+    - io.github.algolia/algolia-productivity
+    hosted_remote: 1
+    local_package: 0
+    transports:
+      streamable-http: 1
+    auth_declared: 0
+    catalog_declared: false
+    namespace_domains:
+    - algolia.com
+  matched_by:
+  - remote-domain
+  detected_by: sweep-agent-tools.py
   first_seen: '2026-10-14'
 templates: []
 skips:
