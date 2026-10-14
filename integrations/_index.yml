@@ -187,16 +187,28 @@
   relationship: distribution-channel
   status: not-a-workflow
   arazzo: null
+- slug: algolia-github-marketplace-actions
+  label: GitHub Marketplace (actions)
+  partner: github-actions
+  partner_name: GitHub Marketplace (actions)
+  type: marketplace
+  marketplace: github-actions
+  channel: partner-built
+  evidence: https://github.com/marketplace/actions/algolia-crawler-automatic-crawl
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
 - slug: algolia-twilio-segment
   label: Twilio Segment
   partner: segment
   partner_name: Twilio Segment
-  type: coverage
-  marketplace: coverage
+  type: marketplace
+  marketplace: segment-partner-destinations
   channel: partner-built
   evidence: https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-algolia-insights
   source: edge
-  relationship: connector-coverage
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
 - slug: algolia-mparticle
@@ -221,17 +233,5 @@
   evidence: https://hightouch.com/docs/destinations/algolia
   source: edge
   relationship: connector-coverage
-  status: not-a-workflow
-  arazzo: null
-- slug: algolia-github-marketplace-actions
-  label: GitHub Marketplace (actions)
-  partner: github-actions
-  partner_name: GitHub Marketplace (actions)
-  type: marketplace
-  marketplace: github-actions
-  channel: partner-built
-  evidence: https://github.com/marketplace/actions/algolia-crawler-automatic-crawl
-  source: edge
-  relationship: platform-app
   status: not-a-workflow
   arazzo: null
