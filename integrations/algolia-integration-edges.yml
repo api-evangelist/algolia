@@ -9,6 +9,8 @@ checked:
 - https://aws.amazon.com/marketplace/
 - https://azuremarketplace.microsoft.com/
 - https://composio.dev/toolkits/algolia
+- https://docs.mparticle.com/integrations/algolia/event/
+- https://hightouch.com/docs/destinations/algolia
 - https://monid.ai/tools/algolia
 - https://n8n.io/integrations/algolia/
 - https://www.algolia.com/developers/integrations
@@ -18,6 +20,7 @@ checked:
 - https://www.algolia.com/doc/integration/salesforce-commerce-cloud-b2c/getting-started/introduction/
 - https://www.algolia.com/doc/integration/shopify/getting-started/quick-start/
 - https://www.algolia.com/integrations (403 to curl)
+- https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-algolia-insights
 - https://zapier.com/apps/algolia/integrations
 summary: null
 marketplace_apps:
@@ -416,6 +419,78 @@ edges:
   seller_name: Algolia
   detected_by: sweep-cloud-marketplaces.py
   detected: '2026-10-13'
+- partner_name: Twilio Segment
+  partner: segment
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-algolia-insights
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - actions-algolia-insights
+      status: PUBLIC
+      partner_owned: true
+      connection_modes:
+      - cloud:server
+      - cloud:web
+      accepted_methods:
+      - Alias
+      - Group
+      - Identify
+      - Page
+      - Track
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
+- partner_name: mParticle
+  partner: mparticle
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://docs.mparticle.com/integrations/algolia/event/
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - algolia
+      integration_types:
+      - event
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
+- partner_name: Hightouch
+  partner: hightouch
+  partner_match: aggregator
+  marketplace: coverage
+  channel: partner-built
+  direction: partner-built
+  type: coverage
+  relationship: connector-coverage
+  evidence: https://hightouch.com/docs/destinations/algolia
+  coverage_role:
+  - destination
+  cdp_signals:
+    destination:
+      catalog_entries:
+      - algolia
+      status: released
+      sync_types:
+      - Index records
+      - Insight events
+      sync_modes:
+      - insert
+      - update
+      - upsert
+  detected_by: sweep-cdp.py
+  first_seen: '2026-10-14'
 templates: []
 skips:
 - label: Slack
