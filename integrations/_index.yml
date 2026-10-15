@@ -290,7 +290,7 @@
     app_slug: algolia
     beta: false
     builder: unknown (not in the directory record)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: algolia-n8n
   label: n8n
@@ -317,7 +317,7 @@
     published: '2026-03-09T21:47:59.597Z'
     matched_on: publisher-email
     builder: provider (package published from the provider's own domain)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: algolia-pipedream
   label: Pipedream
@@ -343,7 +343,7 @@
     actions: true
     sources: false
     builder: Pipedream repo (component)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: algolia-sanity-own
   label: Sanity (own)
