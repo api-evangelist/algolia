@@ -24,6 +24,7 @@ checked:
 - https://www.algolia.com/integrations (403 to curl)
 - https://www.twilio.com/docs/segment/connections/destinations/catalog/actions-algolia-insights
 - https://zapier.com/apps/algolia/integrations
+- sanity/integrations/sanity-integration-edges.yml
 - stripe/integrations/stripe-integration-edges.yml
 summary: null
 marketplace_apps:
@@ -560,6 +561,23 @@ edges:
   detected: '2026-10-15'
   detected_by: mirror-platform-listings.py
   category: data_and_analytics, developer_tools
+- partner_name: Sanity (own)
+  partner: sanity
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.sanity.io/technology-partners/algolia
+  mirror_of: sanity/integrations/sanity-integration-edges.yml
+  apps:
+  - Algolia
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: Sanity technology partner
 templates: []
 skips:
 - label: Slack
