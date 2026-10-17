@@ -395,114 +395,6 @@ paths:
           description: No content.
 components:
   schemas:
-    ErrorBase:
-      description: Error.
-      type: object
-      x-keep-model: true
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    Configuration:
-      type: object
-      description: Query Suggestions configuration.
-      required:
-      - sourceIndices
-      properties:
-        sourceIndices:
-          type: array
-          description: Algolia indices from which to get the popular searches for query suggestions.
-          minItems: 1
-          items:
-            $ref: '#/components/schemas/SourceIndex'
-        languages:
-          $ref: '#/components/schemas/Languages'
-        exclude:
-          $ref: '#/components/schemas/Exclude'
-        enablePersonalization:
-          type: boolean
-          default: false
-          description: Whether to turn on personalized query suggestions.
-        allowSpecialCharacters:
-          type: boolean
-          default: false
-          description: Whether to include suggestions with special characters.
-    LogLevel:
-      title: level
-      type: string
-      description: 'Type of log entry.
-
-
-        - `SKIP`. A query is skipped because it doesn''t match the conditions for successful inclusion. For example, when a query doesn''t generate enough search results.
-
-        - `INFO`. An informative log entry.
-
-        - `ERROR`. The Query Suggestions process encountered an error.
-
-        '
-      enum:
-      - SKIP
-      - INFO
-      - ERROR
-    Facets:
-      title: facets
-      description: 'Facets to use as top categories with your suggestions.
-
-
-        If provided, Query Suggestions adds the top facet values to each suggestion.
-
-        '
-      default: null
-      oneOf:
-      - type: array
-        items:
-          $ref: '#/components/schemas/Facet'
-      - type: 'null'
-      example:
-      - attribute: category
-        amount: 3
-      - attribute: brand
-        amount: 2
-    AnalyticsTags:
-      title: analyticsTags
-      description: 'Analytics tags for filtering the popular searches.
-
-        For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
-
-        '
-      default: null
-      oneOf:
-      - type: array
-        items:
-          type: string
-      - type: 'null'
-    ConfigurationWithIndex:
-      type: object
-      description: Query Suggestions configuration.
-      required:
-      - indexName
-      - sourceIndices
-      allOf:
-      - type: object
-        additionalProperties: false
-        properties:
-          indexName:
-            $ref: '#/components/schemas/IndexName'
-      - $ref: '#/components/schemas/Configuration'
-    ConfigurationResponse:
-      type: object
-      description: API response for retrieving Query Suggestions configurations.
-      allOf:
-      - $ref: '#/components/schemas/AppID'
-      - $ref: '#/components/schemas/ConfigurationWithIndex'
-      required:
-      - appID
-      - allowSpecialCharacters
-      - enablePersonalization
-      - exclude
-      - languages
-      - sourceIndices
     External:
       description: 'Algolia indices with popular searches to use as query suggestions.
 
@@ -528,17 +420,61 @@ components:
         items:
           type: string
       - type: 'null'
-    AppID:
-      type: object
-      properties:
-        appID:
+    AnalyticsTags:
+      title: analyticsTags
+      description: 'Analytics tags for filtering the popular searches.
+
+        For more information, see [Segment your analytics data](https://www.algolia.com/doc/guides/search-analytics/guides/segments).
+
+        '
+      default: null
+      oneOf:
+      - type: array
+        items:
           type: string
-          description: Algolia application ID to which this Query Suggestions configuration belongs.
+      - type: 'null'
+    ConfigurationResponse:
+      type: object
+      description: API response for retrieving Query Suggestions configurations.
+      allOf:
+      - $ref: '#/components/schemas/AppID'
+      - $ref: '#/components/schemas/ConfigurationWithIndex'
+      required:
+      - appID
+      - allowSpecialCharacters
+      - enablePersonalization
+      - exclude
+      - languages
+      - sourceIndices
     IndexName:
       title: indexName
       type: string
       description: Name of the Query Suggestions index (case-sensitive).
       example: ALGOLIA_INDEX_NAME
+    Generate:
+      title: generate
+      description: 'Facets used for generating query suggestions from facet values.
+
+
+        For example, if you set `generate: ["color", "brand"]`, combinations from the facet values are added as query suggestions,
+
+        such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
+
+
+        You can include nested lists.
+
+        '
+      default: null
+      oneOf:
+      - type: array
+        items:
+          type: array
+          items:
+            type: string
+      - type: 'null'
+      example:
+      - - color
+        - brand
     Languages:
       title: languages
       description: 'Languages for deduplicating singular and plural suggestions.
@@ -565,15 +501,12 @@ components:
         amount:
           type: integer
           description: Number of suggestions.
-    BaseResponse:
+    AppID:
       type: object
       properties:
-        status:
-          type: integer
-          description: HTTP status code.
-        message:
+        appID:
           type: string
-          description: Details about the response, such as error messages.
+          description: Algolia application ID to which this Query Suggestions configuration belongs.
     Exclude:
       title: exclude
       description: Words or regular expressions to exclude from the suggestions.
@@ -583,6 +516,69 @@ components:
         items:
           type: string
       - type: 'null'
+    Configuration:
+      type: object
+      description: Query Suggestions configuration.
+      required:
+      - sourceIndices
+      properties:
+        sourceIndices:
+          type: array
+          description: Algolia indices from which to get the popular searches for query suggestions.
+          minItems: 1
+          items:
+            $ref: '#/components/schemas/SourceIndex'
+        languages:
+          $ref: '#/components/schemas/Languages'
+        exclude:
+          $ref: '#/components/schemas/Exclude'
+        enablePersonalization:
+          type: boolean
+          default: false
+          description: Whether to turn on personalized query suggestions.
+        allowSpecialCharacters:
+          type: boolean
+          default: false
+          description: Whether to include suggestions with special characters.
+    BaseResponse:
+      type: object
+      properties:
+        status:
+          type: integer
+          description: HTTP status code.
+        message:
+          type: string
+          description: Details about the response, such as error messages.
+    ConfigurationWithIndex:
+      type: object
+      description: Query Suggestions configuration.
+      required:
+      - indexName
+      - sourceIndices
+      allOf:
+      - type: object
+        additionalProperties: false
+        properties:
+          indexName:
+            $ref: '#/components/schemas/IndexName'
+      - $ref: '#/components/schemas/Configuration'
+    LogLevel:
+      title: level
+      type: string
+      description: 'Type of log entry.
+
+
+        - `SKIP`. A query is skipped because it doesn''t match the conditions for successful inclusion. For example, when a query doesn''t generate enough search results.
+
+        - `INFO`. An informative log entry.
+
+        - `ERROR`. The Query Suggestions process encountered an error.
+
+        '
+      enum:
+      - SKIP
+      - INFO
+      - ERROR
     SourceIndex:
       type: object
       description: Configuration of an Algolia index for Query Suggestions.
@@ -630,96 +626,47 @@ components:
           $ref: '#/components/schemas/Generate'
         external:
           $ref: '#/components/schemas/External'
-    Generate:
-      title: generate
-      description: 'Facets used for generating query suggestions from facet values.
+    Facets:
+      title: facets
+      description: 'Facets to use as top categories with your suggestions.
 
 
-        For example, if you set `generate: ["color", "brand"]`, combinations from the facet values are added as query suggestions,
-
-        such as "blue adidas", "red adidas", "blue nike", "red nike", etc.
-
-
-        You can include nested lists.
+        If provided, Query Suggestions adds the top facet values to each suggestion.
 
         '
       default: null
       oneOf:
       - type: array
         items:
-          type: array
-          items:
-            type: string
+          $ref: '#/components/schemas/Facet'
       - type: 'null'
       example:
-      - - color
-        - brand
-  parameters:
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, for example `1/newFeature`.
-      required: true
-      schema:
-        type: string
-        example: /keys
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
-    IndexName:
-      name: indexName
-      in: path
-      required: true
-      description: Query Suggestions index name.
-      schema:
-        $ref: '#/components/schemas/IndexName'
+      - attribute: category
+        amount: 3
+      - attribute: brand
+        amount: 2
+    ErrorBase:
+      description: Error.
+      type: object
+      x-keep-model: true
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
   responses:
+    MethodNotAllowed:
+      description: Method not allowed with this API key.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
     BadRequest:
       description: Bad request or request arguments.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
-    UnprocessableEntity:
-      description: Unprocessable Entity.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BaseResponse'
-          examples:
-            UnprocessableEntity:
-              summary: Configuration already exists
-              value:
-                status: 422
-                message: 'Configuration already exists for index: test-qs'
-    InternalError-2:
-      description: Internal Server Error.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BaseResponse'
-          examples:
-            Error:
-              description: This error can happen if you use a non-existing `indexName` as a path parameter when trying to update or delete a Query Suggestions configuration.
-              value:
-                status: 500
-                message: Internal Server Error
-    NotFound:
-      description: Not Found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/BaseResponse'
-          examples:
-            NotFound:
-              summary: Index not found
-              value:
-                status: 404
-                message: Not Found
     Unauthorized:
       description: Unauthorized
       content:
@@ -750,14 +697,50 @@ components:
               value:
                 status: 401
                 message: The provided API key is missing the \"editSettings\" ACL.
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
+    InternalError-2:
+      description: Internal Server Error.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseResponse'
+          examples:
+            Error:
+              description: This error can happen if you use a non-existing `indexName` as a path parameter when trying to update or delete a Query Suggestions configuration.
+              value:
+                status: 500
+                message: Internal Server Error
+    UnprocessableEntity:
+      description: Unprocessable Entity.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseResponse'
+          examples:
+            UnprocessableEntity:
+              summary: Configuration already exists
+              value:
+                status: 422
+                message: 'Configuration already exists for index: test-qs'
+    IndexNotFound:
+      description: Index not found.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
-    MethodNotAllowed:
-      description: Method not allowed with this API key.
+    NotFound:
+      description: Not Found.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/BaseResponse'
+          examples:
+            NotFound:
+              summary: Index not found
+              value:
+                status: 404
+                message: Not Found
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
       content:
         application/json:
           schema:
@@ -794,18 +777,35 @@ components:
               value:
                 status: 400
                 message: Invalid body "every source index `minLetters` must be positive".
-    IndexNotFound:
-      description: Index not found.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
     InternalError:
       description: Internal error.
       content:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+  parameters:
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, for example `1/newFeature`.
+      required: true
+      schema:
+        type: string
+        example: /keys
+    IndexName:
+      name: indexName
+      in: path
+      required: true
+      description: Query Suggestions index name.
+      schema:
+        $ref: '#/components/schemas/IndexName'
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
   securitySchemes:
     appId:
       type: apiKey

@@ -335,46 +335,34 @@ paths:
         '204':
           description: No content.
 components:
-  headers:
-    x-ratelimit-limit:
-      description: Number of allowed requests per one minute.
-      example: 100
-      schema:
-        type: integer
-    x-ratelimit-reset:
-      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
-      example: 1710682486
-      schema:
-        type: integer
-    x-ratelimit-remaining:
-      description: Number of remaining requests in the current period.
-      example: 99
-      schema:
-        type: integer
-  parameters:
-    PathInPath:
-      name: path
-      in: path
-      description: Path of the endpoint, for example `1/newFeature`.
-      required: true
-      schema:
-        type: string
-        example: /keys
-    UserToken:
-      name: userToken
-      in: path
-      required: true
-      description: Unique identifier representing a user for which to fetch the personalization profile.
-      schema:
-        $ref: '#/components/schemas/userToken'
-    Parameters:
-      name: parameters
-      in: query
-      description: Query parameters to apply to the current query.
-      schema:
-        type: object
-        additionalProperties: true
   schemas:
+    eventsScoring:
+      type: object
+      additionalProperties: false
+      required:
+      - score
+      - eventName
+      - eventType
+      properties:
+        score:
+          $ref: '#/components/schemas/score'
+        eventName:
+          type: string
+          description: Event name.
+        eventType:
+          $ref: '#/components/schemas/EventType'
+    score:
+      type: integer
+      description: Event score.
+    ErrorBase:
+      description: Error.
+      type: object
+      x-keep-model: true
+      additionalProperties: true
+      properties:
+        message:
+          type: string
+          example: Invalid Application-Id or API-Key
     EventType:
       title: eventType
       type: string
@@ -383,9 +371,31 @@ components:
       - click
       - conversion
       - view
-    score:
-      type: integer
-      description: Event score.
+    facetsScoring:
+      type: object
+      additionalProperties: false
+      required:
+      - score
+      - facetName
+      properties:
+        score:
+          $ref: '#/components/schemas/score'
+        facetName:
+          type: string
+          description: Facet attribute name.
+    userToken:
+      type: string
+      description: 'Unique pseudonymous or anonymous user identifier.
+
+
+        This helps with analytics and click and conversion events.
+
+        For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
+
+        '
+      example: test-user-123
+      x-categories:
+      - Personalization
     personalizationStrategyParams:
       type: object
       additionalProperties: false
@@ -424,70 +434,25 @@ components:
             If set to 0, personalization has no impact on the search results.
 
             '
-    ErrorBase:
-      description: Error.
-      type: object
-      x-keep-model: true
-      additionalProperties: true
-      properties:
-        message:
-          type: string
-          example: Invalid Application-Id or API-Key
-    facetsScoring:
-      type: object
-      additionalProperties: false
-      required:
-      - score
-      - facetName
-      properties:
-        score:
-          $ref: '#/components/schemas/score'
-        facetName:
-          type: string
-          description: Facet attribute name.
-    eventsScoring:
-      type: object
-      additionalProperties: false
-      required:
-      - score
-      - eventName
-      - eventType
-      properties:
-        score:
-          $ref: '#/components/schemas/score'
-        eventName:
-          type: string
-          description: Event name.
-        eventType:
-          $ref: '#/components/schemas/EventType'
-    userToken:
-      type: string
-      description: 'Unique pseudonymous or anonymous user identifier.
-
-
-        This helps with analytics and click and conversion events.
-
-        For more information, see [user token](https://www.algolia.com/doc/guides/sending-events/concepts/usertoken).
-
-        '
-      example: test-user-123
-      x-categories:
-      - Personalization
+  headers:
+    x-ratelimit-reset:
+      description: Timestamp when the rate limit will reset, measured in seconds since the Unix epoch.
+      example: 1710682486
+      schema:
+        type: integer
+    x-ratelimit-limit:
+      description: Number of allowed requests per one minute.
+      example: 100
+      schema:
+        type: integer
+    x-ratelimit-remaining:
+      description: Number of remaining requests in the current period.
+      example: 99
+      schema:
+        type: integer
   responses:
     MethodNotAllowed:
       description: Method not allowed with this API key.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    BadRequest:
-      description: Bad request or request arguments.
-      content:
-        application/json:
-          schema:
-            $ref: '#/components/schemas/ErrorBase'
-    FeatureNotEnabled:
-      description: This feature is not enabled on your Algolia account.
       content:
         application/json:
           schema:
@@ -498,6 +463,41 @@ components:
         application/json:
           schema:
             $ref: '#/components/schemas/ErrorBase'
+    FeatureNotEnabled:
+      description: This feature is not enabled on your Algolia account.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+    BadRequest:
+      description: Bad request or request arguments.
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ErrorBase'
+  parameters:
+    Parameters:
+      name: parameters
+      in: query
+      description: Query parameters to apply to the current query.
+      schema:
+        type: object
+        additionalProperties: true
+    UserToken:
+      name: userToken
+      in: path
+      required: true
+      description: Unique identifier representing a user for which to fetch the personalization profile.
+      schema:
+        $ref: '#/components/schemas/userToken'
+    PathInPath:
+      name: path
+      in: path
+      description: Path of the endpoint, for example `1/newFeature`.
+      required: true
+      schema:
+        type: string
+        example: /keys
   securitySchemes:
     appId:
       type: apiKey
