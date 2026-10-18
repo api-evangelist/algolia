@@ -386,7 +386,7 @@
     - alpha
     in_cloud: true
     builder: unknown (community connector; contributor not in the record)
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
 - slug: algolia-fivetran
   label: Fivetran
@@ -412,5 +412,5 @@
     - connectors/applications/algolia
     vendor_link: https://www.algolia.com/
     builder: Fivetran
-  status: pending-generation
+  status: not-a-workflow
   arazzo: null
