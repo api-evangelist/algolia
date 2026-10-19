@@ -5,12 +5,14 @@ source:
 - https://n8n.io/integrations/algolia/
 - https://composio.dev/toolkits/algolia
 checked:
+- https://api.nuget.org/v3
 - https://apps.shopify.com/algolia (404)
 - https://aws.amazon.com/marketplace/
 - https://azuremarketplace.microsoft.com/
 - https://composio.dev/toolkits/algolia
 - https://connectors.airbyte.com/files/registries/v0/cloud_registry.json
 - https://connectors.airbyte.com/files/registries/v0/oss_registry.json
+- https://crates.io/api/v1
 - https://docs.mparticle.com/integrations/algolia/event/
 - https://fivetran.com/docs-sitemap.xml
 - https://fivetran.com/docs/connectors/partner-built-program
@@ -19,8 +21,13 @@ checked:
 - https://hightouch.com/docs/destinations/algolia
 - https://monid.ai/tools/algolia
 - https://n8n.io/integrations/algolia/
+- https://proxy.golang.org
+- https://pypi.org/pypi
 - https://registry.modelcontextprotocol.io/v0/servers
+- https://registry.npmjs.org
 - https://registry.npmjs.org/-/v1/search?text=keywords:n8n-community-node-package
+- https://repo1.maven.org/maven2
+- https://rubygems.org/api/v1
 - https://www.algolia.com/developers/integrations
 - https://www.algolia.com/doc/integration/bigcommerce/get-started/
 - https://www.algolia.com/doc/integration/commercetools/get-started/
@@ -718,6 +725,309 @@ edges:
     vendor_link: https://www.algolia.com/
     builder: Fivetran
   detected_by: sweep-data-integration.py
+  first_seen: '2026-10-18'
+- partner_name: Go module proxy
+  partner: null
+  partner_match: null
+  type: register
+  direction: provider-built
+  category: official SDK (Go)
+  evidence: https://pkg.go.dev/github.com/algolia/algoliasearch-client-go/v4
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Go module proxy (public registry JSON)
+    spec_file: null
+    language: Go
+    packages:
+    - name: github.com/algolia/algoliasearch-client-go/v4
+      version: v4.48.0
+      released: '2026-10-12'
+      released_field: Time
+      lapsed: false
+      page: https://pkg.go.dev/github.com/algolia/algoliasearch-client-go/v4
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
+- partner_name: Maven Central
+  partner: maven-central
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Java/JVM)
+  evidence: https://central.sonatype.com/artifact/com.algolia/algoliasearch
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Maven Central (public registry JSON)
+    spec_file: null
+    language: Java/JVM
+    packages:
+    - name: com.algolia:algoliasearch
+      version: 4.45.0
+      released: '2026-10-12'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.algolia/algoliasearch
+      repo_leg: github-org:algolia
+      publisher_leg: groupId:algolia.com
+      matched_by: domain
+    - name: com.algolia:algoliasearch-client-kotlin
+      version: 3.50.0
+      released: '2026-10-12'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.algolia/algoliasearch-client-kotlin
+      repo_leg: github-org:algolia
+      publisher_leg: groupId:algolia.com
+      matched_by: domain
+    - name: com.algolia:algoliasearch-scala_3
+      version: 2.43.1
+      released: '2026-06-23'
+      released_field: lastUpdated
+      lapsed: false
+      page: https://central.sonatype.com/artifact/com.algolia/algoliasearch-scala_3
+      repo_leg: github-org:algolia
+      publisher_leg: groupId:algolia.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
+- partner_name: npm registry
+  partner: npm
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (JavaScript/TypeScript)
+  evidence: https://www.npmjs.com/package/@algolia/autocomplete-js
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: npm registry (public registry JSON)
+    spec_file: null
+    language: JavaScript/TypeScript
+    packages:
+    - name: '@algolia/autocomplete-js'
+      version: 1.19.12
+      released: '2026-09-29'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@algolia/autocomplete-js
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: '@algolia/cli'
+      version: 5.18.0
+      released: '2026-10-16'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@algolia/cli
+      repo_leg: domain:algolia.com
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: '@algolia/client-abtesting'
+      version: 5.60.0
+      released: '2026-10-12'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@algolia/client-abtesting
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: '@algolia/client-search'
+      version: 5.60.0
+      released: '2026-10-12'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@algolia/client-search
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: '@algolia/ingestion'
+      version: 1.60.0
+      released: '2026-10-12'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@algolia/ingestion
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: '@algolia/monitoring'
+      version: 1.60.0
+      released: '2026-10-12'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@algolia/monitoring
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: '@algolia/recommend'
+      version: 5.60.0
+      released: '2026-10-12'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@algolia/recommend
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: '@docsearch/react'
+      version: 5.1.2
+      released: '2026-10-05'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/@docsearch/react
+      repo_leg: domain:algolia.com
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: algoliasearch
+      version: 5.60.0
+      released: '2026-10-12'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/algoliasearch
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: algoliasearch-helper
+      version: 3.30.0
+      released: '2026-10-01'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/algoliasearch-helper
+      repo_leg: domain:algolia.com
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: angular-instantsearch
+      version: 4.4.3
+      released: '2026-09-29'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/angular-instantsearch
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: instantsearch.js
+      version: 4.120.0
+      released: '2026-10-12'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/instantsearch.js
+      repo_leg: domain:algolia.com
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: react-instantsearch
+      version: 7.52.0
+      released: '2026-10-12'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/react-instantsearch
+      repo_leg: domain:algolia.com
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: search-insights
+      version: 2.17.3
+      released: '2026-07-15'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/search-insights
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: vue-instantsearch
+      version: 4.30.1
+      released: '2026-10-12'
+      released_field: modified
+      lapsed: false
+      page: https://www.npmjs.com/package/vue-instantsearch
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
+- partner_name: NuGet Gallery
+  partner: nuget
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (.NET)
+  evidence: https://www.nuget.org/packages/Algolia.Search
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: NuGet Gallery (public registry JSON)
+    spec_file: null
+    language: .NET
+    packages:
+    - name: Algolia.Search
+      version: 7.50.0
+      released: '2026-10-12'
+      released_field: published
+      lapsed: false
+      page: https://www.nuget.org/packages/Algolia.Search
+      repo_leg: domain:algolia.com
+      publisher_leg: org:algolia
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
+  first_seen: '2026-10-18'
+- partner_name: RubyGems
+  partner: rubygems
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Ruby)
+  evidence: https://rubygems.org/gems/algolia
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: RubyGems (public registry JSON)
+    spec_file: null
+    language: Ruby
+    packages:
+    - name: algolia
+      version: 3.46.1
+      released: '2026-10-12'
+      released_field: version_created_at
+      lapsed: false
+      page: https://rubygems.org/gems/algolia
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+    - name: algoliasearch-rails
+      version: 3.0.4
+      released: '2026-09-01'
+      released_field: version_created_at
+      lapsed: false
+      page: https://rubygems.org/gems/algoliasearch-rails
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-official-sdks.py
+    detected: '2026-10-18'
+  detected_by: sweep-official-sdks.py
   first_seen: '2026-10-18'
 templates: []
 skips:
