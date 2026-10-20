@@ -58,111 +58,6 @@
   source: edge
   arazzo: algolia-commercetools-product-index-sync.yml
   status: arazzo
-- slug: algolia-gmail
-  label: Gmail
-  partner: gmail
-  partner_name: Gmail
-  category: Email
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/gmail
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: algolia-ezicheq
-  label: EZICHEQ
-  partner_name: EZICHEQ
-  category: Productivity
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/ezicheq
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: algolia-slack
-  label: Slack
-  partner: slack
-  partner_name: Slack
-  category: Team Chat
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/slack
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: algolia-asana
-  label: Asana
-  partner: asana
-  partner_name: Asana
-  category: Project Management
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/asana
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: algolia-google-ads
-  label: Google Ads
-  partner: google-ads
-  partner_name: Google Ads
-  category: Ads & Conversion
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/google-ads
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: algolia-twilio
-  label: Twilio
-  partner: twilio
-  partner_name: Twilio
-  category: Phone & SMS
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/twilio
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: algolia-veeqo
-  label: Veeqo
-  partner_name: Veeqo
-  category: eCommerce
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/veeqo
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
-- slug: algolia-figma
-  label: Figma
-  partner: figma
-  partner_name: Figma
-  category: Images & Design
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/figma
-  source: edge
-  status: pending-generation
-  arazzo: null
-- slug: algolia-split-csv
-  label: Split CSV
-  partner_name: Split CSV
-  category: Productivity
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/split-csv
-  source: edge
-  status: pending-partner-spec
-  arazzo: null
 - slug: algolia-aws-marketplace
   label: AWS Marketplace
   partner: amazon-web-services
@@ -775,4 +670,118 @@
     detected_by: sweep-compliance-assurance.py
     detected: '2026-10-20'
   status: not-a-workflow
+  arazzo: null
+- slug: algolia-gmail
+  label: Gmail
+  partner: gmail
+  partner_name: Gmail
+  category: Email
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/gmail
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: algolia-ezicheq
+  label: EZICHEQ
+  partner_name: EZICHEQ
+  category: Productivity
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/ezicheq
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: algolia-slack
+  label: Slack
+  partner: slack
+  partner_name: Slack
+  category: Team Chat
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/slack
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: algolia-asana
+  label: Asana
+  partner: asana
+  partner_name: Asana
+  category: Project Management
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/asana
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: algolia-google-ads
+  label: Google Ads
+  partner: google-ads
+  partner_name: Google Ads
+  category: Ads & Conversion
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/google-ads
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: algolia-twilio
+  label: Twilio
+  partner: twilio
+  partner_name: Twilio
+  category: Phone & SMS
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/twilio
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: algolia-veeqo
+  label: Veeqo
+  partner_name: Veeqo
+  category: eCommerce
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/veeqo
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
+  arazzo: null
+- slug: algolia-figma
+  label: Figma
+  partner: figma
+  partner_name: Figma
+  category: Images & Design
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/figma
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-generation
+  arazzo: null
+- slug: algolia-split-csv
+  label: Split CSV
+  partner_name: Split CSV
+  category: Productivity
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  evidence: https://zapier.com/apps/algolia/integrations/split-csv
+  source: edge
+  relationship: ipaas-bridge
+  status: pending-partner-spec
   arazzo: null

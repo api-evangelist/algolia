@@ -1,4 +1,4 @@
-generated: '2026-10-12'
+generated: '2026-10-20'
 method: searched
 source:
 - https://zapier.com/apps/algolia/integrations
@@ -313,105 +313,6 @@ edges:
   direction: unknown
   category: eCommerce
   note: Algolia documents an installation/integration guide for this platform on its own docs host (HTTP 200, 2026-10-12).
-- partner_name: Gmail
-  partner: gmail
-  partner_match: name-exact
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/gmail
-  direction: third-party
-  category: Email
-  partner_url: https://mail.google.com/
-- partner_name: EZICHEQ
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/ezicheq
-  direction: third-party
-  category: Productivity
-  partner_url: https://ezicheq.com/
-- partner_name: Slack
-  partner: slack
-  partner_match: name-exact
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/slack
-  direction: third-party
-  category: Team Chat
-  partner_url: https://slack.com/
-- partner_name: Asana
-  partner: asana
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/asana
-  direction: third-party
-  category: Project Management
-  partner_url: http://asana.com/
-- partner_name: Google Ads
-  partner: google-ads
-  partner_match: name-exact
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/google-ads
-  direction: third-party
-  category: Ads & Conversion
-  partner_url: https://ads.google.com/
-- partner_name: Twilio
-  partner: twilio
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/twilio
-  direction: third-party
-  category: Phone & SMS
-  partner_url: https://www.twilio.com/
-- partner_name: Veeqo
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/veeqo
-  direction: third-party
-  category: eCommerce
-  partner_url: http://veeqo.com/
-- partner_name: Figma
-  partner: figma
-  partner_match: domain
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/figma
-  direction: third-party
-  category: Images & Design
-  partner_url: https://www.figma.com/
-- partner_name: Split CSV
-  partner: null
-  partner_match: null
-  partner_candidate: null
-  type: marketplace
-  marketplace: zapier
-  channel: ipaas-usage
-  evidence: https://zapier.com/apps/algolia/integrations/split-csv
-  direction: third-party
-  category: Productivity
-  partner_url: https://www.splitcsv.com/
 - partner_name: AWS Marketplace
   partner: amazon-web-services
   partner_match: aggregator
@@ -1096,6 +997,114 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-compliance-assurance.py
   first_seen: '2026-10-20'
+- partner_name: Gmail
+  partner: gmail
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/algolia/integrations/gmail
+  direction: third-party
+  category: Email
+  partner_url: https://mail.google.com/
+- partner_name: EZICHEQ
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/algolia/integrations/ezicheq
+  direction: third-party
+  category: Productivity
+  partner_url: https://ezicheq.com/
+- partner_name: Slack
+  partner: slack
+  partner_match: name-exact
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/algolia/integrations/slack
+  direction: third-party
+  category: Team Chat
+  partner_url: https://slack.com/
+- partner_name: Asana
+  partner: asana
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/algolia/integrations/asana
+  direction: third-party
+  category: Project Management
+  partner_url: http://asana.com/
+- partner_name: Google Ads
+  partner: google-ads
+  partner_match: domain+name-among-holders
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/algolia/integrations/google-ads
+  direction: third-party
+  category: Ads & Conversion
+  partner_url: https://ads.google.com/
+- partner_name: Twilio
+  partner: twilio
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/algolia/integrations/twilio
+  direction: third-party
+  category: Phone & SMS
+  partner_url: https://www.twilio.com/
+- partner_name: Veeqo
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/algolia/integrations/veeqo
+  direction: third-party
+  category: eCommerce
+  partner_url: http://veeqo.com/
+- partner_name: Figma
+  partner: figma
+  partner_match: domain
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/algolia/integrations/figma
+  direction: third-party
+  category: Images & Design
+  partner_url: https://www.figma.com/
+- partner_name: Split CSV
+  partner: null
+  partner_match: null
+  partner_candidate: null
+  type: marketplace
+  marketplace: zapier
+  channel: ipaas-usage
+  relationship: ipaas-bridge
+  evidence: https://zapier.com/apps/algolia/integrations/split-csv
+  direction: third-party
+  category: Productivity
+  partner_url: https://www.splitcsv.com/
 templates: []
 skips:
 - label: Slack
