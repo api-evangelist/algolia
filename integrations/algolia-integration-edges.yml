@@ -56,6 +56,14 @@ checked:
 - https://officialskills.sh/sitemap.xml
 - https://skillsmp.com/sitemap.xml
 - https://www.skills.sh/sitemap.xml
+- https://appexchange.salesforce.com/explore/business-needs?category=commerce
+- https://commercetools.com/partners
+- https://machalliance.org/members
+- https://marketplace.commercetools.com
+- https://printify.com/integrations/
+- https://www.bigcommerce.com/apps/
+- https://www.printful.com/integrations
+- bigcommerce/integrations/bigcommerce-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -912,72 +920,6 @@ edges:
     builder: Pipedream repo (component)
   detected_by: sweep-workflow-automation.py
   first_seen: '2026-10-15'
-- partner_name: n8n (n8n-community)
-  partner: n8n
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: n8n-community
-  evidence: https://www.npmjs.com/package/@algolia/n8n-nodes-algolia
-  mirror_of: n8n/integrations/n8n-integration-edges.yml
-  apps: []
-  listing_count: 1
-  detected: '2026-10-19'
-  detected_by: mirror-platform-listings.py
-- partner_name: Sanity (own)
-  partner: sanity
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.sanity.io/technology-partners/algolia
-  mirror_of: sanity/integrations/sanity-integration-edges.yml
-  apps:
-  - Algolia
-  listing_count: 1
-  detected: '2026-10-15'
-  detected_by: mirror-platform-listings.py
-  category: Sanity technology partner
-- partner_name: Stripe (own)
-  partner: stripe
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://marketplace.stripe.com/apps/algolia-provider-integration
-  mirror_of: stripe/integrations/stripe-integration-edges.yml
-  apps:
-  - Algolia
-  listing_count: 1
-  detected: '2026-10-15'
-  detected_by: mirror-platform-listings.py
-  category: data_and_analytics, developer_tools
-- partner_name: Zendesk (own)
-  partner: zendesk
-  partner_match: mirror
-  mirror_match: domain
-  type: marketplace
-  relationship: platform-app
-  direction: third-party
-  channel: partner-built
-  marketplace: own
-  evidence: https://www.zendesk.com/marketplace/apps/support/92125/algolia-search/
-  mirror_of: zendesk/integrations/zendesk-integration-edges.yml
-  apps:
-  - Algolia Search
-  listing_count: 1
-  detected: '2026-10-20'
-  detected_by: mirror-platform-listings.py
-  category: Knowledge and Content Management
 - partner_name: Cloud Security Alliance STAR Registry
   partner: null
   partner_match: register
@@ -1238,6 +1180,123 @@ edges:
     detected: '2026-10-20'
   detected_by: sweep-agent-skills.py
   first_seen: '2026-10-20'
+- partner_name: MACH Alliance
+  partner: null
+  partner_match: register
+  type: register
+  channel: standard-directory
+  relationship: standard-participant
+  direction: partner-built
+  evidence: https://machalliance.org/members/algolia
+  category: composable (MACH) commerce alliance membership
+  contract_reference:
+    register: MACH Alliance members directory (machalliance.org/members)
+    standard: MACH Alliance (Microservices, API-first, Cloud-native SaaS, Headless)
+    spec_file: null
+    role: mach-certified-vendor
+    registered_name: Algolia
+    register_id: algolia
+    register_category: MACH Certified ISVs
+    register_country: US
+    matched_domain: algolia.com
+    matched_by: domain
+    signal_note: certified_products = ONE entry for the vendor's MACH certification (the Alliance certifies the
+      vendor against the MACH criteria; no per-product list); awards and self-listed partnerships are context, never
+      counted
+    detected_by: sweep-mach-headless-commerce.py
+    detected: '2026-10-20'
+    certified_products:
+    - product: MACH certified ISV
+      product_type: MACH certified ISV
+      certifier: MACH Alliance
+      lapsed: false
+    awards_context:
+    - Agent Ready Award 2026
+  detected_by: sweep-mach-headless-commerce.py
+  first_seen: '2026-10-20'
+- partner_name: n8n (n8n-community)
+  partner: n8n
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: n8n-community
+  evidence: https://www.npmjs.com/package/@algolia/n8n-nodes-algolia
+  mirror_of: n8n/integrations/n8n-integration-edges.yml
+  apps: []
+  listing_count: 1
+  detected: '2026-10-19'
+  detected_by: mirror-platform-listings.py
+- partner_name: Sanity (own)
+  partner: sanity
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.sanity.io/technology-partners/algolia
+  mirror_of: sanity/integrations/sanity-integration-edges.yml
+  apps:
+  - Algolia
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: Sanity technology partner
+- partner_name: Stripe (own)
+  partner: stripe
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://marketplace.stripe.com/apps/algolia-provider-integration
+  mirror_of: stripe/integrations/stripe-integration-edges.yml
+  apps:
+  - Algolia
+  listing_count: 1
+  detected: '2026-10-15'
+  detected_by: mirror-platform-listings.py
+  category: data_and_analytics, developer_tools
+- partner_name: Zendesk (own)
+  partner: zendesk
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.zendesk.com/marketplace/apps/support/92125/algolia-search/
+  mirror_of: zendesk/integrations/zendesk-integration-edges.yml
+  apps:
+  - Algolia Search
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: Knowledge and Content Management
+- partner_name: BigCommerce (own)
+  partner: bigcommerce
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.bigcommerce.com/apps/algolia-search-discovery/
+  mirror_of: bigcommerce/integrations/bigcommerce-integration-edges.yml
+  apps:
+  - Algolia AI Search & Discovery
+  listing_count: 1
+  detected: '2026-10-20'
+  detected_by: mirror-platform-listings.py
+  category: Merchandising, Search & Navigation
 templates: []
 skips:
 - label: Slack

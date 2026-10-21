@@ -590,57 +590,6 @@
     builder: Pipedream repo (component)
   status: not-a-workflow
   arazzo: null
-- slug: algolia-n8n-n8n-community
-  label: n8n (n8n-community)
-  partner: n8n
-  partner_name: n8n (n8n-community)
-  type: marketplace
-  marketplace: n8n-community
-  channel: partner-built
-  evidence: https://www.npmjs.com/package/@algolia/n8n-nodes-algolia
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: algolia-sanity-own
-  label: Sanity (own)
-  partner: sanity
-  partner_name: Sanity (own)
-  category: Sanity technology partner
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://www.sanity.io/technology-partners/algolia
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: algolia-stripe-own
-  label: Stripe (own)
-  partner: stripe
-  partner_name: Stripe (own)
-  category: data_and_analytics, developer_tools
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://marketplace.stripe.com/apps/algolia-provider-integration
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: algolia-zendesk-own
-  label: Zendesk (own)
-  partner: zendesk
-  partner_name: Zendesk (own)
-  category: Knowledge and Content Management
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://www.zendesk.com/marketplace/apps/support/92125/algolia-search/
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: algolia-cloud-security-alliance-star-registry
   label: Cloud Security Alliance STAR Registry
   partner_name: Cloud Security Alliance STAR Registry
@@ -857,3 +806,101 @@
     detected: '2026-10-20'
   status: not-a-workflow
   arazzo: null
+- slug: algolia-mach-alliance
+  label: MACH Alliance
+  partner_name: MACH Alliance
+  category: composable (MACH) commerce alliance membership
+  type: register
+  channel: standard-directory
+  evidence: https://machalliance.org/members/algolia
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: MACH Alliance members directory (machalliance.org/members)
+    standard: MACH Alliance (Microservices, API-first, Cloud-native SaaS, Headless)
+    spec_file: null
+    role: mach-certified-vendor
+    registered_name: Algolia
+    register_id: algolia
+    register_category: MACH Certified ISVs
+    register_country: US
+    matched_domain: algolia.com
+    matched_by: domain
+    signal_note: certified_products = ONE entry for the vendor's MACH certification (the Alliance certifies the
+      vendor against the MACH criteria; no per-product list); awards and self-listed partnerships are context, never
+      counted
+    detected_by: sweep-mach-headless-commerce.py
+    detected: '2026-10-20'
+    certified_products:
+    - product: MACH certified ISV
+      product_type: MACH certified ISV
+      certifier: MACH Alliance
+      lapsed: false
+    awards_context:
+    - Agent Ready Award 2026
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-n8n-n8n-community
+  label: n8n (n8n-community)
+  partner: n8n
+  partner_name: n8n (n8n-community)
+  type: marketplace
+  marketplace: n8n-community
+  channel: partner-built
+  evidence: https://www.npmjs.com/package/@algolia/n8n-nodes-algolia
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-sanity-own
+  label: Sanity (own)
+  partner: sanity
+  partner_name: Sanity (own)
+  category: Sanity technology partner
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.sanity.io/technology-partners/algolia
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-stripe-own
+  label: Stripe (own)
+  partner: stripe
+  partner_name: Stripe (own)
+  category: data_and_analytics, developer_tools
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.stripe.com/apps/algolia-provider-integration
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-zendesk-own
+  label: Zendesk (own)
+  partner: zendesk
+  partner_name: Zendesk (own)
+  category: Knowledge and Content Management
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.zendesk.com/marketplace/apps/support/92125/algolia-search/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-bigcommerce-own
+  label: BigCommerce (own)
+  partner: bigcommerce
+  partner_name: BigCommerce (own)
+  category: Merchandising, Search & Navigation
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.bigcommerce.com/apps/algolia-search-discovery/
+  source: edge
+  relationship: platform-app
+  arazzo: algolia-bigcommerce-product-index-sync.yml
+  status: arazzo
