@@ -71,6 +71,8 @@ checked:
 - https://www.ycombinator.com/companies
 - terraform/integrations/terraform-integration-edges.yml
 - adobe-commerce/integrations/adobe-commerce-integration-edges.yml
+- netlify/integrations/netlify-integration-edges.yml
+- vercel/integrations/vercel-integration-edges.yml
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -1396,6 +1398,43 @@ edges:
   detected: '2026-10-22'
   detected_by: mirror-platform-listings.py
   category: Adobe Commerce Marketplace extension
+- partner_name: Netlify (own)
+  partner: netlify
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://www.netlify.com/integrations/algolia/
+  mirror_of: netlify/integrations/netlify-integration-edges.yml
+  apps:
+  - Algolia
+  - Algolia Crawler
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Search
+  partner_tier: build-plugin
+- partner_name: Vercel (own)
+  partner: vercel
+  partner_match: mirror
+  mirror_match: domain
+  type: marketplace
+  relationship: platform-app
+  direction: third-party
+  channel: partner-built
+  marketplace: own
+  evidence: https://vercel.com/marketplace/algolia
+  mirror_of: vercel/integrations/vercel-integration-edges.yml
+  apps:
+  - Algolia
+  listing_count: 1
+  detected: '2026-10-22'
+  detected_by: mirror-platform-listings.py
+  category: Searching
+  partner_tier: native
 templates: []
 skips:
 - label: Slack
