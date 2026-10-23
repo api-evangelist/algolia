@@ -898,122 +898,6 @@
     year: '2013'
   status: not-a-workflow
   arazzo: null
-- slug: algolia-n8n-n8n-community
-  label: n8n (n8n-community)
-  partner: n8n
-  partner_name: n8n (n8n-community)
-  type: marketplace
-  marketplace: n8n-community
-  channel: partner-built
-  evidence: https://www.npmjs.com/package/@algolia/n8n-nodes-algolia
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: algolia-sanity-own
-  label: Sanity (own)
-  partner: sanity
-  partner_name: Sanity (own)
-  category: Sanity technology partner
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://www.sanity.io/technology-partners/algolia
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: algolia-stripe-own
-  label: Stripe (own)
-  partner: stripe
-  partner_name: Stripe (own)
-  category: data_and_analytics, developer_tools
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://marketplace.stripe.com/apps/algolia-provider-integration
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: algolia-zendesk-own
-  label: Zendesk (own)
-  partner: zendesk
-  partner_name: Zendesk (own)
-  category: Knowledge and Content Management
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://www.zendesk.com/marketplace/apps/support/92125/algolia-search/
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: algolia-bigcommerce-own
-  label: BigCommerce (own)
-  partner: bigcommerce
-  partner_name: BigCommerce (own)
-  category: Merchandising, Search & Navigation
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://www.bigcommerce.com/apps/algolia-search-discovery/
-  source: edge
-  relationship: platform-app
-  arazzo: algolia-bigcommerce-product-index-sync.yml
-  status: arazzo
-- slug: algolia-terraform-terraform-registry
-  label: Terraform (terraform-registry)
-  partner: terraform
-  partner_name: Terraform (terraform-registry)
-  category: infrastructure-as-code provider registry listing
-  type: marketplace
-  marketplace: terraform-registry
-  channel: partner-built
-  evidence: https://registry.terraform.io/providers/algolia/algolia
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: algolia-adobe-commerce-own
-  label: Adobe Commerce (own)
-  partner: adobe-commerce
-  partner_name: Adobe Commerce (own)
-  category: Adobe Commerce Marketplace extension
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://commercemarketplace.adobe.com/algolia-algoliasearch-magento-2.html
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: algolia-netlify-own
-  label: Netlify (own)
-  partner: netlify
-  partner_name: Netlify (own)
-  category: Search
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://www.netlify.com/integrations/algolia/
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
-- slug: algolia-vercel-own
-  label: Vercel (own)
-  partner: vercel
-  partner_name: Vercel (own)
-  category: Searching
-  type: marketplace
-  marketplace: own
-  channel: partner-built
-  evidence: https://vercel.com/marketplace/algolia
-  source: edge
-  relationship: platform-app
-  status: not-a-workflow
-  arazzo: null
 - slug: algolia-packagist
   label: Packagist
   partner: packagist
@@ -1285,5 +1169,147 @@
       24 months'
     detected_by: sweep-php-dart-elixir-package-registries.py
     detected: '2026-10-22'
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-n8n-n8n-community
+  label: n8n (n8n-community)
+  partner: n8n
+  partner_name: n8n (n8n-community)
+  type: marketplace
+  marketplace: n8n-community
+  channel: partner-built
+  evidence: https://www.npmjs.com/package/@algolia/n8n-nodes-algolia
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-sanity-own
+  label: Sanity (own)
+  partner: sanity
+  partner_name: Sanity (own)
+  category: Sanity technology partner
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.sanity.io/technology-partners/algolia
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-stripe-own
+  label: Stripe (own)
+  partner: stripe
+  partner_name: Stripe (own)
+  category: data_and_analytics, developer_tools
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://marketplace.stripe.com/apps/algolia-provider-integration
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-zendesk-own
+  label: Zendesk (own)
+  partner: zendesk
+  partner_name: Zendesk (own)
+  category: Knowledge and Content Management
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.zendesk.com/marketplace/apps/support/92125/algolia-search/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-bigcommerce-own
+  label: BigCommerce (own)
+  partner: bigcommerce
+  partner_name: BigCommerce (own)
+  category: Merchandising, Search & Navigation
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.bigcommerce.com/apps/algolia-search-discovery/
+  source: edge
+  relationship: platform-app
+  arazzo: algolia-bigcommerce-product-index-sync.yml
+  status: arazzo
+- slug: algolia-terraform-terraform-registry
+  label: Terraform (terraform-registry)
+  partner: terraform
+  partner_name: Terraform (terraform-registry)
+  category: infrastructure-as-code provider registry listing
+  type: marketplace
+  marketplace: terraform-registry
+  channel: partner-built
+  evidence: https://registry.terraform.io/providers/algolia/algolia
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-adobe-commerce-own
+  label: Adobe Commerce (own)
+  partner: adobe-commerce
+  partner_name: Adobe Commerce (own)
+  category: Adobe Commerce Marketplace extension
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://commercemarketplace.adobe.com/algolia-algoliasearch-magento-2.html
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-netlify-own
+  label: Netlify (own)
+  partner: netlify
+  partner_name: Netlify (own)
+  category: Search
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://www.netlify.com/integrations/algolia/
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-vercel-own
+  label: Vercel (own)
+  partner: vercel
+  partner_name: Vercel (own)
+  category: Searching
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://vercel.com/marketplace/algolia
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-adobe-experience-cloud-own
+  label: Adobe Experience Cloud (own)
+  partner: adobe-experience-cloud
+  partner_name: Adobe Experience Cloud (own)
+  category: Adobe Exchange Experience Cloud listing (Experience Platform, Real-Time CDP)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://exchange.adobe.com/apps/ec/600114
+  source: edge
+  relationship: platform-app
+  status: not-a-workflow
+  arazzo: null
+- slug: algolia-adobe-experience-manager-own
+  label: Adobe Experience Manager (own)
+  partner: adobe-experience-manager
+  partner_name: Adobe Experience Manager (own)
+  category: Adobe Exchange Experience Cloud listing (Experience Manager)
+  type: marketplace
+  marketplace: own
+  channel: partner-built
+  evidence: https://exchange.adobe.com/apps/ec/105651
+  source: edge
+  relationship: platform-app
   status: not-a-workflow
   arazzo: null
