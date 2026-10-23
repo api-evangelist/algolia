@@ -73,6 +73,9 @@ checked:
 - adobe-commerce/integrations/adobe-commerce-integration-edges.yml
 - netlify/integrations/netlify-integration-edges.yml
 - vercel/integrations/vercel-integration-edges.yml
+- https://hex.pm/api
+- https://packagist.org/packages
+- https://pub.dev/api
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -1435,6 +1438,277 @@ edges:
   detected_by: mirror-platform-listings.py
   category: Searching
   partner_tier: native
+- partner_name: Packagist
+  partner: packagist
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (PHP)
+  evidence: https://packagist.org/packages/algolia/algolia-search-bundle
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Packagist (public registry JSON)
+    spec_file: null
+    language: PHP
+    packages:
+    - name: algolia/algolia-search-bundle
+      version: 8.1.0
+      released: '2026-04-07'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/algolia/algolia-search-bundle
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+      abandoned: true
+    - name: algolia/algoliasearch-adapter-magento-2
+      version: 0.9.1
+      released: '2026-06-30'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/algolia/algoliasearch-adapter-magento-2
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+    - name: algolia/algoliasearch-client-php
+      version: 4.50.0
+      released: '2026-10-12'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/algolia/algoliasearch-client-php
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+    - name: algolia/algoliasearch-custom-algolia-magento-2
+      version: 1.4.0
+      released: '2025-01-28'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/algolia/algoliasearch-custom-algolia-magento-2
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+    - name: algolia/algoliasearch-ingestion-magento-2
+      version: 0.2.2
+      released: '2026-08-20'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/algolia/algoliasearch-ingestion-magento-2
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+    - name: algolia/algoliasearch-inventory-magento-2
+      version: 1.5.0
+      released: '2026-08-05'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/algolia/algoliasearch-inventory-magento-2
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+    - name: algolia/algoliasearch-laravel
+      version: 1.7.1
+      released: '2017-01-30'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/algolia/algoliasearch-laravel
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+      abandoned: true
+    - name: algolia/algoliasearch-laravel-4
+      version: 1.1.1
+      released: '2016-06-30'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/algolia/algoliasearch-laravel-4
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+      abandoned: true
+    - name: algolia/algoliasearch-magento
+      version: 1.19.0
+      released: '2021-02-24'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/algolia/algoliasearch-magento
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+    - name: algolia/algoliasearch-magento-2
+      version: 3.19.2
+      released: '2026-09-28'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/algolia/algoliasearch-magento-2
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+    - name: algolia/algoliasearch-magento-2-es-compatibility
+      version: 0.0.1
+      released: '2020-01-08'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/algolia/algoliasearch-magento-2-es-compatibility
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+    - name: algolia/algoliasearch-nette
+      version: 1.0.2
+      released: '2017-08-08'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/algolia/algoliasearch-nette
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: algolia/algoliasearch-wordpress
+      version: 2.11.3
+      released: '2019-01-21'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/algolia/algoliasearch-wordpress
+      repo_leg: github-org:algolia
+      publisher_leg: org:algolia
+      matched_by: github-org
+      abandoned: true
+    - name: algolia/laravel-scout-algolia-macros
+      version: 0.6.0
+      released: '2018-09-04'
+      released_field: time
+      lapsed: true
+      page: https://packagist.org/packages/algolia/laravel-scout-algolia-macros
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    - name: algolia/search-bundle
+      version: 8.1.0
+      released: '2026-04-07'
+      released_field: time
+      lapsed: false
+      page: https://packagist.org/packages/algolia/search-bundle
+      repo_leg: github-org:algolia
+      publisher_leg: email:algolia.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
+- partner_name: pub.dev
+  partner: pub-dev
+  partner_match: register
+  type: register
+  direction: provider-built
+  category: official SDK (Dart/Flutter)
+  evidence: https://pub.dev/packages/algolia_client_agent_studio
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: pub.dev (public registry JSON)
+    spec_file: null
+    language: Dart/Flutter
+    packages:
+    - name: algolia_client_agent_studio
+      version: 1.54.0
+      released: '2026-10-12'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/algolia_client_agent_studio
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:algolia.com
+      matched_by: domain
+    - name: algolia_client_composition
+      version: 1.54.0
+      released: '2026-10-12'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/algolia_client_composition
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:algolia.com
+      matched_by: domain
+    - name: algolia_client_core
+      version: 1.54.0
+      released: '2026-10-12'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/algolia_client_core
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:algolia.com
+      matched_by: domain
+    - name: algolia_client_ingestion
+      version: 1.54.0
+      released: '2026-10-12'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/algolia_client_ingestion
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:algolia.com
+      matched_by: domain
+    - name: algolia_client_insights
+      version: 1.54.0
+      released: '2026-10-12'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/algolia_client_insights
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:algolia.com
+      matched_by: domain
+    - name: algolia_client_recommend
+      version: 1.54.0
+      released: '2026-10-12'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/algolia_client_recommend
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:algolia.com
+      matched_by: domain
+    - name: algolia_client_search
+      version: 1.54.0
+      released: '2026-10-12'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/algolia_client_search
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:algolia.com
+      matched_by: domain
+    - name: algolia_helper_flutter
+      version: 1.6.0
+      released: '2025-12-17'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/algolia_helper_flutter
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:algolia.com
+      matched_by: domain
+    - name: algolia_insights
+      version: 1.0.4
+      released: '2025-11-18'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/algolia_insights
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:algolia.com
+      matched_by: domain
+    - name: algoliasearch
+      version: 1.54.0
+      released: '2026-10-12'
+      released_field: published
+      lapsed: false
+      page: https://pub.dev/packages/algoliasearch
+      repo_leg: not required (verified publisher)
+      publisher_leg: verified-publisher:algolia.com
+      matched_by: domain
+    current: true
+    signal_note: 'an official package on the registry: distribution, not an integration; lapsed = no release in
+      24 months'
+    detected_by: sweep-php-dart-elixir-package-registries.py
+    detected: '2026-10-22'
+  detected_by: sweep-php-dart-elixir-package-registries.py
+  first_seen: '2026-10-22'
 templates: []
 skips:
 - label: Slack
