@@ -78,6 +78,9 @@ checked:
 - https://pub.dev/api
 - adobe-experience-cloud/integrations/adobe-experience-cloud-integration-edges.yml
 - adobe-experience-manager/integrations/adobe-experience-manager-integration-edges.yml
+- https://aur.archlinux.org/cgit/aur.git/tree/.SRCINFO
+- https://aur.archlinux.org/packages-meta-ext-v1.json.gz
+- https://aur.archlinux.org/rpc/v5/info
 summary: null
 marketplace_apps:
 - marketplace: zapier
@@ -1748,6 +1751,66 @@ edges:
   detected: '2026-10-23'
   detected_by: mirror-platform-listings.py
   category: Adobe Exchange Experience Cloud listing (Experience Manager)
+- partner_name: Arch User Repository (AUR)
+  partner: null
+  partner_match: null
+  type: register
+  direction: provider-built
+  category: official CLI (Arch User Repository (AUR))
+  evidence: https://aur.archlinux.org/packages/algolia
+  channel: package-registry
+  relationship: distribution-channel
+  contract_reference:
+    register: Arch User Repository (AUR) (public package index)
+    spec_file: null
+    packages:
+    - name: algolia
+      kind: aur
+      version: 1.7.0-1
+      released: '2025-06-11'
+      released_field: AUR LastModified
+      out_of_date: true
+      lapsed: true
+      page: https://aur.archlinux.org/packages/algolia
+      upstream: https://www.algolia.com/doc/tools/cli
+      cli: 'AUR description: Interact with and configure Algolia applications'
+      repo_leg: domain:algolia.com
+      publisher_leg: artifact-github-org:algolia
+      matched_by: domain
+    - name: algolia-bin
+      kind: aur
+      version: 1.6.11-3
+      released: '2024-11-30'
+      released_field: AUR LastModified
+      out_of_date: true
+      lapsed: true
+      page: https://aur.archlinux.org/packages/algolia-bin
+      upstream: https://www.algolia.com/doc/tools/cli
+      cli: 'AUR description: Interact with and configure Algolia applications'
+      repo_leg: domain:algolia.com
+      publisher_leg: artifact-github-org:algolia
+      matched_by: domain
+    - name: algolia-git
+      kind: aur
+      version: 1.6.11.r6.g666f84e-1
+      released: '2024-11-30'
+      released_field: AUR LastModified
+      out_of_date: true
+      lapsed: true
+      page: https://aur.archlinux.org/packages/algolia-git
+      upstream: https://www.algolia.com/doc/tools/cli
+      cli: 'AUR description: Interact with and configure Algolia applications'
+      repo_leg: domain:algolia.com
+      publisher_leg: artifact-github-org:algolia
+      matched_by: domain
+    current: false
+    signal_note: 'the provider''s own command-line tool packaged for Arch Linux (community-maintained PKGBUILD whose
+      upstream and source artifact are the provider''s): distribution, not an integration; lapsed = flagged out-of-date
+      or not updated in 24 months'
+    detected_by: sweep-aur-vendor-cli-packages.py
+    detected: '2026-10-23'
+  detected_by: sweep-aur-vendor-cli-packages.py
+  first_seen: '2026-10-23'
 templates: []
 skips:
 - label: Slack
